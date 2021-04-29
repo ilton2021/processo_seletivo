@@ -7,7 +7,7 @@
 	     <div class="alert alert-danger {{ Session::get ('mensagem')['class'] }} ">
 		      {{ Session::get ('mensagem')['msg'] }}
 		 </div>
-		</div>
+		</div> 
 		@endif
 	   @endif
         <div class="container-fluid">
