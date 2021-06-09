@@ -109,7 +109,6 @@
 									   <?php $a = [$prc->unidade_id]; ?>
 								   @endif
 							   @endforeach
-							   <?php $qtd = sizeof($a); ?>
 							   @foreach($unidades as $unidade)
 							      @if($unidade->id == 7 || $unidade->id == 6) 
 								   <td width="300px">
