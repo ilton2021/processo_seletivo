@@ -73,7 +73,7 @@
 					  <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" 
 					  href="{{asset('http://hcp.org.br/processoseletivo')}}/{{($pseletivo[0]->nome)}}/{{('admin/lab/uploads')}}/{{($proc->nomearquivo2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
 					  @endif
-					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('resultadoProcessosA', array($pseletivo[0]->id, $proc->id, $proc->vaga)) }}"> <i class="fas fa-file-alt"></i></a></center></th>
+					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('resultadoProcessosA', array($pseletivo[0]->id, $proc->id)) }}"> <i class="fas fa-file-alt"></i></a></center></th>
 				    </tr>
                   </tfoot>
 				  @endforeach

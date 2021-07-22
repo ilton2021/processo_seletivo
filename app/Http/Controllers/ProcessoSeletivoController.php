@@ -371,6 +371,9 @@ class ProcessoSeletivoController extends Controller
 			$vagas = Vaga::where('processo_seletivo_id',$id)->get();
 			return view('cadastro_vaga_processo', compact('text','processos','vagas'));
 		} else {
+			$nome  = $input['nome'];
+			$nomeC = str_replace('/','-',$nome);
+			$input['nome'] = $nomeC;
 			$vaga = Vaga::create($input); 
 			$lastUpdated = $vaga->max('updated_at');
 			$id = $input['processo_seletivo_id'];
