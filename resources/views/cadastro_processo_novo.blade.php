@@ -1,28 +1,51 @@
 @extends('navbar.default-navbar')
 <body id="page-top">
 	<div class="container" style="margin-top: 80px;">
-       @if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div class="alert alert-danger {{ Session::get ('mensagem')['class'] }} ">
-		      {{ Session::get ('mensagem')['msg'] }}
+		@if ($errors->any())
+		 <div class="alert alert-danger">
+		  <ul>
+		    @foreach ($errors->all() as $error)
+		      <li>{{ $error }}</li>
+			@endforeach
+		  </ul>
 		 </div>
-		</div> 
 		@endif
-	   @endif
         <div class="container-fluid">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Cadastro Processo Seletivo:</h6>
             </div>
-            <div class="card-body">
+            <div class="card-body"> <?php $ano = date('Y', strtotime('now')); ?>
               <div class="table-responsive">
 			  <form method="POST" action="{{ route('storeProcesso') }}" enctype="multipart/form-data">
 			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
                       <td>Nome:</td>
-                      <td><input type="text" class="form-control" id="nome" name="nome" value="" required="true" placeholder="EX: hmr012020; belojardim022020" /></td>
+                      <td>
+					  	<select id="nome1" name="nome1" class="form-control">
+						 <option id="nome1" name="nome1" value="hcpgestao"> hcpgestao </option>
+						 <option id="nome1" name="nome1" value="hmr"> hmr </option>
+						 <option id="nome1" name="nome1" value="belojardim"> belojardim </option>
+						 <option id="nome1" name="nome1" value="arcoverde"> arcoverde </option>
+						 <option id="nome1" name="nome1" value="arruda"> arruda </option>
+						 <option id="nome1" name="nome1" value="caruaru"> caruaru </option>
+						 <option id="nome1" name="nome1" value="hss"> hss </option>
+						 <option id="nome1" name="nome1" value="hpr"> hpr </option>
+						</select>
+						<select id="nome2" name="nome2" class="form-control">
+						 <?php for($a = 1; $a <= 40; $a++){ ?>
+						  @if($a < 10)
+						  <option id="nome2" name="nome2" value="<?php echo '0'.$a; ?>">0{{ $a }}</option>	
+						  @else
+						  <option id="nome2" name="nome2" value="<?php echo $a; ?>">{{ $a }}</option>
+						  @endif
+						 <?php } ?>
+						</select>
+						<select id="nome3" name="nome3" class="form-control">
+						 <option id="nome3" name="nome3" value="<?php echo $ano; ?>">{{ $ano }}</option>		
+						</select>
+					  </td>
 			        </tr>
                     <tr>
                       <td>Edital:</td>

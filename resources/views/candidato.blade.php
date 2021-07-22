@@ -103,20 +103,14 @@
 							<table class="table table-responsive table-border" border="1"> 
 							<tr>
 							   <?php $hoje = date('d-m-Y', strtotime('now')); $a = 0; ?> 
-							   @foreach($processos1 as $prc)
-								 <?php $data_resultado = date('d-m-Y', strtotime($prc->data_resultado)); ?> 
-								   @if(strtotime($hoje) <= strtotime($data_resultado))
-									   <?php $a = [$prc->unidade_id]; ?>
-								   @endif
-							   @endforeach
 							   @foreach($unidades as $unidade)
-							      @if($unidade->id == 7 || $unidade->id == 6) 
+							      @if($unidade->id == 0) 
 								   <td width="300px">
 									  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
 								   </td>
 								   @else
 								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+									  <a href="" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
 								   </td>
 								   @endif 
 							   @endforeach
@@ -139,7 +133,9 @@
 							   @endforeach
 						   </tr>
 						   <tr>
-						       <td colspan="8">O Processo Seletivo: UPAE CARUARU 01/2021 foi cancelado. <a href="{{asset('storage')}}/{{'Cancelamento Seleção pessoal HCP Gestão UPAE CARUARU - 01.2021.pdf'}}">clique aqui.</a></td>
+						       <td colspan="8">O Processo Seletivo: UPAE CARUARU 01/2021 foi cancelado. <a href="{{asset('storage')}}/{{'Cancelamento Seleção pessoal HCP Gestão UPAE CARUARU - 01.2021.pdf'}}">clique aqui.</a> <br><br>
+						       <p align="justify">Prezados candidatos, se faz encerrado o processo simplificado 02/2021 - UPAE Belo Jardim por ausência de candidatos com a experiência na função como descrito no regulamento.
+                                Agradecemos sua compreensão! <a href="{{asset('storage')}}/{{'Cancelamento Seleção pessoal HCP Gestão UPAE BELO JARDIM - 02.2021.pdf'}}">clique aqui.</a></p></td>
 						   </tr>
 						  </table>
 						</div>

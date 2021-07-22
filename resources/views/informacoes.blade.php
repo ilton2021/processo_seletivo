@@ -82,7 +82,9 @@
                     </tr>
 					<tr>
                       <td>CTPS:</td>
-					  <td></td>
+					  <td>
+					    <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps1)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					  </td>
                     </tr>
 					<tr>
                       <td>Data Início:</td>
@@ -107,7 +109,9 @@
                     </tr>
 					<tr>
                       <td>CTPS:</td>
-					  <td></td>
+					  <td>
+					   <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					  </td>
                     </tr>
 					<tr>
                       <td>Data Início:</td>
@@ -133,7 +137,9 @@
                     </tr>
 					<tr>
                       <td>CTPS:</td>
-					  <td></td>
+					  <td>
+					   <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps3)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					  </td>
                     </tr>
 					<tr>
                       <td>Data Início:</td>

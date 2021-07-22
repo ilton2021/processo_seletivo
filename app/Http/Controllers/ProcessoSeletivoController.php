@@ -10,6 +10,7 @@ use DB;
 use App\Model\Loggers;
 use Illuminate\Support\Facades\Redirect;
 use Auth;
+use Validator;
 
 class ProcessoSeletivoController extends Controller
 {
@@ -74,9 +75,10 @@ class ProcessoSeletivoController extends Controller
 	// Salvar Processo Seletivo //
 	public function storeProcesso(Request $request)
 	{
-		$input = $request->all();
+		$input = $request->all(); $a = $input['nome1']; $b = $input['nome2']; $c = $input['nome3'];
+		$input['nome']  = $a.$b.$c; 
 		$nomeA 	  = $_FILES['edital']['name']; 
-		$extensao = pathinfo($nomeA, PATHINFO_EXTENSION);
+		$extensao = pathinfo($nomeA, PATHINFO_EXTENSION); 
 		$unidades = Unidade::all();
 		$processos = ProcessoSeletivo::all();
 		if($input['inscricao_inicio'] > $input['inscricao_fim'] || $input['inscricao_inicio'] == $input['inscricao_fim'])
@@ -91,48 +93,23 @@ class ProcessoSeletivoController extends Controller
 			return view('cadastro_processo_novo', compact('text','unidades','processos'));
 		} else {
 			if($extensao == 'pdf') {
-				$v = \Validator::make($request->all(), [
-					'nome'   => 'required|max:255|unique:processo_seletivo,nome',
+				$validator = Validator::make($request->all(), [
 					'inscricao_inicio' => 'required|date',
 					'inscricao_fim'    => 'required|date',
 					'data_prova'       => 'required|date',
 					'data_resultado'   => 'required|date'
 				]);
-				if ($v->fails()) {
-					$failed = $v->failed();
-					if ( !empty($failed['nome']['Required']) ) {
-						\Session::flash('mensagem', ['msg' => 'O campo nome é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['nome']['Max']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo nome possui no máximo 255 caracteres!','class'=>'green white-text']);
-					} else if ( !empty($failed['nome']['Unique']) ) { 
-						\Session::flash('mensagem', ['msg' => 'Este Processo Seletivo já foi cadastrado!','class'=>'green white-text']);
-					} else if ( !empty($failed['inscricao_inicio']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo início inscrição é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['inscricao_inicio']['Date']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo início inscrição é uma data!','class'=>'green white-text']);
-					} else if ( !empty($failed['inscricao_fim']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo fim inscrição é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['inscricao_fim']['Date']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo fim inscrição é uma data!','class'=>'green white-text']);
-					} else if ( !empty($failed['data_prova']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo data da prova é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['data_prova']['Date']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo data da prova é uma data!','class'=>'green white-text']);
-					} else if ( !empty($failed['data_resultado']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo data do resultado é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['data_resultado']['Date']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo data do resultado é uma data!','class'=>'green white-text']);
-					}
-					$text = true;
-					return view('cadastro_processo_novo', compact('text','unidades','processos'));
-				} else { 					
+				if ($validator->fails()) {
+					return view('cadastro_processo_novo', compact('unidades','processos'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));
+				} else { 				
+						
 					$request->file('edital')->move('../public/storage/processo/edital/', $nomeA);
 					$input['edital'] = $nomeA;
 					$input['edital_caminho'] = 'processo/edital/'.$nomeA;
 					$nome = $input['nome'];
-					$n = str_replace(' ','',$nome);  
-					$n = str_replace('/','_',$n); 
-					$p = DB::statement("CREATE TABLE processo_seletivo_".$n." 
+					$p = DB::statement("CREATE TABLE IF NOT EXISTS processo_seletivo_".$nome." 
 					 (id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 					  vaga varchar(400) COLLATE utf8_unicode_ci NULL,
 					  data_inscricao varchar(50) COLLATE utf8_unicode_ci NULL DEFAULT current_timestamp(),
