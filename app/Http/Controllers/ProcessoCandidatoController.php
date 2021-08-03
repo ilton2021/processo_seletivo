@@ -244,14 +244,14 @@ class ProcessoCandidatoController extends Controller
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$nomeP     = $processos[0]->nome;
 		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get();
-		$avaliacao = AvaliacaoLideranca::where('processo_seletivo_id',$id)->where('id_candidato',$id_c)->get();
+		$avaliacao = AvaliacaoOperacional::where('processo_seletivo_id',$id)->where('id_candidato',$id_c)->get();
 		$pergAvaOp = PerguntaAvaliacaoOperacional::where('processo_seletivo_id',$id)->where('candidato_id',$id_c)->get();
  		$qtd = sizeof($avaliacao); 
 		if($qtd > 0){
 			return view('avaliacaoOperacionalVisualizar', compact('processos','candidato','avaliacao','pergAvaOp'));
 		} else {
 			return view('avaliacaoOperacional', compact('processos','candidato'));
-		}
+		}	
 	}
 
 	public function storeAvaliacaoOperacional($id, $id_c, Request $request)

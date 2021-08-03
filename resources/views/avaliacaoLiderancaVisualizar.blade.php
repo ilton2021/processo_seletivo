@@ -47,6 +47,8 @@
 					</tr>
 				</table>
 
+				@foreach($pergAvaLid as $pg)
+				@if($pg->pergunta == 'LIDERANÇA')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
 					  <td colspan="6"><b><center> COMPETÊNCIAS: </center></b></td>
@@ -62,8 +64,6 @@
 					<tr>
                       <td width="500px;"> <p align="justify">Grau de Liderança para conduzir pessoas em relação 
 					  aos resultados esperados e dimensionados para a área.</p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'LIDERANÇA')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="lideranca_1" name="lideranca_1" checked /> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -75,11 +75,13 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="lideranca_5" name="lideranca_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
 				    </tr>
 				</table>
+				@endif
+				@endforeach
 
+				@foreach($pergAvaLid as $pg)
+				@if($pg->pergunta == 'FLEXIBILIDADE')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
 					 <td>FLEXIBILIDADE: </td>
@@ -92,8 +94,6 @@
 					<tr>
                       <td width="500px;"> <p align="justify">Grau de Flexibilidade em relação a mudanças e 
 					  situações complexas.</p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'FLEXIBILIDADE')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="flexibilidade_1" name="flexibilidade_1" checked /> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -105,11 +105,13 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="flexibilidade_5" name="flexibilidade_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
 				    </tr>
 				</table>
+				@endif
+				@endforeach
 
+				@foreach($pergAvaLid as $pg)
+				@if($pg->pergunta == 'RESULTADOS')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
 					 <td>RESULTADOS: </td>
@@ -122,8 +124,6 @@
 					<tr>
                       <td width="500px;"> <p align="justify">Grau de comportamento proativo em relação as entregas
 					  necessárias e visão de resultados para a área em que irá atuar.</p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'RESULTADOS')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="resultados_1" name="resultados_1" checked /> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -135,11 +135,13 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="resultados_5" name="resultados_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
 				    </tr>
 				</table>
+				@endif
+			    @endforeach
 
+				@foreach($pergAvaLid as $pg)
+				@if($pg->pergunta == 'PRESTEZA')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
 					 <td>PRESTEZA: </td>
@@ -152,8 +154,6 @@
 					<tr>
                       <td width="500px;"> <p align="justify">Disposição de agir prontamente no cumprimento das 
 					  demandas de trabalho; </p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'PRESTEZA')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="presteza_1" name="presteza_1" checked /> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -165,11 +165,13 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="presteza_5" name="presteza_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
 				    </tr>
 				</table>
+				@endif
+				@endforeach
 
+				@foreach($pergAvaLid as $pg)
+				@if($pg->pergunta == 'COMUNICAÇÃO')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
 					 <td>COMUNICAÇÃO: </td>
@@ -182,8 +184,6 @@
 					<tr>
                       <td width="500px;"> <p align="justify">Consciência da boa forma de comunicação e 
 					  tratamento de informações. </p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'COMUNICAÇÃO')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="comunicacao_1" name="comunicacao_1" checked /> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -195,11 +195,13 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="comunicacao_5" name="comunicacao_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
 				    </tr>
 				</table>
+				@endif
+				@endforeach
 
+				@foreach($pergAvaLid as $pg)
+				@if($pg->pergunta == 'ORGANIZAÇÃO')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
 					 <td>ORGANIZAÇÃO: </td>
@@ -211,8 +213,6 @@
 					</tr>
 					<tr>
                       <td width="500px;"> <p align="justify">Estrutura de programação diária e demandas de trabalho. </p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'ORGANIZAÇÃO')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="organizacao_1" name="organizacao_1" checked /> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -224,11 +224,13 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="organizacao_5" name="organizacao_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
 				    </tr>
 				</table>
+				@endif
+				@endforeach
 
+				@foreach($pergAvaLid as $pg)
+			    @if($pg->pergunta == 'ORGANIZAÇÃO')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
 					 <td>ADMINISTRAÇÃO DO TEMPO: </td>
@@ -241,8 +243,6 @@
 					<tr>
                       <td width="500px;"> <p align="justify">Sabe lidar com pressão para realizar atividades em curto 
 					  espaço de tempo. </p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'ORGANIZAÇÃO')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="administracao_1" name="administracao_1" checked /> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -254,11 +254,13 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="administracao_5" name="administracao_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
 				    </tr>
 				</table>
+				@endif
+				@endforeach
 
+				@foreach($pergAvaLid as $pg)
+			    @if($pg->pergunta == 'AMBIENTE')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
 					 <td>AMBIENTE DE TRABALHO: </td>
@@ -271,8 +273,6 @@
 					<tr>
                       <td width="500px;"> <p align="justify">Cuidado e zelo na utilização dos equipamentos e instalações
 					  no exercício das atividades e tarefas. </p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'AMBIENTE')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="ambiente_1" name="ambiente_1"  checked/> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -284,11 +284,14 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="ambiente_5" name="ambiente_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
+					  
 				    </tr>
 				</table>
+				@endif
+				@endforeach
 				
+				@foreach($pergAvaLid as $pg)
+				@if($pg->pergunta == 'APROVEITAMENTO')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
 					 <td>APROVEITAMENTO DE RECURSOS: </td>
@@ -301,8 +304,6 @@
 					<tr>
                       <td width="500px;"> <p align="justify">Melhor utilização dos recursos disponíveis,
 					  visando a melhoria dos fluxos dos processos de trabalho e consecução de resultados eficientes. </p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'APROVEITAMENTO')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="aproveitamento_1" name="aproveitamento_1" checked /> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -314,11 +315,13 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="aproveitamento_5" name="aproveitamento_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
 				    </tr>
 				</table>
+				@endif
+				@endforeach
 
+				@foreach($pergAvaLid as $pg)
+				@if($pg->pergunta == 'EQUIPE')
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
 					 <td>TRABALHO EM EQUIPE: </td>
@@ -331,8 +334,6 @@
 					<tr>
                       <td width="500px;"> <p align="justify"> Capacidade de desenvolver as atividades e tarefas 
 					  em equipe, valorizando o trabalho em conjunto em busca de resultados comuns. </p></td>
-					  @foreach($pergAvaLid as $pg)
-					  @if($pg->pergunta == 'EQUIPE')
 					  @if($pg->resposta == 1) 
 					  <td><center><br> <input type="checkbox" id="equipe_1" name="equipe_1" checked /> </center> </td><td></td><td></td><td></td><td></td> 
 					  @elseif($pg->resposta == 2) 
@@ -344,10 +345,10 @@
 					  @elseif($pg->resposta == 5) 
 					  <td></td><td></td><td></td><td></td><td><center><br> <input type="checkbox" id="equipe_5" name="equipe_5" checked /> </center> </td> 
 					  @endif
-					  @endif
-					  @endforeach
 				    </tr>
 				</table>
+				@endif
+				@endforeach
 
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
