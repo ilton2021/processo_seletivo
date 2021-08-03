@@ -1,0 +1,2 @@
+<p>O Gestor respondeu uma Avaliação de Liderança.</p>
+<p>Acesse este link para ver a Avaliação: <a href="https://localhost/processoSeletivo/public/cadastro/avaliacaoL/{{ $ava->processo_seletivo_id }}/{{ $ava->id_candidato }}"> clique aqui </a> </p>

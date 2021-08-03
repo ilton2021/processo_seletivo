@@ -1,0 +1,2 @@
+<p>O RH criou uma Avaliação Operacional.</p>
+<p>Acesse este link para responder a Avaliação: <a href="https://localhost/processoSeletivo/public/cadastro/avaliacaoO/{{ $ava->processo_seletivo_id }}/{{ $ava->id_candidato }}"> clique aqui </a> </p>

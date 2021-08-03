@@ -58,6 +58,7 @@
 					  <th style="width: 200px;"><center>Vaga</center></th>
 					  <th><center>Currículo</center></th>
 					  <th><center>Resultado</center></th>	
+					  <th><center>Avaliação</center></th>
 				    </tr>
                   </thead>
 				  @foreach($processos2 as $proc)
@@ -68,12 +69,13 @@
 					  <th title="{{ $proc->vaga }}"><center>{{ strtoupper(substr($proc->vaga, 0, 30)) }}</center></th>
 					  <th><center>
 					  @if($pseletivo[0]->origem == 1)
-					  <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/curriculo')}}/{{($pseletivo[0]->nome)}}/{{($proc->nomearquivo2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					  <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/curriculo')}}/{{($pseletivo[0]->nome)}}/{{($proc->nomearquivo2)}}"> <i class="fas fa-file"></i></a></center></th>
 					  @else
 					  <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" 
-					  href="{{asset('http://hcp.org.br/processoseletivo')}}/{{($pseletivo[0]->nome)}}/{{('admin/lab/uploads')}}/{{($proc->nomearquivo2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					  href="{{asset('http://hcp.org.br/processoseletivo')}}/{{($pseletivo[0]->nome)}}/{{('admin/lab/uploads')}}/{{($proc->nomearquivo2)}}"> <i class="fas fa-file"></i></a></center></th>
 					  @endif
-					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('resultadoProcessosA', array($pseletivo[0]->id, $proc->id)) }}"> <i class="fas fa-file-alt"></i></a></center></th>
+					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('resultadoProcessosA', array($pseletivo[0]->id, $proc->id, $proc->vaga)) }}"> <i class="fas fa-file-alt"></i></a></center></th>
+					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('avaliacao', array($pseletivo[0]->id, $proc->id)) }}"> <i class="fas fa-file-excel"></i></a></center></th>
 				    </tr>
                   </tfoot>
 				  @endforeach

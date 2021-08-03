@@ -24,12 +24,20 @@ Route::post('/candidato/resultados_listas/{id}/{id_escolha}/{nome}/', 'Candidato
 Route::get('/candidato/cadastroCandidato/{id}/{id_processo}', 'CandidatoController@cadastroCandidato')->name('cadastroCandidato');
 Route::post('/candidato/cadastroCandidato/{id}/{id_processo}/validar/{a}', 'CandidatoController@validar')->name('validar');
 
+Route::get('/cadastro/avaliacaoL/{id}/{id_c}','ProcessoCandidatoController@avaliacaoGestorLideranca')->name('avaliacaoGestorLideranca');
+Route::post('/cadastro/avaliacaoL/{id}/{id_c}','ProcessoCandidatoController@updateAvaliacaoLideranca')->name('updateAvaliacaoLideranca');
+
+Route::get('/cadastro/avaliacaoO/{id}/{id_c}','ProcessoCandidatoController@avaliacaoGestorOperacional')->name('avaliacaoGestorOperacional');
+Route::post('/cadastro/avaliacaoO/{id}/{id_c}','ProcessoCandidatoController@updateAvaliacaoOperacional')->name('updateAvaliacaoOperacional');
+Route::get('/cadastro/avaliacaoGestor/','ProcessoCandidatoController@avaliacaoGestor')->name('avaliacaoGestor');
+
 Route::get('/auth/login','UserController@telaLogin')->name('telaLogin');
 Route::post('/auth/login/', 'UserController@Login')->name('Login');
 Route::get('/auth/register','UserController@telaRegistro')->name('telaRegistro');
 Route::post('/auth/register/','UserController@store')->name('store');
 Route::get('/telaReset','UserController@telaReset')->name('telaReset');
 Route::post('/telaReset/','UserController@resetarSenha')->name('resetarSenha');
+
 
 Route::middleware(['auth'])->group( function() {
 	
@@ -80,6 +88,14 @@ Route::middleware(['auth'])->group( function() {
 		Route::post('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
 		Route::get('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
 		Route::get('/resultado_processos/{id}/cadastro/exportCandidatos/{nome}', 'ProcessoResultadoController@exportCandidatos')->name('exportCandidatos');
+
+		Route::get('/resultado_processos/{id}/cadastro/avaliacao/{id_c}','ProcessoCandidatoController@avaliacao')->name('avaliacao');
+		Route::get('/resultado_processos/{id}/cadastro/avaliacaoLideranca/{id_c}','ProcessoCandidatoController@avaliacaoLideranca')->name('avaliacaoLideranca');
+		Route::get('/resultado_processos/{id}/cadastro/avaliacaoLiderancaVisualizar/{id_c}','ProcessoCandidatoController@avaliacaoLiderancaVisualizar')->name('avaliacaoLiderancaVisualizar');
+		Route::post('/resultado_processos/{id}/cadastro/avaliacaoLideranca/{id_c}','ProcessoCandidatoController@storeAvaliacaoLideranca')->name('storeAvaliacaoLideranca');
+		Route::get('/resultado_processos/{id}/cadastro/avaliacaoOperacional/{id_c}','ProcessoCandidatoController@avaliacaoOperacional')->name('avaliacaoOperacional');
+		Route::get('/resultado_processos/{id}/cadastro/avaliacaoOperacionalVisualizar/{id_c}','ProcessoCandidatoController@avaliacaoOperacionalVisualizar')->name('avaliacaoOperacionalVisualizar');
+		Route::post('/resultado_processos/{id}/cadastro/avaliacaoOperacional/{id_c}','ProcessoCandidatoController@storeAvaliacaoOperacional')->name('storeAvaliacaoOperacional');
 		////
 	});
 });

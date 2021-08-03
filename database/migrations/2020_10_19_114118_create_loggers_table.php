@@ -15,11 +15,11 @@ class CreateLoggersTable extends Migration
     {
         Schema::create('loggers', function (Blueprint $table) {
             $table->id();
-	    $table->string('tela');
-	    $table->string('acao');
-	    $table->unsignedBigInteger('user_id');
-	    $table->foreign('user_id')->references('id')->on('users');
-	    $table->unsignedBigInteger('unidade_id');
+            $table->string('tela');
+            $table->string('acao');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('unidade_id');
             $table->timestamps();
         });
     }

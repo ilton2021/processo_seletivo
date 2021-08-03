@@ -1,0 +1,2 @@
+<p>O RH criou uma Avaliação de Liderança.</p>
+<p>Acesse este link para responder a Avaliação: <a href="https://localhost/processoSeletivo/public/cadastro/avaliacaoL/{{ $ava->processo_seletivo_id }}/{{ $ava->id_candidato }}"> clique aqui </a> </p>
