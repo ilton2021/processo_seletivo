@@ -2,9 +2,10 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <title>Processo Seletivo - Hospital de Câncer de Pernambuco</title>
-	<link href="../../../../../../css/teste.css" rel="stylesheet" type="text/css" />
-	<script type="../text/javascript"> </script>        
-	<link href="https://www.hcp.org.br/plugins/content/addtoany/addtoany.css" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>	
+	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('js/utils.js') }}" rel="stylesheet">
+	<link href="{{ asset('js/bootstrap.js') }}" rel="stylesheet">
 </head>
     <body class="page homepage  ltr preset1 menu-homepage responsive bg hfeed clearfix">
         

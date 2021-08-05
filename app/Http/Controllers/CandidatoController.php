@@ -649,14 +649,20 @@ class CandidatoController extends Controller
 				$data_fim3 			 = $input['data_fim3'];	
 				$arquivo_ctps3       = $input['arquivo_ctps3'];
 			}
-			$arquivo 			 = $input['arquivo'];
-			$habilitacao 		 = $input['habilitacao'];
-			$periodo 			 = $input['periodo'];
-			$outra_cidade 		 = $input['outra_cidade'];
+			$arquivo 	  = $input['arquivo'];
+			$habilitacao  = $input['habilitacao'];
+			$periodo 	  = $input['periodo'];
+			$outra_cidade = $input['outra_cidade'];
+			$como_soube   = $input['como_soube'];
+			if($como_soube == "outros"){
+				$como_soube = $input['como_soube2'];
+			} 
+			$parentesco = $input['parentesco'];
+			$parentesco_nome = $input['parentesco_nome'];
 			$text = true;
 			\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe sua disponibilidade!','class'=>'green white-text']);
 			$a = 10;			
-			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3','arquivo','habilitacao','periodo','outra_cidade'));	
+			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3','arquivo','habilitacao','periodo','outra_cidade','como_soube','parentesco','parentesco_nome'));	
 		} else if( !($input['cpf'] == "") && $a == 10 ){
 			$cpf 		  = $input['cpf'];
 			$vaga 		  = $input['vaga'];
@@ -711,6 +717,12 @@ class CandidatoController extends Controller
 			}
 			$outra_cidade     = $input['outra_cidade'];
 			$arquivo 		  = $input['arquivo'];
+			$como_soube 	  = $input['como_soube'];
+			if($como_soube == "outros"){
+				$como_soube = $input['como_soube2'];
+			} 
+			$parentesco = $input['parentesco'];
+			$parentesco_nome = $input['parentesco_nome'];
 			$input['vaga_id'] = $vaga;
 			$input['processo_seletivo_id'] = $id_processo;
 			$input['data_inscricao'] 	   = $hoje = date('Y-m-d',(strtotime('now')));
@@ -726,8 +738,8 @@ class CandidatoController extends Controller
 			outra_cidade, exp_01_empresa, exp_01_cargo, exp_01_atribuicoes, arquivo_ctps1,
 			exp_01_data_ini, exp_01_data_fim, exp_02_empresa, exp_02_cargo, exp_02_atribuicoes,
 			arquivo_ctps2, exp_02_data_ini, exp_02_data_fim, exp_03_empresa, exp_03_cargo,
-			exp_03_atribuicoes, arquivo_ctps3, exp_03_data_ini, exp_03_data_fim, nomearquivo,
-			status, status_avaliacao, data_avaliacao, msg_avaliacao, status_entrevista,
+			exp_03_atribuicoes, arquivo_ctps3, exp_03_data_ini, exp_03_data_fim, como_soube, parentesco, parentesco_nome, 
+			nomearquivo, status, status_avaliacao, data_avaliacao, msg_avaliacao, status_entrevista,
 			data_entrevista, msg_entrevista, status_resultado, msg_resultado, nomearquivo2, numeroInscricao) 
 			VALUES 
 			('$nome_vaga','$data_inscricao','$nome','$cpf','$email','$fone_fixo','$celular',
@@ -738,7 +750,7 @@ class CandidatoController extends Controller
 			'$arquivo_ctps1','$data_inicio','$data_fim','$empresa2','$cargo2',
 			'$atribuicao2','$arquivo_ctps2','$data_inicio2','$data_fim2','$empresa3',
 			'$cargo3','$atribuicao3','$arquivo_ctps3','$data_inicio3','$data_fim3',
-			'$arquivo_deficiencia','','','','','','','','','','$arquivo','') ");
+			'$como_soube','$parentesco','$parentesco_nome','$arquivo_deficiencia','','','','','','','','','','$arquivo','') ");
 			$text = true;
 			\Session::flash('mensagem', ['msg' => 'Você está cadastrado! Boa Sorte!!','class'=>'green white-text']);
 			$a = 10;	

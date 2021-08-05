@@ -62,7 +62,7 @@
 			document.getElementById('Salvar2').style.display = 'block';
 		  }
 		}
-  </script>
+	 </script>
 </head>
     <body>
 	  @if (Session::has('mensagem'))
@@ -662,10 +662,33 @@
 				   <option id="outra_cidade" name="outra_cidade" value="sim">Sim</option>
 				  </select>
 				 </td>
+				</tr>
+			 	<tr>
+				  <td> Como soube da vaga? </td>
+				  <td>
+				  <select class="form-control" id="como_soube" name="como_soube"> 
+				  	<option id="como_soube" name="como_soube" value="redes_sociais"> Redes Sociais </option>
+					<option id="como_soube" name="como_soube" value="site_hcpgestao"> Site HCP Gestão </option>  
+					<option id="como_soube" name="como_soube" value="indicacao"> Indicação </option>  
+					<option id="como_soube" name="como_soube" value="outros"> Outros </option>  
+				  </select>
+				  </td>
+				  <td> <input type="text" id="como_soube2" name="como_soube2" class="form-control"  /> </td>
+				</tr>
+				<tr>
+				  <td> Você possui Parentesco com algum Colaborador do HCP Gestão? </td>
+				  <td>
+				  <select class="form-control" id="parentesco" name="parentesco"> 
+				  	<option id="parentesco" name="parentesco" value="nao"> Não </option>  
+					<option id="parentesco" name="parentesco" value="sim"> Sim </option>  
+				  </td>
+				  <td> <input type="text" id="parentesco_nome" name="parentesco_nome" class="form-control" placeholder="Nome do Colaborador"  /> </td>
+				</tr>
+				<tr>
 				 <td colspan="2">
 				  <center><input type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" value="Prosseguir" id="Salvar" name="Salvar" /> </center>
 				 </td>
-				</tr>
+				<tr>
 			  </table>
 			@endif
 			
@@ -673,6 +696,9 @@
 			   <input hidden type="text" id="habilitacao" name="habilitacao" value="<?php echo $habilitacao ?>" />
 			   <input hidden type="text" id="periodo" name="periodo" value="<?php echo $periodo ?>" />
 			   <input hidden type="text" id="outra_cidade" name="outra_cidade" value="<?php echo $outra_cidade ?>" />
+			   <input hidden type="text" id="como_soube" name="como_soube" value="<?php echo $como_soube ?>" />
+			   <input hidden type="text" id="parentesco" name="parentesco" value="<?php echo $parentesco ?>" />
+			   <input hidden type="text" id="parentesco_nome" name="parentesco_nome" value="<?php echo $parentesco_nome ?>" />
 			@endif
 			
 			@if($a == 10)
@@ -686,7 +712,7 @@
 			  <td>
 			    <input hidden type="text" id="candidato_id" name="candidato_id" value="" />
 				<input hidden type="text" id="processo_seletivo_id" name="processo_seletivo_id" value="" />
-				<input hidden type="text" id="data_inscricao" name="data_inscricao" value="" />
+				<input hidden type="text" id="data_inscricao" name="data_inscricao" value="" /> 
 			  </td>
 			</table>
 			@endif

@@ -103,82 +103,93 @@ class ProcessoSeletivoController extends Controller
 					return view('cadastro_processo_novo', compact('unidades','processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
-				} else { 				
-						
+				} else { 										
 					$request->file('edital')->move('../public/storage/processo/edital/', $nomeA);
 					$input['edital'] = $nomeA;
 					$input['edital_caminho'] = 'processo/edital/'.$nomeA;
 					$nome = $input['nome'];
-					$p = DB::statement("CREATE TABLE IF NOT EXISTS processo_seletivo_".$nome." 
-					 (id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-					  vaga varchar(400) COLLATE utf8_unicode_ci NULL,
-					  data_inscricao varchar(50) COLLATE utf8_unicode_ci NULL DEFAULT current_timestamp(),
-					  nome varchar(150) COLLATE utf8_unicode_ci NULL,
-					  cpf varchar(30) COLLATE utf8_unicode_ci NULL,
-					  email varchar(100) COLLATE utf8_unicode_ci NULL,
-					  telefone_fixo varchar(15) COLLATE utf8_unicode_ci NULL,
-					  telefone varchar(30) COLLATE utf8_unicode_ci NULL,
-					  lugar_nascimento varchar(50) COLLATE utf8_unicode_ci NULL,
-					  estado_nascimento varchar(50) COLLATE utf8_unicode_ci NULL,
-					  cidade_nascimento varchar(100) COLLATE utf8_unicode_ci NULL,
-					  data_nascimento varchar(50) COLLATE utf8_unicode_ci NULL,
-					  rua varchar(100) COLLATE utf8_unicode_ci NULL,
-					  numero varchar(10) COLLATE utf8_unicode_ci NULL,
-					  bairro varchar(100) COLLATE utf8_unicode_ci NULL,
-					  cidade varchar(100) COLLATE utf8_unicode_ci NULL,
-					  estado varchar(100) COLLATE utf8_unicode_ci NULL,
-					  cep varchar(30) COLLATE utf8_unicode_ci NULL,
-					  complemento varchar(200) COLLATE utf8_unicode_ci NULL,
-					  escolaridade varchar(100) COLLATE utf8_unicode_ci NULL,
-					  status_escolaridade varchar(50) COLLATE utf8_unicode_ci NULL,
-					  formacao varchar(150) COLLATE utf8_unicode_ci NULL,
-					  cursos varchar(1000) COLLATE utf8_unicode_ci NULL,
-					  deficiencia varchar(15) COLLATE utf8_unicode_ci NULL,
-					  habilitacao varchar(15) COLLATE utf8_unicode_ci NULL,
-					  periodo_integral varchar(100) COLLATE utf8_unicode_ci NULL,
-					  periodo_noturno varchar(100) COLLATE utf8_unicode_ci NULL,
-					  meio_periodo varchar(100) COLLATE utf8_unicode_ci NULL,
-					  outra_cidade varchar(15) COLLATE utf8_unicode_ci NULL,
-					  exp_01_empresa varchar(150) COLLATE utf8_unicode_ci NULL,
-					  exp_01_cargo varchar(150) COLLATE utf8_unicode_ci NULL,
-					  exp_01_atribuicoes varchar(500) COLLATE utf8_unicode_ci NULL,
-					  arquivo_ctps1 varchar(500) COLLATE utf8_unicode_ci NULL,
-					  exp_01_data_ini varchar(15) COLLATE utf8_unicode_ci NULL,
-					  exp_01_data_fim varchar(15) COLLATE utf8_unicode_ci NULL,
-					  exp_02_empresa varchar(150) COLLATE utf8_unicode_ci NULL,
-					  exp_02_cargo varchar(150) COLLATE utf8_unicode_ci NULL,
-					  exp_02_atribuicoes varchar(500) COLLATE utf8_unicode_ci NULL,
-					  arquivo_ctps2 varchar(500) COLLATE utf8_unicode_ci NULL,
-					  exp_02_data_ini varchar(15) COLLATE utf8_unicode_ci NULL,
-					  exp_02_data_fim varchar(15) COLLATE utf8_unicode_ci NULL,
-					  exp_03_empresa varchar(150) COLLATE utf8_unicode_ci NULL,
-					  exp_03_cargo varchar(150) COLLATE utf8_unicode_ci NULL,
-					  exp_03_atribuicoes varchar(500) COLLATE utf8_unicode_ci NULL,
-					  arquivo_ctps3 varchar(500) COLLATE utf8_unicode_ci NULL,
-					  exp_03_data_ini varchar(15) COLLATE utf8_unicode_ci NULL,
-					  exp_03_data_fim varchar(15) COLLATE utf8_unicode_ci NULL,
-					  nomearquivo varchar(600) COLLATE utf8_unicode_ci NULL,
-					  status varchar(15) COLLATE utf8_unicode_ci NULL,
-					  status_avaliacao varchar(50) COLLATE utf8_unicode_ci NULL,
-					  data_avaliacao varchar(50) COLLATE utf8_unicode_ci NULL,
-					  msg_avaliacao varchar(500) COLLATE utf8_unicode_ci NULL,
-					  status_entrevista varchar(50) COLLATE utf8_unicode_ci NULL,
-					  data_entrevista varchar(50) COLLATE utf8_unicode_ci NULL,
-					  msg_entrevista varchar(500) COLLATE utf8_unicode_ci NULL,
-					  status_resultado varchar(50) COLLATE utf8_unicode_ci NULL,
-					  msg_resultado varchar(500) COLLATE utf8_unicode_ci NULL,
-					  nomearquivo2 varchar(1000) COLLATE utf8_unicode_ci NULL,
-					  numeroInscricao varchar(100) COLLATE utf8_unicode_ci NULL
-					) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; ");
-					$input['origem'] = 1;
-					$processo_seletivo = ProcessoSeletivo::create($input);
-					$lastUpdated = $processo_seletivo->max('updated_at');
-					$processos = ProcessoSeletivo::paginate(10);
-					$input['user_id'] = Auth::user()->id;
-					$loggers = Loggers::create($input);
-					\Session::flash('mensagem', ['msg' => 'Processo Seletivo cadastrado com Sucesso!!','class'=>'green white-text']);
-					$text = true;	
-					return view('cadastro_processo', compact('text','processos'));
+					$processo 	 = ProcessoSeletivo::where('nome',$nome)->get();
+					$qtdProcesso = sizeof($processo); 
+					if($qtdProcesso == 0) {
+						$p = DB::statement("CREATE TABLE IF NOT EXISTS processo_seletivo_".$nome." 
+						(id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+						vaga varchar(400) COLLATE utf8_unicode_ci NULL,
+						data_inscricao varchar(50) COLLATE utf8_unicode_ci NULL DEFAULT current_timestamp(),
+						nome varchar(150) COLLATE utf8_unicode_ci NULL,
+						cpf varchar(30) COLLATE utf8_unicode_ci NULL,
+						email varchar(100) COLLATE utf8_unicode_ci NULL,
+						telefone_fixo varchar(15) COLLATE utf8_unicode_ci NULL,
+						telefone varchar(30) COLLATE utf8_unicode_ci NULL,
+						lugar_nascimento varchar(50) COLLATE utf8_unicode_ci NULL,
+						estado_nascimento varchar(50) COLLATE utf8_unicode_ci NULL,
+						cidade_nascimento varchar(100) COLLATE utf8_unicode_ci NULL,
+						data_nascimento varchar(50) COLLATE utf8_unicode_ci NULL,
+						rua varchar(100) COLLATE utf8_unicode_ci NULL,
+						numero varchar(10) COLLATE utf8_unicode_ci NULL,
+						bairro varchar(100) COLLATE utf8_unicode_ci NULL,
+						cidade varchar(100) COLLATE utf8_unicode_ci NULL,
+						estado varchar(100) COLLATE utf8_unicode_ci NULL,
+						cep varchar(30) COLLATE utf8_unicode_ci NULL,
+						complemento varchar(200) COLLATE utf8_unicode_ci NULL,
+						escolaridade varchar(100) COLLATE utf8_unicode_ci NULL,
+						status_escolaridade varchar(50) COLLATE utf8_unicode_ci NULL,
+						formacao varchar(150) COLLATE utf8_unicode_ci NULL,
+						cursos varchar(1000) COLLATE utf8_unicode_ci NULL,
+						deficiencia varchar(15) COLLATE utf8_unicode_ci NULL,
+						habilitacao varchar(15) COLLATE utf8_unicode_ci NULL,
+						periodo_integral varchar(100) COLLATE utf8_unicode_ci NULL,
+						periodo_noturno varchar(100) COLLATE utf8_unicode_ci NULL,
+						meio_periodo varchar(100) COLLATE utf8_unicode_ci NULL,
+						outra_cidade varchar(15) COLLATE utf8_unicode_ci NULL,
+						exp_01_empresa varchar(150) COLLATE utf8_unicode_ci NULL,
+						exp_01_cargo varchar(150) COLLATE utf8_unicode_ci NULL,
+						exp_01_atribuicoes varchar(500) COLLATE utf8_unicode_ci NULL,
+						arquivo_ctps1 varchar(500) COLLATE utf8_unicode_ci NULL,
+						exp_01_data_ini varchar(15) COLLATE utf8_unicode_ci NULL,
+						exp_01_data_fim varchar(15) COLLATE utf8_unicode_ci NULL,
+						exp_02_empresa varchar(150) COLLATE utf8_unicode_ci NULL,
+						exp_02_cargo varchar(150) COLLATE utf8_unicode_ci NULL,
+						exp_02_atribuicoes varchar(500) COLLATE utf8_unicode_ci NULL,
+						arquivo_ctps2 varchar(500) COLLATE utf8_unicode_ci NULL,
+						exp_02_data_ini varchar(15) COLLATE utf8_unicode_ci NULL,
+						exp_02_data_fim varchar(15) COLLATE utf8_unicode_ci NULL,
+						exp_03_empresa varchar(150) COLLATE utf8_unicode_ci NULL,
+						exp_03_cargo varchar(150) COLLATE utf8_unicode_ci NULL,
+						exp_03_atribuicoes varchar(500) COLLATE utf8_unicode_ci NULL,
+						arquivo_ctps3 varchar(500) COLLATE utf8_unicode_ci NULL,
+						exp_03_data_ini varchar(15) COLLATE utf8_unicode_ci NULL,
+						exp_03_data_fim varchar(15) COLLATE utf8_unicode_ci NULL,
+						como_soube varchar(255) COLLATE utf8_unicode_ci NULL,
+						parentesco varchar(255) COLLATE utf8_unicode_ci NULL,
+						parentesco_nome varchar(255) COLLATE utf8_unicode_ci NULL,
+						nomearquivo varchar(600) COLLATE utf8_unicode_ci NULL,
+						status varchar(15) COLLATE utf8_unicode_ci NULL,
+						status_avaliacao varchar(50) COLLATE utf8_unicode_ci NULL,
+						data_avaliacao varchar(50) COLLATE utf8_unicode_ci NULL,
+						msg_avaliacao varchar(500) COLLATE utf8_unicode_ci NULL,
+						status_entrevista varchar(50) COLLATE utf8_unicode_ci NULL,
+						data_entrevista varchar(50) COLLATE utf8_unicode_ci NULL,
+						msg_entrevista varchar(500) COLLATE utf8_unicode_ci NULL,
+						status_resultado varchar(50) COLLATE utf8_unicode_ci NULL,
+						msg_resultado varchar(500) COLLATE utf8_unicode_ci NULL,
+						nomearquivo2 varchar(1000) COLLATE utf8_unicode_ci NULL,
+						numeroInscricao varchar(100) COLLATE utf8_unicode_ci NULL
+						) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; ");
+						$input['origem'] = 1;
+						$processo_seletivo = ProcessoSeletivo::create($input);
+						$lastUpdated = $processo_seletivo->max('updated_at');
+						$processos = ProcessoSeletivo::paginate(10);
+						$input['user_id'] = Auth::user()->id;
+						$loggers = Loggers::create($input);
+						\Session::flash('mensagem', ['msg' => 'Processo Seletivo cadastrado com Sucesso!!','class'=>'green white-text']);
+						$text = true;	
+						return view('cadastro_processo', compact('text','processos'));
+					} else {
+						$validator = "Este Processo Seletivo já existe!";
+						return view('cadastro_processo_novo', compact('unidades','processos'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));	
+					}
 				}
 			} else {
 				\Session::flash('mensagem', ['msg' => 'Só é suportado arquivos: pdf!','class'=>'green white-text']);		

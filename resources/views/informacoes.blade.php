@@ -150,6 +150,29 @@
 					  <td>{{ $processos2[0]->exp_03_data_fim }}</td>
                     </tr>
 					@endif
+					<tr>
+					<td>&nbsp;</td>
+					</tr>
+					<tr>
+					 <td> <b>Como Soube da Vaga?</b></td>
+					 @if($processos2[0]->como_soube == "site_hcpgestao")
+					 <td> {{ 'Site do HCP Gestão' }} </td>		
+					 @elseif($processos2[0]->como_soube == "redes_sociais")
+					 <td> {{ 'Redes Sociais' }} </td>		
+					 @elseif($processos2[0]->como_soube == "indicacao")
+					 <td> {{ 'Indicação' }} </td>		
+					 @else
+					 <td> {{ $processos2[0]->como_soube }} </td>		
+					 @endif
+					</tr>
+					<tr>
+					 <td> <b>Possui Parentesco com algum Colaborador do HCP Gestão?</b></td>
+					 @if($processos2[0]->parentesco == "nao")
+					 <td> {{ 'Não' }} </td>
+					 @else	
+					 <td> {{ 'Sim - ' .$processos2[0]->parentesco_nome }} </td>		
+					 @endif
+					</tr>
                 </table>
 				
 				<table border=0 width=1000>
