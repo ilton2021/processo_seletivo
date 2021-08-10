@@ -10,7 +10,7 @@
 			<div id="header">
 				<div class="top">
 						<div id="logo">
-							<p><span class=""><a href="candidato"><img src="images/gestao.png" alt="" /></a></span></p>
+							<p><span class=""><a href="{{ url('/') }}"><img src="images/gestao.png" alt="" /></a></span></p>
 							<h1 id="title">Processo Seletivo</h1>
 							<p>Hospital do Câncer de Pernambuco</p>
 						</div>
@@ -20,6 +20,7 @@
 								<li><a href="#portfolio1" id="portfolio-link"><span class="icon solid fa-calendar-plus">Processos Abertos</span></a></li>
 								<li><a href="#about" id="about-link"><span class="icon solid fa-book-open">Editais em Curso</span></a></li>
 								<li><a href="#contact" id="about-link"><span class="icon solid fa-calendar-check">Result. de Processos Anter.</span></a></li>
+								<li><a href="#avisos" id="avisos-link"><span class="icon solid fa-check-square">Quadro de Avisos</span></a></li>
 								<li><a href="#portfolio2" id="portfolio-link"><span class="icon solid fa-th">Sobre</span></a></li>
 							</ul>
 						</nav>
@@ -102,9 +103,16 @@
 							</header>
 							<table class="table table-responsive table-border" border="1"> 
 							<tr>
-							   <?php $hoje = date('d-m-Y', strtotime('now')); $a = 0; ?> 
+							<?php $hoje = date('d-m-Y', strtotime('now')); $a = 0; ?> 
+							   @foreach($ps as $prc)
+								 <?php $inscricao_fim = date('d-m-Y', strtotime($prc->inscricao_fim)); ?> 
+								   @if(strtotime($hoje) <= strtotime($inscricao_fim))
+									   <?php $a = [$prc->unidade_id]; ?>
+								   @endif
+							   @endforeach
+							   <?php $qtd = sizeof($a); ?>
 							   @foreach($unidades as $unidade)
-							      @if($unidade->id == 0) 
+							      @if($unidade->id == $a) 
 								   <td width="300px">
 									  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
 								   </td>
@@ -132,12 +140,28 @@
 							   </td>
 							   @endforeach
 						   </tr>
-						   <tr>
-						       <td colspan="8">O Processo Seletivo: UPAE CARUARU 01/2021 foi cancelado. <a href="{{asset('storage')}}/{{'Cancelamento Seleção pessoal HCP Gestão UPAE CARUARU - 01.2021.pdf'}}">clique aqui.</a> <br><br>
-						       <p align="justify">Prezados candidatos, se faz encerrado o processo simplificado 02/2021 - UPAE Belo Jardim por ausência de candidatos com a experiência na função como descrito no regulamento.
-                                Agradecemos sua compreensão! <a href="{{asset('storage')}}/{{'Cancelamento Seleção pessoal HCP Gestão UPAE BELO JARDIM - 02.2021.pdf'}}">clique aqui.</a></p></td>
-						   </tr>
 						  </table>
+						</div>
+				 </section>
+
+				 <section id="avisos" class="four" style="width:100%; overflow: scroll;">
+						<div class="container">
+							<header>
+								<h2>Quadro de Avisos:</h2>
+							</header>
+							<table class="table table-responsive" border="2" style="background-color: #131819"> 
+						     @foreach($quadros as $qd)
+						  	  <tr> 
+								@foreach($processos as $pc)
+								 @if($qd->processo_seletivo_id == $pc->id)
+								  <td> {{ $pc->nome }} </td>
+								 @endif
+								@endforeach
+								<td><p> {{ $qd->descricao }} </p></td> 
+								<td> <a target="_blank" class="button" style="padding: 3px;" href="{{asset('storage')}}/{{($qd->arquivo_caminho)}}">Download</a> </td>
+							  </tr>
+							 @endforeach
+						    </table>
 						</div>
 				 </section>
 				 

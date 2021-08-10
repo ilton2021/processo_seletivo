@@ -3,17 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Model\ProcessoSeletivo;
 use App\Model\Unidade;
-
-Route::get('/', function () {
-    $processos = ProcessoSeletivo::all();
-	$processos1 = ProcessoSeletivo::all();
-    $unidades = Unidade::all();
-    return view('/candidato', compact('processos','unidades','processos1'));
-})->name('candidato');
+use App\Model\QuadroAvisos;
 
 Auth::routes();
 
-Route::get('candidato', 'CandidatoController@candidatoIndex')->name('candidatoIndex');
+Route::get('/', 'CandidatoController@candidatoIndex')->name('candidatoIndex');
 Route::get('informativo/{id}/{id_p}', 'CandidatoController@informativo')->name('informativo'); 
 Route::get('candidato/cadastro', 'CandidatoController@candidatoIndex_')->name('candidatoIndex_');
 Route::get('candidato/resultados_processos/{id}', 'CandidatoController@candidatoResultados')->name('candidatoResultados');
@@ -96,6 +90,16 @@ Route::middleware(['auth'])->group( function() {
 		Route::get('/resultado_processos/{id}/cadastro/avaliacaoOperacional/{id_c}','ProcessoCandidatoController@avaliacaoOperacional')->name('avaliacaoOperacional');
 		Route::get('/resultado_processos/{id}/cadastro/avaliacaoOperacionalVisualizar/{id_c}','ProcessoCandidatoController@avaliacaoOperacionalVisualizar')->name('avaliacaoOperacionalVisualizar');
 		Route::post('/resultado_processos/{id}/cadastro/avaliacaoOperacional/{id_c}','ProcessoCandidatoController@storeAvaliacaoOperacional')->name('storeAvaliacaoOperacional');
+		////
+
+		//Quadro de Avisos
+		Route::get('/quadroAvisos/cadastro','QuadroAvisosController@cadastroQuadroAvisos')->name('cadastroQuadroAvisos');
+		Route::get('/quadroAvisos/cadastro/novo','QuadroAvisosController@quadroAvisosNovo')->name('quadroAvisosNovo');
+		Route::post('/quadroAvisos/cadastro/novo','QuadroAvisosController@storeQuadroAvisos')->name('storeQuadroAvisos');
+		Route::get('/quadroAvisos/cadastro/alterar/{id}','QuadroAvisosController@quadroAvisosAlterar')->name('quadroAvisosAlterar');
+		Route::post('/quadroAvisos/cadastro/alterar/{id}','QuadroAvisosController@updateQuadroAvisos')->name('updateQuadroAvisos');
+		Route::get('/quadroAvisos/cadastro/excluir/{id}','QuadroAvisosController@quadroAvisosExcluir')->name('quadroAvisosExcluir');
+		Route::post('/quadroAvisos/cadastro/excluir/{id}','QuadroAvisosController@deleteQuadroAvisos')->name('deleteQuadroAvisos');
 		////
 	});
 });

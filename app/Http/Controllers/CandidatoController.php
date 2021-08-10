@@ -8,6 +8,7 @@ use App\Model\Unidade;
 use App\Model\ProcessoSeletivo;
 use App\Model\ProcessoCandidato;
 use App\Model\Experiencias;
+use App\Model\QuadroAvisos;
 use App\Model\Vaga;
 use App\Model\Endereco;
 use DB;
@@ -29,8 +30,12 @@ class CandidatoController extends Controller
 		->join('processo_seletivo', 'unidade.id', '=', 'processo_seletivo.unidade_id')
 		->select('unidade.id')
 		->get()->toArray();
+		$quadros = QuadroAvisos::all();
+		$hoje = date('Y-m-d', strtotime('now'));
+		$ps = DB::table('processo_seletivo')->where('inscricao_fim','>=',$hoje)->where('inscricao_inicio','<=',$hoje)->get();
+		$qtd = sizeof($ps);
 		$text = false;
-		return view('candidato', compact('unidades','processos','processos2','text','processos1'));
+		return view('candidato', compact('unidades','processos','processos2','text','processos1','quadros','qtd','ps'));
 	}
 	
 	// Página Informações Cadastro Candidatos //
