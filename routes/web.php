@@ -48,6 +48,8 @@ Route::middleware(['auth'])->group( function() {
 		Route::post('/processo_seletivo/processoExcluir/{id}','ProcessoSeletivoController@destroyProcesso')->name('destroyProcesso');
 		Route::post('/processo_seletivo/pesquisar', 'ProcessoSeletivoController@pesquisarProcesso')->name('pesquisarProcesso');
 		Route::get('/processo_seletivo/pesquisar/', 'ProcessoSeletivoController@pesquisarProcesso')->name('pesquisarProcesso');
+		Route::get('/processo_seletivo/cadastroCandidato/{id}','CandidatoController@cadastroCandidato2')->name('cadastroCandidato2');
+		Route::post('/processo_seletivo/cadastroCandidato/{id}','CandidatoController@storeCandidato2')->name('storeCandidato2');
 		////
 
 		//Unidade

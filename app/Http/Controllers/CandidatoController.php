@@ -13,6 +13,7 @@ use App\Model\Vaga;
 use App\Model\Endereco;
 use DB;
 use Redirect;
+use Validator;
 
 class CandidatoController extends Controller
 {
@@ -91,6 +92,89 @@ class CandidatoController extends Controller
 		$text = false;
 		return view('resultados_listas', compact('processos','unidade','id','text'));
 	}
+
+	public function cadastroCandidato2($id)
+	{
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
+		return view('cadastro_candidato2', compact('processos','vagas'));
+	}
+
+	public function storeCandidato2(Request $request, $id)
+	{
+		$input = $request->all();
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
+		$validator = Validator::make($request->all(), [
+			'nome'   => 'required|max:255',
+			'vaga'   => 'required|max:255',
+			'email'  => 'required|email'	
+		]);
+		if ($validator->fails()) {
+			return view('cadastro_candidato2', compact('processos','vagas'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
+		} else {
+			$vaga  = $input['vaga'];
+			$data  = $input['data_inscricao'];
+			$nome  = $input['nome'];
+			$cpf   = $input['cpf'];
+			$email = $input['email'];
+			$telefone = $input['telefone'];
+
+			if($request->file('nome_arquivo2') != NULL) {	
+				$nomeA = $_FILES['nome_arquivo2']['name'];
+				$extensao = pathinfo($nomeA, PATHINFO_EXTENSION);
+				if($extensao === 'pdf' || $extensao === 'doc' || $extensao === 'docx') {
+					$arquivo = $nomeA;
+				} else {
+					$validator = "O Currículo tem que ser .pdf, .doc ou .docx!!";
+					return view('cadastro_candidato2', compact('processos','vagas'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
+				}
+			} else {
+				$arquivo = NULL;
+			}
+
+			if($processos[0]->origem == 1) {
+			$processo = DB::statement("INSERT INTO processo_seletivo_".$processos[0]->nome. "(vaga, 
+			data_inscricao, nome, cpf, email, telefone_fixo, telefone, lugar_nascimento, estado_nascimento, 
+			cidade_nascimento, data_nascimento, rua, numero, bairro, cidade, estado, cep, complemento, 
+			escolaridade, status_escolaridade, formacao, cursos, deficiencia, habilitacao, periodo_integral, 
+			periodo_noturno, meio_periodo, outra_cidade, exp_01_empresa, exp_01_cargo, exp_01_atribuicoes, 
+			arquivo_ctps1, exp_01_data_ini, exp_01_data_fim, exp_02_empresa, exp_02_cargo, exp_02_atribuicoes, 
+			arquivo_ctps2, exp_02_data_ini, exp_02_data_fim, exp_03_empresa, exp_03_cargo, exp_03_atribuicoes, 
+			arquivo_ctps3, exp_03_data_ini, exp_03_data_fim, nomearquivo, 
+			status, status_avaliacao, data_avaliacao, msg_avaliacao, status_entrevista, data_entrevista, 
+			msg_entrevista, status_resultado, msg_resultado, nomearquivo2, numeroInscricao) VALUES ('$vaga',
+			'$data','$nome','$cpf','$email','','$telefone','','','','','','','','','','','','','','','','','','',
+			'','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',
+			'$arquivo','')");
+			} else {
+			$processo = DB::statement("INSERT INTO processo_seletivo_".$processos[0]->nome. "(vaga, 
+			data_inscricao, nome, cpf, email, telefone_fixo, telefone, lugar_nascimento, estado_nascimento, 
+			cidade_nascimento, data_nascimento, rua, numero, bairro, cidade, estado, cep, complemento, 
+			escolaridade, status_escolaridade, formacao, cursos, sexo, estado_civil, deficiencia, habilitacao, 
+			periodo_integral, periodo_noturno, meio_periodo, outra_cidade, 
+			exp_01_empresa,exp_01_cargo,exp_01_atribuicoes, exp_01_comentarios, exp_01_data_ini, exp_01_data_fim, 
+			exp_02_empresa,exp_02_cargo,exp_02_atribuicoes, exp_02_comentarios, exp_02_data_ini, exp_02_data_fim, 
+			exp_03_empresa,exp_03_cargo,exp_03_atribuicoes, exp_03_comentarios, exp_03_data_ini, exp_03_data_fim, 
+			exp_04_empresa,exp_04_cargo,exp_04_atribuicoes, exp_04_comentarios, exp_04_data_ini, exp_04_data_fim,
+			exp_05_empresa,exp_05_cargo,exp_05_atribuicoes, exp_05_comentarios, exp_05_data_ini, exp_05_data_fim,
+			nomearquivo, tipo_cad, status, status_avaliacao, data_avaliacao, msg_avaliacao, status_entrevista, 
+			data_entrevista, msg_entrevista, status_resultado, msg_resultado, nomearquivo2) 
+			VALUES ('$vaga','$data','$nome','$cpf','$email','','$telefone','','','','','','','','','','','','',
+			'','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',
+			'','','','','','','','','','','','','','','','','','','','$arquivo')");
+			}
+
+			$processos = DB::table('processo_seletivo')->paginate(10);
+			return view('cadastro_processo', compact('processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
+		}
+	}
 	
 	// Página Resultados (Avaliação, Entrevista, Aprovados e Cadastro Reserva) - Candidatos //
 	public function candidatoListasOpcao($id, $id_escolha, $nome)
@@ -131,7 +215,7 @@ class CandidatoController extends Controller
 			return view('resultados_listas_opcao', compact('processos_result','unidade','idE','id','nome'));
 		}
 	}
-	
+
 	public function pesquisarCandidatoResultado($id, $idE, $nome, Request $request)
 	{
 		$input = $request->all(); 

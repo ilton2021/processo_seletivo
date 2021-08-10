@@ -49,6 +49,9 @@
 					  <th><center>Vagas</center></th>
 					  <th><center>Alterar</center></th>
 					  <th><center>Excluir</center></th>
+					  @if(Auth::user()->id == 1 || Auth::user()->id == 18)
+					  <th><center>Add Candidato</center></th>
+					  @endif
                     </tr>
                   </thead>
 				  @foreach($processos as $processo)
@@ -60,6 +63,9 @@
 					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('vagaCadastro', $processo->id) }}"> <i class="fas fa-bars"></i></a></center></th>
 					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('processoAlterar', $processo->id) }}"> <i class="fas fa-edit"></i></a></center></th>
 					  <th><center><a class="btn btn-danger btn-sm" style="color: #FFFFFF;" href="{{ route('processoExcluir', $processo->id) }}"> <i class="fas fa-times-circle"></i></a></center></th>
+					  @if(Auth::user()->id == 1 || Auth::user()->id == 18)
+					  <th><center><a class="btn btn-dark btn-sm" style="color: #FFFFFF;" href="{{ route('cadastroCandidato2', $processo->id) }}"> <i class="fas fa-check"></i></a></center></th>
+					  @endif
                     </tr>
                   </tfoot>
 				  @endforeach
