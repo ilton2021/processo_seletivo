@@ -52,8 +52,7 @@ class CandidatoController extends Controller
 		->join('processo_seletivo', 'unidade.id', '=', 'processo_seletivo.unidade_id')
 		->select('unidade.id')
 		->get()->toArray();
-		$text = false;
-		return view('informativo', compact('unidades','processos','processos2','text'));
+		return view('informativo', compact('unidades','processos','processos2'));
 	}
 	
 	// Página Confirmação Inscrição //
@@ -69,8 +68,7 @@ class CandidatoController extends Controller
 	{
 		$processos = ProcessoSeletivo::where('unidade_id', $id)->get();
 		$unidade   = Unidade::find($id);
-		$text = false;
-		return view('resultados_processos', compact('processos','unidade','text'));
+		return view('resultados_processos', compact('processos','unidade'));
 	}
 	
 	// Página Editais em Curso - Candidatos //
@@ -78,8 +76,7 @@ class CandidatoController extends Controller
 	{
 		$processos = ProcessoSeletivo::where('unidade_id', $id)->get();
 		$unidade   = Unidade::find($id);
-		$text = false;
-		return view('resultados_editais', compact('processos','unidade','text'));
+		return view('resultados_editais', compact('processos','unidade'));
 	}
 	
 	// Página Resultados - Candidatos //
@@ -89,8 +86,7 @@ class CandidatoController extends Controller
 		$idU 	   = $processos[0]->unidade_id;
 		$unidade   = Unidade::where('id',$idU)->get();
 		$id = $id;
-		$text = false;
-		return view('resultados_listas', compact('processos','unidade','id','text'));
+		return view('resultados_listas', compact('processos','unidade','id'));
 	}
 
 	public function cadastroCandidato2($id)
@@ -177,7 +173,7 @@ class CandidatoController extends Controller
 	}
 	
 	// Página Resultados (Avaliação, Entrevista, Aprovados e Cadastro Reserva) - Candidatos //
-	public function candidatoListasOpcao($id, $id_escolha, $nome)
+	public function candidatoListasOpcao($id, $id_escolha, $nome, Request $request)
 	{
 		if($id_escolha == 1) {
 			$processos_result = DB::table('processo_seletivo_' .$nome)
@@ -207,9 +203,10 @@ class CandidatoController extends Controller
 		$qtd = sizeof($processos_result); 
 		if($qtd == 0) {
 			$unidade   = Unidade::where('id',$idU)->get();
-			\Session::flash('mensagem', ['msg' => 'Este Processo Seletivo não tem Resultados!','class'=>'green white-text']);
-			$text = true;
-			return view('resultados_listas', compact('processos','unidade','id','text','nome'));
+			$validator = 'Este Processo Seletivo não tem Resultados!';
+			return view('resultados_listas', compact('processos','unidade','id','nome'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 		} else {
 			$unidade   = Unidade::where('id',$idU)->get();
 			return view('resultados_listas_opcao', compact('processos_result','unidade','idE','id','nome'));
@@ -272,7 +269,6 @@ class CandidatoController extends Controller
 				->get();
 			}
 		}
-		$text = false;
 		$pesq = '';
 		return view('resultados_listas_opcao', compact('processos_result','unidade','idE','id','nome'));
 		

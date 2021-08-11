@@ -41,14 +41,14 @@
 				 </div>
 			  </section>	 
 			  </div>
-			  @if (Session::has('mensagem'))
-				@if ($text == true)
-				<div class="container">
-				 <div class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-					  {{ Session::get ('mensagem')['msg'] }}
-				 </div>
+			  @if ($errors->any())
+				<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+					@endforeach
+				</ul>
 				</div>
-			   @endif
 			  @endif
 			  <p align="right"><a href="{{route('candidatoIndex')}}" class="btn btn-warning btn-sm" style="margin-top: 10px; color: #FFFFFF;"> Voltar <i class="fas fa-undo-alt"></i> </a></p>
 			  <table class="table table-responsive table-border" border="2" bordercolor=DCDCDC>

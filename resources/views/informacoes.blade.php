@@ -1,15 +1,15 @@
 @extends('navbar.default-navbar')
 <body id="page-top">
 	<div class="container" style="margin-top: 80px;">
-       @if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div class="alert alert-danger {{ Session::get ('mensagem')['class'] }} ">
-		      {{ Session::get ('mensagem')['msg'] }}
+		@if ($errors->any())
+		 <div class="alert alert-danger">
+		  <ul>
+		    @foreach ($errors->all() as $error)
+		      <li>{{ $error }}</li>
+			@endforeach
+		  </ul>
 		 </div>
-		</div>
 		@endif
-	   @endif
         <div class="container-fluid">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -83,7 +83,9 @@
 					<tr>
                       <td>CTPS:</td>
 					  <td>
-					    <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps1)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					    @if(!empty($processos2[0]->arquivo_ctps1))
+						<a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps1)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+						@endif
 					  </td>
                     </tr>
 					<tr>
@@ -110,7 +112,9 @@
 					<tr>
                       <td>CTPS:</td>
 					  <td>
-					   <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					   @if(!empty($processos2[0]->arquivo_ctps2))
+					    <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					   @endif
 					  </td>
                     </tr>
 					<tr>
@@ -138,7 +142,9 @@
 					<tr>
                       <td>CTPS:</td>
 					  <td>
-					   <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps3)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					    @if(!empty($processos2[0]->arquivo_ctps3))
+					     <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps3)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+						@endif
 					  </td>
                     </tr>
 					<tr>
@@ -153,6 +159,7 @@
 					<tr>
 					<td>&nbsp;</td>
 					</tr>
+					@if(!empty($processos2[0]->como_soube))
 					<tr>
 					 <td> <b>Como Soube da Vaga?</b></td>
 					 @if($processos2[0]->como_soube == "site_hcpgestao")
@@ -165,6 +172,8 @@
 					 <td> {{ $processos2[0]->como_soube }} </td>		
 					 @endif
 					</tr>
+					@endif
+					@if(!empty($processos2[0]->parentesco))
 					<tr>
 					 <td> <b>Possui Parentesco com algum Colaborador do HCP Gestão?</b></td>
 					 @if($processos2[0]->parentesco == "nao")
@@ -173,6 +182,7 @@
 					 <td> {{ 'Sim - ' .$processos2[0]->parentesco_nome }} </td>		
 					 @endif
 					</tr>
+					@endif
                 </table>
 				
 				<table border=0 width=1000>

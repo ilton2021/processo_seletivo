@@ -112,7 +112,7 @@
 							   @endforeach
 							   <?php $qtd = sizeof($a); ?>
 							   @foreach($unidades as $unidade)
-							      @if($unidade->id == $a) 
+							      @if($unidade->id == 2) 
 								   <td width="300px">
 									  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
 								   </td>

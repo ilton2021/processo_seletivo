@@ -31,14 +31,14 @@
 				 </div>
 			  </section>	 
 			  </div>
-			  @if (Session::has('mensagem'))
-				@if ($text == 1)
-				   <div class="container">
-					  <div class="alert alert-danger {{ Session::get ('mensagem')['class'] }} ">
-						 {{ Session::get ('mensagem')['msg'] }}
-					  </div>
-				   </div>
-				@endif
+			  @if ($errors->any())
+				<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+				</div>
 			  @endif
 			  <p align="right"><a href="{{route('candidatoResultados', $processos[0]->unidade_id)}}" class="btn btn-warning btn-sm" style="margin-top: 10px; color: #FFFFFF;"> Voltar <i class="fas fa-undo-alt"></i> </a></p>
 			  <br><br>
