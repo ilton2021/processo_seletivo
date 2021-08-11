@@ -79,8 +79,8 @@ Route::middleware(['auth'])->group( function() {
 		//ResultadosProcessos
 		Route::get('/resultado_processos/{id}/cadastro','ProcessoResultadoController@cadastrarResultados')->name('cadastrarResultados');
 		Route::get('/resultado_processos/{id}/informacoes/{id_cand}','ProcessoResultadoController@informacoes')->name('informacoes');
-		Route::get('/resultado_processos/{id}/cadastro/resultadoA/{id_candidato}/{id_vaga}', 'ProcessoResultadoController@resultadoProcessosA')->name('resultadoProcessosA');
-		Route::post('/resultado_processos/{id}/cadastro/resultadoA/{id_candidato}/{id_vaga}/storeAvaliacaoA', 'ProcessoResultadoController@storeAvaliacaoA')->name('storeAvaliacaoA');
+		Route::get('/resultado_processos/{id}/cadastro/resultadoA/{id_candidato}/', 'ProcessoResultadoController@resultadoProcessosA')->name('resultadoProcessosA');
+		Route::post('/resultado_processos/{id}/cadastro/resultadoA/{id_candidato}/storeAvaliacaoA', 'ProcessoResultadoController@storeAvaliacaoA')->name('storeAvaliacaoA');
 		Route::post('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
 		Route::get('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
 		Route::get('/resultado_processos/{id}/cadastro/exportCandidatos/{nome}', 'ProcessoResultadoController@exportCandidatos')->name('exportCandidatos');

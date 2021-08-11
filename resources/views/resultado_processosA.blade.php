@@ -1,15 +1,15 @@
 @extends('navbar.default-navbar')
    <div class="container" style="margin-top: 80px;">
 	   <div class="container">
-		   @if (Session::has('mensagem'))
-			@if ($text == true)
-			<div class="container">
-			 <div class="alert alert-danger {{ Session::get ('mensagem')['class'] }} ">
-				  {{ Session::get ('mensagem')['msg'] }}
-			 </div>
-			</div>
-			@endif
-		   @endif  <?php $qtd = sizeof($processos2); ?>
+	    @if ($errors->any())
+		 <div class="alert alert-success">
+		  <ul>
+		    @foreach ($errors->all() as $error)
+		      <li>{{ $error }}</li>
+			@endforeach
+		  </ul>
+		 </div>
+		@endif  <?php $qtd = sizeof($processos2); ?>
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Resultado Processo Seletivo:</h6>
@@ -17,7 +17,7 @@
 			<div class="card-body">
               <div class="table-responsive">
             	<table class="table table-bordered" id="dataTable" width="10px" cellspacing="0">
-				<form method="POST" action="{{ route('storeAvaliacaoA', array($idP, $candidato, $vaga)) }}">
+				<form method="POST" action="{{ route('storeAvaliacaoA', array($idP, $candidato)) }}">
 			    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<tr>
 					 <td align="right" colspan="7" border="0"> 
@@ -31,12 +31,12 @@
 					  @if($processos2[0]->status_avaliacao == "")
 						<select class="form-control" id="modoA" name="modoA">
 						  <option id="modoA" name="modoA" value="0">Selecione...</option>	
-						  <option id="modoA" name="modoA" value="1">Habilitado</option>	
-						  <option id="modoA" name="modoA" value="2">Desabilitado</option>	
+						  <option id="modoA" name="modoA" value="Habilitado">Habilitado</option>	
+						  <option id="modoA" name="modoA" value="Desabilitado">Desabilitado</option>	
 						</select>
 					  @else
 						<select class="form-control" id="modoA" name="modoA">
-						  <option id="modoA" name="modoA" value="1">Habilitado</option>	
+						  <option id="modoA" name="modoA" value="Habilitado">Habilitado</option>	
 						</select>  
 					  @endif
 					  </td>
@@ -65,12 +65,12 @@
 					  @if($processos2[0]->status_entrevista == "")
 						<select class="form-control" id="modoE" name="modoE">
 						  <option id="modoE" name="modoE" value="0">Selecione...</option>	
-						  <option id="modoE" name="modoE" value="1">Habilitado</option>	
-						  <option id="modoE" name="modoE" value="2">Desabilitado</option>	
+						  <option id="modoE" name="modoE" value="Habilitado">Habilitado</option>	
+						  <option id="modoE" name="modoE" value="Desabilitado">Desabilitado</option>	
 						</select>
 					  @else
 						<select class="form-control" id="modoE" name="modoE">
-						  <option id="modoE" name="modoE" value="1">Habilitado</option>	
+						  <option id="modoE" name="modoE" value="Habilitado">Habilitado</option>	
 						</select>  
 					  @endif
 					  </td>
@@ -121,12 +121,14 @@
 					  @if($processos2[0]->status_avaliacao == "")
 						<select class="form-control" id="modoC" name="modoC">
 						  <option id="modoC" name="modoC" value="0">Selecione...</option>	
-						  <option id="modoC" name="modoC" value="1">Habilitado</option>	
-						  <option id="modoC" name="modoC" value="2">Desabilitado</option>	
+						  <option id="modoC" name="modoC" value="Habilitado">Habilitado</option>	
+						  <option id="modoC" name="modoC" value="Desabilitado">Desabilitado</option>	
 						</select>
 					  @else
 						<select class="form-control" id="modoC" name="modoC">
-						  <option id="modoC" name="modoC" value="1">Habilitado</option>	
+						  <option id="modoC" name="modoC" value="0">Selecione...</option>	
+						  <option id="modoC" name="modoC" value="Habilitado">Habilitado</option>	
+						  <option id="modoC" name="modoC" value="Desabilitado">Desabilitado</option>	
 						</select>  
 					  @endif
 					  </td>

@@ -24,9 +24,8 @@ class ProcessoSeletivoController extends Controller
 	public function cadastroProcesso(Request $request)
 	{
 		$processos = DB::table('processo_seletivo')->paginate(10);
-		$text = false;			
 		$input = $request->all(); 
-		return view('cadastro_processo', compact('text', 'processos'));
+		return view('cadastro_processo', compact('processos'));
 	}
 	
 	// Página Alterar Vaga //
@@ -34,8 +33,7 @@ class ProcessoSeletivoController extends Controller
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$vaga = Vaga::where('id', $id_vaga)->get();
-		$text = false;			
-		return view('cadastro_vaga_alterar', compact('text','processos','vaga'));
+		return view('cadastro_vaga_alterar', compact('processos','vaga'));
 	}
 	
 	// Página Excluir Vaga //
@@ -43,8 +41,7 @@ class ProcessoSeletivoController extends Controller
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$vaga = Vaga::where('id', $id_vaga)->get();
-		$text = false;			
-		return view('cadastro_vaga_excluir', compact('text','processos','vaga'));
+		return view('cadastro_vaga_excluir', compact('processos','vaga'));
 	}
 	
 	// Página Pesquisa Processo Seletivo //
@@ -52,15 +49,13 @@ class ProcessoSeletivoController extends Controller
 	{
 		$input = $request->all();  
 		if($input['pesq'] == NULL) {
-			$text = false;
 			$processos = $this->processo_seletivo->paginate(10);	
 			$pesq = '';
 		} else {
 			$pesq = $input['pesq'];
-			$text = false;
 			$processos = $this->processo_seletivo->where('nome', 'LIKE', '%' . $pesq . '%')->paginate(10);	
 		}
-		return view('cadastro_processo', compact('text','processos','pesq'));
+		return view('cadastro_processo', compact('processos','pesq'));
 	}
 	
 	// Página Cadastrar Novo Processo Seletivo //
@@ -68,8 +63,7 @@ class ProcessoSeletivoController extends Controller
 	{
 		$unidades = Unidade::all();
 		$processos = ProcessoSeletivo::all(); 
-		$text = false;
-		return view('cadastro_processo_novo', compact('text','unidades','processos'));
+		return view('cadastro_processo_novo', compact9('unidades','processos'));
 	}
 	
 	// Salvar Processo Seletivo //
@@ -83,14 +77,16 @@ class ProcessoSeletivoController extends Controller
 		$processos = ProcessoSeletivo::all();
 		if($input['inscricao_inicio'] > $input['inscricao_fim'] || $input['inscricao_inicio'] == $input['inscricao_fim'])
 		{
-			\Session::flash('mensagem', ['msg' => 'Data da Inscrição Inicial não pode ser maior ou igual que a Data da Inscrição Final!','class'=>'green white-text']);		
-			$text = true;
-			return view('cadastro_processo_novo', compact('text','unidades'));
+			$validator = 'Data da Inscrição Inicial não pode ser maior ou igual que a Data da Inscrição Final!';		
+			return view('cadastro_processo_novo', compact('unidades','processos'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));
 		}
 		if($request->file('edital') === NULL) {	
-			\Session::flash('mensagem', ['msg' => 'Informe o arquivo do Edital!','class'=>'green white-text']);		
-			$text = true;
-			return view('cadastro_processo_novo', compact('text','unidades','processos'));
+			$validator = 'Informe o arquivo do Edital!';
+			return view('cadastro_processo_novo', compact('unidades','processos'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));
 		} else {
 			if($extensao == 'pdf') {
 				$validator = Validator::make($request->all(), [
@@ -181,9 +177,10 @@ class ProcessoSeletivoController extends Controller
 						$processos = ProcessoSeletivo::paginate(10);
 						$input['user_id'] = Auth::user()->id;
 						$loggers = Loggers::create($input);
-						\Session::flash('mensagem', ['msg' => 'Processo Seletivo cadastrado com Sucesso!!','class'=>'green white-text']);
-						$text = true;	
-						return view('cadastro_processo', compact('text','processos'));
+						$validator = 'Processo Seletivo cadastrado com Sucesso!!';
+						return view('cadastro_processo', compact('processos'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));
 					} else {
 						$validator = "Este Processo Seletivo já existe!";
 						return view('cadastro_processo_novo', compact('unidades','processos'))
@@ -192,9 +189,10 @@ class ProcessoSeletivoController extends Controller
 					}
 				}
 			} else {
-				\Session::flash('mensagem', ['msg' => 'Só é suportado arquivos: pdf!','class'=>'green white-text']);		
-				$text = true;
-				return view('cadastro_processo_novo', compact('text','unidades'));
+				$validator = 'Só é suportado arquivos: pdf!';		
+				return view('cadastro_processo_novo', compact('unidades','processos'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));
 			}
 		}
 	}
@@ -203,10 +201,9 @@ class ProcessoSeletivoController extends Controller
 	public function processoAlterar($id)
 	{
 		$processos = ProcessoSeletivo::where('id', $id)->get();
-		$id_u = $processos[0]->unidade_id;
-		$unidades = Unidade::where('id',$id_u)->get();
-		$text = false;
-		return view('cadastro_processo_alterar', compact('text','processos','unidades'));
+		$id_u 	   = $processos[0]->unidade_id;
+		$unidades  = Unidade::where('id',$id_u)->get();
+		return view('cadastro_processo_alterar', compact('processos','unidades'));
 	}
 	
 	// Alterar Processo Seletivo //
@@ -218,42 +215,22 @@ class ProcessoSeletivoController extends Controller
 		$unidades = Unidade::where('id', $id_unidade)->get();
 		if($input['inscricao_inicio'] > $input['inscricao_fim'] || $input['inscricao_inicio'] == $input['inscricao_fim'])
 		{
-			\Session::flash('mensagem', ['msg' => 'Data da Inscrição Inicial não pode ser maior ou igual que a Data da Inscrição Final!','class'=>'green white-text']);		
-			$text = true;
-			return view('cadastro_processo_alterar', compact('text','unidades','processos'));
+			$validator = 'Data da Inscrição Inicial não pode ser maior ou igual que a Data da Inscrição Final!';		
+			return view('cadastro_processo_alterar', compact('unidades','processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 		}
-		$v = \Validator::make($request->all(), [
+		$validator = Validator::make($request->all(), [
 			'nome'   => 'required|max:255',
 			'inscricao_inicio' => 'required|date',
 			'inscricao_fim'    => 'required|date',
 			'data_prova'       => 'required|date',
 			'data_resultado'   => 'required|date'
 		]);
-		if ($v->fails()) {
-			$failed = $v->failed();
-			if ( !empty($failed['nome']['Required']) ) {
-				\Session::flash('mensagem', ['msg' => 'O campo nome é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['nome']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo nome possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['inscricao_inicio']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo início inscrição é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['inscricao_inicio']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo início inscrição é uma data!','class'=>'green white-text']);
-			} else if ( !empty($failed['inscricao_fim']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo fim inscrição é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['inscricao_fim']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo fim inscrição é uma data!','class'=>'green white-text']);
-			} else if ( !empty($failed['data_prova']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo data da prova é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['data_prova']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo data da prova é uma data!','class'=>'green white-text']);
-			} else if ( !empty($failed['data_resultado']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo data do resultado é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['data_resultado']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo data do resultado é uma data!','class'=>'green white-text']);
-		}
-			$text = true;
-			return view('cadastro_processo_alterar', compact('text','unidades'));
+		if ($validator->fails()) {
+			return view('cadastro_processo_alterar', compact('unidades'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 		} else {
 			if($request->file('edital_') == NULL){
 				$nome = $input['edital'];
@@ -264,9 +241,10 @@ class ProcessoSeletivoController extends Controller
 				$input['user_id'] = Auth::user()->id;
 				$loggers = Loggers::create($input);
 				$lastUpdated = $processos->max('updated_at');
-				\Session::flash('mensagem', ['msg' => 'Processo Seletivo alterado com Sucesso!!','class'=>'green white-text']);
-				$text = true;	
-				return view('cadastro_processo', compact('text','processos'));			
+				$validator = 'Processo Seletivo alterado com Sucesso!!';
+				return view('cadastro_processo', compact('processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 			} else {
 				$nome = $_FILES['edital_']['name']; 
 				$extensao = pathinfo($nome, PATHINFO_EXTENSION);
@@ -280,14 +258,16 @@ class ProcessoSeletivoController extends Controller
 					$input['user_id'] = Auth::user()->id;
 					$loggers = Loggers::create($input);
 					$lastUpdated = $processos->max('updated_at');
-					\Session::flash('mensagem', ['msg' => 'Processo Seletivo alterado com Sucesso!!','class'=>'green white-text']);
-					$text = true;	
-					return view('cadastro_processo', compact('text','processos'));
+					$validator = 'Processo Seletivo alterado com Sucesso!!';
+					return view('cadastro_processo', compact('processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 				} else {
 					$processos = ProcessoSeletivo::where('id', $id)->get();
-					\Session::flash('mensagem', ['msg' => 'Só é suportado arquivos: pdf!','class'=>'green white-text']);		
-					$text = true;
-					return view('cadastro_processo_alterar', compact('text','processos','unidades'));
+					$validator = 'Só é suportado arquivos: pdf!';
+					return view('cadastro_processo_alterar', compact('processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 				}
 			}
 		}
@@ -297,10 +277,9 @@ class ProcessoSeletivoController extends Controller
 	public function processoExcluir($id)
 	{
 		$processos = ProcessoSeletivo::where('id', $id)->get();
-		$id_u = $processos[0]->unidade_id;
-		$unidades = Unidade::where('id',$id_u)->get();
-		$text = false;
-		return view('cadastro_processo_excluir', compact('text','processos','unidades'));
+		$id_u 	   = $processos[0]->unidade_id;
+		$unidades  = Unidade::where('id',$id_u)->get();
+		return view('cadastro_processo_excluir', compact('processos','unidades'));
 	}
 	
 	// Excluir Processo Seletivo //
@@ -311,25 +290,25 @@ class ProcessoSeletivoController extends Controller
 		$processos = ProcessoSeletivo::paginate(10);
 		$input['user_id'] = Auth::user()->id;
 		$loggers = Loggers::create($input);
-		$text = true;
-		\Session::flash('mensagem', ['msg' => 'Processo Seletivo excluído com sucesso!','class'=>'green white-text']);
-		return view('cadastro_processo', compact('text','processos'));
+		$validator = 'Processo Seletivo excluído com sucesso!';
+		return view('cadastro_processo', compact('processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 	}
 	
 	// Página Cadastro de Vaga //
 	public function vagaCadastro($id)
 	{
 		$processos = ProcessoSeletivo::where('id', $id)->get();
-		$vagas = Vaga::where('processo_seletivo_id',$id)->get();
-		$text = false;
-		return view('cadastro_vaga_processo', compact('text','processos','vagas'));
+		$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
+		return view('cadastro_vaga_processo', compact('processos','vagas'));
 	}
 	
 	// Salvar Nova Vaga //
 	public function storeVaga(Request $request)
 	{
 		$input = $request->all();
-		$v = \Validator::make($request->all(), [
+		$validator = Validator::make($request->all(), [
 			'nome'   				 => 'required|max:255',
 			'codigo_vaga' 			 => 'required|max:255',
 			'categoria_profissional' => 'required|max:255',
@@ -339,48 +318,13 @@ class ProcessoSeletivoController extends Controller
 			'taxa'   			     => 'required|max:10|numeric',
 			'quantidade' 			 => 'required|max:100'
 		]);
-		if ($v->fails()) {
-			$failed = $v->failed();
-			if ( !empty($failed['nome']['Required']) ) {
-				\Session::flash('mensagem', ['msg' => 'O campo nome é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['nome']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo nome possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['codigo_vaga']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo código vaga é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['codigo_vaga']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo código vaga possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['categoria_profissional']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo categoria profissional é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['categoria_profissional']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo categoria profissional possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['carga_horaria']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo carga horária é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['carga_horaria']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo carga horária possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['salario_bruto']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo salário bruto é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['salario_bruto']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo salário bruto possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['status']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo status é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['status']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo status possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['taxa']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo taxa é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['taxa']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo taxa possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['taxa']['Numeric']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo taxa é númerico!','class'=>'green white-text']);
-			} else if ( !empty($failed['quantidade']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo quantidade é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['quantidade']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo quantidade possui no máximo 255 caracteres!','class'=>'green white-text']);
-			}
-			$text = true;
-			$id = $input['processo_seletivo_id'];
+		if ($validator->fails()) {
+			$id 	   = $input['processo_seletivo_id'];
 			$processos = ProcessoSeletivo::where('id', $id)->get();
-			$vagas = Vaga::where('processo_seletivo_id',$id)->get();
-			return view('cadastro_vaga_processo', compact('text','processos','vagas'));
+			$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
+			return view('cadastro_vaga_processo', compact('processos','vagas'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 		} else {
 			$nome  = $input['nome'];
 			$nomeC = str_replace('/','-',$nome);
@@ -391,10 +335,11 @@ class ProcessoSeletivoController extends Controller
 			$processos = ProcessoSeletivo::where('id', $id)->get();
 			$input['user_id'] = Auth::user()->id;
 			$loggers = Loggers::create($input);
-			$vagas = Vaga::where('processo_seletivo_id',$id)->get();
-			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Vaga cadastrada com sucesso!','class'=>'green white-text']);
-			return view('cadastro_vaga_processo', compact('text','processos','vagas'));
+			$vagas   = Vaga::where('processo_seletivo_id',$id)->get();
+			$validator = 'Vaga cadastrada com sucesso!';
+			return view('cadastro_vaga_processo', compact('processos','vagas'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 		}
 	}
 	
@@ -402,7 +347,7 @@ class ProcessoSeletivoController extends Controller
 	public function updateVaga($idP, $id, Request $request)
 	{
 		$input = $request->all();
-		$v = \Validator::make($request->all(), [
+		$validator = Validator::make($request->all(), [
 			'nome'   				 => 'required|max:255',
 			'codigo_vaga' 			 => 'required|max:255',
 			'categoria_profissional' => 'required|max:255',
@@ -412,48 +357,13 @@ class ProcessoSeletivoController extends Controller
 			'taxa'   			     => 'required|max:10|numeric',
 			'quantidade' 			 => 'required|max:100'
 		]);
-		if ($v->fails()) {
-			$failed = $v->failed();
-			if ( !empty($failed['nome']['Required']) ) {
-				\Session::flash('mensagem', ['msg' => 'O campo nome é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['nome']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo nome possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['codigo_vaga']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo código vaga é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['codigo_vaga']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo código vaga possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['categoria_profissional']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo categoria profissional é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['categoria_profissional']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo categoria profissional possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['carga_horaria']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo carga horária é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['carga_horaria']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo carga horária possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['salario_bruto']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo salário bruto é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['salario_bruto']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo salário bruto possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['status']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo status é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['status']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo status possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['taxa']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo taxa é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['taxa']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo taxa possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['taxa']['Numeric']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo taxa é númerico!','class'=>'green white-text']);
-			} else if ( !empty($failed['quantidade']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo quantidade é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['quantidade']['Date']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo quantidade possui no máximo 255 caracteres!','class'=>'green white-text']);
-			}
-			$text = true;
-			$id = $input['processo_seletivo_id'];
+		if ($validator->fails()) {
+			$id 	   = $input['processo_seletivo_id'];
 			$processos = ProcessoSeletivo::where('id', $id)->get();
-			$vagas = Vaga::where('processo_seletivo_id',$id)->get();
-			return view('cadastro_vaga_processo', compact('text','processos','vagas'));
+			$vagas 	   = Vaga::where('processo_seletivo_id',$id)->get();
+			return view('cadastro_vaga_processo', compact('processos','vagas'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 		} else { 
 			$vaga = Vaga::find($id);
 			$vaga->update($input);
@@ -463,8 +373,6 @@ class ProcessoSeletivoController extends Controller
 			$input['user_id'] = Auth::user()->id;
 			$loggers = Loggers::create($input);
 			$vagas = Vaga::where('processo_seletivo_id',$id)->get();
-			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Vaga alterada com sucesso!','class'=>'green white-text']);
 			return redirect()->route('vagaCadastro', [$idP]);
 		}
 	}
@@ -477,9 +385,7 @@ class ProcessoSeletivoController extends Controller
 		$input['user_id'] = Auth::user()->id;
 		$loggers   = Loggers::create($input);
 		$processos = ProcessoSeletivo::where('id',$idP)->get();
-		$vagas = Vaga::where('id',$id)->get();
-		$text  = true;
-		\Session::flash('mensagem', ['msg' => 'Vaga excluído com sucesso!','class'=>'green white-text']);
+		$vagas 	   = Vaga::where('id',$id)->get();
 		return redirect()->route('vagaCadastro', [$idP]);
 	}
 }

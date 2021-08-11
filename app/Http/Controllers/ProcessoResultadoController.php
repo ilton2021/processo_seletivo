@@ -14,63 +14,56 @@ use Illuminate\Support\Facades\DB;
 use App\Model\Loggers;
 use Maatwebsite\Excel\Facades\Excel;
 use Auth;
+use Validator;
 
 class ProcessoResultadoController extends Controller
 {
 	// Página Resultado Processo Seletivo - Avaliação de Conhecimento //
-    public function resultadoProcessosA($id, $id_candidato, $id_vaga)
+    public function resultadoProcessosA($id, $id_candidato)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$nome = $processos[0]->nome;
 		$processos2 = DB::table('processo_seletivo_'.$nome)->where('id',$id_candidato)->get();
-		$text 	   = false;
 		$idP 	   = $id;
 		$candidato = $id_candidato;
-		$vaga      = $id_vaga;
 		$resultado = ProcessoResultado::where('candidato_id',$candidato)->where('processo_seletivo_id',$idP)->where('resultado',1)->get();
-		return view('resultado_processosA', compact('text', 'processos','idP','candidato','vaga','resultado','processos2'));
+		return view('resultado_processosA', compact('processos','idP','candidato','resultado','processos2'));
 	}
 
 	// Página Resultado Processo Seletivo - Entrevista Profissional //
-	public function resultadoProcessosE($id, $id_candidato, $id_vaga)
+	public function resultadoProcessosE($id, $id_candidato)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get(); 
 		$nome = $processos[0]->nome;
 		$processos2 = DB::table('processo_seletivo_'.$nome)->where('id',$id_candidato)->orderby('id','ASC')->get(); 
-		$text 	   = false;
 		$idP 	   = $id;
 		$candidato = $id_candidato;
-		$vaga      = $id_vaga;
 		$resultado = ProcessoResultado::where('candidato_id',$candidato)->where('processo_seletivo_id',$idP)->where('resultado',1)->get();
-		return view('resultado_processosE', compact('text', 'processos','idP','candidato','vaga','resultado','processos2'));
+		return view('resultado_processosE', compact('processos','idP','candidato','resultado','processos2'));
 	}
 
 	// Página Resultado Processo Seletivo - Resultado //
-	public function resultadoProcessosR($id, $id_candidato, $id_vaga)
+	public function resultadoProcessosR($id, $id_candidato)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$nome = $processos[0]->nome;
 		$processos2 = DB::table('processo_seletivo_'.$nome)->where('id',$id_candidato)->get();
-		$text 	   = false;
 		$idP 	   = $id;
 		$candidato = $id_candidato;
-		$vaga      = $id_vaga;
 		$resultado = ProcessoResultado::where('candidato_id',$candidato)->where('processo_seletivo_id',$idP)->where('resultado',1)->get();
-		return view('resultado_processosR', compact('text', 'processos','idP','candidato','vaga','resultado','processos2'));
+		return view('resultado_processosR', compact('processos','idP','candidato','resultado','processos2'));
 	}
 
 	// Página Resultado Processo Seletivo - Cadastro de Reserva //
-	public function resultadoProcessosC($id, $id_candidato, $id_vaga)
+	public function resultadoProcessosC($id, $id_candidato)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$nome = $processos[0]->nome;
 		$processos2 = DB::table('processo_seletivo_'.$nome)->where('id',$id_candidato)->get();
-		$text 	   = false;
 		$idP 	   = $id;
 		$candidato = $id_candidato;
-		$vaga      = $id_vaga;
 		$resultado = ProcessoResultado::where('candidato_id',$candidato)->where('processo_seletivo_id',$idP)->where('resultado',1)->get();
-		return view('resultado_processosC', compact('text', 'processos','idP','candidato','vaga','resultado','processos2'));
+		return view('resultado_processosC', compact('processos','idP','candidato','resultado','processos2'));
 	}
 	
 	public function informacoes($id, $id_candidato)
@@ -87,22 +80,18 @@ class ProcessoResultadoController extends Controller
 	// Página Cadastro de Resultados //
 	public function cadastrarResultados($id)
 	{
-		$pseletivo = ProcessoSeletivo::where('id',$id)->get();
+		$pseletivo  = ProcessoSeletivo::where('id',$id)->get();
 		$candidatos = Candidato::all();
 		$p_vagas = ProcessoCandidato::where('processo_seletivo_id',$id)->get();
-		$vagas = Vaga::all();
-		$nome = $pseletivo[0]->nome;
+		$vagas   = Vaga::all();
+		$nome    = $pseletivo[0]->nome;
 		$processos2 = DB::table('processo_seletivo_'.$nome)->orderby('nome', 'ASC')->paginate(10);
-		$processos = DB::table('processo_candidato')
-		->join('vaga', 'vaga.id', '=', 'processo_candidato.vaga_id')
-		->join('processo_seletivo', 'processo_seletivo.id', '=', 'processo_candidato.processo_seletivo_id')
-		->join('candidato', 'candidato.id', '=', 'processo_candidato.candidato_id')
-		->select('processo_candidato.*','vaga.id as IDVaga','vaga.nome as NomeVaga','candidato.nome as NomeCandidato','candidato.cpf as CPF','candidato.deficiencia as deficiencia','processo_seletivo.nome as nome','candidato.id as ID_CANDIDATO')
-		->where('processo_candidato.processo_seletivo_id', $id)
+		$processos  = DB::table('processo_seletivo_'.$nome)
+		->join('vaga', 'vaga.nome', '=', 'processo_seletivo_'.$nome.'.vaga')
+		->select('processo_seletivo_'.$nome.'.*','vaga.id as IDVaga','vaga.nome as NomeVaga','processo_seletivo_'.$nome.'.nome as NomeCandidato','processo_seletivo_'.$nome.'.cpf as CPF','processo_seletivo_'.$nome.'.deficiencia as deficiencia','processo_seletivo_'.$nome.'.nome as nome','processo_seletivo_'.$nome.'.id as ID_CANDIDATO')
 		->get()->toArray();
 		$unidades = Unidade::all();
-		$text = false;
-		return view('cadastro_resultado_processos', compact('text','pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2'));
+		return view('cadastro_resultado_processos', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2'));
 	}
 	
 	public function pesquisarCandidato($id, Request $request)
@@ -134,15 +123,13 @@ class ProcessoResultadoController extends Controller
 			}			
 		}
 		$unidades = Unidade::all();
-		$text = false;
-		return view('cadastro_resultado_processos', compact('text','pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2'));
+		return view('cadastro_resultado_processos', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2'));
 	}
 
 	// Salvar Resultados //
-	public function storeAvaliacaoA($id, $id_candidato, $id_vaga, Request $request)
+	public function storeAvaliacaoA($id, $id_candidato, Request $request)
 	{
 		$idP  = $id;
-		$vaga = $id_vaga;
 		$candidato = $id_candidato;
 		$input 	   = $request->all();
 		$processoS = ProcessoSeletivo::where('id',$id)->get();
@@ -158,26 +145,15 @@ class ProcessoResultadoController extends Controller
 		
 		if($modoA == "Habilitado" || $modoA == "Desabilitado")
 		{
-			$v = \Validator::make($request->all(), [
+			$validator = Validator::make($request->all(), [
 				'modoA'   	      => 'required',
 				'data_resultadoA' => 'required|date',
 				'mensagemA'    	  => 'required|max:500'
 			]);	
-			if ($v->fails()) {
-				$failed = $v->failed();
-				if ( !empty($failed['modo']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo resultado é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['data_resultado']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo data resultado é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['data_resultado']['Date']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo data resultado é uma data!','class'=>'green white-text']);
-				} else if ( !empty($failed['mensagem']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo mensagem é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['mensagem']['Max']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo mensagem possui no máximo 500 caracteres!','class'=>'green white-text']);
-				}  
-				$text = true;
-				return view('resultado_processosA', compact('text','processos','idP','candidato','processos2','vaga'));
+			if ($validator->fails()) {
+				return view('resultado_processosA', compact('processos','idP','candidato','processos2'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 			} else {
 					$input['data_resultadoA'] 	   = date('Y-m-d', strtotime($input['data_resultadoA']));
 					$input['processo_seletivo_id'] = $id;
@@ -195,26 +171,15 @@ class ProcessoResultadoController extends Controller
 		}
 		if ($modoE == "Habilitado" || $modoE == "Desabilitado")
 		{
-			$v = \Validator::make($request->all(), [
+			$validator = Validator::make($request->all(), [
 				'modoE'   	 	  => 'required',
 				'data_resultadoE' => 'required|date',
 				'mensagemE'    	  => 'required|max:500'
 			]);	
-			if ($v->fails()) {
-			$failed = $v->failed();
-				if ( !empty($failed['modo']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo resultado é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['data_resultado']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo data resultado é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['data_resultado']['Date']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo data resultado é uma data!','class'=>'green white-text']);
-				} else if ( !empty($failed['mensagem']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo mensagem é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['mensagem']['Max']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo mensagem possui no máximo 500 caracteres!','class'=>'green white-text']);
-				}  
-				$text = true;
-				return view('resultado_processosA', compact('text','processos','idP','candidato','processos2','vaga'));
+			if ($validator->fails()) {
+				return view('resultado_processosA', compact('processos','idP','candidato','processos2'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 			} else {
 				$input['data_resultadoE'] 	   = date('Y-m-d', strtotime($input['data_resultadoE']));
 				$input['processo_seletivo_id'] = $id;
@@ -232,21 +197,14 @@ class ProcessoResultadoController extends Controller
 		}
 		if ($modoR != 0)
 		{
-			$v = \Validator::make($request->all(), [
+			$validator = Validator::make($request->all(), [
 				'modoR'   	 	 => 'required',
 				'mensagemR'    	 => 'required|max:500'
 			]);
-			if ($v->fails()) {
-				$failed = $v->failed();
-				if ( !empty($failed['modo']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo resultado é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['mensagem']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo mensagem é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['mensagem']['Max']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo mensagem possui no máximo 500 caracteres!','class'=>'green white-text']);
-				}  
-				$text = true;
-				return view('resultado_processosA', compact('text','processos','idP','candidato','processos2','vaga'));
+			if ($validator->fails()) {
+				return view('resultado_processosA', compact('processos','idP','candidato','processos2'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 			} else {
 				$input['processo_seletivo_id'] = $id;
 				if($input['modoR'] == 3){
@@ -273,26 +231,15 @@ class ProcessoResultadoController extends Controller
 		}
 		if ($modoC == "Habilitado" || $modoC == "Desabilitado")
 		{
-			$v = \Validator::make($request->all(), [
+			$validator = Validator::make($request->all(), [
 				'modoC'   	 	  => 'required',
 				'data_resultadoC' => 'required|date',
 				'mensagemC'    	  => 'required|max:500'
 			]);
-			if ($v->fails()) {
-				$failed = $v->failed();
-				if ( !empty($failed['modo']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo resultado é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['data_resultado']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo data resultado é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['data_resultado']['Date']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo data resultado é uma data!','class'=>'green white-text']);
-				} else if ( !empty($failed['mensagem']['Required']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo mensagem é obrigatório!','class'=>'green white-text']);
-				} else if ( !empty($failed['mensagem']['Max']) ) {
-					\Session::flash('mensagem', ['msg' => 'O campo mensagem possui no máximo 500 caracteres!','class'=>'green white-text']);
-				}  
-				$text = true;
-				return view('resultado_processosA', compact('text','processos','idP','candidato','processos2','vaga'));
+			if ($validator->fails()) {
+				return view('resultado_processosA', compact('processos','idP','candidato','processos2'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 			} else {
 				$input['data_resultadoC'] 	   = date('Y-m-d', strtotime($input['data_resultadoC']));
 				$input['processo_seletivo_id'] = $id;
@@ -303,7 +250,6 @@ class ProcessoResultadoController extends Controller
 				DB::statement("UPDATE processo_seletivo_".$nome." SET status_convocacao = '$modoC',
 				data_convocacao = '$data_resultado',
 				msg_convocacao = '$mensagem' WHERE id = '$id_candidato' ");
-				$text = true;
 				$input['user_id'] = Auth::user()->id;
 				$loggers = Loggers::create($input);
 				$validacao = 1;
@@ -312,18 +258,17 @@ class ProcessoResultadoController extends Controller
 		
 		if($validacao == 1)
 		{
-			$text = true;
 			$processos = ProcessoSeletivo::all();
 			$id_candidato = $id_candidato;
-			$id_vaga = $id_vaga;
 			\Session::flash('mensagem', ['msg' => 'Resultado cadastrado com sucesso!','class'=>'green white-text']);
 			return redirect()->route('cadastrarResultados', [$id]);
 		} 
 		else 
 		{
-			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Informe o Resultado do Processo Seletivo!','class'=>'green white-text']);
-			return view('resultado_processosA', compact('text','processos','idP','candidato','processos2','vaga'));
+			$validator = 'Informe o Resultado do Processo Seletivo!';
+			return view('resultado_processosA', compact('processos','idP','candidato','processos2'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 		}	
 	}
 	

@@ -77,7 +77,7 @@ return [
         'array' => 'The :attribute must not have more than :value items.',
     ],
     'max' => [
-        'numeric' => 'The :attribute may not be greater than :max.',
+        'numeric' => 'O campo :attribute não pode ser maior que :max caracteres.',
         'file' => 'The :attribute may not be greater than :max kilobytes.',
         'string' => 'O campo :attribute não pode ter mais que :max caracteres.',
         'array' => 'The :attribute may not have more than :max items.',
@@ -92,7 +92,7 @@ return [
     ],
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
-    'numeric' => 'The :attribute must be a number.',
+    'numeric' => 'O campo :attribute tem que ser um valor númerico.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
     'required' => 'O campo :attribute é obrigatório.',

@@ -6,15 +6,15 @@
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>	
     <div class="container" style="margin-top: 80px;">
-	@if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-		      {{ Session::get ('mensagem')['msg'] }}
+		@if ($errors->any())
+		 <div class="alert alert-success">
+		  <ul>
+		    @foreach ($errors->all() as $error)
+		      <li>{{ $error }}</li>
+			@endforeach
+		  </ul>
 		 </div>
-		</div>
 		@endif
-	@endif
         <div class="container">
           <div class="card shadow mb-4">
             <div class="card-header py-3">

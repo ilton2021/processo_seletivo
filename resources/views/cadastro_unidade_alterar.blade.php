@@ -5,9 +5,18 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Alterar Unidades:</h6>
             </div>
+			@if ($errors->any())
+			<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+			</div>
+			@endif
             <div class="card-body">
               <div class="table-responsive">
-			  <form method="POST" action="{{ route('updateUnidade', $unidades[0]->id) }}">
+			  <form method="POST" action="{{ route('updateUnidade', $unidades[0]->id) }}" enctype="multipart/form-data">
 			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
@@ -16,7 +25,7 @@
 			        </tr>
                     <tr>
                       <td>Imagem:</td>
-                      <td><input type="file" class="form-control" id="imagem_" name="imagem_"  /></td>
+                      <td><input type="file" class="form-control" id="imagem_" name="imagem_" /></td>
 					</tr>
 					<tr>
 					  <td></td>

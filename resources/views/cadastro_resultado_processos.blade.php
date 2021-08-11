@@ -8,15 +8,15 @@
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <div class="container" style="margin-top: 80px;">
-      @if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-		      {{ Session::get ('mensagem')['msg'] }}
+		@if ($errors->any())
+		 <div class="alert alert-danger">
+		  <ul>
+		    @foreach ($errors->all() as $error)
+		      <li>{{ $error }}</li>
+			@endforeach
+		  </ul>
 		 </div>
-		</div>
 		@endif
-	   @endif
         <div class="container">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -74,7 +74,7 @@
 					  <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" 
 					  href="{{asset('http://hcp.org.br/processoseletivo')}}/{{($pseletivo[0]->nome)}}/{{('admin/lab/uploads')}}/{{($proc->nomearquivo2)}}"> <i class="fas fa-file"></i></a></center></th>
 					  @endif
-					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('resultadoProcessosA', array($pseletivo[0]->id, $proc->id, $proc->vaga)) }}"> <i class="fas fa-file-alt"></i></a></center></th>
+					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('resultadoProcessosA', array($pseletivo[0]->id, $proc->id)) }}"> <i class="fas fa-file-alt"></i></a></center></th>
 					  <th><center><a class="btn btn-info btn-sm" style="color: #FFFFFF;" href="{{ route('avaliacao', array($pseletivo[0]->id, $proc->id)) }}"> <i class="fas fa-file-excel"></i></a></center></th>
 				    </tr>
                   </tfoot>

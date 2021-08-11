@@ -1,15 +1,15 @@
 @extends('navbar.default-navbar')
 <body id="page-top">
 	<div class="container" style="margin-top: 80px;">
-       @if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div class="alert alert-danger {{ Session::get ('mensagem')['class'] }} ">
-		      {{ Session::get ('mensagem')['msg'] }}
+		@if ($errors->any())
+		 <div class="alert alert-danger">
+		  <ul>
+		    @foreach ($errors->all() as $error)
+		      <li>{{ $error }}</li>
+			@endforeach
+		  </ul>
 		 </div>
-		</div>
 		@endif
-	   @endif
         <div class="container-fluid">
 		  <div class="card shadow mb-4">
             <div class="card-header py-3">

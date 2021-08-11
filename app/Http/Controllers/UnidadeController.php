@@ -9,6 +9,7 @@ use App\Model\ProcessoSeletivo;
 use Illuminate\Support\Facades\DB;
 use App\Model\Loggers;
 use Auth;
+use Validator;
 	
 class UnidadeController extends Controller
 {
@@ -23,16 +24,14 @@ class UnidadeController extends Controller
 	{
 		$unidades = $this->unidade->paginate(10);
 		$processos = ProcessoSeletivo::all();
-		$text = false;
-		return view('cadastro_unidade', compact('unidades','text','processos'));
+		return view('cadastro_unidade', compact('unidades','processos'));
 	}
 	
 	// Página Nova Unidade //
 	public function unidadeNovo()
 	{
-		$text = false;
 		$processos = ProcessoSeletivo::all();
-		return view('cadastro_unidade_novo', compact('text','processos'));
+		return view('cadastro_unidade_novo', compact('processos'));
 	}
 	
 	// Página Alterar Unidade //
@@ -42,8 +41,7 @@ class UnidadeController extends Controller
 		$idE = $unidades[0]->id;
 		$endereco = Endereco::where('id_tabela',1)->where('id_interno',$idE)->get();
 		$processos = ProcessoSeletivo::all();
-		$text = false;
-		return view('cadastro_unidade_alterar', compact('text','unidades','endereco','processos'));
+		return view('cadastro_unidade_alterar', compact('unidades','endereco','processos'));
 	}
 	
 	// Página Excluir Unidade //
@@ -52,8 +50,7 @@ class UnidadeController extends Controller
 		$unidades = Unidade::where('id', $id)->get();
 		$endereco = Endereco::where('id_tabela',1)->where('id_interno',$unidades[0]->id)->get();
 		$processos = ProcessoSeletivo::all();
-		$text = false;
-		return view('cadastro_unidade_excluir', compact('text','unidades','endereco','processos'));
+		return view('cadastro_unidade_excluir', compact('unidades','endereco','processos'));
 	}
 	
 	// Pesquisar Unidade //
@@ -61,10 +58,9 @@ class UnidadeController extends Controller
 	{
 		$input = $request->all();
 		$nome = $input['pesq'];
-		$text = false;
 		$unidades = $this->unidade->where('nome', 'LIKE', '%' . $nome . '%')->paginate(10);
 		$processos = ProcessoSeletivo::all();
-		return view('cadastro_unidade', compact('text','unidades','processos'));
+		return view('cadastro_unidade', compact('unidades','processos'));
 	}
 	
 	// Salvar Unidade //
@@ -73,13 +69,15 @@ class UnidadeController extends Controller
 		$input = $request->all();
 		$nome = $_FILES['imagem']['name']; 
 		$extensao = pathinfo($nome, PATHINFO_EXTENSION);
+		$processos = ProcessoSeletivo::all();
 		if($request->file('imagem') === NULL) {	
-			\Session::flash('mensagem', ['msg' => 'Informe a imagem da Unidade!','class'=>'green white-text']);		
-			$text = true;
-			return view('cadastro_unidade_novo', compact('text'));
+			$validator = 'Informe a imagem da Unidade!';		
+			return view('cadastro_unidade_novo', compact('processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 		} else {
 			if($extensao == 'png' || $extensao == 'jpg') {
-				$v = \Validator::make($request->all(), [
+				$validator = Validator::make($request->all(), [
 					'nome'   => 'required|max:255|unique:unidade,nome',
 					'rua' 	 => 'required|max:255',
 					'numero' => 'required|max:10',
@@ -89,48 +87,13 @@ class UnidadeController extends Controller
 					'pais'	 => 'required|max:255',
 					'cep' 	 => 'required|max:15'
 				]);
-				if ($v->fails()) {
-					$failed = $v->failed();
-					if ( !empty($failed['nome']['Required']) ) {
-						\Session::flash('mensagem', ['msg' => 'O campo nome é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['nome']['Max']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo nome possui no máximo 255 caracteres!','class'=>'green white-text']);
-					} else if ( !empty($failed['nome']['Unique']) ) { 
-						\Session::flash('mensagem', ['msg' => 'Esta Unidade já foi cadastrada!','class'=>'green white-text']);
-					} else if ( !empty($failed['rua']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo rua é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['rua']['Max']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo rua possui no máximo 255 caracteres!','class'=>'green white-text']);
-					} else if ( !empty($failed['numero']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo numero é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['numero']['Max']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo numero possui no máximo 255 caracteres!','class'=>'green white-text']);
-					} else if ( !empty($failed['bairro']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo bairro é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['bairro']['Max']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo bairro possui no máximo 255 caracteres!','class'=>'green white-text']);
-					} else if ( !empty($failed['cidade']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo cidade é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['cidade']['Max']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo cidade possui no máximo 255 caracteres!','class'=>'green white-text']);
-					} else if ( !empty($failed['estado']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo estado é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['estado']['Max']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo estado possui no máximo 255 caracteres!','class'=>'green white-text']);
-					} else if ( !empty($failed['pais']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo país é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['pais']['Max']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo país possui no máximo 255 caracteres!','class'=>'green white-text']);
-					} else if ( !empty($failed['cep']['Required']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo cep é obrigatório!','class'=>'green white-text']);
-					} else if ( !empty($failed['cep']['Max']) ) { 
-						\Session::flash('mensagem', ['msg' => 'O campo cep possui no máximo 255 caracteres!','class'=>'green white-text']);
-					}
-					$text = true;
-					return view('cadastro_unidade_novo', compact('text'));
+				if ($validator->fails()) {
+					return view('cadastro_unidade_novo', compact('processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 				} else { 					
 					$request->file('imagem')->move('../public/storage/unidade/', $nome);
-					$input['imagem'] = $nome;
+					$input['imagem']  = $nome;
 					$input['caminho'] = 'unidade/'.$nome;
 					$unidade = Unidade::create($input);
 					$input['id_tabela'] = 1;
@@ -138,19 +101,21 @@ class UnidadeController extends Controller
 					$input['id_interno'] = $idUnidade[0]->id;
 					$endereco = Endereco::create($input);
 					$lastUpdated = $unidade->max('updated_at');
-					$unidades = Unidade::all();
+					$unidades  = Unidade::all();
 					$input['user_id'] = Auth::user()->id;
-					$loggers = Loggers::create($input);
-					$unidades = $this->unidade->paginate(10);
-					\Session::flash('mensagem', ['msg' => 'Unidade cadastrado com Sucesso!!','class'=>'green white-text']);
-					$text = true;
+					$loggers   = Loggers::create($input);
+					$unidades  = $this->unidade->paginate(10);
+					$validator = 'Unidade cadastrado com Sucesso!!';
 					$processos = ProcessoSeletivo::all();
-					return view('cadastro_unidade', compact('text','unidades','processos'));
+					return view('cadastro_unidade', compact('unidades','processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 				}
 			}else {
-				\Session::flash('mensagem', ['msg' => 'Só é suportado arquivos: png ou jpg!','class'=>'green white-text']);		
-				$text = true;
-				return view('cadastro_unidade_novo', compact('text'));
+				$validator = 'Só é suportado arquivos: png ou jpg!';		
+				return view('cadastro_unidade_novo', compact('processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 			}
 		}
 	}
@@ -159,7 +124,10 @@ class UnidadeController extends Controller
 	public function updateUnidade($id, Request $request)
 	{
 		$input = $request->all();
-		$v = \Validator::make($request->all(), [
+		$unidades = Unidade::where('id',$id)->get();
+		$endereco = Endereco::where('id_interno',$id)->get();
+		$processos = ProcessoSeletivo::all();
+		$validator = Validator::make($request->all(), [
 			'nome'   => 'required|max:255',
 			'rua' 	 => 'required|max:255',
 			'numero' => 'required|max:10',
@@ -169,47 +137,12 @@ class UnidadeController extends Controller
 			'pais'	 => 'required|max:255',
 			'cep' 	 => 'required|max:15'
 		]);
-		if ($v->fails()) {
-			$failed = $v->failed();
-			if ( !empty($failed['nome']['Required']) ) {
-				\Session::flash('mensagem', ['msg' => 'O campo nome é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['nome']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo nome possui no máximo 255 caracteres!','class'=>'green white-text']);
-		    } else if ( !empty($failed['nome']['Unique']) ) { 
-				\Session::flash('mensagem', ['msg' => 'Esta Unidade já foi cadastrada!','class'=>'green white-text']);
-			} else if ( !empty($failed['rua']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo rua é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['rua']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo rua possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['numero']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo numero é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['numero']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo numero possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['bairro']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo bairro é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['bairro']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo bairro possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['cidade']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo cidade é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['cidade']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo cidade possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['estado']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo estado é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['estado']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo estado possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['pais']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo país é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['pais']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo país possui no máximo 255 caracteres!','class'=>'green white-text']);
-			} else if ( !empty($failed['cep']['Required']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo cep é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['cep']['Max']) ) { 
-				\Session::flash('mensagem', ['msg' => 'O campo cep possui no máximo 255 caracteres!','class'=>'green white-text']);
-			}
-			$text = true;
-			return view('cadastro_unidade_alterar', compact('text'));
+		if ($validator->fails()) {
+			return view('cadastro_unidade_alterar', compact('unidades','endereco','processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 		} else {
-			if($request->file('imagem_') == NULL){
+			if($request->file('imagem_') === NULL){
 				$nome = $input['imagem'];
 				$input['imagem'] = $nome;
 				$input['caminho'] = 'unidade/'.$nome;
@@ -225,10 +158,11 @@ class UnidadeController extends Controller
 				$input['user_id'] = Auth::user()->id;
 				$loggers = Loggers::create($input);
 				$unidades = $this->unidade->paginate(10);
-				\Session::flash('mensagem', ['msg' => 'Unidade alterada com Sucesso!!','class'=>'green white-text']);
-				$text = true;	
+				$validator = 'Unidade alterada com Sucesso!!';
 				$processos = ProcessoSeletivo::all();
-				return view('cadastro_unidade', compact('text','unidades','processos'));
+				return view('cadastro_unidade', compact('unidades','processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 			} else {
 				$nome = $_FILES['imagem_']['name']; 
 				$extensao = pathinfo($nome, PATHINFO_EXTENSION);
@@ -247,16 +181,18 @@ class UnidadeController extends Controller
 					$unidades = Unidade::where('id', $id)->get();
 					$endereco = Endereco::where('id_tabela',1)->where('id_interno',$unidades[0]->id)->get();
 					$lastUpdated = $unidades->max('updated_at');
-					\Session::flash('mensagem', ['msg' => 'Unidade alterada com Sucesso!!','class'=>'green white-text']);
-					$text = true;	
-					return view('cadastro_unidade', compact('text','unidades','endereco'));	
+					$validator = 'Unidade alterada com Sucesso!!';
+					return view('cadastro_unidade', compact('unidades','processos'))	
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 				} else {
-					$unidades = Unidade::where('id', $id)->get();
-					$endereco = Endereco::where('id_tabela',1)->where('id_interno',$unidades[0]->id)->get();
-					\Session::flash('mensagem', ['msg' => 'Só é suportado arquivos: png ou jpg!','class'=>'green white-text']);		
-					$text = true;
+					$unidades  = Unidade::where('id', $id)->get();
+					$endereco  = Endereco::where('id_tabela',1)->where('id_interno',$unidades[0]->id)->get();
+					$validator = 'Só é suportado arquivos: png ou jpg!';		
 					$processos = ProcessoSeletivo::all();
-					return view('cadastro_unidade_alterar', compact('text','unidades','endereco','processos'));
+					return view('cadastro_unidade_alterar', compact('unidades','endereco','processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 				}
 			}
 		}
@@ -274,9 +210,10 @@ class UnidadeController extends Controller
 		$input['user_id'] = Auth::user()->id;
 		$loggers = Loggers::create($input);
 		$unidades = $this->unidade->paginate(10);
-		$text = true;
-		\Session::flash('mensagem', ['msg' => 'Unidade excluído com sucesso!','class'=>'green white-text']);
+		$validator = 'Unidade excluído com sucesso!';
 		$processos = ProcessoSeletivo::all();
-		return view('cadastro_unidade', compact('text','unidades','processos'));
+		return view('cadastro_unidade', compact('unidades','processos'))
+					  ->withErrors($validator)
+                      ->withInput(session()->flashInput($request->input()));
 	}
 }

@@ -5,6 +5,15 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Unidades:</h6>
             </div>
+			@if ($errors->any())
+			<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+			</div>
+			@endif
             <div class="card-body">
               <div class="table-responsive">
 			  <form method="POST" action="{{ route('storeUnidade') }}" enctype="multipart/form-data">

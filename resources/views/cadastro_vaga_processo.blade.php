@@ -5,14 +5,14 @@
           <h1 class="h3 mb-0 text-gray-800">Vaga:</h1>
        </div>
         <div class="container-fluid">
-		@if (Session::has('mensagem'))
-				@if ($text == true)
-				<div class="container">
-				 <div class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-					  {{ Session::get ('mensagem')['msg'] }}
-				 </div>
-				</div>
-				@endif
+			@if ($errors->any())
+			<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+			</div>
 			@endif
           <div class="card shadow mb-4">
             <div class="card-header py-3">
