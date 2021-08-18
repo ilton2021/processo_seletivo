@@ -20,7 +20,6 @@ Route::post('/candidato/cadastroCandidato/{id}/{id_processo}/validar/{a}', 'Cand
 
 Route::get('/cadastro/avaliacaoL/{id}/{id_c}','ProcessoCandidatoController@avaliacaoGestorLideranca')->name('avaliacaoGestorLideranca');
 Route::post('/cadastro/avaliacaoL/{id}/{id_c}','ProcessoCandidatoController@updateAvaliacaoLideranca')->name('updateAvaliacaoLideranca');
-
 Route::get('/cadastro/avaliacaoO/{id}/{id_c}','ProcessoCandidatoController@avaliacaoGestorOperacional')->name('avaliacaoGestorOperacional');
 Route::post('/cadastro/avaliacaoO/{id}/{id_c}','ProcessoCandidatoController@updateAvaliacaoOperacional')->name('updateAvaliacaoOperacional');
 Route::get('/cadastro/avaliacaoGestor/','ProcessoCandidatoController@avaliacaoGestor')->name('avaliacaoGestor');

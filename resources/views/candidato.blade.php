@@ -104,13 +104,6 @@
 							<table class="table table-responsive table-border" border="1"> 
 							<tr>
 							<?php $hoje = date('d-m-Y', strtotime('now')); $a = 0; ?> 
-							   @foreach($ps as $prc)
-								 <?php $inscricao_fim = date('d-m-Y', strtotime($prc->inscricao_fim)); ?> 
-								   @if(strtotime($hoje) <= strtotime($inscricao_fim))
-									   <?php $a = [$prc->unidade_id]; ?>
-								   @endif
-							   @endforeach
-							   <?php $qtd = sizeof($a); ?>
 							   @foreach($unidades as $unidade)
 							      @if($unidade->id == 2) 
 								   <td width="300px">

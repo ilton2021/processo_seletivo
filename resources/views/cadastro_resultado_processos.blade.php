@@ -58,7 +58,7 @@
 					  <th style="width: 200px;"><center>Vaga</center></th>
 					  <th><center>Currículo</center></th>
 					  <th><center>Resultado</center></th>	
-					  <th><center>Avaliação</center></th>
+					  <th><center>Parecer</center></th>
 				    </tr>
                   </thead>
 				  @foreach($processos2 as $proc)

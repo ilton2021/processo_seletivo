@@ -251,7 +251,7 @@
 
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <tr>
-					 <td>JUSTIFICATIVA DO RH: </td>
+					 <td>PARECER DO RH: </td>
 					</tr>
 					<tr>
                       <td> <textarea id="justificativa_rh" name="justificativa_rh" rows="20" cols="140" required="true"> </textarea> </td>

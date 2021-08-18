@@ -362,14 +362,14 @@
 
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
-					 <td>JUSTIFICATIVA DO RH: </td>
+					 <td>PARECER DO RH: </td>
 					</tr>
 					<tr>
                       <td> <textarea readonly="true" id="justificativa_rh" name="justificativa_rh" rows="20" cols="140" required="true" value="<?php echo $avaliacao[0]->justificativa_rh; ?>">{{  $avaliacao[0]->justificativa_rh }} </textarea> </td>
 				    </tr>
 
 					<tr>
-					 <td>JUSTIFICATIVA DO GESTOR: </td>
+					 <td>PARECER DO GESTOR: </td>
 					</tr>
 					<tr>
                       <td> <textarea id="justificativa_gestor" name="justificativa_gestor" rows="20" cols="140" required="true" value="<?php echo $avaliacao[0]->justificativa_gestor; ?>"> </textarea> </td>

@@ -293,9 +293,7 @@ class CandidatoController extends Controller
 		$nome = $processos->nome;  
 		$vagas = Vaga::where('processo_seletivo_id', $id_processo)->get();
 		$input = $request->all();
-		
 		$cpf = $input['cpf']; 
-		
 		$hoje     = date('Y-m-d', strtotime('now')); 
 		$insc_fim = date('Y-m-d', strtotime($processos->inscricao_fim));
 		
