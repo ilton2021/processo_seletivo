@@ -523,7 +523,7 @@ class CandidatoController extends Controller
 					\Session::flash('mensagem', ['msg' => 'Data Final não pode ser maior ou igual a Data Início!','class'=>'green white-text']);
 					$a = 7;			
 					return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'));										
-				} 
+				}
 			} 
 			if($request->file('arquivo_ctps1') !== NULL) {
 				$a = 1; 
@@ -699,7 +699,7 @@ class CandidatoController extends Controller
 				$cargo 				 = $input['cargo'];
 				$atribuicao 		 = $input['atribuicao'];
 				$data_inicio 		 = $input['data_inicio'];
-				$data_fim 			 = $input['data_fim'];
+				$data_fim 			 = date('Y-m-d',strtotime('now'));
 				$arquivo_ctps1		 = $input['arquivo_ctps1'];
 			}
 			if($input['empresa2'] == "") {
@@ -714,7 +714,7 @@ class CandidatoController extends Controller
 				$cargo2 			 = $input['cargo2'];
 				$atribuicao2 		 = $input['atribuicao2'];
 				$data_inicio2 		 = $input['data_inicio2'];
-				$data_fim2 			 = $input['data_fim2'];				
+				$data_fim2 			 = date('Y-m-d',strtotime('now'));				
 				$arquivo_ctps2		 = $input['arquivo_ctps2'];
 			}
 			if($input['empresa3'] == "") {
@@ -729,7 +729,7 @@ class CandidatoController extends Controller
 				$cargo3 		 	 = $input['cargo3'];
 				$atribuicao3 		 = $input['atribuicao3'];
 				$data_inicio3 		 = $input['data_inicio3'];
-				$data_fim3 			 = $input['data_fim3'];	
+				$data_fim3 			 = date('Y-m-d',strtotime('now'));	
 				$arquivo_ctps3       = $input['arquivo_ctps3'];
 			}
 			$arquivo 	  = $input['arquivo'];

@@ -28,7 +28,7 @@ Route::get('/auth/login','UserController@telaLogin')->name('telaLogin');
 Route::post('/auth/login/', 'UserController@Login')->name('Login');
 Route::get('/auth/register','UserController@telaRegistro')->name('telaRegistro');
 Route::post('/auth/register/','UserController@store')->name('store');
-Route::get('/telaReset','UserController@telaReset')->name('telaReset');
+Route::get('/telaReset','UserController@telaReset')->name('telaReset');	
 Route::post('/telaReset/','UserController@resetarSenha')->name('resetarSenha');
 
 
