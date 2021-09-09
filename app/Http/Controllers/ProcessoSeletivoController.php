@@ -63,7 +63,7 @@ class ProcessoSeletivoController extends Controller
 	{
 		$unidades = Unidade::all();
 		$processos = ProcessoSeletivo::all(); 
-		return view('cadastro_processo_novo', compact9('unidades','processos'));
+		return view('cadastro_processo_novo', compact('unidades','processos'));
 	}
 	
 	// Salvar Processo Seletivo //
@@ -308,6 +308,12 @@ class ProcessoSeletivoController extends Controller
 	public function storeVaga(Request $request)
 	{
 		$input = $request->all();
+		$id 	   = $input['processo_seletivo_id'];
+		$processos = ProcessoSeletivo::where('id', $id)->get();
+		$unidade_id = $processos[0]->unidade_id;
+		$input['unidade_id'] = $unidade_id;
+
+		
 		$validator = Validator::make($request->all(), [
 			'nome'   				 => 'required|max:255',
 			'codigo_vaga' 			 => 'required|max:255',
@@ -319,8 +325,7 @@ class ProcessoSeletivoController extends Controller
 			'quantidade' 			 => 'required|max:100'
 		]);
 		if ($validator->fails()) {
-			$id 	   = $input['processo_seletivo_id'];
-			$processos = ProcessoSeletivo::where('id', $id)->get();
+			
 			$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
 			return view('cadastro_vaga_processo', compact('processos','vagas'))
 					  ->withErrors($validator)

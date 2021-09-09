@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Model\Candidato;
 use App\Model\Unidade;
 use App\Model\ProcessoSeletivo;
@@ -342,7 +343,7 @@ class CandidatoController extends Controller
 			} else {
 				$text = true;
 				$cpf = $input['cpf'];
-				\Session::flash('mensagem', ['msg' => 'Vamos em frente! Selecione a Vaga!','class'=>'green white-text']);
+				\Session::flash('mensagem', ['msg' => 'Vamos em frente, selecione a Vaga!','class'=>'green white-text']);
 				$a = 2;			
 				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','cpf'));	
 			}				
@@ -350,7 +351,7 @@ class CandidatoController extends Controller
 			$cpf = $input['cpf'];
 			$vaga = $input['vaga'];
 			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe seus dados!','class'=>'green white-text']);
+			\Session::flash('mensagem', ['msg' => 'Vamos em frente, agora informe seus dados!','class'=>'green white-text']);
 			$a = 3;			
 			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf'));	
 		} else if( !($input['cpf'] == "") && $a == 3 ){
@@ -367,7 +368,7 @@ class CandidatoController extends Controller
 				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'));	
 			}
 			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe seu local de naturalidade!','class'=>'green white-text']);
+			\Session::flash('mensagem', ['msg' => 'Você é natural de:','class'=>'green white-text']);
 			$a = 4;			
 			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'));	
 		} else if( !($input['cpf'] == "") && $a == 4 ){
@@ -384,7 +385,7 @@ class CandidatoController extends Controller
 			$ano = date('Y', strtotime($data_nasc));
 			if($estado_nasc == "") {
 				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Selecione um Estado!','class'=>'green white-text']);
+				\Session::flash('mensagem', ['msg' => 'Selecione seu estado!','class'=>'green white-text']);
 				$a = 4;			
 				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'));	
 			} else if($ano > '2010'){
@@ -394,7 +395,7 @@ class CandidatoController extends Controller
 				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'));	
 			} else {
 				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe seu local de residência!','class'=>'green white-text']);
+				\Session::flash('mensagem', ['msg' => 'Vamos em frente! Agora informe os dados da residência onde você mora!','class'=>'green white-text']);
 				$a = 5;			
 				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc'));		
 			}
@@ -417,7 +418,7 @@ class CandidatoController extends Controller
 			$cep 		  = $input['cep'];
 			$complemento  = $input['complemento'];
 			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe sua escolaridade!','class'=>'green white-text']);
+			\Session::flash('mensagem', ['msg' => 'Um pouco mais sobre você:','class'=>'green white-text']);
 			$a = 6;			
 			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento'));	
 		} else if( !($input['cpf'] == "") && $a == 6 ){
@@ -458,7 +459,7 @@ class CandidatoController extends Controller
 						$request->file('arquivo_deficiencia')->move('../public/storage/candidato/deficiencia/'.$nprocesso.'/',$nomeA);
 						$arquivo_deficiencia = 'candidato/deficiencia/'.$nprocesso.'/'.$nomeA; 
 						$text = true;
-						\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe sua experiência!','class'=>'green white-text']);
+						\Session::flash('mensagem', ['msg' => 'Nos fale sobre suas experiências anteriores...','class'=>'green white-text']);
 						$a = 7;
 						return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'));										
 					} else {
@@ -471,7 +472,7 @@ class CandidatoController extends Controller
 			} else {
 				$arquivo_deficiencia = NULL;	
 				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe sua experiência!','class'=>'green white-text']);
+				\Session::flash('mensagem', ['msg' => 'Nos fale sobre suas experiências anteriores...','class'=>'green white-text']);
 				$a = 7;
 				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'));										
 			}
@@ -587,7 +588,7 @@ class CandidatoController extends Controller
 				$arquivo_ctps3 = null;
 			}
 			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe seu currículo!','class'=>'green white-text']);
+			\Session::flash('mensagem', ['msg' => 'Agora, é de extrema importância que você anexe o seu currículo!','class'=>'green white-text']);
 			$a = 8;
 			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3'));		
 		} else if( !($input['cpf'] == "") && $a == 8 ){
@@ -635,7 +636,7 @@ class CandidatoController extends Controller
 			$arquivo             = $input['arquivo'];
 			if($request->file('arquivo') === NULL) {	
 				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Informe seu currículo!','class'=>'green white-text']);
+				\Session::flash('mensagem', ['msg' => 'Anexe seu currículo!','class'=>'green white-text']);
 				$a = 8;
 				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3'));		
 			} else {
@@ -653,7 +654,7 @@ class CandidatoController extends Controller
 					}
 					$request->file('arquivo')->move('../public/storage/candidato/curriculo/'.$nprocesso.'/',$arquivo);
 					$text = true; 
-					\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe sua disponibilidade!','class'=>'green white-text']);
+					\Session::flash('mensagem', ['msg' => 'Precisamos saber um pouco mais sobre sua disponibilidade.','class'=>'green white-text']);
 					$a = 9;
 					return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3','arquivo'));	
 				} else {
@@ -737,13 +738,18 @@ class CandidatoController extends Controller
 			$periodo 	  = $input['periodo'];
 			$outra_cidade = $input['outra_cidade'];
 			$como_soube   = $input['como_soube'];
+			$parentesco   = $input['parentesco'];
 			if($como_soube == "outros"){
 				$como_soube = $input['como_soube2'];
 			} 
-			$parentesco = $input['parentesco'];
-			$parentesco_nome = $input['parentesco_nome'];
+			if($parentesco == "sim"){
+				$parentesco_nome = $input['parentesco_nome'];
+			}else{
+				$parentesco_nome = "";
+			}
+
 			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Vamos em frente! Informe sua disponibilidade!','class'=>'green white-text']);
+			\Session::flash('mensagem', ['msg' => 'Muito Obrigado por inscrever-se!','class'=>'green white-text']);
 			$a = 10;			
 			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3','arquivo','habilitacao','periodo','outra_cidade','como_soube','parentesco','parentesco_nome'));	
 		} else if( !($input['cpf'] == "") && $a == 10 ){
@@ -835,7 +841,17 @@ class CandidatoController extends Controller
 			'$cargo3','$atribuicao3','$arquivo_ctps3','$data_inicio3','$data_fim3',
 			'$como_soube','$parentesco','$parentesco_nome','$arquivo_deficiencia','','','','','','','','','','$arquivo','') ");
 			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Você está cadastrado! Boa Sorte!!','class'=>'green white-text']);
+
+			Mail::send('email.resultadoCadastro', [], function($m) use ($email) {
+				$m->from('portal@hcpgestao.org.br', 'PROCESSO SELETIVO HCP GESTÃO');
+				$m->subject('Cadastro Concluído!!!');
+				$m->to($email);
+			});
+
+
+			\Session::flash('mensagem', ['msg' => 'Você foi cadastrado para esta seleção! Desejamos Boa Sorte!!!','class'=>'green white-text']);
+	
+
 			$a = 10;	
 			$unidades = Unidade::all();
 			$processos = DB::table('processo_seletivo')
@@ -851,6 +867,7 @@ class CandidatoController extends Controller
 			$numeroInscricao = $nprocesso.'-'.$id2;
 			DB::statement("UPDATE processo_seletivo_".$nprocesso." SET numeroInscricao = '$numeroInscricao' WHERE id = '$id2' ");
 			$text = false;
+			
 			return view('candidato_', compact('unidade','processos','numero','nprocesso','text'));	
 		}
 	}
