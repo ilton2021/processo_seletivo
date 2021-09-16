@@ -29,8 +29,9 @@ Route::post('/auth/login/', 'UserController@Login')->name('Login');
 Route::get('/auth/register','UserController@telaRegistro')->name('telaRegistro');
 Route::post('/auth/register/','UserController@store')->name('store');
 Route::get('/telaReset','UserController@telaReset')->name('telaReset');	
-Route::post('/telaReset/','UserController@resetarSenha')->name('resetarSenha');
-
+Route::post('/telaReset','UserController@resetarSenha')->name('resetarSenha');
+Route::get('/auth/passwords/email','UserController@telaEmail')->name('telaEmail');
+Route::post('/auth/passwords/email','UserController@emailReset')->name('emailReset');
 
 Route::middleware(['auth'])->group( function() {
 	

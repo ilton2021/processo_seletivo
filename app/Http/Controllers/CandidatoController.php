@@ -819,6 +819,17 @@ class CandidatoController extends Controller
 			$nprocesso 		= $input['processo_nome'];
 			$n_vaga    = Vaga::where('id',$vaga)->get();
 			$nome_vaga = $n_vaga[0]->nome; 
+
+			$cpf = $input['cpf'];
+			$processos2 = DB::table('processo_seletivo_'.$nprocesso)->where('cpf',$cpf)->get();
+			$qtd = sizeof($processos2);
+			if($qtd > 0) {
+				$text = true;
+				\Session::flash('mensagem', ['msg' => 'Você já está participando desta seleção! Desejamos Boa Sorte e Sucesso!','class'=>'red white-text']);		
+				$a = 1;
+				return view('cadastro_candidatos', compact('unidade','processos','text','a'));	
+			} 
+
 			DB::statement("INSERT INTO processo_seletivo_".$nprocesso."
 			(vaga,data_inscricao,nome, cpf, email, telefone_fixo, telefone, lugar_nascimento, estado_nascimento,
 			cidade_nascimento, data_nascimento, rua, numero, bairro, cidade, estado,
@@ -848,10 +859,8 @@ class CandidatoController extends Controller
 				$m->to($email);
 			});
 
-
 			\Session::flash('mensagem', ['msg' => 'Você foi cadastrado para esta seleção! Desejamos Boa Sorte!!!','class'=>'green white-text']);
 	
-
 			$a = 10;	
 			$unidades = Unidade::all();
 			$processos = DB::table('processo_seletivo')

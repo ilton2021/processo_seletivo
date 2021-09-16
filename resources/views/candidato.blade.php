@@ -105,13 +105,13 @@
 							<tr>
 							<?php $hoje = date('d-m-Y', strtotime('now')); $a = 0; ?> 
 							   @foreach($unidades as $unidade)
-							      @if($unidade->id == 2) 
+							      @if($unidade->id == 2 || $unidade->id == 5 || $unidade->id == 6) 
 								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
+									  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="80px"></a>
 								   </td>
 								   @else
 								   <td width="300px">
-									  <a href="" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+									  <a href="" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
 								   </td>
 								   @endif 
 							   @endforeach
@@ -129,7 +129,7 @@
 							<tr>
 							   @foreach($unidades as $unidade)
 							   <td width="300px">
-								 <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
+								 <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
 							   </td>
 							   @endforeach
 						   </tr>
@@ -175,7 +175,7 @@
 							<p align="jusitify">
 							No âmbito de Gestão por OSS, a SPCC executa desde o ano de 2014 a gestão das UPAE Padre Assis Neves no município de Belo Jardim/PE e da UPAE Áureo Bradley no município de Arcoverde/PE; e desde o ano de 2018 a gestão da UPAE Caruaru e do Hospital São Sebastião, todas unidades do Governo do Estado de Pernambuco.
 							</p>
-							<p align="jusitfy">
+							<p align="jusitfy">	
 							Ainda, desde o ano de 2016 executa a gestão do Hospital da Mulher do Recife e da UPAE Arruda, ambos da Prefeitura Municipal do Recife.
 						    </p>
 

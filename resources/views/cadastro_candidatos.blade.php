@@ -110,14 +110,14 @@
 			  </table>
 			  @endif
 			  @if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div id="msg" style="text-align:center;" class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-		     <b>{{ Session::get ('mensagem')['msg'] }}</b>
-		 </div>
-		</div>
-		@endif
-	  @endif
+				@if ($text == true)
+				  <div class="container">
+					<div id="msg" style="text-align:center;" class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
+						<b>{{ Session::get ('mensagem')['msg'] }}</b>
+					</div>
+				  </div>
+				@endif
+			  @endif
 			  <table class="table table-borderless" border="0" width="100" bordercolor=DCDCDC id="dadosCpf" name="dadosCpf">
 			   <form action="{{ route('validar', array($unidade->id, $processos->id, $a)) }}" method="POST" enctype="multipart/form-data">	
 			   <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -334,14 +334,10 @@
 				 <td>
 				   <input style="width:250px;" class="form-control" placeholder="COMPLEMENTO" type="text" id="complemento" name="complemento" maxlength="200" />
 				   <td style="width:250px;"><span><b>Ex: Bloco C, AP - 203</b></span> </td>
- 
-				</td>
-				
-				 
+ 				</td>				
 				</tr>
-				
 			  </table>
-			  <center><input type="submit" class="btn btn-success btn-sm" style="margin-top: 70px;" value="Prosseguir" id="Salvar" name="Salvar" /> </center>
+			  <center><input type="submit" class="btn btn-success btn-sm" style="margin-top: 50px;" value="Prosseguir" id="Salvar" name="Salvar" /> </center>
 
 			  @endif
 			  
@@ -357,7 +353,6 @@
 					
 			@if($a == 6)
 			 <table class="table table-borderless" border="0" width="500" bordercolor=DCDCDC id="dadosEscolaridade">
-				
 				<tr style="width:50px;">
 				 <td><span  class="input-group-text"> Escolaridade: </td>
 				 <td>
@@ -379,8 +374,7 @@
 					 <option id="status_escolaridade" name="status_escolaridade" value="Concluido">Concluído</option>
 				   </select>
 				 </td>
-				</tr>
-				
+				</tr>	
 				<tr>
 				 <td> <span class="input-group-text">Formação em qual curso? </td>
 				 <td>
@@ -397,28 +391,20 @@
 					 <option id="deficiencia" name="deficiencia" value="Reabilitado">Reabilitado</option>
 					 <option id="deficiencia" name="deficiencia" value="Outra">Outra</option>
 				   </select>
-
 				 </td>
 				</tr>
 				<tr>
-				<td><span class="input-group-text"> Quais cursos realizou? </td>
+				 <td><span class="input-group-text"> Quais cursos realizou? </td>
 				 <td>
 				   <textarea class="form-control" placeholder="quais cursos realizou?" type="text" id="cursos" name="cursos" value="" maxlength="500"> </textarea>
-				</td>
-				<td style="width:250px;"><span><b>Anexe o Laudo -></b></span> </td>
-
-				<td>
-				<input style="width:150px;" class="form-control" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" value="" maxlength="600"> 
-
-			</td>
-
-			</tr>
-				
-							
-			  </table>
-
-			  <center><input type="submit" class="btn btn-success btn-sm" style="margin-top: 60px;" value="Prosseguir" id="Salvar" name="Salvar" /> </center>
-
+				 </td>
+				 <td style="width:250px;"><span><b>Anexe o Laudo -></b></span> </td>
+			 	 <td>
+				   <input style="width:150px;" class="form-control" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" value="" maxlength="600"> 
+				 </td>
+				</tr>
+			</table>
+			<center><input type="submit" class="btn btn-success btn-sm" style="margin-top: 60px;" value="Prosseguir" id="Salvar" name="Salvar" /> </center>
 			@endif
 			
 			@if($a == 7 || $a == 8 || $a == 9 || $a == 10)
@@ -438,131 +424,114 @@
 			  
 			<table style= "margin-top:-50px; width:700px;" class="table table-borderless" border="0" bordercolor=DCDCDC id="dadosExp1">
 				<tr>
-						<td>
-	
+				  <td>
+					<center><p style="margin-left: 180px; margin-top: 70px;"><span> <b>Os seus dados referentes a experiência serão adicionados num formulário. </br>Este formulário será exibido assim que você clicar no botão abaixo. </b> </span></p>	</center>	
+					<!-- Button trigger modal -->
+					<button style="margin-left: 275px; margin-top:10px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+					Clique aqui para adicionar suas experiências.
+					</button>
 
-<center><p style="margin-left: 180px; margin-top: 70px;"><span> <b>Os seus dados referentes a experiência serão adicionados num formulário. </br>Este formulário será exibido assim que você clicar no botão abaixo. </b> </span></p>	</center>	
-<!-- Button trigger modal -->
-<button style="margin-left: 275px; margin-top:10px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Clique aqui para adicionar suas experiências.
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" style="margin-left: -400px;" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="width: 1000px;">
-      <div class="modal-header">
-        <center><h5 class="modal-title"id="exampleModalLongTitle" >Experiências</h5></center>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" style="width: 900px; background-color: white;">
-        
-
-					<table>
-
-						<tr>
-						<td colspan="6" align="right">
-						Adicionar Experiência 02 <input type="checkbox" onclick="desabilitar('sim')" id="exp1" name="exp1" />
-						</td>
-						</tr>
-						<tr>
-						<td colspan="3" align="center"><strong> Experiência 01: </strong></td>
-						</tr>
-						<tr>
-						<td><span style="width: 150px;" class="input-group-text"> Empresa:</span> </td>
-						<td>
-						<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa" name="empresa" value="" maxlength="150" />
-						</td>
-						<td><span style="width: 150px; " class="input-group-text"> Cargo:</span> </td>
-						<td>
-						<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo" name="cargo" value="" maxlength="150" />
-						</td>
-						</tr>
-						
-						<tr>
-						<td><span style="width: 150px;" class="input-group-text"> Data Início:</span> </td>
-						<td>
-						<input style="margin-left: -45px; width:230px; " class="form-control" type="date" id="data_inicio" name="data_inicio" value="" maxlength="15" />
-						</td>
-						<td><span style="width: 150px;" class="input-group-text"> Data Fim: </td>
-						<td>
-						<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim" name="data_fim" value="" maxlength="15" />
-						</td>
-						</tr>
-						<tr>
-						
-						</tr>
-						<tr>
-						<td><span style="width: 150px;" class="input-group-text"> Suas Atribuições: </span></td>
-						<td>
-						<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao" name="atribuicao" value="" maxlength="300" />
-						</td>
-						<td> CTPS ou Contra Cheque </br> .doc, .docx e .pdf </td>
-						<td>
-						<input class="form-control" type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600"> 
-						</td>
-						</tr>
-						
-						<tr>
-							<td colspan="4">
-								<center><strong>ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</strong></center>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="6">
-							<center><input type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" value="Prosseguir" id="Salvar1" name="Salvar" /> </center>  
-							</td>
-						</tr>
-						
-					</table>
-
-
-							<table class="table table-borderless" border="0" width="500" bordercolor=DCDCDC id="dadosExp2" style="display: none; background-color: white;">
-								<tr>
-								<td colspan="6" align="right" width="800">
-								Adicionar Experiência 03 <input type="checkbox" onclick="desabilitar2('sim')" id="exp_2" name="exp_2" />
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" style="margin-left: -400px;" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content" style="width: 1000px;">
+						<div class="modal-header">
+							<center><h5 class="modal-title"id="exampleModalLongTitle" >Experiências</h5></center>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" style="width: 900px; background-color: white;">
+						  <table>
+							<tr>
+							 	<td colspan="6" align="right">
+							  		Adicionar Experiência 02 <input type="checkbox" onclick="desabilitar('sim')" id="exp1" name="exp1" />
+							 	</td>
+							</tr>
+							<tr>
+							 	<td colspan="3" align="center"><strong> Experiência 01: </strong></td>
+							</tr>
+							<tr>
+							 	<td><span style="width: 150px;" class="input-group-text"> Empresa:</span> </td>
+							 	<td>
+							  		<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa" name="empresa" value="" maxlength="150" />
+							 	</td>
+							 	<td><span style="width: 150px; " class="input-group-text"> Cargo:</span> </td>
+							 	<td>
+							  		<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo" name="cargo" value="" maxlength="150" />
+							 	</td>
+							</tr>				
+							<tr>
+							 	<td><span style="width: 150px;" class="input-group-text"> Data Início:</span> </td>
+							 	<td>
+							  		<input style="margin-left: -45px; width:230px;" class="form-control" type="date" id="data_inicio" name="data_inicio" value="" maxlength="15" />
+							 	</td>
+							 	<td><span style="width: 150px;" class="input-group-text"> Data Fim: </td>
+							 	<td>
+							  		<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim" name="data_fim" value="" maxlength="15" />
+							 	</td>
+							</tr>
+							<tr>		
+							</tr>
+							<tr>
+							 	<td> <span style="width: 150px;" class="input-group-text"> Suas Atribuições: </span> </td>
+							 	<td>
+							  		<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao" name="atribuicao" value="" maxlength="300" />
+							 	</td>
+							 	<td> CTPS ou Contra Cheque </br> .doc, .docx e .pdf </td>
+							 	<td>
+							  		<input class="form-control" type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600"> 
+							 	</td>
+							</tr>
+							<tr>
+								<td colspan="4">
+									<center><strong>ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</strong></center>
 								</td>
-								</tr>
-								<tr>
+							</tr>
+							<tr>
+								<td colspan="6">
+								<center><input type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" value="Prosseguir" id="Salvar1" name="Salvar" /> </center>  
+								</td>
+							</tr>
+						  </table>
+
+						  <table class="table table-borderless" border="0" width="500" bordercolor=DCDCDC id="dadosExp2" style="display: none; background-color: white;">
+							<tr>
+								<td colspan="6" align="right" width="800">
+							 		Adicionar Experiência 03 <input type="checkbox" onclick="desabilitar2('sim')" id="exp_2" name="exp_2" />
+								</td>
+							</tr>
+							<tr>
 								<td colspan="3" align="center"><strong> Experiência 02: </strong></td>
-								</tr>
-								<tr>
+							</tr>
+							<tr>
 								<td><span style="width: 150px;" class="input-group-text"> Empresa:</span> </td>
 								<td>
-								<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa2" name="empresa2" value="" maxlength="150" />
+									<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa2" name="empresa2" value="" maxlength="150" />
 								</td>
 								<td><span style="width: 150px; " class="input-group-text"> Cargo:</span> </td>
 								<td>
-								<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo2" name="cargo2" value="" maxlength="150" />
+									<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo2" name="cargo2" value="" maxlength="150" />
 								</td>
-								</tr>
-								
-
-
-								<tr>
+							</tr>
+							<tr>
 								<td><span style="width: 150px;" class="input-group-text"> Data Início:</span> </td>
 								<td>
-								<input style="margin-left: -45px; width:230px; " class="form-control" type="date" id="data_inicio2" name="data_inicio2" value="" maxlength="15" />
+									<input style="margin-left: -45px; width:230px; " class="form-control" type="date" id="data_inicio2" name="data_inicio2" value="" maxlength="15" />
 								</td>
 								<td><span style="width: 150px;" class="input-group-text"> Data Fim: </td>
 								<td>
-								<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim2" name="data_fim2" value="" maxlength="15" />
+									<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim2" name="data_fim2" value="" maxlength="15" />
 								</td>
-								</tr>
-								<tr>
 							</tr>
-
-
-								<tr>
+							<tr>
 								<td><span style="width: 150px;" class="input-group-text"> Suas Atribuições: </span></td>
 								<td>
-								<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao2" name="atribuicao2" value="" maxlength="300" />
+									<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao2" name="atribuicao2" value="" maxlength="300" />
 								</td>
 								<td> CTPS ou Contra Cheque </br> .doc, .docx e .pdf </td>
 								<td>
-								<input class="form-control" type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
+									<input class="form-control" type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
 								</td>
 								</tr>
 								<tr>
@@ -570,62 +539,55 @@
 								</tr>
 								<tr>
 								<td colspan="6">
-								<center><input  type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" value="Prosseguir" id="Salvar2" name="Salvar" /> </center>  
+									<center><input  type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" value="Prosseguir" id="Salvar2" name="Salvar" /> </center>  
 								</td>
 								</tr>
-								
-							</table>
+						  </table>
 
-											<table class="table table-borderless" border="0" width="500" bordercolor=DCDCDC id="dadosExp3" style="display: none; background-color: white;">
-												<tr>
-												<td colspan="3" align="center"><strong> Experiência 03: </strong></td>
-												</tr>
-												<tr>
-												<td><span style="width: 150px;" class="input-group-text"> Empresa:</span> </td>
-												<td>
-												<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa3" name="empresa3" value="" maxlength="150" />
-												</td>
-												<td><span style="width: 150px; " class="input-group-text"> Cargo:</span> </td>
-												<td>
-												<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo3" name="cargo3" value="" maxlength="150" />
-												</td>
-												</tr>
-											
-											
-												<tr>
-												<td><span style="width: 150px;" class="input-group-text"> Data Início:</span> </td>
-												<td>
-												<input style="margin-left: -45px; width:230px; " class="form-control" type="date" id="data_inicio3" name="data_inicio3" value="" maxlength="15" />
-												</td>
-												<td><span style="width: 150px;" class="input-group-text"> Data Fim: </td>
-												<td>
-												<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim3" name="data_fim3" value="" maxlength="15" />
-												</td>
-												</tr>
-												<tr>
-
-
-												
-												<tr>
-												<td><span style="width: 150px;" class="input-group-text"> Suas Atribuições: </span></td>
-												<td>
-												<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao3" name="atribuicao3" value="" maxlength="300" />
-												</td>
-												<td> CTPS ou Contra Cheque </br> .doc, .docx e .pdf </td>
-												<td>
-												<input class="form-control" type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
-												</td>
-												</tr>
-												<tr>
-												<td colspan="4"><center><strong>ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</center></strong></td>
-												</tr>
-												<tr>
-												<td colspan="6">
-												<center><input colspan="6" type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" value="Prosseguir" id="Salvar3" name="Salvar" /> </center>  
-												</td>
-												</tr>
-											</table>
-											
+						  <table class="table table-borderless" border="0" width="500" bordercolor=DCDCDC id="dadosExp3" style="display: none; background-color: white;">
+						 	<tr>
+							  <td colspan="3" align="center"><strong> Experiência 03: </strong></td>
+							</tr>
+							<tr>
+							  <td><span style="width: 150px;" class="input-group-text"> Empresa:</span> </td>
+							  <td>
+								<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa3" name="empresa3" value="" maxlength="150" />
+							  </td>
+							  <td><span style="width: 150px; " class="input-group-text"> Cargo:</span> </td>
+							  <td>
+								<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo3" name="cargo3" value="" maxlength="150" />
+							  </td>
+							</tr>
+							<tr>
+							  <td><span style="width: 150px;" class="input-group-text"> Data Início:</span> </td>
+							  <td>
+								<input style="margin-left: -45px; width:230px; " class="form-control" type="date" id="data_inicio3" name="data_inicio3" value="" maxlength="15" />
+							  </td>
+							  <td><span style="width: 150px;" class="input-group-text"> Data Fim: </td>
+							  <td>
+								<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim3" name="data_fim3" value="" maxlength="15" />
+							  </td>
+							</tr>
+							<tr>					
+							<tr>
+							  <td><span style="width: 150px;" class="input-group-text"> Suas Atribuições: </span></td>
+							  <td>
+								<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao3" name="atribuicao3" value="" maxlength="300" />
+							  </td>
+							  <td> CTPS ou Contra Cheque </br> .doc, .docx e .pdf </td>
+							  <td>
+								<input class="form-control" type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
+							  </td>
+							</tr>
+							<tr>
+							  <td colspan="4"><center><strong>ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</center></strong></td>
+							</tr>
+							<tr>
+							  <td colspan="6">
+								<center><input colspan="6" type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" value="Prosseguir" id="Salvar3" name="Salvar" /> </center>  
+							  </td>
+							</tr>
+						  </table>			
 			</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
@@ -633,7 +595,6 @@
 	</div>
 </div>
 </div>
-			  
 			@endif
 			
 			@if($a == 8 || $a == 9 || $a == 10)
@@ -778,11 +739,9 @@
 			  </td>
 			</table>
 			@endif
-			
 			<input hidden type="text" id="id_tabela" name="id_tabela" value="" />
 			<input hidden type="text" id="id_interno" name="id_interno" value="" />
-			<input hidden type="text" id="pais" name="pais" value="" />
-			
+			<input hidden type="text" id="pais" name="pais" value="" />		
 			</form> 
 		  </div>
 		</div>
@@ -819,7 +778,7 @@
 	 });
 
 
-	function habilitar(){
+function habilitar(){
 	if(document.getElementById('check').checked){
 		document.getElementById('data_fim').disabled = true;
 	} else {
@@ -829,7 +788,6 @@
 
 function comoSoube(){
 	var optionSelect = document.getElementById("como_soube").value;
-	
 	if(optionSelect == "outros"){
 		document.getElementById("como_soube2").disabled = false;
 	} else {
@@ -837,40 +795,30 @@ function comoSoube(){
 	}
 }
 		
-
 function familiar(){
-
 	var parente = document.getElementById("parentesco").value;
-
 	if(parente == "sim"){
 		document.getElementById("parentesco_nome").disabled = false;
 	}else{
 		document.getElementById("parentesco_nome").disabled = true;
 	}
 }
-
-	 </script>
+</script>
 	 
-  </body>
-  <style>
-
+</body>
+<style>
 body{
 	font-size: 13px;
 	background-color: white;
 	Font-family: Cambria, Georgia, serif.;
-
 }
-
 h5{
 	margin-top: 15px;
 }
-
 div#msg{
 	font-size: 13px;
 }
-
-div#reflexo{
-	
+div#reflexo{	
 	background-color: white;
 	height: 670px;
 	width: 900px;
@@ -886,7 +834,6 @@ img#hcp{
 	width:90px;
 	height:50px;
 	margin-top:-200px;
-
 }
 div#titulo{
 	border-radius: 10px;
@@ -894,19 +841,10 @@ div#titulo{
 #tabelaTitulo{
 	
 }
-
 table#tabelacep{
-
 	margin-top: 25px;
-
 }
-
 section.sppb-section{
 }
-
-
-
-
-
 </style>
 </html>
