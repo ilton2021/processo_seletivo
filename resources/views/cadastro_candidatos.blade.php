@@ -109,15 +109,15 @@
 				</tr>
 			  </table>
 			  @endif
-			  @if (Session::has('mensagem'))
-				@if ($text == true)
-				  <div class="container">
-					<div id="msg" style="text-align:center;" class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-						<b>{{ Session::get ('mensagem')['msg'] }}</b>
-					</div>
-				  </div>
-				@endif
-			  @endif
+			  @if($errors->any())
+			  <div class="alert alert-success">
+				<ul>
+					@foreach ($errors->all() as $error)
+					  <li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			  </div>
+		 	  @endif 
 			  <table class="table table-borderless" border="0" width="100" bordercolor=DCDCDC id="dadosCpf" name="dadosCpf">
 			   <form action="{{ route('validar', array($unidade->id, $processos->id, $a)) }}" method="POST" enctype="multipart/form-data">	
 			   <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -179,7 +179,7 @@
 				<tr>
 				 <td>    <span class="input-group-text">Nome Completo:</span></td>
 				 <td>
-				   <input class="form-control" placeholder="nome"  type="text" id="nome" name="nome" value="" required maxlength="150" />
+				   <input class="form-control" placeholder="nome"  type="text" id="nome" name="nome" value="{{ old('nome') }}" required maxlength="150" />
 				 </td>
 				 <td></td>
 				</tr>
@@ -197,13 +197,13 @@
 				<tr>
 				 <td><span class="input-group-text"> Telefone Celular:</span> </td>
 				 <td>
-				   <input class="form-control" placeholder="Ex: (81)98888-3333" type="text" maxlength="14" id="celular" name="celular" value="" required />
+				   <input class="form-control" placeholder="Ex: (81)98888-3333" type="text" maxlength="14" id="celular" name="celular" value="{{ old('celular') }}" required />
 				 </td><td></td>
 				</tr>
 				<tr>
 				 <td><span class="input-group-text"> Telefone Fixo:</span> </td>
 				 <td>
-				   <input class="form-control" placeholder="Ex: (81)2222-3333" type="text" id="fone_fixo" maxlength="13" name="fone_fixo" value="" />
+				   <input class="form-control" placeholder="Ex: (81)2222-3333" type="text" id="fone_fixo" maxlength="13" name="fone_fixo" value="{{ old('fone_fixo') }}" />
 				 </td>
 			 	 
 				</tr>
@@ -226,7 +226,7 @@
 				<tr>
 				 <td><span class="input-group-text"> Cidade:</span> </td>
 				 <td>
-				   <input class="form-control" placeholder="Cidade" type="text" id="cidade_nasc" name="cidade_nasc" value="" required maxlength="100" />
+				   <input class="form-control" placeholder="Cidade" type="text" id="cidade_nasc" name="cidade_nasc" value="{{ old('cidade_nasc') }}" required maxlength="100" />
 				 </td>
 				</tr>
 				<tr>
@@ -268,13 +268,13 @@
 				<tr>
 				 <td><span class="input-group-text"> País:</span> </td>
 				 <td>
-				   <input class="form-control" placeholder="País" type="text" id="naturalidade" name="naturalidade" value="" required maxlength="50" />
+				   <input class="form-control" placeholder="País" type="text" id="naturalidade" name="naturalidade" value="{{ old('naturalidade') }}" required maxlength="50" />
 				 </td>
 				</tr>
 				<tr>
 				 <td><span class="input-group-text"> Data de Nascimento: </span></td>
 				 <td>
-				   <input class="form-control" type="date" id="data_nasc" name="data_nasc" value="" required />
+				   <input class="form-control" type="date" id="data_nasc" name="data_nasc" value="{{ old('data_nasc') }}" required />
 				 </td>
 				 
 				</tr>
@@ -297,42 +297,40 @@
 				<tr>
 				 <td style="width:200px;"><span class="input-group-text"> Qual CEP:</span> </td>
 				 <td>
-				 <input style="width: 250px;" class="form-control" placeholder="CEP" type="text" id="cep" name="cep" required maxlength="30" />
-
+				 <input style="width: 250px;" class="form-control" placeholder="CEP" type="text" id="cep" name="cep" value="{{ old('cep') }}" required maxlength="30" />
 				 </td>
 				 <td>
 				 <span class="input-group-text"> Qual Rua:</span>
 				</td>
 				<td>
-				   <input style="width:250px;" class="form-control" placeholder="RUA" type="text" id="rua" name="rua" required maxlength="100" />
+				   <input style="width:250px;" class="form-control" placeholder="RUA" type="text" id="rua" name="rua" value="{{ old('rua') }}" required maxlength="100" />
 				 </td>
 				</tr>
-
 				<tr>
 				 <td><span class="input-group-text"> Qual Número:</span> </td>
 				 <td>
-				   <input style="width:250px;" class="form-control" placeholder="NÚMERO" type="text" id="numero" name="numero" required maxlength="10" />
+				   <input style="width:250px;" class="form-control" placeholder="NÚMERO" type="text" id="numero" name="numero" value="{{ old('numero') }}" required maxlength="10" />
 				 </td>
 				 <td><span class="input-group-text"> Qual Bairro:</span> </td>
 				 <td>
-				   <input style="width:250px;" class="form-control" placeholder="BAIRRO" type="text" id="bairro" name="bairro" required maxlength="100" />
+				   <input style="width:250px;" class="form-control" placeholder="BAIRRO" type="text" id="bairro" name="bairro" value="{{ old('bairro') }}" required maxlength="100" />
 				 </td>
 				</tr>
 				
 				<tr>
 				 <td><span class="input-group-text"> Qual Cidade:</span> </td>
 				 <td>
-				   <input style="width:250px;" class="form-control" placeholder="CIDADE" type="text" id="cidade" name="cidade" required maxlength="100" />
+				   <input style="width:250px;" class="form-control" placeholder="CIDADE" type="text" id="cidade" name="cidade" value="{{ old('cidade') }}" required maxlength="100" />
 				 </td>
 				 <td><span class="input-group-text"> Qual Estado:</span> </td>
 				 <td>
-				   <input style="width:250px;" class="form-control" placeholder="ESTADO" type="text" id="estado" name="estado" required maxlength="100" />
+				   <input style="width:250px;" class="form-control" placeholder="ESTADO" type="text" id="estado" name="estado" value="{{ old('estado') }}" required maxlength="100" />
 				 </td>
 				</tr>
 				<tr>
 				 <td ><span class="input-group-text"> Complemento: </td>
 				 <td>
-				   <input style="width:250px;" class="form-control" placeholder="COMPLEMENTO" type="text" id="complemento" name="complemento" maxlength="200" />
+				   <input style="width:250px;" class="form-control" placeholder="COMPLEMENTO" type="text" id="complemento" name="complemento" value="{{ old('complemento') }}" maxlength="200" />
 				   <td style="width:250px;"><span><b>Ex: Bloco C, AP - 203</b></span> </td>
  				</td>				
 				</tr>
@@ -354,9 +352,9 @@
 			@if($a == 6)
 			 <table class="table table-borderless" border="0" width="500" bordercolor=DCDCDC id="dadosEscolaridade">
 				<tr style="width:50px;">
-				 <td><span  class="input-group-text"> Escolaridade: </td>
+				 <td><span class="input-group-text"> Escolaridade: </td>
 				 <td>
-				   <select style="width:250px;" id="escolaridade" name="escolaridade" class="form-control">
+				   <select style="width:200px;" id="escolaridade" name="escolaridade" class="form-control">
 				    <option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
 				    <option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
 					<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
@@ -368,7 +366,7 @@
 				 </td>
 				 <td><span class="input-group-text"> Status da Escolaridade: </td>
 				 <td>
-				   <select id="status_escolaridade" name="status_escolaridade" class="form-control">
+				   <select id="status_escolaridade" style="width:200px;" name="status_escolaridade" class="form-control">
 				     <option id="status_escolaridade" name="status_escolaridade" value="Em Andamento">Em Andamento</option>
 					 <option id="status_escolaridade" name="status_escolaridade" value="Trancado">Trancado</option>
 					 <option id="status_escolaridade" name="status_escolaridade" value="Concluido">Concluído</option>
@@ -378,7 +376,7 @@
 				<tr>
 				 <td> <span class="input-group-text">Formação em qual curso? </td>
 				 <td>
-				   <input class="form-control" placeholder="Formação em qual curso?" type="text" id="formacao" name="formacao" value="" maxlength="150" />
+				   <input class="form-control" style="width:200px;" placeholder="Formação em qual curso?" type="text" id="formacao" name="formacao" value="{{ old('formacao') }}" maxlength="150" />
 				 </td>
 				 <td><span class="input-group-text"> Possui alguma PCD: </td>
 				 <td>
@@ -396,11 +394,11 @@
 				<tr>
 				 <td><span class="input-group-text"> Quais cursos realizou? </td>
 				 <td>
-				   <textarea class="form-control" placeholder="quais cursos realizou?" type="text" id="cursos" name="cursos" value="" maxlength="500"> </textarea>
+				   <textarea class="form-control" style="width:200px;" placeholder="quais cursos realizou?" type="text" id="cursos" name="cursos" value="{{ old('cursos') }}" maxlength="500">{{ old('cursos') }}</textarea>
 				 </td>
 				 <td style="width:250px;"><span><b>Anexe o Laudo -></b></span> </td>
 			 	 <td>
-				   <input style="width:150px;" class="form-control" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" value="" maxlength="600"> 
+				   <input style="width:200px;" class="form-control" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" value="" maxlength="600"> 
 				 </td>
 				</tr>
 			</table>
@@ -454,21 +452,21 @@
 							<tr>
 							 	<td><span style="width: 150px;" class="input-group-text"> Empresa:</span> </td>
 							 	<td>
-							  		<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa" name="empresa" value="" maxlength="150" />
+							  		<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" />
 							 	</td>
 							 	<td><span style="width: 150px; " class="input-group-text"> Cargo:</span> </td>
 							 	<td>
-							  		<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo" name="cargo" value="" maxlength="150" />
+							  		<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" />
 							 	</td>
 							</tr>				
 							<tr>
 							 	<td><span style="width: 150px;" class="input-group-text"> Data Início:</span> </td>
 							 	<td>
-							  		<input style="margin-left: -45px; width:230px;" class="form-control" type="date" id="data_inicio" name="data_inicio" value="" maxlength="15" />
+							  		<input style="margin-left: -45px; width:230px;" class="form-control" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" />
 							 	</td>
 							 	<td><span style="width: 150px;" class="input-group-text"> Data Fim: </td>
 							 	<td>
-							  		<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim" name="data_fim" value="" maxlength="15" />
+							  		<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" />
 							 	</td>
 							</tr>
 							<tr>		
@@ -476,7 +474,7 @@
 							<tr>
 							 	<td> <span style="width: 150px;" class="input-group-text"> Suas Atribuições: </span> </td>
 							 	<td>
-							  		<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao" name="atribuicao" value="" maxlength="300" />
+							  		<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" />
 							 	</td>
 							 	<td> CTPS ou Contra Cheque </br> .doc, .docx e .pdf </td>
 							 	<td>
@@ -507,27 +505,27 @@
 							<tr>
 								<td><span style="width: 150px;" class="input-group-text"> Empresa:</span> </td>
 								<td>
-									<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa2" name="empresa2" value="" maxlength="150" />
+									<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" />
 								</td>
 								<td><span style="width: 150px; " class="input-group-text"> Cargo:</span> </td>
 								<td>
-									<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo2" name="cargo2" value="" maxlength="150" />
+									<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" />
 								</td>
 							</tr>
 							<tr>
 								<td><span style="width: 150px;" class="input-group-text"> Data Início:</span> </td>
 								<td>
-									<input style="margin-left: -45px; width:230px; " class="form-control" type="date" id="data_inicio2" name="data_inicio2" value="" maxlength="15" />
+									<input style="margin-left: -45px; width:230px; " class="form-control" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" />
 								</td>
 								<td><span style="width: 150px;" class="input-group-text"> Data Fim: </td>
 								<td>
-									<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim2" name="data_fim2" value="" maxlength="15" />
+									<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" />
 								</td>
 							</tr>
 							<tr>
 								<td><span style="width: 150px;" class="input-group-text"> Suas Atribuições: </span></td>
 								<td>
-									<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao2" name="atribuicao2" value="" maxlength="300" />
+									<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" />
 								</td>
 								<td> CTPS ou Contra Cheque </br> .doc, .docx e .pdf </td>
 								<td>
@@ -551,28 +549,28 @@
 							<tr>
 							  <td><span style="width: 150px;" class="input-group-text"> Empresa:</span> </td>
 							  <td>
-								<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa3" name="empresa3" value="" maxlength="150" />
+								<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Empresa" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" />
 							  </td>
 							  <td><span style="width: 150px; " class="input-group-text"> Cargo:</span> </td>
 							  <td>
-								<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo3" name="cargo3" value="" maxlength="150" />
+								<input style = "margin-left: 10px; margin-right: 230px;" class="form-control" placeholder="Cargo" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" />
 							  </td>
 							</tr>
 							<tr>
 							  <td><span style="width: 150px;" class="input-group-text"> Data Início:</span> </td>
 							  <td>
-								<input style="margin-left: -45px; width:230px; " class="form-control" type="date" id="data_inicio3" name="data_inicio3" value="" maxlength="15" />
+								<input style="margin-left: -45px; width:230px; " class="form-control" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" />
 							  </td>
 							  <td><span style="width: 150px;" class="input-group-text"> Data Fim: </td>
 							  <td>
-								<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim3" name="data_fim3" value="" maxlength="15" />
+								<input style = "margin-left: 10px; margin-right: 60px;"class="form-control" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" />
 							  </td>
 							</tr>
 							<tr>					
 							<tr>
 							  <td><span style="width: 150px;" class="input-group-text"> Suas Atribuições: </span></td>
 							  <td>
-								<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao3" name="atribuicao3" value="" maxlength="300" />
+								<input style="margin-left: -45px; width:230px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" />
 							  </td>
 							  <td> CTPS ou Contra Cheque </br> .doc, .docx e .pdf </td>
 							  <td>
@@ -681,8 +679,7 @@
 				  </select>
 				 </td>
 				</tr>
-			 	<tr>
-	
+			 	<tr>	
 				  <td><span class="input-group-text"> Como soube da vaga?</span> </td>
 				  <td>
 				  <select style= "width:140px;"onchange="comoSoube()" class="form-control" id="como_soube" name="como_soube"> 
@@ -691,20 +688,17 @@
 					<option id="como_soube" name="como_soube" value="indicacao"> Indicação </option>  
 					<option id="como_soube" name="como_soube" value="outros"> Outros </option>  
 				  </select>
-				  <td> <input style= "width:200px; margin-left: -225px" type="text" id="como_soube2" name="como_soube2" class="form-control" disabled required/> </td>
-
+				  <td> <input style= "width:200px; margin-left: -225px" type="text" id="como_soube2" name="como_soube2" class="form-control" disabled required/> </td> 
 				  </td>
-				  
 				</tr>
 				<tr>
-				  <td> Você possui Parentesco com algum Colaborador do HCP Gestão? </td>
+				  <td><span class="input-group-text"> Você possui Parentesco com algum Colaborador do HCP Gestão? </span></td>
 				  <td>
 				  <select style= "width:100px;" onchange="familiar()" class="form-control" id="parentesco" name="parentesco"> 
 				  	<option id="parentesco" name="parentesco" value="nao"> Não </option>  
 					<option id="parentesco" name="parentesco" value="sim"> Sim </option>  
 					</select>	
 					<td> <input style= "width:200px; margin-left: -225px;" type="text" id="parentesco_nome" name="parentesco_nome" class="form-control" disabled required/> </td>
-
 				  </td>
 				</tr>
 				<tr>

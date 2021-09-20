@@ -105,7 +105,7 @@
 							<tr>
 							<?php $hoje = date('d-m-Y', strtotime('now')); $a = 0; ?> 
 							   @foreach($unidades as $unidade)
-							      @if($unidade->id == 2 || $unidade->id == 5 || $unidade->id == 6) 
+							      @if($unidade->id == 2) 
 								   <td width="300px">
 									  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="80px"></a>
 								   </td>
