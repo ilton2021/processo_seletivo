@@ -22,6 +22,7 @@ class CandidatoController extends Controller
     public function candidatoIndex()
 	{
 		$unidades = Unidade::all();
+		$hoje = date('Y-m-d', strtotime('now'));
 		$processos1 = ProcessoSeletivo::all();
 		$qtd = sizeof($processos1);
 		$processos = DB::table('processo_seletivo')
@@ -29,15 +30,29 @@ class CandidatoController extends Controller
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
 		->get()->toArray();
 		$processos2 = DB::table('unidade')
-		->join('processo_seletivo', 'unidade.id', '=', 'processo_seletivo.unidade_id')
+		->join('processo_seletivo','unidade.id','=','processo_seletivo.unidade_id')
 		->select('unidade.id')
-		->get()->toArray();
+		->where('inscricao_fim','>=',$hoje)
+		->where('inscricao_inicio','<=',$hoje)
+		->get(); 
+		$qtdP = sizeof($processos2); 
 		$quadros = QuadroAvisos::all();
-		$hoje = date('Y-m-d', strtotime('now'));
-		$ps = DB::table('processo_seletivo')->where('inscricao_fim','>=',$hoje)->where('inscricao_inicio','<=',$hoje)->get();
-		$qtd = sizeof($ps);
-		$text = false;
-		return view('candidato', compact('unidades','processos','processos2','processos1','quadros','qtd','ps'));
+		$missing = array();
+		for($a = 0; $a < $qtdP; $a++){
+			$missing[] = $processos2[$a]->id;
+		}
+		if( is_array($missing) && count($missing) > 0 ) {
+			$result = '';
+			$total = count($missing) - 1;
+			for($i = 0; $i <= $total; $i++){ 
+				$result .= $missing[$i];
+				if($i < $total)
+					$result .= ", ";
+			}
+		} else {
+			$result = "";
+		}
+		return view('candidato', compact('unidades','processos','processos2','processos1','quadros','qtd','result'));
 	}
 	
 	// Página Informações Cadastro Candidatos //
