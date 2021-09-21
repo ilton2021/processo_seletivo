@@ -15,11 +15,10 @@
 		<div id="sp-logo" class="span2"><div class="logo-wrapper"><a href="/"><img alt="" class="image-logo" src="/images/layout/marca-site-hcp.png" /></a></div></div>
 		<div id="sp-menu" class="span7">	
 		<div style= "text-align:center; opacity:75%;border-radius: 25px; color: white;margin-top:-15px;height: 160px;background-color: #57D211;  margin-bottom: -25px; Font-family: Cambria, Georgia, serif."class="jumbotron jumbotron-fluid">
-									<div class="container">
-										<h5 class="display-8"><b><p style="align: center">PROCESSO SELETIVO HCP GESTÃO<br><img id="hcp" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></td> </p></h5>
-									</div>
-									</div>	
-											
+			<div class="container">
+				<h5 class="display-8"><b><p style="align: center">PROCESSO SELETIVO HCP GESTÃO<br><img id="hcp" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></td> </p></h5>
+			</div>
+		</div>	
 		</div>
 	   </div></div>
 	   </header>
@@ -44,15 +43,15 @@
 				 </div>
 			  </section>	 
 			  </div>
-			  @if (Session::has('mensagem'))
-				@if ($text == true)
-				<div class="container">
-				 <div class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-					  {{ Session::get ('mensagem')['msg'] }}
-				 </div>
-				</div>
-			   @endif
-			  @endif
+			  @if($errors->any())
+			  <div class="alert alert-success">
+				<ul>
+					@foreach ($errors->all() as $error)
+					  <li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			  </div>
+		 	  @endif 
 			  <table class="table table-borderless" border="1" bordercolor=DCDCDC>
 			   <tr>
 			    <td> <b><u><center> Parabéns! Você foi cadastrado no Processo Seletivo:</u></b> <b>{{ $nprocesso }}</b>! </center> </td>

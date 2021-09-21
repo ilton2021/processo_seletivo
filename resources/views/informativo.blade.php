@@ -37,20 +37,20 @@
 						 <br>
 						 <table class="table table-borderless" border="0" width="500" id="inicio">
 						   <tr>
-							<td align="center"><strong> Olá! Seja bem vindo ao processo seletivo simplificado {{ $processos[0]->nome }}. </strong></td>
+							<td align="center"><strong> Olá! Seja bem vindo ao Processo Seletivo Simplificado: {{ $processos[0]->nome }}. </strong></td>
 						   </tr>
 						   <tr>
-						    <td>
+						    <td> 
 							  <p>
-								<b><center>Antes de iniciar o Processo Seletivo é importante:</center></b> <br>
-								<ul style="text-align: center; list-style-type:none;">
+								<b><center>Antes de iniciar o Processo Seletivo é importante:</center></b> <br><br>
+								<ul style="text-align: left; list-style-type:none;">
 									<li style="padding: 2px;"><b>Ler todo o edital com atenção: <a href="{{asset('storage')}}/{{$processos[0]->edital_caminho}}" target='_blank'>Regulamento - {{ $processos[0]->nome }}</a>.</b></li>
 									<li style="padding: 2px;"><b>Ler toda documentação necessária para admissão: <a href="{{ asset('storage/doc.pdf')}}" target='_blank'>Documentos</a></b></li>
 									<li style="padding: 2px;"><b>Anexar seu currículo atualizado em formato de arquivo PDF ou DOC.</b></li>
 									<li style="padding: 2px;"><b>Caso seja PCD (Pessoas com Deficiência), anexar declaração de portador de deficiência em formato de arquivo PDF ou DOC.</b></li>
 									<li style="padding: 2px;"><b>Informar seus dados corretamente, você poderá ser excluído do Processo Seletivo.</b></li>
 									<li style="padding: 2px;"><b>Sem estes dados não é possível completar o Processo Seletivo.</b></li>
-									<li style='color:red;'><b>Inscrição de {{ date('d/m/Y', strtotime($processos[0]->inscricao_inicio)) }} até {{ date('d/m/Y', strtotime($processos[0]->inscricao_fim)) }}</b></li>
+									<li style="padding: 2px; color:red;"><b>Inscrição de {{ date('d/m/Y', strtotime($processos[0]->inscricao_inicio)) }} até {{ date('d/m/Y', strtotime($processos[0]->inscricao_fim)) }}</b></li>
 								</ul>
 							  </p>
 							</td>
@@ -78,15 +78,7 @@
 			
 		  </div>
 		</div>
-		<footer>
-			
-			<table id="redes">
-				<tr>
-					<td> <img id="facebook" src="{{ asset('img/facebook.png') }}"></td>
-					<td> <img id="insta" src="{{ asset('img/logotipo-do-instagram.png') }} "></td>
-			</tr>
-		</table>
-</footer>
+		
 	  </div>
 	  
 	 </div>
@@ -101,50 +93,27 @@ footer table#hcp{
 h5{
 	margin-top: 15px;
 }
-
 footer table#redes{
-	
 	background-color: #57D211;
 	width: 900px;
 	border-radius: 5px;
 	opacity:85%;
-
-
 }
-
 footer img{
 	padding:2px;
 	align:center;
 }
-
 img#hcp{
 	width:90px;
 	height:50px;
-	margin-top:-200px;
-	
-	
+	margin-top:-200px;	
 }
-footer img#facebook{
-	width:30px;
-	height:30px;
-	margin-left:410px;
-	
-}
-footer img#insta{
-	width:30px;
-	height:30px;
-	margin-left:-450px;
-}
-
 body{
 	font-size: 13px;
 	background-color: white;
 	Font-family: Cambria, Georgia, serif.;
-
 }
-
-	div#reflexo{
-	
+div#reflexo{
 	background-color: white;
 	height: 670px;
 	width: 900px;
@@ -156,5 +125,5 @@ body{
 	position:absolute;
 	box-shadow: 0px 0px 20px 8px #DDDDDC;	
 }
-	  </style>
+</style>
 </html>

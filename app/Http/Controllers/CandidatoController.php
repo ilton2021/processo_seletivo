@@ -22,6 +22,7 @@ class CandidatoController extends Controller
     public function candidatoIndex()
 	{
 		$unidades = Unidade::all();
+		$hoje = date('Y-m-d', strtotime('now'));
 		$processos1 = ProcessoSeletivo::all();
 		$qtd = sizeof($processos1);
 		$processos = DB::table('processo_seletivo')
@@ -29,15 +30,29 @@ class CandidatoController extends Controller
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
 		->get()->toArray();
 		$processos2 = DB::table('unidade')
-		->join('processo_seletivo', 'unidade.id', '=', 'processo_seletivo.unidade_id')
+		->join('processo_seletivo','unidade.id','=','processo_seletivo.unidade_id')
 		->select('unidade.id')
-		->get()->toArray();
+		->where('inscricao_fim','>=',$hoje)
+		->where('inscricao_inicio','<=',$hoje)
+		->get(); 
+		$qtdP = sizeof($processos2); 
 		$quadros = QuadroAvisos::all();
-		$hoje = date('Y-m-d', strtotime('now'));
-		$ps = DB::table('processo_seletivo')->where('inscricao_fim','>=',$hoje)->where('inscricao_inicio','<=',$hoje)->get();
-		$qtd = sizeof($ps);
-		$text = false;
-		return view('candidato', compact('unidades','processos','processos2','text','processos1','quadros','qtd','ps'));
+		$missing = array();
+		for($a = 0; $a < $qtdP; $a++){
+			$missing[] = $processos2[$a]->id;
+		}
+		if( is_array($missing) && count($missing) > 0 ) {
+			$result = '';
+			$total = count($missing) - 1;
+			for($i = 0; $i <= $total; $i++){ 
+				$result .= $missing[$i];
+				if($i < $total)
+					$result .= ", ";
+			}
+		} else {
+			$result = "";
+		}
+		return view('candidato', compact('unidades','processos','processos2','processos1','quadros','qtd','result'));
 	}
 	
 	// Página Informações Cadastro Candidatos //
@@ -118,7 +133,6 @@ class CandidatoController extends Controller
 			$cpf   = $input['cpf'];
 			$email = $input['email'];
 			$telefone = $input['telefone'];
-
 			if($request->file('nome_arquivo2') != NULL) {	
 				$nomeA = $_FILES['nome_arquivo2']['name'];
 				$extensao = pathinfo($nomeA, PATHINFO_EXTENSION);
@@ -283,7 +297,7 @@ class CandidatoController extends Controller
 		$vagas = Vaga::where('processo_seletivo_id', $id_processo)->get();
 		$text = false;
 		$a = 1;
-		return view('cadastro_candidatos', compact('unidade','processos','text','vagas','a'));
+		return view('cadastro_candidatos', compact('unidade','processos','vagas','a'));
 	}
 	
 	// Validação da Inscrição de Candidatos //
@@ -297,7 +311,6 @@ class CandidatoController extends Controller
 		$cpf = $input['cpf']; 
 		$hoje     = date('Y-m-d', strtotime('now')); 
 		$insc_fim = date('Y-m-d', strtotime($processos->inscricao_fim));
-		
 		if(strtotime($hoje) > strtotime($insc_fim))
 		{
 			$processos = ProcessoSeletivo::all();
@@ -308,53 +321,61 @@ class CandidatoController extends Controller
 						->with('processos1')
 						->with('unidades');
 		}
-		
-		$v = \Validator::make($request->all(), [
+		$validator = Validator::make($request->all(), [
 			'cpf' => 'required|digits:11'
 		]);
-		if ($v->fails()) {
-			$failed = $v->failed();
-			if ( !empty($failed['cpf']['Required']) ) {
-				\Session::flash('mensagem', ['msg' => 'O campo cpf é obrigatório!','class'=>'green white-text']);
-			} else if ( !empty($failed['cpf']['Digits']) ) {
-				\Session::flash('mensagem', ['msg' => 'O campo cpf tem que ser números!','class'=>'green white-text']);
-			}
-			$text = true;
-			$a 	  = 1;
-			return view('cadastro_candidatos', compact('unidade','processos','text','a'));	
-		}
-		
-		if (strlen($cpf) != 11 || preg_match('/([0-9])\1{10}/', $cpf)) {
-			$text = true;
-			\Session::flash('mensagem', ['msg' => 'CPF Inválido!','class'=>'red white-text']);		
+		if ($validator->fails()) {
 			$a = 1;
-			return view('cadastro_candidatos', compact('unidade','processos','text','a'));	
+			return view('cadastro_candidatos', compact('unidade','processos','a'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));	
+		}
+		if (strlen($cpf) != 11 || preg_match('/([0-9])\1{10}/', $cpf)) {
+			$validator = 'CPF Inválido!';		
+			$a = 1;
+			return view('cadastro_candidatos', compact('unidade','processos','a'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));	
 		} 
-		
-		if( !($input['cpf'] == "") && $a == 1 ){
+		if( !($input['cpf'] == "") && $a == 1){
 			$cpf = $input['cpf'];
 			$processos2 = DB::table('processo_seletivo_'.$nome)->where('cpf',$cpf)->get();
 			$qtd = sizeof($processos2);
 			if($qtd > 0) {
-				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Você já está participando desta seleção! Desejamos Boa Sorte e Sucesso!','class'=>'red white-text']);		
+				$validator = 'Você já está participando desta seleção! Desejamos Boa Sorte e Sucesso!';		
 				$a = 1;
-				return view('cadastro_candidatos', compact('unidade','processos','text','a'));	
+				return view('cadastro_candidatos', compact('unidade','processos','a'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
 			} else {
-				$text = true;
 				$cpf = $input['cpf'];
-				\Session::flash('mensagem', ['msg' => 'Vamos em frente, selecione a Vaga!','class'=>'green white-text']);
+				$validator = 'Vamos em frente, selecione a Vaga!';
 				$a = 2;			
-				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','cpf'));	
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','cpf'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
 			}				
 		} else if( !($input['cpf'] == "") && $a == 2 ){
 			$cpf = $input['cpf'];
 			$vaga = $input['vaga'];
-			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Vamos em frente, agora informe seus dados!','class'=>'green white-text']);
+			$validator = 'Vamos em frente, agora informe seus dados!';
 			$a = 3;			
-			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf'));	
+			return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));	
 		} else if( !($input['cpf'] == "") && $a == 3 ){
+			$cpf = $input['cpf'];
+			$vaga = $input['vaga'];
+			$validator = Validator::make($request->all(), [
+				'nome' 	  => 'required|max:255',				
+				'celular' => 'required|max:14',
+				'email'   => 'required|email|max:255',
+			]);
+			if($validator->fails()){
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
+			}
 			$cpf 	   = $input['cpf'];
 			$vaga 	   = $input['vaga'];
 			$nome 	   = $input['nome'];
@@ -362,15 +383,17 @@ class CandidatoController extends Controller
 			$fone_fixo = $input['fone_fixo'];
 			$celular   = $input['celular']; 
 			if($fone_fixo == "(" || $celular == "("){
-				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Telefone Inválido!','class'=>'green white-text']);
+				$validator = 'Telefone Inválido!';
 				$a = 3;			
-				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'));	
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
 			}
-			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Você é natural de:','class'=>'green white-text']);
+			$validator = 'Você é natural de:';
 			$a = 4;			
-			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'));	
+			return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));		
 		} else if( !($input['cpf'] == "") && $a == 4 ){
 			$cpf 		  = $input['cpf'];
 			$vaga 		  = $input['vaga'];
@@ -378,26 +401,39 @@ class CandidatoController extends Controller
 			$email 		  = $input['email'];
 			$fone_fixo 	  = $input['fone_fixo'];
 			$celular 	  = $input['celular'];
+			$validator = Validator::make($request->all(), [
+				'naturalidade' => 'required|max:50',				
+				'estado_nasc'  => 'required|max:10',
+				'cidade_nasc'  => 'required|max:100'
+			]);
+			if($validator->fails()){
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
+			}
 			$naturalidade = $input['naturalidade'];
 			$estado_nasc  = $input['estado_nasc'];
 			$cidade_nasc  = $input['cidade_nasc'];
 			$data_nasc 	  = $input['data_nasc'];
 			$ano = date('Y', strtotime($data_nasc));
 			if($estado_nasc == "") {
-				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Selecione seu estado!','class'=>'green white-text']);
+				$validator = 'Selecione seu estado!';
 				$a = 4;			
-				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'));	
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
 			} else if($ano > '2010'){
-				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Você não tem idade suficiente para este Processo Seletivo!','class'=>'green white-text']);
+				$validator = 'Você não tem idade suficiente para este Processo Seletivo!';
 				$a = 4;			
-				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'));	
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
 			} else {
-				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Vamos em frente! Agora informe os dados da residência onde você mora!','class'=>'green white-text']);
+				$validator = 'Vamos em frente! Agora informe os dados da residência onde você mora!';
 				$a = 5;			
-				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc'));		
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
 			}
 		} else if( !($input['cpf'] == "") && $a == 5 ){
 			$cpf 		  = $input['cpf'];
@@ -410,6 +446,18 @@ class CandidatoController extends Controller
 			$estado_nasc  = $input['estado_nasc'];
 			$cidade_nasc  = $input['cidade_nasc'];
 			$data_nasc 	  = $input['data_nasc'];
+			$validator = Validator::make($request->all(), [
+				'rua' 		  => 'required|max:100',				
+				'numero'  	  => 'required|max:10',
+				'bairro'  	  => 'required|max:100',
+				'cidade'  	  => 'required|max:100',
+				'cep'  		  => 'required|max:9'
+			]);
+			if($validator->fails()){
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));	
+			}
 			$rua 		  = $input['rua'];
 			$numero 	  = $input['numero'];
 			$bairro 	  = $input['bairro'];
@@ -417,10 +465,11 @@ class CandidatoController extends Controller
 			$estado 	  = $input['estado'];
 			$cep 		  = $input['cep'];
 			$complemento  = $input['complemento'];
-			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Um pouco mais sobre você:','class'=>'green white-text']);
+			$validator = 'Um pouco mais sobre você:';
 			$a = 6;			
-			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento'));	
+			return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));
 		} else if( !($input['cpf'] == "") && $a == 6 ){
 			$cpf 		  = $input['cpf'];
 			$vaga 		  = $input['vaga'];
@@ -439,6 +488,18 @@ class CandidatoController extends Controller
 			$estado 	  = $input['estado'];
 			$cep 		  = $input['cep'];
 			$complemento  = $input['complemento'];
+			$validator = Validator::make($request->all(), [
+				'escolaridade' 		  => 'required|max:100',				
+				'status_escolaridade' => 'required|max:50',
+				'formacao'  	  	  => 'required|max:150',
+				'cursos'  	  		  => 'required|max:1000',
+				'deficiencia'  		  => 'required|max:9'
+			]);
+			if($validator->fails()){
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
+			}
 			$escolaridade = $input['escolaridade'];
 			$status_escolaridade = $input['status_escolaridade'];
 			$formacao 			 = $input['formacao'];
@@ -446,10 +507,11 @@ class CandidatoController extends Controller
 			$deficiencia 	     = $input['deficiencia'];
 			if($deficiencia !== "0") {
 				if($request->file('arquivo_deficiencia') === NULL) {	
-					$text = true;
-					\Session::flash('mensagem', ['msg' => 'Informe o arquivo de PCD!','class'=>'green white-text']);
+					$validator = 'Informe o arquivo de PCD!';
 					$a = 6;
-					return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento'));	
+					return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));		
 				} else {
 					$nomeA = $_FILES['arquivo_deficiencia']['name'];
 					$extensao = pathinfo($nomeA, PATHINFO_EXTENSION);
@@ -458,23 +520,26 @@ class CandidatoController extends Controller
 						$nprocesso = $input['processo_nome'];
 						$request->file('arquivo_deficiencia')->move('../public/storage/candidato/deficiencia/'.$nprocesso.'/',$nomeA);
 						$arquivo_deficiencia = 'candidato/deficiencia/'.$nprocesso.'/'.$nomeA; 
-						$text = true;
-						\Session::flash('mensagem', ['msg' => 'Nos fale sobre suas experiências anteriores...','class'=>'green white-text']);
+						$validator = 'Nos fale sobre suas experiências anteriores...';
 						$a = 7;
-						return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'));										
+						return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'))
+							->withErrors($validator)
+							->withInput(session()->flashInput($request->input()));	
 					} else {
-						$text = true;
-						\Session::flash('mensagem', ['msg' => 'Os arquivos permitidos são: .doc, .docx e .pdf!','class'=>'green white-text']);
+						$validator = 'Os arquivos permitidos são: .doc, .docx e .pdf!';
 						$a = 6;
-						return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento'));	
+						return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento'))
+							->withErrors($validator)
+							->withInput(session()->flashInput($request->input()));		
 					}
 				}
 			} else {
 				$arquivo_deficiencia = NULL;	
-				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Nos fale sobre suas experiências anteriores...','class'=>'green white-text']);
+				$validator = 'Nos fale sobre suas experiências anteriores...';
 				$a = 7;
-				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'));										
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));											
 			}
 		} else if( !($input['cpf'] == "") && $a == 7 ){
 			$cpf 		  = $input['cpf'];
@@ -500,6 +565,22 @@ class CandidatoController extends Controller
 			$cursos 			 = $input['cursos'];
 			$deficiencia 	     = $input['deficiencia'];
 			$arquivo_deficiencia = $input['arquivo_deficiencia'];
+			$validator = Validator::make($request->all(), [
+				'empresa' 	  => 'max:150',				
+				'cargo' 	  => 'max:150',
+				'atribuicao'  => 'max:500',
+				'empresa2'    => 'max:150',
+				'cargo2'  	  => 'max:150',
+				'atribuicao2' => 'max:500',
+				'empresa3'    => 'max:150',
+				'cargo3'  	  => 'max:150',
+				'atribuicao3' => 'max:500',
+			]);
+			if($validator->fails()){
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'))										
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
+			}
 			$empresa 			 = $input['empresa'];
 			$cargo 				 = $input['cargo'];
 			$atribuicao 		 = $input['atribuicao'];
@@ -520,14 +601,15 @@ class CandidatoController extends Controller
 				$anoI = date('Y-m-d', strtotime($data_inicio));
 				$anoF = date('Y-m-d', strtotime($data_fim));
 				if($anoI == $anoF || $anoF < $anoI) {
-					$text = true;
-					\Session::flash('mensagem', ['msg' => 'Data Final não pode ser maior ou igual a Data Início!','class'=>'green white-text']);
+					$validator = 'Data Final não pode ser maior ou igual a Data Início!';
 					$a = 7;			
-					return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'));										
+					return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));											
 				}
 			} 
 			if($request->file('arquivo_ctps1') !== NULL) {
-				$a = 1; 
+				$a = 1; 	
 				$nomeC1   = $_FILES['arquivo_ctps1']['name'];
 				$extensao = pathinfo($nomeC1, PATHINFO_EXTENSION);
 				if($extensao == 'pdf' || $extensao == 'doc' || $extensao == 'docx') {
@@ -536,11 +618,12 @@ class CandidatoController extends Controller
 					$request->file('arquivo_ctps1')->move('../public/storage/candidato/ctps1/'.$nprocesso.'/', $nomeC1);
 					$arquivo_ctps1 = 'candidato/deficiencia/ctps1/'.$nprocesso.'/'.$nomeC1; 
 				} else {
-					$text = true;
-					\Session::flash('mensagem', ['msg' => 'Só é suportado arquivos: .pdf, .doc, .docx!','class'=>'green white-text']);
+					$validator = 'Só é suportado arquivos: .pdf, .doc, .docx!';
 					$a = 7;
 					$arquivo_ctps1 = NULL;					
-					return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'));
+					return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));	
 				}
 			} 
 			if($request->file('arquivo_ctps2') !== NULL) {
@@ -553,11 +636,12 @@ class CandidatoController extends Controller
 					$request->file('arquivo_ctps2')->move('../public/storage/candidato/ctps2/'.$nprocesso.'/',$nomeC2);
 					$arquivo_ctps2 = 'candidato/deficiencia/ctps2/'.$nprocesso.'/'.$nomeC2;
 				} else {
-					$text = true;
-					\Session::flash('mensagem', ['msg' => 'Só é suportado arquivos: .pdf, .doc, .docx!','class'=>'green white-text']);
+					$validator = 'Só é suportado arquivos: .pdf, .doc, .docx!';
 					$a = 7;
 					$arquivo_ctps2 = NULL;					
-					return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'));
+					return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));	
 				}
 			} 
 			if($request->file('arquivo_ctps3') !== NULL) {
@@ -570,14 +654,14 @@ class CandidatoController extends Controller
 					$request->file('arquivo_ctps3')->move('../public/storage/candidato/ctps3/'.$nprocesso.'/',$nomeC3);
 					$arquivo_ctps3 = 'candidato/deficiencia/ctps3/'.$nprocesso.'/'.$nomeC3;
 				} else {
-					$text = true;
-					\Session::flash('mensagem', ['msg' => 'Só é suportado arquivos: .pdf, .doc, .docx!','class'=>'green white-text']);
+					$validator = 'Só é suportado arquivos: .pdf, .doc, .docx!';
 					$a = 7;
 					$arquivo_ctps3 = NULL;		
-					return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'));
+					return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));	
 				}
 			} 
-			
 			if($a == 0){
 				$arquivo_ctps1 = null;
 			}
@@ -587,10 +671,11 @@ class CandidatoController extends Controller
 			if($c == 0) {
 				$arquivo_ctps3 = null;
 			}
-			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Agora, é de extrema importância que você anexe o seu currículo!','class'=>'green white-text']);
+			$validator = 'Agora, é de extrema importância que você anexe o seu currículo!';
 			$a = 8;
-			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3'));		
+			return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));			
 		} else if( !($input['cpf'] == "") && $a == 8 ){
 			$cpf 		  = $input['cpf'];
 			$vaga 		  = $input['vaga'];
@@ -635,10 +720,11 @@ class CandidatoController extends Controller
 			$arquivo_ctps3       = $input['arquivo_ctps3'];
 			$arquivo             = $input['arquivo'];
 			if($request->file('arquivo') === NULL) {	
-				$text = true;
-				\Session::flash('mensagem', ['msg' => 'Anexe seu currículo!','class'=>'green white-text']);
+				$validator = 'Anexe seu currículo!';
 				$a = 8;
-				return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3'));		
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));			
 			} else {
 				$nomeB = $_FILES['arquivo']['name'];
 				$extensao = pathinfo($nomeB, PATHINFO_EXTENSION);
@@ -653,15 +739,17 @@ class CandidatoController extends Controller
 						$arquivo = $nome.'.docx';
 					}
 					$request->file('arquivo')->move('../public/storage/candidato/curriculo/'.$nprocesso.'/',$arquivo);
-					$text = true; 
-					\Session::flash('mensagem', ['msg' => 'Precisamos saber um pouco mais sobre sua disponibilidade.','class'=>'green white-text']);
+					$validator = 'Precisamos saber um pouco mais sobre sua disponibilidade.';
 					$a = 9;
-					return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3','arquivo'));	
+					return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3','arquivo'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));		
 				} else {
-					$text = true;
-					\Session::flash('mensagem', ['msg' => 'Os arquivos permitidos são: .doc, .docx e .pdf!','class'=>'green white-text']);
+					$validator = 'Os arquivos permitidos são: .doc, .docx e .pdf!';
 					$a = 8;
-					return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3'));		
+					return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3'))
+						->withErrors($validator)
+						->withInput(session()->flashInput($request->input()));			
 				}
 			}
 		} else if( !($input['cpf'] == "") && $a == 9 ){
@@ -737,6 +825,15 @@ class CandidatoController extends Controller
 			$habilitacao  = $input['habilitacao'];
 			$periodo 	  = $input['periodo'];
 			$outra_cidade = $input['outra_cidade'];
+			$validator = Validator::make($request->all(), [
+				'como_soube2' 	  => 'max:255',				
+				'parentesco_nome' => 'max:255'
+			]);
+			if($validator->fails()){
+				return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3','arquivo','habilitacao','periodo','outra_cidade'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
+			}
 			$como_soube   = $input['como_soube'];
 			$parentesco   = $input['parentesco'];
 			if($como_soube == "outros"){
@@ -747,11 +844,11 @@ class CandidatoController extends Controller
 			}else{
 				$parentesco_nome = "";
 			}
-
-			$text = true;
-			\Session::flash('mensagem', ['msg' => 'Muito Obrigado por inscrever-se!','class'=>'green white-text']);
+			$validator = 'Muito Obrigado por inscrever-se!';
 			$a = 10;			
-			return view('cadastro_candidatos', compact('unidade','processos','text','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3','arquivo','habilitacao','periodo','outra_cidade','como_soube','parentesco','parentesco_nome'));	
+			return view('cadastro_candidatos', compact('unidade','processos','a','vagas','vaga','cpf','nome','email','fone_fixo','celular','naturalidade','estado_nasc','cidade_nasc','data_nasc','rua','numero','bairro','cidade','estado','cep','complemento','escolaridade','status_escolaridade','formacao','cursos','deficiencia','arquivo_deficiencia','empresa','cargo','atribuicao','data_inicio','data_fim','arquivo_ctps1','empresa2','cargo2','atribuicao2','data_inicio2','data_fim2','arquivo_ctps2','empresa3','cargo3','atribuicao3','data_inicio3','data_fim3','arquivo_ctps3','arquivo','habilitacao','periodo','outra_cidade','como_soube','parentesco','parentesco_nome'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));	
 		} else if( !($input['cpf'] == "") && $a == 10 ){
 			$cpf 		  = $input['cpf'];
 			$vaga 		  = $input['vaga'];
@@ -819,6 +916,20 @@ class CandidatoController extends Controller
 			$nprocesso 		= $input['processo_nome'];
 			$n_vaga    = Vaga::where('id',$vaga)->get();
 			$nome_vaga = $n_vaga[0]->nome; 
+			$cpf = $input['cpf'];
+			$processos2 = DB::table('processo_seletivo_'.$nprocesso)->where('cpf',$cpf)->get();
+			$qtd = sizeof($processos2);
+			if($qtd > 0) {
+				$validator = 'Você já está participando desta seleção! Desejamos Boa Sorte e Sucesso!';		
+				$a = 1;
+				return view('cadastro_candidatos', compact('unidade','processos','a'))
+					->withErrors($validator)
+					->withInput(session()->flashInput($request->input()));	
+			} 
+			$empresa = htmlentities($empresa,ENT_QUOTES); $atribuicao = htmlentities($atribuicao,ENT_QUOTES);
+			$empresa2 = htmlentities($empresa2,ENT_QUOTES); $atribuicao2 = htmlentities($atribuicao2,ENT_QUOTES);
+			$empresa3 = htmlentities($empresa3,ENT_QUOTES); $atribuicao3 = htmlentities($atribuicao3,ENT_QUOTES);
+
 			DB::statement("INSERT INTO processo_seletivo_".$nprocesso."
 			(vaga,data_inscricao,nome, cpf, email, telefone_fixo, telefone, lugar_nascimento, estado_nascimento,
 			cidade_nascimento, data_nascimento, rua, numero, bairro, cidade, estado,
@@ -840,7 +951,7 @@ class CandidatoController extends Controller
 			'$atribuicao2','$arquivo_ctps2','$data_inicio2','$data_fim2','$empresa3',
 			'$cargo3','$atribuicao3','$arquivo_ctps3','$data_inicio3','$data_fim3',
 			'$como_soube','$parentesco','$parentesco_nome','$arquivo_deficiencia','','','','','','','','','','$arquivo','') ");
-			$text = true;
+			
 
 			Mail::send('email.resultadoCadastro', [], function($m) use ($email) {
 				$m->from('portal@hcpgestao.org.br', 'PROCESSO SELETIVO HCP GESTÃO');
@@ -848,10 +959,8 @@ class CandidatoController extends Controller
 				$m->to($email);
 			});
 
-
-			\Session::flash('mensagem', ['msg' => 'Você foi cadastrado para esta seleção! Desejamos Boa Sorte!!!','class'=>'green white-text']);
+			$validator = 'Você foi cadastrado para esta seleção! Desejamos Boa Sorte!!!';
 	
-
 			$a = 10;	
 			$unidades = Unidade::all();
 			$processos = DB::table('processo_seletivo')
@@ -866,9 +975,7 @@ class CandidatoController extends Controller
 			$id2 = $numero[0]->id;
 			$numeroInscricao = $nprocesso.'-'.$id2;
 			DB::statement("UPDATE processo_seletivo_".$nprocesso." SET numeroInscricao = '$numeroInscricao' WHERE id = '$id2' ");
-			$text = false;
-			
-			return view('candidato_', compact('unidade','processos','numero','nprocesso','text'));	
+			return view('candidato_', compact('unidade','processos','numero','nprocesso'));	
 		}
 	}
 }

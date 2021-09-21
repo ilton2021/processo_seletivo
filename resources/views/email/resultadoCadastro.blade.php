@@ -29,7 +29,7 @@
                             <td align="center"><p style="font-size: 18px; margin-top: 20px;">Acompanhe o processo e as atualizações de edital em:</p></td>
                             </tr>
                             <tr>
-                            <td align="center"><p style="font-size: 18px; margin-top: 20px;"><a>https://hcpgestao.org.br/processoSeletivo/public/</a></p></td>
+                            <td align="center"><p style="font-size: 18px; margin-top: 20px;"><a href="https://hcpgestao.org.br/processoSeletivo/public/">https://hcpgestao.org.br/processoSeletivo/public/</a></p></td>
                             </tr>
 
 							</tr>

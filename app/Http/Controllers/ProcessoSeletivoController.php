@@ -113,7 +113,7 @@ class ProcessoSeletivoController extends Controller
 						data_inscricao varchar(50) COLLATE utf8_unicode_ci NULL DEFAULT current_timestamp(),
 						nome varchar(150) COLLATE utf8_unicode_ci NULL,
 						cpf varchar(30) COLLATE utf8_unicode_ci NULL,
-						email varchar(100) COLLATE utf8_unicode_ci NULL,
+						email varchar(255) COLLATE utf8_unicode_ci NULL,
 						telefone_fixo varchar(15) COLLATE utf8_unicode_ci NULL,
 						telefone varchar(30) COLLATE utf8_unicode_ci NULL,
 						lugar_nascimento varchar(50) COLLATE utf8_unicode_ci NULL,

@@ -89,7 +89,7 @@ class ProcessoResultadoController extends Controller
 		$processos  = DB::table('processo_seletivo_'.$nome)
 		->join('vaga', 'vaga.nome', '=', 'processo_seletivo_'.$nome.'.vaga')
 		->select('processo_seletivo_'.$nome.'.*','vaga.id as IDVaga','vaga.nome as NomeVaga','processo_seletivo_'.$nome.'.nome as NomeCandidato','processo_seletivo_'.$nome.'.cpf as CPF','processo_seletivo_'.$nome.'.deficiencia as deficiencia','processo_seletivo_'.$nome.'.nome as nome','processo_seletivo_'.$nome.'.id as ID_CANDIDATO')
-		->get()->toArray();
+		->paginate(40);
 		$unidades = Unidade::all();
 		return view('cadastro_resultado_processos', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2'));
 	}

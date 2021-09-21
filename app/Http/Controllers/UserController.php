@@ -11,6 +11,8 @@ use Spatie\Permission\Models\Role;
 use App\Model\ProcessoSeletivo;
 use DB;
 use Hash;
+use Validator;
+use Mail;
 
 class UserController extends Controller
 {
@@ -53,6 +55,7 @@ class UserController extends Controller
 	{
 		return view('auth.passwords.email');
 	}
+
 	
 	// Tela Resetar Senha Usuário //
 	public function telaReset()
@@ -60,6 +63,36 @@ class UserController extends Controller
 		$text = false;
 		$token = '';
 		return view('auth.passwords.reset', compact('text','token'));
+	}
+
+	public function emailReset(Request $request)
+	{   
+		$input = $request->all(); 
+		$email = $input['email'];
+		$usuarios = User::where('email',$email)->get();
+		$qtd = sizeof($usuarios);
+		$validator = Validator::make($request->all(), [
+			'email' => 'required|email',
+		]);	
+		$email2 = 'ilton.albuquerque@hcpgestao.org.br';
+		if($qtd > 0){
+			Mail::send('email.emailReset', [], function($m) use ($email,$email2) {
+				$m->from('ilton.albuquerque@hcpgestao.org.br', 'PORTAL DO PROCESSO SELETIVO');
+				$m->subject('Solicitação de Alteração de Senha');
+				$m->to($email);
+				$m->cc($email2);
+			});		
+
+			$validator = 'ABRA SUA CAIXA DE E-MAIL PARA VALIDAR SUA SENHA NOVA';
+			return view('auth.passwords.email', compact('email','usuarios'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));
+		}else{ 
+			$validator = 'Este E-mail não foi cadastrado no Portal do Processo Seletivo.';
+			return view('auth.passwords.email', compact('email','usuarios'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));
+		}
 	}
 	
 	// Login Usuário //

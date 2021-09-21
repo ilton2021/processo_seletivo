@@ -104,17 +104,86 @@
 							<table class="table table-responsive table-border" border="1"> 
 							<tr>
 							<?php $hoje = date('d-m-Y', strtotime('now')); $a = 0; ?> 
-							   @foreach($unidades as $unidade)
-							      @if($unidade->id == 2) 
+							<?php $q1 = $result; $r1 = "1"; $s_0 = str_contains($q1, $r1); ?>
+							<?php $q2 = $result; $r2 = "2"; $s_1 = str_contains($q2, $r2); ?>
+							<?php $q3 = $result; $r3 = "3"; $s_2 = str_contains($q3, $r3); ?>
+							<?php $q4 = $result; $r4 = "4"; $s_3 = str_contains($q4, $r4); ?>
+							<?php $q5 = $result; $r5 = "5"; $s_4 = str_contains($q5, $r5); ?>
+							<?php $q6 = $result; $r6 = "6"; $s_5 = str_contains($q6, $r6); ?>
+							<?php $q7 = $result; $r7 = "7"; $s_6 = str_contains($q7, $r7); ?>
+							<?php $q8 = $result; $r8 = "8"; $s_7 = str_contains($q8, $r8); ?>
+							       @if($s_0 == true)
 								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
+									  <a href="{{ route('candidatoEditais', $unidades[0]->id) }}" title="{{ $unidades[0]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[0]->caminho}}" class="rounded-sm" width="80px"></a>
 								   </td>
 								   @else
 								   <td width="300px">
-									  <a href="" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+									  <a href="" title="{{ $unidades[0]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[0]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
 								   </td>
-								   @endif 
-							   @endforeach
+								   @endif
+								   @if($s_1 == true)
+								   <td width="300px">
+									  <a href="{{ route('candidatoEditais', $unidades[1]->id) }}" title="{{ $unidades[1]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[1]->caminho}}" class="rounded-sm" width="80px"></a>
+								   </td>
+								   @else
+								   <td width="300px">
+									  <a href="" title="{{ $unidades[1]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[1]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								   </td>
+								   @endif
+								   @if($s_2 == true)
+								   <td width="300px">
+									  <a href="{{ route('candidatoEditais', $unidades[2]->id) }}" title="{{ $unidades[2]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[2]->caminho}}" class="rounded-sm" width="80px"></a>
+								   </td>
+								   @else
+								   <td width="300px">
+									  <a href="" title="{{ $unidades[2]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[2]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								   </td>
+								   @endif
+								   @if($s_3 == true)
+								   <td width="300px">
+									  <a href="{{ route('candidatoEditais', $unidades[3]->id) }}" title="{{ $unidades[3]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[3]->caminho}}" class="rounded-sm" width="80px"></a>
+								   </td>
+								   @else
+								   <td width="300px">
+									  <a href="" title="{{ $unidades[3]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[3]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								   </td>
+								   @endif
+								   @if($s_4 == true)
+								   <td width="300px">
+									  <a href="{{ route('candidatoEditais', $unidades[4]->id) }}" title="{{ $unidades[4]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[4]->caminho}}" class="rounded-sm" width="80px"></a>
+								   </td>
+								   @else
+								   <td width="300px">
+									  <a href="" title="{{ $unidades[4]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[4]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								   </td>
+								   @endif
+								   @if($s_5 == true)
+								   <td width="300px">
+									  <a href="{{ route('candidatoEditais', $unidades[5]->id) }}" title="{{ $unidades[5]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[5]->caminho}}" class="rounded-sm" width="80px"></a>
+								   </td>
+								   @else
+								   <td width="300px">
+									  <a href="" title="{{ $unidades[5]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[5]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								   </td>
+								   @endif
+								   @if($s_6 == true)
+								   <td width="300px">
+									  <a href="{{ route('candidatoEditais', $unidades[6]->id) }}" title="{{ $unidades[6]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[6]->caminho}}" class="rounded-sm" width="80px"></a>
+								   </td>
+								   @else
+								   <td width="300px">
+									  <a href="" title="{{ $unidades[6]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[6]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								   </td>
+								   @endif
+								   @if($s_7 == true)
+								   <td width="300px">
+									  <a href="{{ route('candidatoEditais', $unidades[7]->id) }}" title="{{ $unidades[7]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[7]->caminho}}" class="rounded-sm" width="80px"></a>
+								   </td>
+								   @else
+								   <td width="300px">
+									  <a href="" title="{{ $unidades[7]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[7]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								   </td>
+								   @endif
 						   </tr>
 						  </table>
 						</div>
@@ -129,7 +198,7 @@
 							<tr>
 							   @foreach($unidades as $unidade)
 							   <td width="300px">
-								 <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('storage')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
+								 <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
 							   </td>
 							   @endforeach
 						   </tr>
@@ -175,7 +244,7 @@
 							<p align="jusitify">
 							No âmbito de Gestão por OSS, a SPCC executa desde o ano de 2014 a gestão das UPAE Padre Assis Neves no município de Belo Jardim/PE e da UPAE Áureo Bradley no município de Arcoverde/PE; e desde o ano de 2018 a gestão da UPAE Caruaru e do Hospital São Sebastião, todas unidades do Governo do Estado de Pernambuco.
 							</p>
-							<p align="jusitfy">
+							<p align="jusitfy">	
 							Ainda, desde o ano de 2016 executa a gestão do Hospital da Mulher do Recife e da UPAE Arruda, ambos da Prefeitura Municipal do Recife.
 						    </p>
 

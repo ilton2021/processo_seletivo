@@ -25,7 +25,7 @@
           <div class="card-body p-0">
             <div class="row">
               <div class="col-lg-6 d-none d-lg-block">
-			    <img src="../public/img/Imagem1.png" height="130" style="margin-top: 100px">
+			    <img src="{{ asset('img/Imagem1.png') }}" height="130" style="margin-top: 100px">
 			  </div>
               <div class="col-lg-6">
                 <div class="p-5">
