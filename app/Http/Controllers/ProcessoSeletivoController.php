@@ -311,9 +311,7 @@ class ProcessoSeletivoController extends Controller
 		$id 	   = $input['processo_seletivo_id'];
 		$processos = ProcessoSeletivo::where('id', $id)->get();
 		$unidade_id = $processos[0]->unidade_id;
-		$input['unidade_id'] = $unidade_id;
-
-		
+		$input['unidade_id'] = $unidade_id;	
 		$validator = Validator::make($request->all(), [
 			'nome'   				 => 'required|max:255',
 			'codigo_vaga' 			 => 'required|max:255',
@@ -325,7 +323,6 @@ class ProcessoSeletivoController extends Controller
 			'quantidade' 			 => 'required|max:100'
 		]);
 		if ($validator->fails()) {
-			
 			$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
 			return view('cadastro_vaga_processo', compact('processos','vagas'))
 					  ->withErrors($validator)

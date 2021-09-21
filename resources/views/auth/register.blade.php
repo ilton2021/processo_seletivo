@@ -13,15 +13,15 @@
   <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
-	@if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div class="alert alert-danger {{ Session::get ('mensagem')['class'] }} ">
-		      {{ Session::get ('mensagem')['msg'] }}
-		 </div>
-		</div>
-		@endif
-	@endif
+    @if ($errors->any())
+      <div class="alert alert-success">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+      </div>
+	  @endif 
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-10 col-lg-12 col-md-9">

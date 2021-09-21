@@ -8,15 +8,15 @@
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
    <div class="container" style="margin-top: 80px;">
-      @if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-		      {{ Session::get ('mensagem')['msg'] }}
-		 </div>
-		</div>
-		@endif
-	   @endif
+        @if($errors->any())
+          <div class="alert alert-success">
+           <ul>
+             @foreach ($errors->all() as $error)
+               <li>{{ $error }}</li>
+             @endforeach
+           </ul>
+          </div>
+		 	  @endif 
         <div class="container">
           <div class="card shadow mb-4">
             <div class="card-header py-3">

@@ -18,7 +18,7 @@
 						    <tr>
 							  <td align="center"><img width="180" class="sppb-img-responsive" src="{{asset('img/gestao.png')}}" alt="Hospital do Câncer de Pernambuco" title="Hospital do Câncer de Pernambuco"></td>
 							  <td align="center" width="600"><p style="font-size: 20px; margin-top: 20px; font-family: Lucida Console, Courier, monospace;">{{ 'Processo Seletivo: '. $processos[0]->nome }} </p></td>
-							  <td align="center"><img width="180" class="sppb-img-responsive" src="{{asset('storage')}}/{{$unidade[0]->caminho}}" alt="{{ $unidade[0]->nome }}" title="{{ $unidade[0]->nome }}"></td>
+							  <td align="center"><img width="180" class="sppb-img-responsive" src="{{asset('img')}}/{{$unidade[0]->caminho}}" alt="{{ $unidade[0]->nome }}" title="{{ $unidade[0]->nome }}"></td>
 							<tr><td colspan="3">&nbsp;&nbsp;</td></tr>
 							</tr>
 							<tr>

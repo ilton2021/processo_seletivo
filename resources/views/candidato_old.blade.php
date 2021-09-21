@@ -41,15 +41,15 @@
 				 </div>
 			  </section>	 
 			  </div>
-			  @if (Session::has('mensagem'))
-				@if ($text == true)
-				<div class="container">
-				 <div class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-					  {{ Session::get ('mensagem')['msg'] }}
-				 </div>
-				</div>
-			   @endif
-			  @endif
+			  @if($errors->any())
+			  <div class="alert alert-success">
+				<ul>
+					@foreach ($errors->all() as $error)
+					  <li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			  </div>
+		 	  @endif 
 			  <table class="table table-responsive table-border" border="2" bordercolor=DCDCDC>
 				<thead>
 				  <tr>

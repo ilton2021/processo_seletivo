@@ -68,14 +68,10 @@
 		  }
 		}
 	 </script>
-
 </head>
     <body>
-	
 	  <div class="container">
-		  
 	  <div id="reflexo"> 
-
 	  <div id="sp-page-builder" class="sp-page-builder  page-1">
 		   <div class="page-content">
 			 <section  class="sppb-section " style="background-repeat:no-repeat;background-size:cover;background-attachment:fixed;background-position:0 0;">
@@ -101,7 +97,6 @@
 			  </section>	 
 			  </div>
 			  <br><br>
-			  
 			  @if($a == 1)
 			  <table class="table table-borderless" border="0" width="500" id="inicio">
 				<tr>

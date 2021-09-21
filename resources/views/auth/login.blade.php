@@ -6,15 +6,15 @@
    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
-	@if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div class="alert alert-success {{ Session::get ('mensagem')['class'] }} ">
-		      {{ Session::get ('mensagem')['msg'] }}
-		 </div>
-		</div>
-		@endif
-	@endif
+  @if ($errors->any())
+      <div class="alert alert-success">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+      </div>
+	@endif 
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-10 col-lg-12 col-md-9">
@@ -22,33 +22,33 @@
           <div class="card-body p-0">
             <div class="row">
               <div class="col-lg-6 d-none d-lg-block">
-			    <img src="../public/img/Imagem1.png" height="130" style="margin-top: 100px">
-			  </div>
+                <img src="../public/img/Imagem1.png" height="130" style="margin-top: 100px">
+              </div>
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Processo Seletivo HCP!</h1>
                   </div>
                   <form class="user" method="POST" action="{{ route('login') }}">
-				  @csrf
+				            @csrf
                     <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Login..." autocomplete="email" autofocus>
-					@error('email')
+					          @error('email')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                       </span>
                     @enderror
-					<br>
-					<input id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" required placeholder="Senha..." autocomplete="current-password">
+                    <br>
+                    <input id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" required placeholder="Senha..." autocomplete="current-password">
                     @error('password')
                        <span class="invalid-feedback" role="alert">
                          <strong>{{ $message }}</strong>
                        </span>
                     @enderror
-					<input type="submit" class="btn btn-primary btn-user btn-block" style="margin-top: 10px;" value="Logar" id="Logar" name="Logar" /> 				 
+					        <input type="submit" class="btn btn-primary btn-user btn-block" style="margin-top: 10px;" value="Logar" id="Logar" name="Logar" /> 				 
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="{{ route('telaReset') }}">Esqueceu a Senha?</a>
+                    <a class="small" href="{{ route('emailReset') }}">Esqueceu a Senha?</a>
                   </div>
                 </div>
               </div>

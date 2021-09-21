@@ -7,8 +7,7 @@
 	<link href="https://www.hcp.org.br/plugins/content/addtoany/addtoany.css" rel="stylesheet" type="text/css" />
 </head>
     <body class="page homepage  ltr preset1 menu-homepage responsive bg hfeed clearfix">
-        
-		<header id="sp-header-wrapper" class=" "><div class="container"><div class="row-fluid" id="header">
+      	<header id="sp-header-wrapper" class=" "><div class="container"><div class="row-fluid" id="header">
 		<div id="sp-logo" class="span2"><div class="logo-wrapper"><a href="/"><img alt="" class="image-logo" src="/images/layout/marca-site-hcp.png" /></a></div></div>
 		<div id="sp-menu" class="span7">	
 			<div>
@@ -19,10 +18,8 @@
 		</div>
 	   </div></div>
 	   </header>
-	   
 	   <br>
-			
-	  <div class="container">
+	   <div class="container">
 		<div id="sp-page-builder" class="sp-page-builder  page-1">
 		   <div class="page-content">
 			 <section  class="sppb-section " style="background-repeat:no-repeat;background-size:cover;background-attachment:fixed;background-position:0 0;">
@@ -75,7 +72,6 @@
 				    </td>
 				  </tr>							 
 			     @endforeach
-				 
 			    </tbody>
 			</table>
 	    </section>

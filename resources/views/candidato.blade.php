@@ -112,78 +112,78 @@
 							<?php $q6 = $result; $r6 = "6"; $s_5 = str_contains($q6, $r6); ?>
 							<?php $q7 = $result; $r7 = "7"; $s_6 = str_contains($q7, $r7); ?>
 							<?php $q8 = $result; $r8 = "8"; $s_7 = str_contains($q8, $r8); ?>
-							       @if($s_0 == true)
-								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidades[0]->id) }}" title="{{ $unidades[0]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[0]->caminho}}" class="rounded-sm" width="80px"></a>
-								   </td>
-								   @else
-								   <td width="300px">
-									  <a href="" title="{{ $unidades[0]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[0]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								   </td>
-								   @endif
-								   @if($s_1 == true)
-								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidades[1]->id) }}" title="{{ $unidades[1]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[1]->caminho}}" class="rounded-sm" width="80px"></a>
-								   </td>
-								   @else
-								   <td width="300px">
-									  <a href="" title="{{ $unidades[1]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[1]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								   </td>
-								   @endif
-								   @if($s_2 == true)
-								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidades[2]->id) }}" title="{{ $unidades[2]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[2]->caminho}}" class="rounded-sm" width="80px"></a>
-								   </td>
-								   @else
-								   <td width="300px">
-									  <a href="" title="{{ $unidades[2]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[2]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								   </td>
-								   @endif
-								   @if($s_3 == true)
-								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidades[3]->id) }}" title="{{ $unidades[3]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[3]->caminho}}" class="rounded-sm" width="80px"></a>
-								   </td>
-								   @else
-								   <td width="300px">
-									  <a href="" title="{{ $unidades[3]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[3]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								   </td>
-								   @endif
-								   @if($s_4 == true)
-								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidades[4]->id) }}" title="{{ $unidades[4]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[4]->caminho}}" class="rounded-sm" width="80px"></a>
-								   </td>
-								   @else
-								   <td width="300px">
-									  <a href="" title="{{ $unidades[4]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[4]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								   </td>
-								   @endif
-								   @if($s_5 == true)
-								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidades[5]->id) }}" title="{{ $unidades[5]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[5]->caminho}}" class="rounded-sm" width="80px"></a>
-								   </td>
-								   @else
-								   <td width="300px">
-									  <a href="" title="{{ $unidades[5]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[5]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								   </td>
-								   @endif
-								   @if($s_6 == true)
-								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidades[6]->id) }}" title="{{ $unidades[6]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[6]->caminho}}" class="rounded-sm" width="80px"></a>
-								   </td>
-								   @else
-								   <td width="300px">
-									  <a href="" title="{{ $unidades[6]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[6]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								   </td>
-								   @endif
-								   @if($s_7 == true)
-								   <td width="300px">
-									  <a href="{{ route('candidatoEditais', $unidades[7]->id) }}" title="{{ $unidades[7]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[7]->caminho}}" class="rounded-sm" width="80px"></a>
-								   </td>
-								   @else
-								   <td width="300px">
-									  <a href="" title="{{ $unidades[7]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[7]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								   </td>
-								   @endif
+							    @if($s_0 == true)
+								 <td width="300px">
+									<a href="{{ route('candidatoEditais', $unidades[0]->id) }}" title="{{ $unidades[0]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[0]->caminho}}" class="rounded-sm" width="80px"></a>
+								 </td>
+								@else
+								 <td width="300px">
+								    <a href="" title="{{ $unidades[0]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[0]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								 </td>
+								@endif
+								@if($s_1 == true)
+								 <td width="300px">
+								    <a href="{{ route('candidatoEditais', $unidades[1]->id) }}" title="{{ $unidades[1]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[1]->caminho}}" class="rounded-sm" width="80px"></a>
+								 </td>
+								@else
+								 <td width="300px">
+								   <a href="" title="{{ $unidades[1]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[1]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								 </td>
+								@endif
+								@if($s_2 == true)
+								 <td width="300px">
+								    <a href="{{ route('candidatoEditais', $unidades[2]->id) }}" title="{{ $unidades[2]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[2]->caminho}}" class="rounded-sm" width="80px"></a>
+								 </td>
+								@else
+								 <td width="300px">
+								    <a href="" title="{{ $unidades[2]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[2]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								 </td>
+								@endif
+								@if($s_3 == true)
+								 <td width="300px">
+								    <a href="{{ route('candidatoEditais', $unidades[3]->id) }}" title="{{ $unidades[3]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[3]->caminho}}" class="rounded-sm" width="80px"></a>
+								 </td>
+								@else
+								 <td width="300px">
+								    <a href="" title="{{ $unidades[3]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[3]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								 </td>
+								@endif
+								@if($s_4 == true)
+								 <td width="300px">
+								 	<a href="{{ route('candidatoEditais', $unidades[4]->id) }}" title="{{ $unidades[4]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[4]->caminho}}" class="rounded-sm" width="80px"></a>
+								 </td>
+								@else
+								 <td width="300px">
+									<a href="" title="{{ $unidades[4]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[4]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								 </td>
+								@endif
+								@if($s_5 == true)
+								 <td width="300px">
+								    <a href="{{ route('candidatoEditais', $unidades[5]->id) }}" title="{{ $unidades[5]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[5]->caminho}}" class="rounded-sm" width="80px"></a>
+								 </td>
+								@else
+								 <td width="300px">
+								    <a href="" title="{{ $unidades[5]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[5]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								 </td>
+								@endif
+								@if($s_6 == true)
+								 <td width="300px">
+									<a href="{{ route('candidatoEditais', $unidades[6]->id) }}" title="{{ $unidades[6]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[6]->caminho}}" class="rounded-sm" width="80px"></a>
+								 </td>
+								@else
+								 <td width="300px">
+									<a href="" title="{{ $unidades[6]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[6]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								 </td>
+								@endif
+								@if($s_7 == true)
+								 <td width="300px">
+									<a href="{{ route('candidatoEditais', $unidades[7]->id) }}" title="{{ $unidades[7]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[7]->caminho}}" class="rounded-sm" width="80px"></a>
+								 </td>
+								@else
+								 <td width="300px">
+								    <a href="" title="{{ $unidades[7]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[7]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
+								 </td>
+								@endif
 						   </tr>
 						  </table>
 						</div>

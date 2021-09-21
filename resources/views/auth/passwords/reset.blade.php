@@ -10,15 +10,15 @@
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
   <div class="container">
-   @if (Session::has('mensagem'))
-		@if ($text == true)
-		<div class="container">
-	     <div class="alert alert-danger {{ Session::get ('mensagem')['class'] }} ">
-		      {{ Session::get ('mensagem')['msg'] }}
-		 </div>
-		</div>
-		@endif
-	@endif
+    @if ($errors->any())
+      <div class="alert alert-success">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+      </div>
+	  @endif 
     <div class="row justify-content-center">
       <div class="col-xl-10 col-lg-12 col-md-9">
         <div class="card o-hidden border-0 shadow-lg my-5">
@@ -33,29 +33,29 @@
                     <h1 class="h4 text-gray-900 mb-4">Processo Seletivo HCP!</h1>
                   </div>
                   <form class="user" method="POST" action="{{ route('resetarSenha') }}">
-				  @csrf
+		        		  @csrf
                     <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Login..." autocomplete="email" autofocus>
-					@error('email')
+					          @error('email')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                       </span>
                     @enderror
-					<br>
-					<input id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" required placeholder="Nova Senha..." autocomplete="current-password">
+                    <br>
+                    <input id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" required placeholder="Nova Senha..." autocomplete="current-password">
                     @error('password')
                        <span class="invalid-feedback" role="alert">
                          <strong>{{ $message }}</strong>
                        </span>
                     @enderror
-					<br>
-					<input id="password_confirmation" type="password" class="form-control form-control-user @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required placeholder="Cadastrar Nova Senha..." >
+                    <br>
+                    <input id="password_confirmation" type="password" class="form-control form-control-user @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required placeholder="Cadastrar Nova Senha..." >
                     @error('password_confirmation')
                        <span class="invalid-feedback" role="alert">
                          <strong>{{ $message }}</strong>
                        </span>
                     @enderror
-					<input type="submit" class="btn btn-primary btn-user btn-block" style="margin-top: 10px;" value="Salvar" id="Salvar" name="Salvar" /> 				 
-					<br><br><center><a href="{{ route('login') }}" class="btn btn-warning btn-sm">Voltar</a></center> 				 
+                    <input type="submit" class="btn btn-primary btn-user btn-block" style="margin-top: 10px;" value="Salvar" id="Salvar" name="Salvar" /> 				 
+                    <br><br><center><a href="{{ route('login') }}" class="btn btn-warning btn-sm">Voltar</a></center> 				 
                   </form>
                   <hr>
                 </div>
@@ -63,10 +63,6 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
-
   </div>
-

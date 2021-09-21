@@ -30,8 +30,7 @@ class ProcessoCandidatoController extends Controller
 		$processos2 = DB::table('processo_seletivo_'.$nome)->get();
 		$vagas = DB::select("SELECT count(vaga) as count, vaga FROM processo_seletivo_".$nome." group by vaga");
 		$qtd = sizeof($processos2);
-		$text = false;
-		return view('numero_inscritos', compact('text', 'processos','qtd','processo','vagas'));
+		return view('numero_inscritos', compact('processos','qtd','processo','vagas'));
 	}
 
 	public function avaliacao($id,$id_c)
@@ -64,7 +63,7 @@ class ProcessoCandidatoController extends Controller
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$nomeP     = $processos[0]->nome;
 		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get(); 
-		$email = 'ilton.albuquerque@hcpgestao.org.br';
+		$email = 'hanna.lira@hcpgestao.org.br';
 		$avaliacao = AvaliacaoLideranca::where('processo_seletivo_id',$id)->where('id_candidato',$id_c)->get();
 		$avaliacao = AvaliacaoLideranca::find($avaliacao[0]->id);
 		Mail::send('email.avaliacaoLiderancaGestor', ['ava' => $avaliacao], function($m) use ($email) {
@@ -99,7 +98,7 @@ class ProcessoCandidatoController extends Controller
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$nomeP     = $processos[0]->nome;
 		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get();
-		$email = 'ilton.albuquerque@hcpgestao.org.br';
+		$email = 'hanna.lira@hcpgestao.org.br';
 		$avaliacao = AvaliacaoOperacional::where('processo_seletivo_id',$id)->where('id_candidato',$id_c)->get();
 		$avaliacao = avaliacaoOperacional::find($avaliacao[0]->id);
 		Mail::send('email.avaliacaoOperacionalGestor', ['ava' => $avaliacao], function($m) use ($email) {
@@ -154,67 +153,55 @@ class ProcessoCandidatoController extends Controller
 			$input['processo_seletivo_id'] = $id;
 			$input['id_candidato'] = $id_c;
 			$avaliacao = AvaliacaoLideranca::create($input);
-
 			$id_max = DB::table('avaliacao_lideranca')->max('id'); 
 			$input['avaliacao_lideranca_id'] = $id_max;
 			$input['candidato_id'] = $id_c;
-
 			for($a = 0; $a < 5; $a++){
-
 				if(!empty($input['lideranca_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'LIDERANÇA';
 					$pergunta = PerguntaAvaliacaoLideranca::create($input);	
 				}
-
 				if(!empty($input['flexibilidade_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'FLEXIBILIDADE';
 					$pergunta = PerguntaAvaliacaoLideranca::create($input);
 				}
-
 				if(!empty($input['resultados_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'RESULTADOS';
 					$pergunta = PerguntaAvaliacaoLideranca::create($input);
 				}
-
 				if(!empty($input['presteza_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'PRESTEZA';
 					$pergunta = PerguntaAvaliacaoLideranca::create($input);
 				}
-
 				if(!empty($input['comunicacao_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'COMUNICAÇÃO';
 					$pergunta = PerguntaAvaliacaoLideranca::create($input);
 				}
-
 				if(!empty($input['organizacao_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'ORGANIZAÇÃO';
 					$pergunta = PerguntaAvaliacaoLideranca::create($input);
 				}
-
 				if(!empty($input['administracao_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'ADMINISTRAÇÃO';
 					$pergunta = PerguntaAvaliacaoLideranca::create($input);
 				}
-
 				if(!empty($input['ambiente_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'AMBIENTE';
 					$pergunta = PerguntaAvaliacaoLideranca::create($input);
 				}
-
 				if(!empty($input['aproveitamento_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'APROVEITAMENTO';
 					$pergunta = PerguntaAvaliacaoLideranca::create($input);
 				}
-
 				if(!empty($input['equipe_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'EQUIPE';
@@ -275,73 +262,60 @@ class ProcessoCandidatoController extends Controller
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		} else {
-			
 			$input['data'] = date('Y-m-d', strtotime($input['data']));
 			$input['justificativa_gestor'] = "";
 			$input['processo_seletivo_id'] = $id;
 			$input['id_candidato'] = $id_c;
 			$avaliacao = AvaliacaoOperacional::create($input);
-
 			$id_max = DB::table('avaliacao_operacional')->max('id'); 
 			$input['avaliacao_operacional_id'] = $id_max;
 			$input['candidato_id'] = $id_c;
-
 			for($a = 0; $a <= 5; $a++){
-
 				if(!empty($input['organizacao_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'ORGANIZAÇÃO';
 					$pergunta = PerguntaAvaliacaoOperacional::create($input);	
 				}
-
 				if(!empty($input['produtividade_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'PRODUTIVIDADE';
 					$pergunta = PerguntaAvaliacaoOperacional::create($input);
 				}
-
 				if(!empty($input['iniciativa_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'INICIATIVA';
 					$pergunta = PerguntaAvaliacaoOperacional::create($input);
 				}
-
 				if(!empty($input['presteza_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'PRESTEZA';
 					$pergunta = PerguntaAvaliacaoOperacional::create($input);
 				}
-
 				if(!empty($input['assiduidade_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'ASSIDUIDADE';
 					$pergunta = PerguntaAvaliacaoOperacional::create($input);
 				}
-
 				if(!empty($input['pontualidade_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'PONTUALIDADE';
 					$pergunta = PerguntaAvaliacaoOperacional::create($input);
 				}
-
 				if(!empty($input['tempo_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'TEMPO';
 					$pergunta = PerguntaAvaliacaoOperacional::create($input);
 				}
-
 				if(!empty($input['equipamento_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'EQUIPAMENTO';
 					$pergunta = PerguntaAvaliacaoOperacional::create($input);
 				}
-
 				if(!empty($input['recurso_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'RECURSO';
 					$pergunta = PerguntaAvaliacaoOperacional::create($input);
 				}
-
 				if(!empty($input['equipe_'.$a])){
 					$input['resposta'] = $a;
 					$input['pergunta'] = 'EQUIPE';

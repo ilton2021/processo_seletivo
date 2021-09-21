@@ -15,8 +15,7 @@ class HomeController extends Controller
     public function index()
     {
 		$processos = ProcessoSeletivo::all();
-		$text = false;
-        return view('home', compact('processos','text'));
+	    return view('home', compact('processos'));
     }
 	
 	public function buttons()

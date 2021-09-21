@@ -71,10 +71,9 @@ class ProcessoResultadoController extends Controller
 		$processos  = ProcessoSeletivo::where('id', $id)->get();
 		$nome 		= $processos[0]->nome;
 		$processos2 = DB::table('processo_seletivo_'.$nome)->where('id',$id_candidato)->get();
-		$text = false;
 		$idP  = $id;
 		$candidato = $id_candidato;
-		return view('informacoes', compact('text','candidato','processos','processos2','idP'));
+		return view('informacoes', compact('candidato','processos','processos2','idP'));
 	}
 	
 	// Página Cadastro de Resultados //
@@ -141,8 +140,7 @@ class ProcessoResultadoController extends Controller
 		$modoC = $input['modoC'];
 		$validacao = 0;
 		$nome = $processoS[0]->nome;
-		$processos2 = DB::table('processo_seletivo_'.$nome)->where('id',$id_candidato)->get();
-		
+		$processos2 = DB::table('processo_seletivo_'.$nome)->where('id',$id_candidato)->get();	
 		if($modoA == "Habilitado" || $modoA == "Desabilitado")
 		{
 			$validator = Validator::make($request->all(), [
@@ -223,7 +221,6 @@ class ProcessoResultadoController extends Controller
 				$nome = $processo[0]->nome;
 				DB::statement("UPDATE processo_seletivo_".$nome." SET status_resultado = '$modo', 
 				msg_resultado = '$mensagem' WHERE id = '$id_candidato' ");
-				$text = true;
 				$input['user_id'] = Auth::user()->id;
 				$loggers = Loggers::create($input);
 				$validacao = 1;
@@ -254,13 +251,12 @@ class ProcessoResultadoController extends Controller
 				$loggers = Loggers::create($input);
 				$validacao = 1;
 			}					
-		}
-		
+		}	
 		if($validacao == 1)
 		{
 			$processos = ProcessoSeletivo::all();
 			$id_candidato = $id_candidato;
-			\Session::flash('mensagem', ['msg' => 'Resultado cadastrado com sucesso!','class'=>'green white-text']);
+			$validator = 'Resultado cadastrado com sucesso!';
 			return redirect()->route('cadastrarResultados', [$id]);
 		} 
 		else 

@@ -124,8 +124,8 @@ class CandidatoController extends Controller
 		]);
 		if ($validator->fails()) {
 			return view('cadastro_candidato2', compact('processos','vagas'))
-					  ->withErrors($validator)
-                      ->withInput(session()->flashInput($request->input()));
+				->withErrors($validator)
+                ->withInput(session()->flashInput($request->input()));
 		} else {
 			$vaga  = $input['vaga'];
 			$data  = $input['data_inscricao'];
@@ -295,7 +295,6 @@ class CandidatoController extends Controller
 		$unidade = Unidade::find($id);
 		$processos = ProcessoSeletivo::find($id_processo);
 		$vagas = Vaga::where('processo_seletivo_id', $id_processo)->get();
-		$text = false;
 		$a = 1;
 		return view('cadastro_candidatos', compact('unidade','processos','vagas','a'));
 	}
@@ -952,15 +951,12 @@ class CandidatoController extends Controller
 			'$cargo3','$atribuicao3','$arquivo_ctps3','$data_inicio3','$data_fim3',
 			'$como_soube','$parentesco','$parentesco_nome','$arquivo_deficiencia','','','','','','','','','','$arquivo','') ");
 			
-
 			Mail::send('email.resultadoCadastro', [], function($m) use ($email) {
 				$m->from('portal@hcpgestao.org.br', 'PROCESSO SELETIVO HCP GESTÃO');
 				$m->subject('Cadastro Concluído!!!');
 				$m->to($email);
 			});
-
 			$validator = 'Você foi cadastrado para esta seleção! Desejamos Boa Sorte!!!';
-	
 			$a = 10;	
 			$unidades = Unidade::all();
 			$processos = DB::table('processo_seletivo')
@@ -975,7 +971,9 @@ class CandidatoController extends Controller
 			$id2 = $numero[0]->id;
 			$numeroInscricao = $nprocesso.'-'.$id2;
 			DB::statement("UPDATE processo_seletivo_".$nprocesso." SET numeroInscricao = '$numeroInscricao' WHERE id = '$id2' ");
-			return view('candidato_', compact('unidade','processos','numero','nprocesso'));	
+			return view('candidato_', compact('unidade','processos','numero','nprocesso'))
+				->withErrors($validator)
+				->withInput(session()->flashInput($request->input()));	
 		}
 	}
 }
