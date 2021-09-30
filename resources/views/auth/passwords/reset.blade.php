@@ -1,41 +1,31 @@
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>Processo Seletivo - Login</title>
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
-</head>
+@extends('layouts.app2')
+@section('content')
   <div class="container">
-    @if ($errors->any())
-      <div class="alert alert-success">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-      </div>
-	  @endif 
     <div class="row justify-content-center">
-      <div class="col-xl-10 col-lg-12 col-md-9">
-        <div class="card o-hidden border-0 shadow-lg my-5">
-          <div class="card-body p-0">
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block">
-			    <img src="{{ asset('img/Imagem1.png') }}" height="130" style="margin-top: 100px">
-			  </div>
-              <div class="col-lg-6">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Processo Seletivo HCP!</h1>
-                  </div>
+      <div class="col-md-8">
+        <div class="card">
+            @if ($errors->any())
+            <div class="alert alert-success">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif 
+              <div class="card-header">{{ __('Resetar Senha') }}</div>
+                <div class="card-body">
                   <form class="user" method="POST" action="{{ route('resetarSenha') }}">
 		        		  @csrf
                     <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Login..." autocomplete="email" autofocus>
 					          @error('email')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                    <br>
+                    <input id="token_" type="text" class="form-control form-control-user @error('token_') is-invalid @enderror" name="token_" value="{{ old('token_') }}" required placeholder="Token..." autocomplete="token_" autofocus>
+					          @error('token_')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                       </span>
@@ -54,8 +44,8 @@
                          <strong>{{ $message }}</strong>
                        </span>
                     @enderror
-                    <input type="submit" class="btn btn-primary btn-user btn-block" style="margin-top: 10px;" value="Salvar" id="Salvar" name="Salvar" /> 				 
-                    <br><br><center><a href="{{ route('login') }}" class="btn btn-warning btn-sm">Voltar</a></center> 				 
+                    <br><br>
+                    <p style="margin-left: 520px;"><a href="{{ route('login') }}" class="btn btn-warning btn-sm" style="width: 80px;">Voltar</a>&nbsp;<input type="submit" class="btn btn-primary btn-sm" style="width: 80px;" value="Salvar" id="Salvar" name="Salvar" /></p>
                   </form>
                   <hr>
                 </div>
@@ -66,3 +56,4 @@
       </div>
     </div>
   </div>
+  @endsection

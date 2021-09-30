@@ -23,8 +23,6 @@ class CandidatoController extends Controller
 	{
 		$unidades = Unidade::all();
 		$hoje = date('Y-m-d', strtotime('now'));
-		$processos1 = ProcessoSeletivo::all();
-		$qtd = sizeof($processos1);
 		$processos = DB::table('processo_seletivo')
 		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
@@ -52,7 +50,7 @@ class CandidatoController extends Controller
 		} else {
 			$result = "";
 		}
-		return view('candidato', compact('unidades','processos','processos2','processos1','quadros','qtd','result'));
+		return view('candidato', compact('unidades','processos','processos2','quadros','result'));
 	}
 	
 	// Página Informações Cadastro Candidatos //
@@ -230,14 +228,12 @@ class CandidatoController extends Controller
 
 	public function pesquisarCandidatoResultado($id, $idE, $nome, Request $request)
 	{
-		$input = $request->all(); 
-		$processos = ProcessoSeletivo::where('id',$id)->get();
-		$idU = $processos[0]->unidade_id;
-		$unidade   = Unidade::where('id',$idU)->get();
+		$input = $request->all();
 		if($input['pesq'] == null) {
 			$id_escolha = $idE;
 			if($id_escolha == 1) {
 				$processos_result = DB::table('processo_seletivo_' .$nome)
+				->where('nome','like','%'.$input['pesq'].'%')
 				->where('status_avaliacao','=','Habilitado')
 				->orderby('nome')
 				->get(); 
@@ -285,6 +281,8 @@ class CandidatoController extends Controller
 			}
 		}
 		$pesq = '';
+		$processo = ProcessoSeletivo::where('nome',$nome)->get();
+		$unidade = Unidade::where('id',$processo[0]->unidade_id)->get(); 
 		return view('resultados_listas_opcao', compact('processos_result','unidade','idE','id','nome'));
 		
 	}

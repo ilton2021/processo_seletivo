@@ -21,7 +21,7 @@
 							   
 							@else
 							  <td align="center" width="600"><p style="font-size: 20px; margin-top: 20px; font-family: Lucida Console, Courier, monospace;">{{ 'Processo Seletivo: '. $nome }} </p></td>
-							  <td align="center"><img width="180" class="sppb-img-responsive" src="{{asset('storage')}}/{{$unidade[0]->caminho}}" alt="" title=""></td>
+							  <td align="center"><img width="180" class="sppb-img-responsive" src="{{asset('img')}}/{{$unidade[0]->caminho}}" alt="" title=""></td>
 							@endif  
 							<tr><td colspan="3">&nbsp;&nbsp;</td></tr>
 							</tr>
@@ -75,13 +75,13 @@
 				  <td><center>{{ strtoupper($processo_res->nome) }}</center></td>
 				  <td><center>{{ strtoupper($processo_res->vaga) }}</center></td>
 				  <td><center>
-				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $processo_res->id; ?>" > 
+				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $processo_res->id; ?>"> 
 					  Resultado
 				  </button> 
 				  </center>
 				  <div class="modal fade" id='exampleModal<?php echo $processo_res->id; ?>' role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog" role="document">
-					<div class='modal-content'>
+					<div class='modal-content'> 
 					  <div class='modal-header'>
 						<h5 class='modal-title' align="left">{{ $processo_res->nome }}</h5>
 						<button type='button' class='close' data-dismiss='modal'>&times;</button>
