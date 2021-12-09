@@ -106,7 +106,7 @@ class CandidatoController extends Controller
 	public function cadastroCandidato2($id)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
-		$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
+		$vagas     = Vaga::where('processo_seletivo_id',$id)->where('ativo',0)->get();
 		return view('cadastro_candidato2', compact('processos','vagas'));
 	}
 
@@ -114,7 +114,7 @@ class CandidatoController extends Controller
 	{
 		$input = $request->all();
 		$processos = ProcessoSeletivo::where('id',$id)->get();
-		$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
+		$vagas     = Vaga::where('processo_seletivo_id',$id)->where('ativo',0)->get();
 		$validator = Validator::make($request->all(), [
 			'nome'   => 'required|max:255',
 			'vaga'   => 'required|max:255',
@@ -292,7 +292,7 @@ class CandidatoController extends Controller
 	{
 		$unidade = Unidade::find($id);
 		$processos = ProcessoSeletivo::find($id_processo);
-		$vagas = Vaga::where('processo_seletivo_id', $id_processo)->get();
+		$vagas = Vaga::where('processo_seletivo_id', $id_processo)->where('ativo',0)->get();
 		$a = 1;
 		return view('cadastro_candidatos', compact('unidade','processos','vagas','a'));
 	}
@@ -303,7 +303,7 @@ class CandidatoController extends Controller
 		$unidade = Unidade::find($id);
 		$processos = ProcessoSeletivo::find($id_processo);
 		$nome = $processos->nome;  
-		$vagas = Vaga::where('processo_seletivo_id', $id_processo)->get();
+		$vagas = Vaga::where('processo_seletivo_id', $id_processo)->where('ativo',0)->get();
 		$input = $request->all();
 		$cpf = $input['cpf']; 
 		$hoje     = date('Y-m-d', strtotime('now')); 

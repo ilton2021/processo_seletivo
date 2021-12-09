@@ -312,6 +312,7 @@ class ProcessoSeletivoController extends Controller
 		$processos = ProcessoSeletivo::where('id', $id)->get();
 		$unidade_id = $processos[0]->unidade_id;
 		$input['unidade_id'] = $unidade_id;	
+		$input['ativo'] = 0;
 		$validator = Validator::make($request->all(), [
 			'nome'   				 => 'required|max:255',
 			'codigo_vaga' 			 => 'required|max:255',
@@ -349,6 +350,7 @@ class ProcessoSeletivoController extends Controller
 	public function updateVaga($idP, $id, Request $request)
 	{
 		$input = $request->all();
+		$input['ativo'] = 0;
 		$validator = Validator::make($request->all(), [
 			'nome'   				 => 'required|max:255',
 			'codigo_vaga' 			 => 'required|max:255',
@@ -383,7 +385,7 @@ class ProcessoSeletivoController extends Controller
 	public function destroyVaga($idP, $id, Request $request)
 	{
 		$input = $request->all();
-		$vaga  = Vaga::find($id)->delete();
+		$vaga = DB::statement('UPDATE `vaga` SET `ativo` = 1 WHERE `id` = '.$id);
 		$input['user_id'] = Auth::user()->id;
 		$loggers   = Loggers::create($input);
 		$processos = ProcessoSeletivo::where('id',$idP)->get();
