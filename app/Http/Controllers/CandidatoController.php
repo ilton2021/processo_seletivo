@@ -725,12 +725,12 @@ class CandidatoController extends Controller
 			} else {
 				$nomeB = $_FILES['arquivo']['name'];
 				$extensao = pathinfo($nomeB, PATHINFO_EXTENSION);
-				if($extensao === 'pdf' || $extensao === 'doc' || $extensao === 'docx') {
+				if($extensao === 'pdf' || $extensao === 'doc' || $extensao === 'docx' || $extensao === 'PDF' || $extensao === 'DOC' || $extensao === 'DOCX') {
 					$nprocesso = $input['processo_nome'];
 					$arquivo = $input['arquivo'];
-					if($extensao === 'pdf'){
+					if($extensao === 'pdf' || $extensao === 'PDF'){
 						$arquivo = $nome.'.pdf'; 	
-					} else if($extensao === 'doc'){
+					} else if($extensao === 'doc' || $extensao == "DOC"){
 						$arquivo = $nome.'.doc';
 					} else {
 						$arquivo = $nome.'.docx';
@@ -785,7 +785,13 @@ class CandidatoController extends Controller
 				$cargo 				 = $input['cargo'];
 				$atribuicao 		 = $input['atribuicao'];
 				$data_inicio 		 = $input['data_inicio'];
-				$data_fim 			 = date('Y-m-d',strtotime('now'));
+				$data_fim 			 = $input['data_fim']; 
+				if($data_inicio != "" && $data_fim == NULL) {
+					$data_fim = date('Y-m-d',strtotime('now'));
+				} else {
+					$data_fim = $input['data_fim'];
+				}
+				
 				$arquivo_ctps1		 = $input['arquivo_ctps1'];
 			}
 			if($input['empresa2'] == "") {
@@ -800,7 +806,12 @@ class CandidatoController extends Controller
 				$cargo2 			 = $input['cargo2'];
 				$atribuicao2 		 = $input['atribuicao2'];
 				$data_inicio2 		 = $input['data_inicio2'];
-				$data_fim2 			 = date('Y-m-d',strtotime('now'));				
+				$data_fim2 			 = $input['data_fim2'];
+				if($data_inicio2 != "" && $data_fim2 == NULL) {
+					$data_fim2 = date('Y-m-d',strtotime('now'));
+				} else {
+					$data_fim2 = $input['data_fim2'];
+				}				 
 				$arquivo_ctps2		 = $input['arquivo_ctps2'];
 			}
 			if($input['empresa3'] == "") {
@@ -815,7 +826,12 @@ class CandidatoController extends Controller
 				$cargo3 		 	 = $input['cargo3'];
 				$atribuicao3 		 = $input['atribuicao3'];
 				$data_inicio3 		 = $input['data_inicio3'];
-				$data_fim3 			 = date('Y-m-d',strtotime('now'));	
+				$data_fim3 			 = $input['data_fim3'];
+				if($data_inicio3 != "" && $data_fim3 == NULL) {
+					$data_fim3 = date('Y-m-d',strtotime('now'));
+				} else {
+					$data_fim3 = $input['data_fim3'];
+				}
 				$arquivo_ctps3       = $input['arquivo_ctps3'];
 			}
 			$arquivo 	  = $input['arquivo'];

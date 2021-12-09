@@ -122,7 +122,7 @@ class ProcessoResultadoController extends Controller
 			}			
 		}
 		$unidades = Unidade::all();
-		return view('cadastro_resultado_processos', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2'));
+		return view('cadastro_resultado_processos', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2','pesq','tipo'));
 	}
 
 	// Salvar Resultados //

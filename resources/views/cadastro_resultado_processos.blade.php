@@ -150,7 +150,7 @@
             </div>
 			<table class="table table-bordered" id="dataTable" width="10px" cellspacing="0">
 			  <tr>
-				<td><p style="margin-left: -400px;"> {{ $processos2->appends(['pesq' => isset($pesq) ? $pesq : ''])->links() }} </p></td>
+				<td><p style="margin-left: -400px;"> {{ $processos2->appends(['pesq' => isset($pesq) ? $pesq : '','tipo' => isset($tipo) ? $tipo : ''])->links() }} </p></td>
 			  </tr> 
 			</table>
           </div>
