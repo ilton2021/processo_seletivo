@@ -70,10 +70,13 @@
           Sistema
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		  @if(Auth::user()->name == "Ilton Albuquerque")
-		   <a class="dropdown-item" href="{{ route('telaRegistro') }}">Adicionar Usuário</a>
+		    @if(Auth::user()->name == "Ilton Albuquerque" || Auth::user()->name == "Alex Neto")
+		     <a class="dropdown-item" href="{{ route('telaRegistro') }}">Adicionar Usuário</a>
 	      @endif
-		   <a class="dropdown-item" href="{{ url('/') }}">Sair</a>
+         <form id="logout-form2" action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button class="dropdown-item" type="submit">Sair</button>
+         </form>
 	    </div>
       </li>
     </ul>
