@@ -50,6 +50,9 @@ Route::middleware(['auth'])->group( function() {
 		Route::get('/processo_seletivo/pesquisar/', 'ProcessoSeletivoController@pesquisarProcesso')->name('pesquisarProcesso');
 		Route::get('/processo_seletivo/cadastroCandidato/{id}','CandidatoController@cadastroCandidato2')->name('cadastroCandidato2');
 		Route::post('/processo_seletivo/cadastroCandidato/{id}','CandidatoController@storeCandidato2')->name('storeCandidato2');
+		Route::post('/processo_seletivo/encontraAvaliacao/','ProcessoSeletivoController@encontraAvaliacao')->name('encontraAvaliacao');
+		Route::get('/processo_seletivo/encontraAvaliacao/','ProcessoSeletivoController@encontraAvaliacao')->name('encontraAvaliacao');
+		Route::get('/resultado_processos/pesquisaAvaliacao', 'ProcessoSeletivoController@pesquisaAvaliacao')->name('pesquisaAvaliacao');
 		////
 
 		//Unidade
@@ -84,7 +87,8 @@ Route::middleware(['auth'])->group( function() {
 		Route::post('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
 		Route::get('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
 		Route::get('/resultado_processos/{id}/cadastro/exportCandidatos/{nome}', 'ProcessoResultadoController@exportCandidatos')->name('exportCandidatos');
-
+		Route::get('/resultado_processos/exibirResultados', 'ProcessoResultadoController@exibirResultados')->name('exibirResultados');
+		
 		Route::get('/resultado_processos/{id}/cadastro/avaliacao/{id_c}','ProcessoCandidatoController@avaliacao')->name('avaliacao');
 		Route::get('/resultado_processos/{id}/cadastro/avaliacaoLideranca/{id_c}','ProcessoCandidatoController@avaliacaoLideranca')->name('avaliacaoLideranca');
 		Route::get('/resultado_processos/{id}/cadastro/avaliacaoLiderancaVisualizar/{id_c}','ProcessoCandidatoController@avaliacaoLiderancaVisualizar')->name('avaliacaoLiderancaVisualizar');

@@ -43,7 +43,8 @@ class ProcessoSeletivoController extends Controller
 		$vaga = Vaga::where('id', $id_vaga)->get();
 		return view('cadastro_vaga_excluir', compact('processos','vaga'));
 	}
-	
+
+
 	// Página Pesquisa Processo Seletivo //
 	public function pesquisarProcesso(Request $request)
 	{
@@ -392,4 +393,30 @@ class ProcessoSeletivoController extends Controller
 		$vagas 	   = Vaga::where('id',$id)->get();
 		return redirect()->route('vagaCadastro', [$idP]);
 	}
+
+	//Pagina de pesquisa de Avaliação
+
+	public function pesquisaAvaliacao(Request $request){
+		$processos = ProcessoSeletivo::paginate(10);
+		$unidades = Unidade::all();
+		return view('pesquisaAvaliacao',compact('unidades','processos'));
+	}
+
+	//Pesquisa de processo seletivo
+	public function encontraAvaliacao(Request $request){
+		$unidades = Unidade::all();
+		$input = $request->all();
+		$unidade_id = $input['unidade_id'];
+		$pesq = $input['pesq'];
+		
+		if($input['pesq'] == NULL) {
+			$processos = $this->processo_seletivo->where('unidade_id',$unidade_id)->paginate(10);
+			return view('pesquisaAvaliacao', compact('processos','unidades','unidade_id','pesq'));
+		} else {
+			$processos = $this->processo_seletivo->where('nome', 'LIKE', '%' . $pesq . '%')->paginate(10);
+			return view('pesquisaAvaliacao', compact('processos','unidades','unidade_id','pesq'));
+		}
+		
+	}
+
 }

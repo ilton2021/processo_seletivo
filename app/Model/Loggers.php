@@ -12,7 +12,6 @@ class Loggers extends Model
 		'tela',
 		'acao',
 		'user_id',
-		'unidade_id',
 		'created_at',
 		'updated_at'
 	];

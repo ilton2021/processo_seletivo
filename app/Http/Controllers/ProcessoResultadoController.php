@@ -110,8 +110,11 @@ class ProcessoResultadoController extends Controller
 			->get()->toArray();
 		if($input['pesq'] == NULL) {
 			$processos2 = DB::table('processo_seletivo_'.$nome)->orderby('nome', 'ASC')->paginate(10);
+			$tipo = ""; $pesq = "";
 		} else {
-			$tipo = $input['tipo'];
+			if(empty($input['tipo'])) { $input['tipo'] = ""; }
+			if(empty($input['pesq'])) { $input['pesq'] = ""; }
+			$tipo = $input['tipo']; 
 			$pesq = $input['pesq'];
 			if($tipo == 'nome'){
 				$processos2 = DB::table('processo_seletivo_'.$nome)->orderby('nome', 'ASC')
