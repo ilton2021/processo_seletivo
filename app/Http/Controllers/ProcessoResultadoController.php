@@ -140,7 +140,6 @@ class ProcessoResultadoController extends Controller
 		$modoA = $input['modoA']; 
 		$modoE = $input['modoE']; 
 		$modoR = $input['modoR'];
-		$modoC = $input['modoC'];
 		$validacao = 0;
 		$nome = $processoS[0]->nome;
 		$processos2 = DB::table('processo_seletivo_'.$nome)->where('id',$id_candidato)->get();	
@@ -229,32 +228,6 @@ class ProcessoResultadoController extends Controller
 				$validacao = 1;
 			}
 		}
-		if ($modoC == "Habilitado" || $modoC == "Desabilitado")
-		{
-			$validator = Validator::make($request->all(), [
-				'modoC'   	 	  => 'required',
-				'data_resultadoC' => 'required|date',
-				'mensagemC'    	  => 'required|max:500'
-			]);
-			if ($validator->fails()) {
-				return view('resultado_processosA', compact('processos','idP','candidato','processos2'))
-					  ->withErrors($validator)
-                      ->withInput(session()->flashInput($request->input()));
-			} else {
-				$input['data_resultadoC'] 	   = date('Y-m-d', strtotime($input['data_resultadoC']));
-				$input['processo_seletivo_id'] = $id;
-				$data_resultado = $input['data_resultadoC'];
-				$mensagem = $input['mensagemC'];
-				$processo = ProcessoSeletivo::where('id', $input['processo_seletivo_id'])->get();
-				$nome = $processo[0]->nome;
-				DB::statement("UPDATE processo_seletivo_".$nome." SET status_convocacao = '$modoC',
-				data_convocacao = '$data_resultado',
-				msg_convocacao = '$mensagem' WHERE id = '$id_candidato' ");
-				$input['user_id'] = Auth::user()->id;
-				$loggers = Loggers::create($input);
-				$validacao = 1;
-			}					
-		}	
 		if($validacao == 1)
 		{
 			$processos = ProcessoSeletivo::all();

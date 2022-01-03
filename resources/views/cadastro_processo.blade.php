@@ -55,7 +55,7 @@
                 <th>
                   <center>Excluir</center>
                 </th>
-                @if(Auth::user()->id == 1 || Auth::user()->id == 18)
+                @if(Auth::user()->id == 1 || Auth::user()->id == 21)
                 <th>
                   <center>Add Candidato</center>
                 </th>
@@ -81,7 +81,7 @@
                   <th>
                     <center><a class="btn btn-danger btn-sm" style="color: #FFFFFF;" href="{{ route('processoExcluir', $processo->id) }}"> <i class="fas fa-times-circle"></i></a></center>
                   </th>
-                  @if(Auth::user()->id == 1 || Auth::user()->id == 18)
+                  @if(Auth::user()->id == 1 || Auth::user()->id == 21)
                   <th>
                     <center><a class="btn btn-dark btn-sm" style="color: #FFFFFF;" href="{{ route('cadastroCandidato2', $processo->id) }}"> <i class="fas fa-check"></i></a></center>
                   </th>

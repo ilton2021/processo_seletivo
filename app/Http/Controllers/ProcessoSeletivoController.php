@@ -395,7 +395,6 @@ class ProcessoSeletivoController extends Controller
 	}
 
 	//Pagina de pesquisa de Avaliação
-
 	public function pesquisaAvaliacao(Request $request){
 		$processos = ProcessoSeletivo::paginate(10);
 		$unidades = Unidade::all();
@@ -416,7 +415,6 @@ class ProcessoSeletivoController extends Controller
 			$processos = $this->processo_seletivo->where('nome', 'LIKE', '%' . $pesq . '%')->paginate(10);
 			return view('pesquisaAvaliacao', compact('processos','unidades','unidade_id','pesq'));
 		}
-		
 	}
 
 }
