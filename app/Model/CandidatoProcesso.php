@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Model;
+
+use Illuminate\Database\Eloquent\Model;
+
+class CandidatoProcesso extends Model
+{
+
+    protected $fillable = [
+        'vaga',
+        'data_inscricao',
+        'nome',
+        'cpf',
+        'email',
+        'telefone_fixo',
+        'telefone',
+        'lugar_nascimento',
+        'estado_nascimento',
+        'cidade_nascimento',
+        'data_nascimento',
+        'rua',
+        'numero',
+        'bairro',
+        'cidade',
+        'estado',
+        'cep',
+        'complemento',
+        'escolaridade',
+        'status_escolaridade',
+        'formacao',
+        'cursos',
+        'deficiencia',
+        'habilitacao',
+        'periodo_integral',
+        'periodo_noturno',
+        'meio_periodo',
+        'outra_cidade',
+        'exp_01_empresa',
+        'exp_01_cargo',
+        'exp_01_atribuicoes',
+        'arquivo_ctps1',
+        'exp_01_data_ini',
+        'exp_01_data_fim',
+        'exp_02_empresa',
+        'exp_02_cargo',
+        'exp_02_atribuicoes',
+        'arquivo_ctps2',
+        'exp_02_data_ini',
+        'exp_02_data_fim',
+        'exp_03_empresa',
+        'exp_03_cargo',
+        'exp_03_atribuicoes',
+        'arquivo_ctps3',
+        'exp_03_data_ini',
+        'exp_03_data_fim',
+        'como_soube',
+        'parentesco',
+        'parentesco_nome',
+        'nomearquivo',
+        'status',
+        'status_avaliacao',
+        'data_avaliacao',
+        'msg_avaliacao',
+        'status_entrevista',
+        'data_entrevista',
+        'msg_entrevista',
+        'status_resultado',
+        'msg_resultado',
+        'nomearquivo2',
+        'numeroInscricao'
+    ];
+}

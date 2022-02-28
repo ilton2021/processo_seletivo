@@ -32,6 +32,7 @@
 						 <option id="nome1" name="nome1" value="caruaru"> caruaru </option>
 						 <option id="nome1" name="nome1" value="hss"> hss </option>
 						 <option id="nome1" name="nome1" value="hpr"> hpr </option>
+						 <option id="nome1" name="nome1" value="igarassu"> igarassu </option>
 						</select>
 						<select id="nome2" name="nome2" class="form-control">
 						 <?php for($a = 1; $a <= 40; $a++){ ?>

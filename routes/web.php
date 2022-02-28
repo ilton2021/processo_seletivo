@@ -16,6 +16,7 @@ Route::get('/candidato/resultados_listas/{id}/candidatoEditais', 'CandidatoContr
 Route::get('/candidato/resultados_listas/{id}/{id_escolha}/{nome}', 'CandidatoController@candidatoListasOpcao')->name('candidatoListasOpcao');
 Route::post('/candidato/resultados_listas/{id}/{id_escolha}/{nome}/', 'CandidatoController@pesquisarCandidatoResultado')->name('pesquisarCandidatoResultado');
 Route::get('/candidato/cadastroCandidato/{id}/{id_processo}', 'CandidatoController@cadastroCandidato')->name('cadastroCandidato');
+Route::post('/candidato/cadastroCandidato/{id}/{id_processo}', 'CandidatoController@validarCandidato')->name('validarCandidato');
 Route::post('/candidato/cadastroCandidato/{id}/{id_processo}/validar/{a}', 'CandidatoController@validar')->name('validar');
 
 Route::get('/cadastro/avaliacaoL/{id}/{id_c}','ProcessoCandidatoController@avaliacaoGestorLideranca')->name('avaliacaoGestorLideranca');
