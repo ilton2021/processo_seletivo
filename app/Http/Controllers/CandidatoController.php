@@ -150,7 +150,7 @@ class CandidatoController extends Controller
 			$processo = DB::statement("INSERT INTO processo_seletivo_".$processos[0]->nome. "(vaga, 
 			data_inscricao, nome, cpf, email, telefone_fixo, telefone, lugar_nascimento, estado_nascimento, 
 			cidade_nascimento, data_nascimento, rua, numero, bairro, cidade, estado, cep, complemento, 
-			escolaridade, status_escolaridade, formacao, cursos, deficiencia, habilitacao, periodo_integral, 
+			escolaridade, status_escolaridade, formacao, cursos, deficiencia, cid, habilitacao, periodo_integral, 
 			periodo_noturno, meio_periodo, outra_cidade, exp_01_empresa, exp_01_cargo, exp_01_atribuicoes, 
 			arquivo_ctps1, exp_01_data_ini, exp_01_data_fim, exp_02_empresa, exp_02_cargo, exp_02_atribuicoes, 
 			arquivo_ctps2, exp_02_data_ini, exp_02_data_fim, exp_03_empresa, exp_03_cargo, exp_03_atribuicoes, 
@@ -470,17 +470,16 @@ class CandidatoController extends Controller
 					->withInput(session()->flashInput($request->input()));	
 			}
 		} else { $arquivo_ctps3 = ""; }
-		$deficiencia = $input['deficiencia'];
-		if($deficiencia !== "0") {
+		$deficiencia_status = $input['deficiencia_status'];
+		if($deficiencia_status == "sim") {
 			if($request->file('arquivo_deficiencia') === NULL) {	
-				$validator = 'Informe o arquivo de PCD!';
-					return view('cadastro_candidatos', compact('unidade','processos','vagas'))
-						->withErrors($validator)
-						->withInput(session()->flashInput($request->input()));		
+				$arquivo_deficiencia = ""; 
+				$cid 		 = $input['cid'];
+				$deficiencia = $input['deficiencia'];		
 			} else {
 				$nomeA = $_FILES['arquivo_deficiencia']['name'];
 				$extensao = pathinfo($nomeA, PATHINFO_EXTENSION);
-				if($extensao == 'pdf' || $extensao == 'doc' || $extensao == 'docx' || $extensao == 'PDF' || $extensao == 'DOC' || $extensao == 'DOCX') {
+				if($extensao == 'pdf' || $extensao == 'doc' || $extensao == 'docx' || $extensao == 'jpg' || $extensao == 'jpeg' || $extensao == 'png' || $extensao == 'PDF' || $extensao == 'DOC' || $extensao == 'DOCX' || $extensao == 'JPG' || $extensao == 'JPEG' || $extensao == 'PNG') {
 					$tamanho = $request->file('arquivo_deficiencia')->getSize();
 					if($tamanho > 10000000) {	
 						$validator = 'O tamanho máximo do Arquivo PCD é 10MB!';
@@ -492,6 +491,8 @@ class CandidatoController extends Controller
 					$nprocesso 			 = $nome_processo;
 					$request->file('arquivo_deficiencia')->move('../public/storage/candidato/deficiencia/'.$nprocesso.'/',$nomeA);
 					$arquivo_deficiencia = 'candidato/deficiencia/'.$nprocesso.'/'.$nomeA; 
+					$cid 		 = $input['cid'];
+					$deficiencia = $input['deficiencia'];
 				} else {
 					$validator = 'No anexo deficiência os arquivos permitidos são: .doc, .docx e .pdf!';
 					return view('cadastro_candidatos', compact('unidade','processos','vagas'))
@@ -499,7 +500,8 @@ class CandidatoController extends Controller
 							->withInput(session()->flashInput($request->input()));		
 				}
 			}
-		} else { $arquivo_deficiencia = ""; }
+		} else { $arquivo_deficiencia = ""; $cid = ""; $deficiencia = "0"; }
+		
 		$arquivo = $input['arquivo'];
 		if($request->file('arquivo') === NULL) {	
 			$validator = 'Anexe seu currículo!';
@@ -524,12 +526,18 @@ class CandidatoController extends Controller
 					$arquivo = $nome.'.pdf'; 	
 				} else if($extensao === 'doc' || $extensao == "DOC"){
 					$arquivo = $nome.'.doc';
-				} else {
+				} else if($extensao === 'docx' || $extensao == "DOCX"){
 					$arquivo = $nome.'.docx';
+				} else if($extensao === 'jpeg' || $extensao == "JPEG"){
+					$arquivo = $nome.'.jpeg';
+				} else if($extensao === 'jpg' || $extensao == "JPG"){
+					$arquivo = $nome.'.jpg';
+				} else if($extensao === 'png' || $extensao == "PNG"){
+					$arquivo = $nome.'.png';
 				}
 				$request->file('arquivo')->move('../public/storage/candidato/curriculo/'.$nprocesso.'/',$arquivo);
 			} else {
-				$validator = 'Os arquivos permitidos são: .doc, .docx e .pdf!';
+				$validator = 'Os arquivos permitidos são: .doc, .docx, .pdf, .jpg, .jpeg, .png!';
 				return view('cadastro_candidatos', compact('unidade','processos','vagas'))
 					->withErrors($validator)
 					->withInput(session()->flashInput($request->input()));			
@@ -582,8 +590,8 @@ class CandidatoController extends Controller
 		DB::statement("INSERT INTO processo_seletivo_".$nprocesso."
 			(vaga,data_inscricao,nome, cpf, email, telefone_fixo, telefone, lugar_nascimento, estado_nascimento,
 			cidade_nascimento, data_nascimento, rua, numero, bairro, cidade, estado,
-			cep, complemento, escolaridade, status_escolaridade, formacao, cursos,
-			deficiencia, habilitacao, periodo_integral, periodo_noturno, meio_periodo,
+			cep, complemento, escolaridade, status_escolaridade, formacao, cursos, 
+			deficiencia, cid, habilitacao, periodo_integral, periodo_noturno, meio_periodo,
 			outra_cidade, exp_01_empresa, exp_01_cargo, exp_01_atribuicoes, arquivo_ctps1,
 			exp_01_data_ini, exp_01_data_fim, exp_02_empresa, exp_02_cargo, exp_02_atribuicoes,
 			arquivo_ctps2, exp_02_data_ini, exp_02_data_fim, exp_03_empresa, exp_03_cargo,
@@ -594,7 +602,7 @@ class CandidatoController extends Controller
 			('$nome_vaga','$hoje','$nome','$cpf','$email','$fone_fixo','$celular',
 			'$naturalidade','$estado_nasc','$cidade_nasc','$data_nasc','$rua','$numero',
 			'$bairro','$cidade','$estado','$cep','$complemento','$escolaridade','$status_escolaridade','$formacao',
-			'$cursos','$deficiencia','$habilitacao','$p1','$p2',
+			'$cursos','$deficiencia','$cid','$habilitacao','$p1','$p2',
 			'$p3','$outra_cidade','$empresa','$cargo','$atribuicao',
 			'$arquivo_ctps1','$data_inicio','$data_fim','$empresa2','$cargo2',
 			'$atribuicao2','$arquivo_ctps2','$data_inicio2','$data_fim2','$empresa3',

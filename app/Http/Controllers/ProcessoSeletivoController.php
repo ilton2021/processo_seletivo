@@ -133,6 +133,7 @@ class ProcessoSeletivoController extends Controller
 						formacao varchar(150) COLLATE utf8mb4_unicode_ci NULL,
 						cursos varchar(1000) COLLATE utf8mb4_unicode_ci NULL,
 						deficiencia varchar(15) COLLATE utf8mb4_unicode_ci NULL,
+						cid varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						habilitacao varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						periodo_integral varchar(100) COLLATE utf8mb4_unicode_ci NULL,
 						periodo_noturno varchar(100) COLLATE utf8mb4_unicode_ci NULL,

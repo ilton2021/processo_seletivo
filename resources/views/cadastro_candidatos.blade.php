@@ -62,30 +62,30 @@
 
 			$(".caracteres").text(caracteresRestantes);
 		});
-	</script>
-  <script type="text/javascript">
-		function desabilitar(valor) {
-		  var status = document.getElementById('exp1').checked;
-		  
-		  if (status == true) {
-			document.getElementById('dadosExp2').style.display = 'block';
-			document.getElementById('Salvar1').style.display = 'none';
-		  } else {
-			document.getElementById('dadosExp2').style.display = 'none';
-			document.getElementById('Salvar1').style.display = 'block';
-		  }
-		}
-		
-		function desabilitar2(valor) {
-		  var status = document.getElementById('exp_2').checked;
-		  
-		  if (status == true) {
-			document.getElementById('dadosExp3').style.display = 'block';
-			document.getElementById('Salvar2').style.display = 'none';
-		  } else {
-			document.getElementById('dadosExp3').style.display = 'none';
-			document.getElementById('Salvar2').style.display = 'block';
-		  }
+		function habilitaDeficiencia(valor) {
+
+			var x = document.getElementById('deficiencia_status').value; 
+			if(x == "sim") {
+				document.getElementById('deficiencia').hidden = false;  
+				document.getElementById('cid').hidden = false;
+				document.getElementById('pcd1').hidden = false; 
+				document.getElementById('pcd2').hidden = false; 
+				document.getElementById('pcd3').hidden = false; 
+				document.getElementById('pcd4').hidden = false; 
+				document.getElementById('pcd5').hidden = false; 
+				document.getElementById('pcd6').hidden = false; 
+				document.getElementById('arquivo_deficiencia').hidden = false;
+			} else if(x == "nao") {
+				document.getElementById('deficiencia').hidden = true;
+				document.getElementById('cid').hidden = true;
+				document.getElementById('pcd1').hidden = true;
+				document.getElementById('pcd2').hidden = true; 
+				document.getElementById('pcd3').hidden = true; 
+				document.getElementById('pcd4').hidden = true; 
+				document.getElementById('pcd5').hidden = true; 
+				document.getElementById('pcd6').hidden = true;
+				document.getElementById('arquivo_deficiencia').hidden = true;
+			}
 		}
 	 </script>
 </head>
@@ -162,7 +162,11 @@
 							<option id="vaga" name="vaga" value="">Selecione...</option>
 							@if(!empty($vagas))
 								@foreach($vagas as $vaga)
-								<option id="vaga" name="vaga" value="<?php echo $vaga->nome ?>">{{ $vaga->nome }} / {{ $vaga->carga_horaria }}</option>	 
+								 @if(old('vaga') == $vaga->nome))
+								  <option id="vaga" name="vaga" value="<?php echo $vaga->nome ?>" selected>{{ $vaga->nome }} / {{ $vaga->carga_horaria }}</option>	 
+								 @else
+								  <option id="vaga" name="vaga" value="<?php echo $vaga->nome ?>">{{ $vaga->nome }} / {{ $vaga->carga_horaria }}</option>	 
+								 @endif 
 								@endforeach
 							@endif
 							</select>
@@ -295,6 +299,63 @@
 				       <tr style="width:50px;">
 						<td> <b>ESCOLARIDADE: (*campo obrigatório)</b>
 						 <select style="width:450px;" id="escolaridade" name="escolaridade" class="form-control">
+						 	@if(old('escolaridade') == "Ensino Medio Completo")
+							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo" selected>Ensino Médio Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
+							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
+							@elseif(old('escolaridade') == "Superior Incompleto")
+							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Incompleto" selected>Superior Incompleto</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
+							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
+							@elseif(old('escolaridade') == "Superior Completo")
+							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Completo" selected>Superior Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
+							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
+							@elseif(old('escolaridade') == "Mestrado Completo")
+							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Mestrado Completo" selected>Mestrado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
+							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
+							@elseif(old('escolaridade') == "Doutorado Completo")
+							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Doutorado Completo" selected>Doutorado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
+							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
+							@elseif(old('escolaridade') == "Pos graduacao")
+							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Pos graduacao" selected>Pós-graduação</option> 
+							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
+							@elseif(old('escolaridade') == "Residencia")
+							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
+							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
+							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
+							<option id="escolaridade" name="escolaridade" value="Residencia" selected>Residência</option> 
+							@else
 							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
 							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
 							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
@@ -302,43 +363,100 @@
 							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
 							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
 							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
+							@endif
 						 </select>
 						</td>
 						<td> <b>STATUS DA ESCOLARIDADE: (*campo obrigatório)</b>
 						 <select id="status_escolaridade" style="width:450px;" name="status_escolaridade" class="form-control">
+							@if(old('status_escolaridade') == "Em Andamento")
+						 	<option id="status_escolaridade" name="status_escolaridade" value="Em Andamento" selected>Em Andamento</option>
+							<option id="status_escolaridade" name="status_escolaridade" value="Trancado">Trancado</option>
+							<option id="status_escolaridade" name="status_escolaridade" value="Concluido">Concluído</option>
+							@elseif(old('status_escolaridade') == "Trancado")
+							<option id="status_escolaridade" name="status_escolaridade" value="Em Andamento">Em Andamento</option>
+							<option id="status_escolaridade" name="status_escolaridade" value="Trancado" selected>Trancado</option>
+							<option id="status_escolaridade" name="status_escolaridade" value="Concluido">Concluído</option>
+							@elseif(old('status_escolaridade') == "Concluido")
+							<option id="status_escolaridade" name="status_escolaridade" value="Em Andamento">Em Andamento</option>
+							<option id="status_escolaridade" name="status_escolaridade" value="Trancado">Trancado</option>
+							<option id="status_escolaridade" name="status_escolaridade" value="Concluido" selected>Concluído</option>
+							@else
 							<option id="status_escolaridade" name="status_escolaridade" value="Em Andamento">Em Andamento</option>
 							<option id="status_escolaridade" name="status_escolaridade" value="Trancado">Trancado</option>
 							<option id="status_escolaridade" name="status_escolaridade" value="Concluido">Concluído</option>
+							@endif
 						 </select>
 						</td>
 					   </tr>	
 					   <tr>
 						<td> <b>FORMAÇÃO EM QUAL CURSO? (*campo obrigatório)</b>
-						 <input class="form-control" style="width:450px;" placeholder="Formação em qual curso?" type="text" id="formacao" name="formacao" value="{{ old('formacao') }}" maxlength="150" required />
+						 <textarea class="form-control" style="width:450px;" placeholder="Formação em qual curso?" type="text" id="formacao" name="formacao" value="{{ old('formacao') }}" maxlength="150" required>{{ old('formacao') }}</textarea>
 						</td>
-						<td> <b>POSSUI ALGUMA PCD: (*campo obrigatório)</b>
-						 <select id="deficiencia" name="deficiencia" class="form-control" onchange='pegavalorlaudo(this)'>
-							<option id="deficiencia" name="deficiencia" value="0">Não Possuo</option>
-							<option id="deficiencia" name="deficiencia" value="Fisica">Física</option>
-							<option id="deficiencia" name="deficiencia" value="Auditiva">Auditiva</option>
-							<option id="deficiencia" name="deficiencia" value="Visual">Visual</option>
-							<option id="deficiencia" name="deficiencia" value="Intelectual">Intelectual</option>
-							<option id="deficiencia" name="deficiencia" value="Reabilitado">Reabilitado</option>
-							<option id="deficiencia" name="deficiencia" value="Outra">Outra</option>
-						 </select>
-						</td>
-					   </tr>
-					   <tr>
 						<td> <b>QUAIS CURSOS REALIZOU? (*campo obrigatório)</b>
 						 <textarea class="form-control" style="width:450px;" placeholder="quais cursos realizou?" type="text" id="cursos" name="cursos" value="{{ old('cursos') }}" maxlength="500" required>{{ old('cursos') }}</textarea>
-						</td>
-						<td> ANEXE O LAUDO
-					 	 <input style="width:450px;" class="form-control" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" value="" maxlength="600"> 
 						</td>
 					   </tr>
 					</table>
 				   </div>
 				  </div>
+				</table>
+				<br>
+				<table style= "margin-top:-50px; margin-left:40px; width:800px;" class="table table-borderless" border="0" bordercolor=DCDCDC>
+			     <tr>
+				  <td>
+					<div class="modal-content" style="width: 1000px;">
+					 <div class="modal-header">
+						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>PCD:</b></h5></center>
+					 </div>
+				     <div class="modal-body" style="width: 900px; background-color: white;">
+					  <table>  
+					   <tr>
+						<td colspan="2"> 
+							Você quer se candidatar para a vaga como Pessoa com Deficiência? 
+							<select id="deficiencia_status" name="deficiencia_status" class="form-control" style="width: 100px;" onchange="habilitaDeficiencia('sim')">
+							 @if(old('deficiencia_status') == "nao")
+							 <option id="deficiencia_status" name="deficiencia_status" value="nao" selected>NÃO</option>
+							 <option id="deficiencia_status" name="deficiencia_status" value="sim">SIM</option> 
+							 @elseif(old('deficiencia_status') == "sim")
+							 <option id="deficiencia_status" name="deficiencia_status" value="nao">NÃO</option>
+							 <option id="deficiencia_status" name="deficiencia_status" value="sim" selected>SIM</option>
+							 @else
+							 <option id="deficiencia_status" name="deficiencia_status" value="nao">NÃO</option>
+							 <option id="deficiencia_status" name="deficiencia_status" value="sim">SIM</option>
+							 @endif
+						    </select>
+						</td>
+					   </tr>
+				       <tr>
+					    <td> <b><label id="pcd"><label id="pcd1" name="pcd1" hidden>ESPECIFIQUE SUA DEFICIÊNCIA: (*campo obrigatório)</label></b>
+						 <select id="deficiencia" name="deficiencia" class="form-control" style="width: 400px;" hidden>
+						    <option id="deficiencia" name="deficiencia" value="Auditiva">Auditiva</option>
+							<option id="deficiencia" name="deficiencia" value="Fisica">Física</option>
+							<option id="deficiencia" name="deficiencia" value="Intelectual">Intelectual</option>
+							<option id="deficiencia" name="deficiencia" value="Mental">Mental</option>
+							<option id="deficiencia" name="deficiencia" value="Autista">Transtorno do Espectro Autista</option>
+							<option id="deficiencia" name="deficiencia" value="Visual">Visual</option>
+							<option id="deficiencia" name="deficiencia" value="Outros">Outros</option>
+						 </select>
+						</td>
+						<td colspan="2"> <label id="pcd2" name="pcd2" hidden><b>CID CORRESPONDENTE: (*campo obrigatório)</b></label>
+						   <input style="width:400px;" class="form-control" hidden placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="{{ old('cid') }}" maxlength="255" required />
+						</td>	
+					   </tr>
+					   <tr>
+						<td>
+						 <p align="justify"><label id="pcd3" name="pcd3" hidden>Envie o laudo PCD para complementar o seu cadastro no HCP GESTÃO</label></p>
+						 <p align="justify"><label id="pcd4" name="pcd4" hidden>O Laudo PCD é importante para garantir que processos seletivos destinados a pessoas com deficiência sejam justos e que deles participem apenas pessoas que tenham alguma deficiência. Desta forma, o HCP Gestão terá como identificar rapidamente aplicações inadequadas, tornando o processo de seleção mais ágil e justo. Como o envio do laudo médico não é obrigatório, você não será automaticamente desclassificado do processo seletivo. No entanto, esse controle será exclusivo do HCP GESTÃO que poderá utilizar esse documento para evitar fraudes. O laudo será coletado e armazenado com base no seu consentimento. Este documento será compartilhado apenas para o processo seletivo em questão conforme nossa Política de Privacidade.</label></p>
+						 <b><label id="pcd"><label id="pcd5" name="pcd5" hidden>ANEXE O LAUDO MÉDICO</label></b>
+					 	 <input style="width:450px;" hidden class="form-control" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" value="" maxlength="600"> 
+						 <br><p><label id="pcd"><label id="pcd6" name="pcd6" hidden>Esse documento pode ser nos formatos: <b>PNG, JPG, JPEG, DOC, DOCX ou PDF.</label></b></p>
+						</td>
+					   </tr>
+					  </table>
+					 </div>
+					</div>
+				  </td>
+				 </tr>
 				</table>
 				<br>
 				<table style= "margin-top:-50px; margin-left:40px; width:800px;" class="table table-borderless" border="0" bordercolor=DCDCDC>
@@ -517,7 +635,7 @@
 						  </select>
 						 </td> 
 						 <td> 
-						   <input style= "width:200px;" type="text" id="como_soube2" name="como_soube2" class="form-control" disabled required/> 
+						   <input style= "width:200px;" type="text" id="como_soube2" name="como_soube2" class="form-control" maxlength="255" disabled required/> 
 						 </td>
 						</tr>
 						<tr>
@@ -527,7 +645,7 @@
 							<option id="parentesco" name="parentesco" value="nao"> Não </option>  
 							<option id="parentesco" name="parentesco" value="sim"> Sim </option>  
 							</select>	
-							<td> <input style= "width:200px;" type="text" id="parentesco_nome" name="parentesco_nome" class="form-control" disabled required/> </td>
+							<td> <input style= "width:200px;" type="text" id="parentesco_nome" name="parentesco_nome" class="form-control" maxlength="255" disabled required/> </td>
 						</td>
 						</tr>
 						<tr> <br>
