@@ -162,7 +162,7 @@
 							<option id="vaga" name="vaga" value="">Selecione...</option>
 							@if(!empty($vagas))
 								@foreach($vagas as $vaga)
-								 @if(old('vaga') == $vaga->nome))
+								 @if(old('vaga') == $vaga->nome))  
 								  <option id="vaga" name="vaga" value="<?php echo $vaga->nome ?>" selected>{{ $vaga->nome }} / {{ $vaga->carga_horaria }}</option>	 
 								 @else
 								  <option id="vaga" name="vaga" value="<?php echo $vaga->nome ?>">{{ $vaga->nome }} / {{ $vaga->carga_horaria }}</option>	 
