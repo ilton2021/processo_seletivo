@@ -9,6 +9,7 @@ Auth::routes();
 
 Route::get('/', 'CandidatoController@candidatoIndex')->name('candidatoIndex');
 Route::get('informativo/{id}/{id_p}', 'CandidatoController@informativo')->name('informativo'); 
+Route::get('informativoLGPD/{id}/{id_p}', 'CandidatoController@informativoLGPD')->name('informativoLGPD');
 Route::get('candidato/cadastro', 'CandidatoController@candidatoIndex_')->name('candidatoIndex_');
 Route::get('candidato/resultados_processos/{id}', 'CandidatoController@candidatoResultados')->name('candidatoResultados');
 Route::get('candidato/resultados_listas/{id}', 'CandidatoController@candidatoListas')->name('candidatoListas');

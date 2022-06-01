@@ -7,32 +7,34 @@
 	<link href="{{ asset('js/utils.js') }}" rel="stylesheet">
 	<link href="{{ asset('js/bootstrap.js') }}" rel="stylesheet">
 </head>
-<div id="reflexo"> 				
-
+<div id="reflexo"> 			
     <body class="page homepage  ltr preset1 menu-homepage responsive bg hfeed clearfix">
-     
-	   
 	   <br>
 	  <div class="container">
-		<div id="sp-page-builder" class="sp-page-builder  page-1">
+		<div id="sp-page-builder" class="sp-page-builder page-1">
 		   <div class="page-content">
 			 <section  class="sppb-section ">
 			   <div class="sppb-addon-container" style="">
 				  <div class="sppb-addon-content">
 					<div class="custom">
-					  <div class="container" style="width:100%;"> <br> <br>
-						 <table class="table table-borderless" align="center" border="0" width="500" bordercolor=DCDCDC >
-						    <tr>
-							  <td align="center"><p style="font-size: 20px; margin-top: 20px;">OLÁ CANDIDATO, SEU CADASTRO FOI CONCLUÍDO</p></td>
+					  <div class="container" style="width:50%;"> <br> <br>
+						 <table class="table table-borderless" align="center" border="0" width="800" bordercolor=DCDCDC >
+							<tr>
+							  <td><img width="180" id="img-unity" src="{{asset('img')}}/{{'gestao.png'}}" class="rounded-sm" alt="..."></td>
+							  <td align="center"><p style="font-size: 14px; margin-top: 10px;"><b>Agora é com a empresa!</b></p></td>
                             </tr>
-                           <tr>
-                            <td align="center"><p style="font-size: 18px; margin-top: 20px;">Acompanhe o processo e as atualizações de edital em:</p></td>
+							<tr>
+							  <td align="justify" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Você finalizou a etapa Currículo no processo seletivo do HCPGESTÃO. Agora, eles analisarão sua compatibilidade com a vaga e decidirão se você avança para as próximas etapas.</p></td>
                             </tr>
                             <tr>
-                            <td align="center"><p style="font-size: 18px; margin-top: 20px;"><a href="https://hcpgestao.org.br/processoSeletivo/public/">https://hcpgestao.org.br/processoSeletivo/public/</a></p></td>
+                              <td align="justify" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Fique de olho no e-mail (inclusive na caixa de spam) e telefone que você cadastrou para ficar sabendo dos próximos passos. Esperamos que esse retorno seja rápido.</p></td>
                             </tr>
-
-							</tr>
+							<tr>
+                              <td align="justify" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Boa sorte! Estamos torcendo por você. ;-) Seu <b>número de Inscrição é: {{ $numeroInscricao }}</b></p></td>
+                            </tr>
+                            <tr>
+                              <td align="center" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Acesse o Portal para informações: <a href="https://hcpgestao.org.br/processo_seletivo_hcpgestao/public/">https://hcpgestao.org.br/processo_seletivo_hcpgestao/public/</a></p></td>
+                      		</tr>
 						  </table>
 					  </div>
 					 </div>
@@ -40,13 +42,11 @@
 				 </div>
 			  </section>	 
 			  </div>
-			
-			  
 	    </section>
 	  </div>
 	  </div>
 	 </div>
-</div>
+	</div>
   </body>
   <style>
 
@@ -56,7 +56,6 @@ footer table#hcp{
 h5{
 	margin-top: 30px;
 }
-
 
 footer img{
 	padding:2px;

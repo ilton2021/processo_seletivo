@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ ('assets/css/main.css') }}" />
+		
 	</head>
 	<body class="is-preload">
 			<div id="header">
@@ -60,20 +61,22 @@
 								   @if((strtotime($hoje) >= strtotime($ini)) && (strtotime($hoje) <= strtotime($fim)))
 								   <tr> 
 									<td style="width: 200px;" title=""><center>{{$processo->nome}}</center></td>
-									@if($processo->unidade_id == 8)
-									<td style="width: 240px;" title="Hospital Provisório do Recife I"><center>{{ 'HPR' }}</center></td>
-									@elseif($processo->unidade_id == 7)
-									<td style="width: 240px;" title="Hospital São Sebastião"><center>{{ 'HSS' }}</center></td>
-									@elseif($processo->unidade_id == 6)
-									<td style="width: 240px;" title="UPAE Caruaru"><center>{{ 'UPAE CARUARU' }}</center></td>
-									@elseif($processo->unidade_id == 5)
-									<td style="width: 240px;" title="UPAE Arruda"><center>{{ 'UPAE ARRUDA' }}</center></td>
-									@elseif($processo->unidade_id == 4)
-									<td style="width: 240px;" title="UPAE Arcoverde"><center>{{ 'UPAE ARCOVERDE' }}</center></td>
+									@if($processo->unidade_id == 2)
+									<td style="width: 240px;" title="Hospital da Mulher do Recife"><center>{{ 'HMR' }}</center></td>
 									@elseif($processo->unidade_id == 3)
 									<td style="width: 240px;" title="UPAE Belo Jardim"><center>{{ 'UPAE BELO JARDIM' }}</center></td>
-									@elseif($processo->unidade_id == 2)
-									<td style="width: 240px;" title="Hospital da Mulher do Recife"><center>{{ 'HMR' }}</center></td>
+									@elseif($processo->unidade_id == 4)
+									<td style="width: 240px;" title="UPAE Arcoverde"><center>{{ 'UPAE ARCOVERDE' }}</center></td>
+									@elseif($processo->unidade_id == 5)
+									<td style="width: 240px;" title="UPAE Arruda"><center>{{ 'UPAE ARRUDA' }}</center></td>
+									@elseif($processo->unidade_id == 6)
+									<td style="width: 240px;" title="UPAE Caruaru"><center>{{ 'UPAE CARUARU' }}</center></td>
+									@elseif($processo->unidade_id == 7)
+									<td style="width: 240px;" title="Hospital São Sebastião"><center>{{ 'HSS' }}</center></td>
+									@elseif($processo->unidade_id == 8)
+									<td style="width: 240px;" title="Hospital Provisório do Recife I"><center>{{ 'HPR' }}</center></td>
+									@elseif($processo->unidade_id == 9)
+									<td style="width: 240px;" title="UPA Igarassu"><center>{{ 'UPA IGARASSU' }}</center></td>
 									@endif
 									<td style="width: 170px;" title=""><center>{{date('d-m-Y', (strtotime($processo->inscricao_fim)))}}</center></td>
 									<td style="width: 5px;" title="">

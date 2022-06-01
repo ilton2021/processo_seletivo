@@ -11,16 +11,6 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('js/utils.js') }}" rel="stylesheet">
   <link href="{{ asset('js/bootstrap.js') }}" rel="stylesheet">
-  <script type="text/javascript">
-		function ativarOutra(valor){
-			var x = document.getElementById('validar').checked; 
-			if(x == true){
-				document.getElementById('div').disabled = false;
-			} else {
-				document.getElementById('div').disabled = true;
-			}
-		}
-  </script>
 </head>
     <body>
 	<div id="reflexo"> 	
@@ -46,29 +36,36 @@
 						 <br>
 						 <table class="table table-borderless" border="0" width="500" id="inicio">
 						   <tr>
-							<td align="center"><strong> Olá! Seja bem vindo ao Processo Seletivo Simplificado: {{ $processos[0]->nome }}. </strong></td>
+							<td align="center"><strong> DECLARAÇÃO DE PRIVACIDADE </strong></td>
 						   </tr>
 						   <tr>
 						    <td> 
 							  <p>
-								<b><center>Antes de iniciar o Processo Seletivo é importante:</center></b> <br><br>
 								<ul style="text-align: left; list-style-type:none;">
-									<li style="padding: 2px;"><b>Ler todo o edital com atenção: <a href="{{asset('storage')}}/{{$processos[0]->edital_caminho}}" target='_blank'>Regulamento - {{ $processos[0]->nome }}</a>.</b></li>
-									<li style="padding: 2px;"><b>Ler toda documentação necessária para admissão: <a href="{{ asset('storage/doc.pdf')}}" target='_blank'>Documentos</a></b></li>
-									<li style="padding: 2px;"><b>Anexar seu currículo atualizado em formato de arquivo PDF ou DOC.</b></li>
-									<li style="padding: 2px;"><b>Caso seja PCD (Pessoas com Deficiência), anexar declaração de portador de deficiência em formato de arquivo PDF ou DOC.</b></li>
-									<li style="padding: 2px;"><b>Informar seus dados corretamente, você poderá ser excluído do Processo Seletivo.</b></li>
-									<li style="padding: 2px;"><b>Sem estes dados não é possível completar o Processo Seletivo.</b></li>
-									<li style="padding: 2px;" align="justify"><b>Todos os dados informados pelo candidato serão tratados pela área de recursos humanos de forma segura e exclusiva para o processo seletivo vigente, o mesmo possui a validade de 6 meses a contar da data fim de inscrição. Após este prazo os dados serão armazenados pelo mesmo período e após 1 ano excluídos de nossa base.</b></li>
-									<li style="padding: 2px; color:red;"><b>Inscrição de {{ date('d/m/Y', strtotime($processos[0]->inscricao_inicio)) }} até {{ date('d/m/Y', strtotime($processos[0]->inscricao_fim)) }}</b></li>
-									<li style="padding: 2px;"><b>Caso ocorra algum erro na inscrição do processo seletivo enviar um e-mail para <b style="color:red;">processoseletivo.hcpgestao@gmail.com</b></li>
+									<li style="padding: 2px;"><b><p align="justify">De acordo com a Lei Geral de Proteção de Dados Nº 13.709/18 e legislação vigente aplicável, o
+											titular dos dados pessoais declara estar ciente e de acordo com as disposições aqui descritas e
+											autoriza, de forma livre e expressa, o tratamento de dados pessoais e informações pelo HCP
+											Gestão, respeitando os princípios de transparência, necessidade, adequação e finalidade para os
+											dados aqui coletados conforme edital publicado. O HCP Gestão fará uso destes dados para
+											cadastro de profissionais e serão armazenados por 12 meses, utilizando as medidas técnicas e
+											organizacionais necessárias para preservar a privacidade dos dados coletados seguindo as
+											melhores práticas de mercado.</p></b></li>
+									<li style="padding: 2px;"><b><p align="justify">O HCP Gestão respeita e garante ao titular a possibilidade de exercer seus direitos. Para exercer
+											seus direitos entre em contato com o Encarregado de Dados no e-mail dpo@hcp.org.br.
+											Direitos do Titular dos Dados: Confirmação da existência de tratamento, o acesso aos dados, a
+											correção de dados incompletos, inexatos ou desatualizados, a anonimização, bloqueio ou
+											eliminação de dados desnecessários, excessivos ou tratados em desconformidade, a
+											portabilidade de seus dados a outro fornecedor de serviço ou produto, mediante requisição
+											expressa pelo titular, a eliminação dos dados tratados com consentimento do titular, a
+											informação sobre a possibilidade de não fornecer o seu consentimento, bem como de ser
+											informado sobre as consequências, em caso de negativa e a revogação do consentimento.</p></b></li>
 								</ul>
 							  </p>
 							</td>
 						   </tr>
 						   <tr>
 						    <td>
-						    <form method="get" action="{{ route('informativoLGPD', array($processos[0]->unidade_id, $processos[0]->id)) }}">	
+						    <form method="get" action="{{ route('cadastroCandidato', array($processos[0]->unidade_id, $processos[0]->id)) }}">	
 						   	   <center><button id="div" href="" class='btn btn-success' target="_blank">Inscrição</button></center>
 							</form>
 						   </td>

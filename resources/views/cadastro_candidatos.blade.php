@@ -87,6 +87,63 @@
 				document.getElementById('arquivo_deficiencia').hidden = true;
 			}
 		}
+
+		function desabilitar6(valor) {
+			var x = document.getElementById('val6').checked;
+			if(x == true){
+				document.getElementById('empresa').disabled  	  = false;
+				document.getElementById('cargo').disabled 		  = false;
+				document.getElementById('data_inicio').disabled   = false;
+				document.getElementById('data_fim').disabled 	  = false;
+				document.getElementById('atribuicao').disabled    = false;
+				document.getElementById('arquivo_ctps1').disabled = false;
+			} else {
+				document.getElementById('empresa').disabled  	  = true;
+				document.getElementById('cargo').disabled 		  = true;
+				document.getElementById('data_inicio').disabled   = true;
+				document.getElementById('data_fim').disabled 	  = true;
+				document.getElementById('atribuicao').disabled    = true;
+				document.getElementById('arquivo_ctps1').disabled = true;
+			}
+		}
+
+		function desabilitar7(valor) {
+			var x = document.getElementById('val7').checked;
+			if(x == true){
+				document.getElementById('empresa2').disabled  	  = false;
+				document.getElementById('cargo2').disabled 		  = false;
+				document.getElementById('data_inicio2').disabled  = false;
+				document.getElementById('data_fim2').disabled 	  = false;
+				document.getElementById('atribuicao2').disabled   = false;
+				document.getElementById('arquivo_ctps2').disabled = false;
+			} else {
+				document.getElementById('empresa2').disabled  	  = true;
+				document.getElementById('cargo2').disabled 		  = true;
+				document.getElementById('data_inicio2').disabled  = true;
+				document.getElementById('data_fim2').disabled 	  = true;
+				document.getElementById('atribuicao2').disabled   = true;
+				document.getElementById('arquivo_ctps2').disabled = true;
+			}
+		}
+
+		function desabilitar8(valor) {
+			var x = document.getElementById('val8').checked;
+			if(x == true){
+				document.getElementById('empresa3').disabled  	  = false;
+				document.getElementById('cargo3').disabled 		  = false;
+				document.getElementById('data_inicio3').disabled  = false;
+				document.getElementById('data_fim3').disabled 	  = false;
+				document.getElementById('atribuicao3').disabled   = false;
+				document.getElementById('arquivo_ctps3').disabled = false;
+			} else {
+				document.getElementById('empresa3').disabled  	  = true;
+				document.getElementById('cargo3').disabled 		  = true;
+				document.getElementById('data_inicio3').disabled  = true;
+				document.getElementById('data_fim3').disabled 	  = true;
+				document.getElementById('atribuicao3').disabled   = true;
+				document.getElementById('arquivo_ctps3').disabled = true;
+			}
+		}
 	 </script>
 </head>
     <body>
@@ -104,7 +161,7 @@
 								<td>
 								 <div style= "text-align:center; opacity:75%;border-radius: 25px; color: white;margin-top:-45px;height: 160px;background-color: #57D211;  margin-bottom: -25px; Font-family: Cambria, Georgia, serif."class="jumbotron jumbotron-fluid">
 									<div class="container">
-										<h5 class="display-8"><p style="align: center"> <b>INSCRIÇÃO <br> PROCESSO SELETIVO: {{ $processos[0]->nome }}</b> <img id="hcp" width="120px;" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></p></td></h5>
+										<h5 class="display-8"><p style="align: center"> <b>INSCRIÇÃO <br> PROCESSO SELETIVO: {{ $processos[0]->nome }}</b> <img id="hcp" width="120px;" style="margin-top: -30px;" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></p></td></h5>
 									</div>
 								 </div>	
 								</td>
@@ -147,12 +204,12 @@
 					  <table>
 						<tr>
 						 <td><b>NOME COMPLETO: (*campo obrigatório)</b>
-						  <input class="form-control"  placeholder="Nome Completo"  type="text" id="nome" name="nome" value="{{ old('nome') }}" required maxlength="150" />
+						  <input class="form-control" placeholder="NOME COMPLETO"  type="text" id="nome" name="nome" value="{{ old('nome') }}" required maxlength="150" />
 						 </td>
-						 <td><b>E-MAIL: (*campo obrigatório)</b>
-						  <input id="email" style="width: 250px;" type="text" class="form-control" name="email" value="{{ old('email') }}" required placeholder="email" maxlength="255">
+						 <td style="width: 400px;"><b>E-MAIL: (*campo obrigatório)</b>
+						  <input id="email" style="width: 250px;" type="email" class="form-control" name="email" value="{{ old('email') }}" required placeholder="E-MAIL" maxlength="255">
 						 </td>
-						 <td><b>CPF: (*campo obrigatório)</b>
+						 <td style="width: 400px;"><b>CPF: (*campo obrigatório)</b>
 						  <input id="cpf" style="width: 250px;" type="text" maxlength="11" class="form-control" name="cpf" max="11" value="{{ old('cpf') }}" required placeholder="APENAS NÚMEROS" autocomplete="cpf" autofocus /> 
 						 </td>
 						</tr>
@@ -172,10 +229,10 @@
 							</select>
 						 </td>
 						 <td> <b>CELULAR: (*campo obrigatório)</b>
-						  <input class="form-control" style="200px;" placeholder="Ex: (81)98888-3333" type="text" maxlength="14" id="telefone" name="telefone" value="{{ old('telefone') }}" required />
+						 <input class="form-control" style="200px;" placeholder="Ex: (81)98888-3333" type="text" maxlength="14" id="telefone" name="telefone" value="{{ old('telefone') }}" required />
 						 </td>
 						 <td> TELEFONE FIXO:
-						  <input class="form-control" style="200px;" placeholder="Ex: (81)2222-3333" type="text" id="fone_fixo" maxlength="13" name="fone_fixo" value="{{ old('fone_fixo') }}" />
+						 <input class="form-control" style="200px;" placeholder="Ex: (81)2222-3333" type="text" id="fone_fixo" maxlength="13" name="fone_fixo" value="{{ old('fone_fixo') }}" />
 						 </td>
 						</tr>
 					  </table>
@@ -189,56 +246,52 @@
 					<div class="modal-content" style="width: 1000px;">
 					 <div class="modal-header">
 						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>NATURALIDADE:</b></h5></center>
-					 </div>
+				   	 </div>
 				     <div class="modal-body" style="width: 900px; background-color: white;">
 					  <table>    	
 					   <tr>
-						<td>
-						<b>CIDADE: (*campo obrigatório)</b>
-						<input class="form-control" style="width:400px" placeholder="Cidade" type="text" id="lugar_nascimento" name="lugar_nascimento" value="{{ old('lugar_nascimento') }}" required maxlength="100" />
+						<td> <b>CIDADE: (*campo obrigatório)</b>
+						 <input class="form-control" style="width:400px" placeholder="CIDADE" type="text" id="lugar_nascimento" name="lugar_nascimento" value="{{ old('lugar_nascimento') }}" required maxlength="100" />
 						</td>
-						<td>
-						<b>ESTADO: (*campo obrigatório)</b>
-						<select class="form-control" id="estado_nascimento" name="estado_nascimento" style="width:400px" required>
-							<option id="estado_nasc" name="estado_nasc" value="">Selecione...</option>
-							<option id="estado_nasc" name="estado_nasc" value='Acre'>Acre</option>
-							<option id="estado_nasc" name="estado_nasc" value='Alagoas'>Alagoas</option>
-							<option id="estado_nasc" name="estado_nasc" value='Amazonas'>Amazonas</option>
-							<option id="estado_nasc" name="estado_nasc" value='Amapá'>Amapá</option>
-							<option id="estado_nasc" name="estado_nasc" value='Bahia'>Bahia</option>
-							<option id="estado_nasc" name="estado_nasc" value='Ceará'>Ceará</option>
-							<option id="estado_nasc" name="estado_nasc" value='Distrito Federal'>Distrito&nbsp;Federal</option>
-							<option id="estado_nasc" name="estado_nasc" value='Espírito Santo'>Espírito&nbsp;Santo</option>
-							<option id="estado_nasc" name="estado_nasc" value='Goiás'>Goiás</option>
-							<option id="estado_nasc" name="estado_nasc" value='Maranhão'>Maranhão</option>
-							<option id="estado_nasc" name="estado_nasc" value='Minas Gerais'>Minas&nbsp;Gerais</option>
-							<option id="estado_nasc" name="estado_nasc" value='Mato Grosso do Sul'>Mato&nbsp;Grosso&nbsp;do&nbsp;Sul</option>
-							<option id="estado_nasc" name="estado_nasc" value='Mato Grosso'>Mato&nbsp;Grosso</option>
-							<option id="estado_nasc" name="estado_nasc" value='Pará'>Pará</option>
-							<option id="estado_nasc" name="estado_nasc" value='Paraíba'>Paraíba</option>
-							<option id="estado_nasc" name="estado_nasc" value='Pernambuco'>Pernambuco</option>
-							<option id="estado_nasc" name="estado_nasc" value='Piauí'>Piauí</option>
-							<option id="estado_nasc" name="estado_nasc" value='Paraná'>Paraná</option>
-							<option id="estado_nasc" name="estado_nasc" value='Rio de Janeiro'>Rio&nbsp;de&nbsp;Janeiro</option>
-							<option id="estado_nasc" name="estado_nasc" value='Rio Grande do Norte'>Rio&nbsp;Grande&nbsp;do&nbsp;Norte</option>
-							<option id="estado_nasc" name="estado_nasc" value='Rondônia'>Rondônia</option>
-							<option id="estado_nasc" name="estado_nasc" value='Roraima'>Roraima</option>
-							<option id="estado_nasc" name="estado_nasc" value='Rio Grande do Sul'>Rio&nbsp;Grande&nbsp;do&nbsp;Sul</option>
-							<option id="estado_nasc" name="estado_nasc" value='Santa Catarina'>Santa&nbsp;Catarina</option>
-							<option id="estado_nasc" name="estado_nasc" value='Sergipe'>Sergipe</option>
-							<option id="estado_nasc" name="estado_nasc" value='São Paulo'>São&nbsp;Paulo</option>
-							<option id="estado_nasc" name="estado_nasc" value='Tocantins'>Tocantins</option>
-						</select>
+						<td> <b>ESTADO: (*campo obrigatório)</b>
+							<select class="form-control" id="estado_nascimento" name="estado_nascimento" style="width:400px" required>
+								<option id="estado_nasc" name="estado_nasc" value="">Selecione...</option>
+								<option id="estado_nasc" name="estado_nasc" value='Acre'>Acre</option>
+								<option id="estado_nasc" name="estado_nasc" value='Alagoas'>Alagoas</option>
+								<option id="estado_nasc" name="estado_nasc" value='Amazonas'>Amazonas</option>
+								<option id="estado_nasc" name="estado_nasc" value='Amapá'>Amapá</option>
+								<option id="estado_nasc" name="estado_nasc" value='Bahia'>Bahia</option>
+								<option id="estado_nasc" name="estado_nasc" value='Ceará'>Ceará</option>
+								<option id="estado_nasc" name="estado_nasc" value='Distrito Federal'>Distrito&nbsp;Federal</option>
+								<option id="estado_nasc" name="estado_nasc" value='Espírito Santo'>Espírito&nbsp;Santo</option>
+								<option id="estado_nasc" name="estado_nasc" value='Goiás'>Goiás</option>
+								<option id="estado_nasc" name="estado_nasc" value='Maranhão'>Maranhão</option>
+								<option id="estado_nasc" name="estado_nasc" value='Minas Gerais'>Minas&nbsp;Gerais</option>
+								<option id="estado_nasc" name="estado_nasc" value='Mato Grosso do Sul'>Mato&nbsp;Grosso&nbsp;do&nbsp;Sul</option>
+								<option id="estado_nasc" name="estado_nasc" value='Mato Grosso'>Mato&nbsp;Grosso</option>
+								<option id="estado_nasc" name="estado_nasc" value='Pará'>Pará</option>
+								<option id="estado_nasc" name="estado_nasc" value='Paraíba'>Paraíba</option>
+								<option id="estado_nasc" name="estado_nasc" value='Pernambuco'>Pernambuco</option>
+								<option id="estado_nasc" name="estado_nasc" value='Piauí'>Piauí</option>
+								<option id="estado_nasc" name="estado_nasc" value='Paraná'>Paraná</option>
+								<option id="estado_nasc" name="estado_nasc" value='Rio de Janeiro'>Rio&nbsp;de&nbsp;Janeiro</option>
+								<option id="estado_nasc" name="estado_nasc" value='Rio Grande do Norte'>Rio&nbsp;Grande&nbsp;do&nbsp;Norte</option>
+								<option id="estado_nasc" name="estado_nasc" value='Rondônia'>Rondônia</option>
+								<option id="estado_nasc" name="estado_nasc" value='Roraima'>Roraima</option>
+								<option id="estado_nasc" name="estado_nasc" value='Rio Grande do Sul'>Rio&nbsp;Grande&nbsp;do&nbsp;Sul</option>
+								<option id="estado_nasc" name="estado_nasc" value='Santa Catarina'>Santa&nbsp;Catarina</option>
+								<option id="estado_nasc" name="estado_nasc" value='Sergipe'>Sergipe</option>
+								<option id="estado_nasc" name="estado_nasc" value='São Paulo'>São&nbsp;Paulo</option>
+								<option id="estado_nasc" name="estado_nasc" value='Tocantins'>Tocantins</option>
+							</select>
 						</td>
 						</tr>
 						<tr>
-						<td>
-						<b>PAÍS: (*campo obrigatório)</b>
-						<input class="form-control" placeholder="País" type="text" id="cidade_nascimento" name="cidade_nascimento" value="{{ old('cidade_nascimento') }}" required maxlength="50" />
+						<td> <b>PAÍS: (*campo obrigatório)</b>
+						   <input class="form-control" placeholder="PAÍS" type="text" id="cidade_nascimento" name="cidade_nascimento" value="{{ old('cidade_nascimento') }}" required maxlength="50" />
 						</td>
-						<td>
-						<b>DATA DE NASCIMENTO: (*campo obrigatório)</b>
-						<input class="form-control" type="date" id="data_nascimento" name="data_nascimento" value="{{ old('data_nascimento') }}" required />
+						<td> <b>DATA DE NASCIMENTO: (*campo obrigatório)</b>
+						    <input class="form-control" type="date" id="data_nascimento" name="data_nascimento" value="{{ old('data_nascimento') }}" required />
 						</td>
 				 	  </tr>
 					</table>
@@ -251,35 +304,35 @@
 				  <td>
 					<div class="modal-content" style="width: 1000px;">
 					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>ENDEREÇO:</b></h5></center>
+						<center><h5 class="modal-title" id="exampleModalLongTitle"><b>ENDEREÇO:</b></h5></center>
 					 </div>
 				     <div class="modal-body" style="width: 900px; background-color: white;">
 					  <table>  
 						<tr>
-							<td> <b>CEP: (*campo obrigatório)</b>
-							 <input style="width: 300px;" class="form-control" placeholder="CEP" type="text" id="cep" name="cep" value="{{ old('cep') }}" required maxlength="30" />
+							<td> <b> CEP: (*campo obrigatório)</b>
+							  <input style="width: 300px;" class="form-control" placeholder="CEP" type="text" id="cep" name="cep" value="{{ old('cep') }}" required maxlength="30" />
 							</td>
-							<td> <b>RUA: (*campo obrigatório)</b>
-							 <input style="width:300px;" class="form-control" placeholder="RUA" type="text" id="rua" name="rua" value="{{ old('rua') }}" required maxlength="100" />
+							<td> <b> RUA: (*campo obrigatório)</b>  
+							  <input style="width:300px;" class="form-control" placeholder="RUA" type="text" id="rua" name="rua" value="{{ old('rua') }}" required maxlength="100" />
 							</td>
-							<td> <b>NÚMERO: (*campo obrigatório)</b>
-							 <input style="width:300px;" class="form-control" placeholder="NÚMERO" type="text" id="numero" name="numero" value="{{ old('numero') }}" required maxlength="10" />
+							<td> <b> NÚMERO: (*campo obrigatório)</b>
+							  <input style="width:300px;" class="form-control" placeholder="NÚMERO" type="text" id="numero" name="numero" value="{{ old('numero') }}" required maxlength="10" />
 							</td>
 						</tr>
 						<tr>
-							<td> <b>BAIRRO: <b>(*campo obrigatório)</b>
-							 <input style="width:300px;" class="form-control" placeholder="BAIRRO" type="text" id="bairro" name="bairro" value="{{ old('bairro') }}" required maxlength="100" />
+							<td> <b> BAIRRO: (*campo obrigatório)</b>
+							  <input style="width:300px;" class="form-control" placeholder="BAIRRO" type="text" id="bairro" name="bairro" value="{{ old('bairro') }}" required maxlength="100" />
 							</td>
-							<td> <b>CIDADE: <b>(*campo obrigatório)</b>
-							 <input style="width:300px;" class="form-control" placeholder="CIDADE" type="text" id="cidade" name="cidade" value="{{ old('cidade') }}" required maxlength="100" />
+							<td> <b> CIDADE: (*campo obrigatório)</b>
+							  <input style="width:300px;" class="form-control" placeholder="CIDADE" type="text" id="cidade" name="cidade" value="{{ old('cidade') }}" required maxlength="100" />
 							</td>
-							<td> <b>ESTADO: <b>(*campo obrigatório)</b>
-							 <input style="width:300px;" class="form-control" placeholder="ESTADO" type="text" id="estado" name="estado" value="{{ old('estado') }}" required maxlength="100" />
+							<td> <b> ESTADO: (*campo obrigatório)</b>
+							  <input style="width:300px;" class="form-control" placeholder="ESTADO" type="text" id="estado" name="estado" value="{{ old('estado') }}" required maxlength="100" />
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2"> COMPLEMENTO:
-							 <input style="width:400px;" class="form-control" placeholder="COMPLEMENTO" type="text" id="complemento" name="complemento" value="{{ old('complemento') }}" maxlength="200" />
+							  <input style="width:400px;" class="form-control" placeholder="COMPLEMENTO" type="text" id="complemento" name="complemento" value="{{ old('complemento') }}" maxlength="200" />
 							</td>				
 						</tr>
 					</table>
@@ -292,13 +345,13 @@
 				  <td>
 					<div class="modal-content" style="width: 1000px;">
 					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>ESCOLARIDADE:</b></h5></center>
+						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>ESCOLARIDADE:</b></h5></center>	
 					 </div>
 				     <div class="modal-body" style="width: 900px; background-color: white;">
 					  <table>  
 				       <tr style="width:50px;">
 						<td> <b>ESCOLARIDADE: (*campo obrigatório)</b>
-						 <select style="width:450px;" id="escolaridade" name="escolaridade" class="form-control">
+						  <select style="width:450px;" id="escolaridade" name="escolaridade" class="form-control">
 						 	@if(old('escolaridade') == "Ensino Medio Completo")
 							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo" selected>Ensino Médio Completo</option> 
 							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
@@ -367,7 +420,7 @@
 						 </select>
 						</td>
 						<td> <b>STATUS DA ESCOLARIDADE: (*campo obrigatório)</b>
-						 <select id="status_escolaridade" style="width:450px;" name="status_escolaridade" class="form-control">
+						  <select id="status_escolaridade" style="width:450px;" name="status_escolaridade" class="form-control">
 							@if(old('status_escolaridade') == "Em Andamento")
 						 	<option id="status_escolaridade" name="status_escolaridade" value="Em Andamento" selected>Em Andamento</option>
 							<option id="status_escolaridade" name="status_escolaridade" value="Trancado">Trancado</option>
@@ -390,10 +443,10 @@
 					   </tr>	
 					   <tr>
 						<td> <b>FORMAÇÃO EM QUAL CURSO? (*campo obrigatório)</b>
-						 <textarea class="form-control" style="width:450px;" placeholder="Formação em qual curso?" type="text" id="formacao" name="formacao" value="{{ old('formacao') }}" maxlength="150" required>{{ old('formacao') }}</textarea>
+						  <textarea class="form-control" style="width:450px;" placeholder="Formação em qual curso?" type="text" id="formacao" name="formacao" value="{{ old('formacao') }}" maxlength="150" required>{{ old('formacao') }}</textarea>
 						</td>
 						<td> <b>QUAIS CURSOS REALIZOU? (*campo obrigatório)</b>
-						 <textarea class="form-control" style="width:450px;" placeholder="quais cursos realizou?" type="text" id="cursos" name="cursos" value="{{ old('cursos') }}" maxlength="500" required>{{ old('cursos') }}</textarea>
+						  <textarea class="form-control" style="width:450px;" placeholder="quais cursos realizou?" type="text" id="cursos" name="cursos" value="{{ old('cursos') }}" maxlength="500" required>{{ old('cursos') }}</textarea>
 						</td>
 					   </tr>
 					</table>
@@ -406,7 +459,7 @@
 				  <td>
 					<div class="modal-content" style="width: 1000px;">
 					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>PCD:</b></h5></center>
+						<center><h5 class="modal-title"id="exampleModalLongTitle">PCD:</h5></center>
 					 </div>
 				     <div class="modal-body" style="width: 900px; background-color: white;">
 					  <table>  
@@ -414,42 +467,35 @@
 						<td colspan="2"> 
 							Você quer se candidatar para a vaga como Pessoa com Deficiência? 
 							<select id="deficiencia_status" name="deficiencia_status" class="form-control" style="width: 100px;" onchange="habilitaDeficiencia('sim')">
-							 @if(old('deficiencia_status') == "nao")
-							 <option id="deficiencia_status" name="deficiencia_status" value="nao" selected>NÃO</option>
-							 <option id="deficiencia_status" name="deficiencia_status" value="sim">SIM</option> 
-							 @elseif(old('deficiencia_status') == "sim")
-							 <option id="deficiencia_status" name="deficiencia_status" value="nao">NÃO</option>
-							 <option id="deficiencia_status" name="deficiencia_status" value="sim" selected>SIM</option>
-							 @else
-							 <option id="deficiencia_status" name="deficiencia_status" value="nao">NÃO</option>
-							 <option id="deficiencia_status" name="deficiencia_status" value="sim">SIM</option>
-							 @endif
+							  <option id="deficiencia_status" name="deficiencia_status" value="sim" selected>SIM</option>  
+							  <option id="deficiencia_status" name="deficiencia_status" value="nao">NÃO</option>
 						    </select>
 						</td>
 					   </tr>
 				       <tr>
-					    <td> <b><label id="pcd"><label id="pcd1" name="pcd1" hidden>ESPECIFIQUE SUA DEFICIÊNCIA: (*campo obrigatório)</label></b>
-						 <select id="deficiencia" name="deficiencia" class="form-control" style="width: 400px;" hidden>
-						    <option id="deficiencia" name="deficiencia" value="Auditiva">Auditiva</option>
-							<option id="deficiencia" name="deficiencia" value="Fisica">Física</option>
-							<option id="deficiencia" name="deficiencia" value="Intelectual">Intelectual</option>
-							<option id="deficiencia" name="deficiencia" value="Mental">Mental</option>
-							<option id="deficiencia" name="deficiencia" value="Autista">Transtorno do Espectro Autista</option>
-							<option id="deficiencia" name="deficiencia" value="Visual">Visual</option>
-							<option id="deficiencia" name="deficiencia" value="Outros">Outros</option>
-						 </select>
+					    <td>ESPECIFIQUE SUA DEFICIÊNCIA:
+						    <select id="deficiencia" name="deficiencia" class="form-control" style="width: 400px;">
+						      <option id="deficiencia" name="deficiencia" value="">Selecione..</option>
+						      <option id="deficiencia" name="deficiencia" value="Auditiva">Auditiva</option>
+							  <option id="deficiencia" name="deficiencia" value="Fisica">Física</option>
+							  <option id="deficiencia" name="deficiencia" value="Intelectual">Intelectual</option>
+							  <option id="deficiencia" name="deficiencia" value="Mental">Mental</option>
+							  <option id="deficiencia" name="deficiencia" value="Autista">Transtorno do Espectro Autista</option>
+							  <option id="deficiencia" name="deficiencia" value="Visual">Visual</option>
+							  <option id="deficiencia" name="deficiencia" value="Outros">Outros</option>
+						    </select>
 						</td>
-						<td colspan="2"> <label id="pcd2" name="pcd2" hidden><b>CID CORRESPONDENTE: (*campo obrigatório)</b></label>
-						   <input style="width:400px;" class="form-control" hidden placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="{{ old('cid') }}" maxlength="255" required />
+						<td colspan="2"> CID CORRESPONDENTE:
+							  <input style="width:400px;" class="form-control" placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="{{ old('cid') }}" maxlength="255" />
 						</td>	
 					   </tr>
 					   <tr>
 						<td>
-						 <p align="justify"><label id="pcd3" name="pcd3" hidden>Envie o laudo PCD para complementar o seu cadastro no HCP GESTÃO</label></p>
-						 <p align="justify"><label id="pcd4" name="pcd4" hidden>O Laudo PCD é importante para garantir que processos seletivos destinados a pessoas com deficiência sejam justos e que deles participem apenas pessoas que tenham alguma deficiência. Desta forma, o HCP Gestão terá como identificar rapidamente aplicações inadequadas, tornando o processo de seleção mais ágil e justo. Como o envio do laudo médico não é obrigatório, você não será automaticamente desclassificado do processo seletivo. No entanto, esse controle será exclusivo do HCP GESTÃO que poderá utilizar esse documento para evitar fraudes. O laudo será coletado e armazenado com base no seu consentimento. Este documento será compartilhado apenas para o processo seletivo em questão conforme nossa Política de Privacidade.</label></p>
-						 <b><label id="pcd"><label id="pcd5" name="pcd5" hidden>ANEXE O LAUDO MÉDICO</label></b>
-					 	 <input style="width:450px;" hidden class="form-control" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" value="" maxlength="600"> 
-						 <br><p><label id="pcd"><label id="pcd6" name="pcd6" hidden>Esse documento pode ser nos formatos: <b>PNG, JPG, JPEG, DOC, DOCX ou PDF.</label></b></p>
+						 <p align="justify">Envie o laudo PCD para complementar o seu cadastro no HCP GESTÃO</label></p>
+						 <p align="justify">O Laudo PCD é importante para garantir que processos seletivos destinados a pessoas com deficiência sejam justos e que deles participem apenas pessoas que tenham alguma deficiência. Desta forma, o HCP Gestão terá como identificar rapidamente aplicações inadequadas, tornando o processo de seleção mais ágil e justo. Como o envio do laudo médico não é obrigatório, você não será automaticamente desclassificado do processo seletivo. No entanto, esse controle será exclusivo do HCP GESTÃO que poderá utilizar esse documento para evitar fraudes. O laudo será coletado e armazenado com base no seu consentimento. Este documento será compartilhado apenas para o processo seletivo em questão conforme nossa Política de Privacidade.</p>
+						 ANEXE O LAUDO MÉDICO
+						    <input style="width:450px;" class="form-control" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" value="" maxlength="600"> 
+					 	 <br><p><b>Esse documento pode ser nos formatos: PNG, JPG, JPEG, DOC, DOCX ou PDF.</b></p>
 						</td>
 					   </tr>
 					  </table>
@@ -464,36 +510,65 @@
 				  <td>
 					<div class="modal-content" style="width: 1000px;">
 					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle">EXPERIÊNCIAS: <b>(*Não Obrigatório)</b></h5></center>
+						<center><h5 class="modal-title"id="exampleModalLongTitle">EXPERIÊNCIAS: </h5></center>
 					 </div>
 				     <div class="modal-body" style="width: 900px; background-color: white;">
 					  <table>
 					   	<tr>
-						  <td colspan="3" align="left"><strong> EXPERIÊNCIA 01: </strong></td>
+						  <td colspan="3" align="left"><strong><center> EXPERIÊNCIA 01: </center></strong>
+						    @if(old('val6') == "on")
+						      <p align="right"><input type="checkbox" checked onclick="desabilitar6('sim')" id="val6" name="val6" /> Habilitar campos</p></td>
+					        @else
+						      <p align="right"><input type="checkbox" onclick="desabilitar6('sim')" id="val6" name="val6" /> Habilitar campos</p></td>
+						    @endif
 						</tr>
 						<tr>
 						  <td> EMPRESA:
-							<input style="width:450px;" class="form-control" placeholder="Empresa" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" />
+							@if(old('val6') == "on")
+							  <input style="width:450px;" class="form-control" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" required />
+							@else
+							  <input style="width:450px;" disabled class="form-control" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" required />
+							@endif
 						  </td>
 						  <td> CARGO:
-							<input style="width: 400px;" class="form-control" placeholder="Cargo" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" />
+						    @if(old('val6') == "on")
+							  <input style="width: 400px;" class="form-control" placeholder="CARGO" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" required />
+							@else
+							  <input style="width: 400px;" disabled class="form-control" placeholder="CARGO" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" required />
+							@endif
 						  </td>
 						</tr>				
 						<tr>
 						  <td> DATA INÍCIO:
-							<input style="width:400px;" class="form-control" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" />
+						    @if(old('val6') == "on")
+							  <input style="width:400px;" class="form-control" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" required />
+							@else
+							  <input style="width:400px;" disabled class="form-control" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" required />
+							@endif
 						  </td>
 						  <td> DATA FIM:
-							<input style = "width:400px;"class="form-control" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" />
+						    @if(old('val6') == "on")
+							  <input style="width:400px;" class="form-control" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" required />
+							@else
+							  <input style="width:400px;" disabled class="form-control" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" required />
+							@endif  
 						  </td>
 						</tr>
 						<tr>
 						  <td> SUAS ATRIBUIÇÕES:
-						   <textarea style="width:450px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300"></textarea>
+						    @if(old('val6') == "on")
+							  <textarea style="width:450px;" class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" required></textarea>
+							@else
+							  <textarea style="width:450px;" disabled class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" required></textarea>
+							@endif
 						   Restam: <span class="caracteres">300 </span> caracteres.<br>
 		  				  </td>
 						  <td> CTPS OU CONTRA CHEQUE </br> <b>.doc, .docx e .pdf</b>
-							<input class="form-control" type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600"> 
+						    @if(old('val6') == "on")
+							  <input class="form-control" type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600" > 
+							@else
+							  <input class="form-control" disabled type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600"> 
+							@endif
 						  </td>
 						</tr>
 						<tr>
@@ -502,63 +577,121 @@
 						  </td>
 						</tr>
 						<tr>
-						  <td colspan="3" align="left"><strong> EXPERIÊNCIA 02: </strong></td>
+						  <td colspan="3" align="left"><strong><center> EXPERIÊNCIA 02: </center></strong>
+						    @if(old('val7') == "on")
+							  <p align="right"><input type="checkbox" checked onclick="desabilitar7('sim')" id="val7" name="val7" /> Habilitar campos</p></td>
+							@else
+							  <p align="right"><input type="checkbox" onclick="desabilitar7('sim')" id="val7" name="val7" /> Habilitar campos</p></td>
+							@endif
 						</tr>
 						<tr>
 						  <td> EMPRESA:
-							<input style="width:450px;" class="form-control" placeholder="Empresa" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" />
+						    @if(old('val7') == "on")
+							  <input style="width:450px;" class="form-control" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" required />
+							@else
+							  <input style="width:450px;" disabled class="form-control" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" required />
+							@endif
 						  </td>
 						  <td> CARGO:
-							<input style = "width: 400px;" class="form-control" placeholder="Cargo" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" />
+						    @if(old('val7') == "on")
+							  <input style="width: 400px;" class="form-control" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" required />
+							@else
+							  <input style="width: 400px;" disabled class="form-control" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" required />
+							@endif
 						  </td>
 						</tr>
 						<tr>
 						  <td> DATA INÍCIO:
-							<input style="width:400px; " class="form-control" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" />
+						    @if(old('val7') == "on")
+							  <input style="width:400px;" class="form-control" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" required />
+							@else
+							  <input style="width:400px;" disabled class="form-control" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" required />
+							@endif
 						  </td>
 						  <td> DATA FIM:
-							<input style="width: 400px;"class="form-control" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" />
+						    @if(old('val7') == "on")
+							  <input style="width: 400px;" class="form-control" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" required />
+							@else
+							  <input style="width: 400px;" disabled class="form-control" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" required />
+							@endif							
 						  </td>
 						</tr>
 						<tr>
 						  <td> SUAS ATRIBUIÇÕES:
-							<textarea style="width:450px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300"></textarea>
+						    @if(old('val7') == "on")
+							  <textarea style="width:450px;" class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" required></textarea>
+							@else
+							  <textarea style="width:450px;" disabled class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" required></textarea>
+							@endif
 							Restam: <span class="caracteres">300 </span> caracteres.<br>
 						  </td>
 						  <td> CTPS OU CONTRA CHEQUE </br> <b>.doc, .docx e .pdf</b>
-							<input class="form-control" type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
+						    @if(old('val7') == "on")
+							  <input class="form-control" type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
+							@else
+							  <input class="form-control" disabled type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
+							@endif
 						  </td>
 						</tr>
 						<tr>
 						  <td colspan="2"><center><strong>ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</center></strong></td>
 						</tr>
 						<tr>
-						  <td colspan="3" align="left"><strong> EXPERIÊNCIA 03: </strong></td>
+						  <td colspan="2" align="left"><strong><center> EXPERIÊNCIA 03: </center></strong>
+						    @if(old('val8') == "on")
+							  <p align="right"><input type="checkbox" checked onclick="desabilitar8('sim')" id="val8" name="val8" /> Habilitar campos</p></td>
+							@else
+							  <p align="right"><input type="checkbox" onclick="desabilitar8('sim')" id="val8" name="val8" /> Habilitar campos</p></td>
+							@endif
 						</tr>
 						<tr>
 						  <td> EMPRESA:
-							<input style="width:450px;" class="form-control" placeholder="Empresa" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" />
+						    @if(old('val8') == "on")
+							  <input style="width:450px;" class="form-control" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" required />
+							@else
+							  <input style="width:450px;" disabled class="form-control" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" required />
+							@endif
 						  </td>
 						  <td> CARGO:
-							<input style="width: 400px;" class="form-control" placeholder="Cargo" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" />
+						    @if(old('val8') == "on")
+							  <input style="width: 400px;" class="form-control" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" required />
+							@else
+							  <input style="width: 400px;" disabled class="form-control" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" required />
+							@endif
 						  </td>
 						</tr>
 						<tr>
 						   <td> DATA INÍCIO:
-							<input style="width:400px; " class="form-control" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" />
+						    @if(old('val8') == "on")
+							  <input style="width:400px;" class="form-control" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" required />
+							@else
+							  <input style="width:400px;" disabled class="form-control" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" required />
+							@endif
 						  </td>
 						  <td> DATA FIM:
-							<input style="width: 400px;"class="form-control" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" />
+						    @if(old('val8') == "on")
+							  <input style="width: 400px;" class="form-control" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" required />
+							@else
+							  <input style="width: 400px;" disabled class="form-control" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" required />
+							@endif
 						  </td>
 						</tr>
 						<tr>					
 						<tr>
 						  <td> SUAS ATRIBUIÇÕES:
-						   <textarea style="width:450px;" class="form-control" placeholder="Suas Atribuições" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300"></textarea>
+						    @if(old('val8') == "on")
+							  <textarea style="width:450px;" class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" required></textarea>
+							@else
+							  <textarea style="width:450px;" disabled class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" required></textarea>
+							@endif
 						   Restam: <span class="caracteres">300 </span> caracteres.<br>
 						  </td>
 						  <td> CTPS OU CONTRA CHEQUE </br> <b>.doc, .docx e .pdf</b>
-							<input class="form-control" type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
+						    @if(old('val8') == "on")
+							  <input class="form-control" type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
+							@else
+							  <input class="form-control" disabled type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
+							@endif
 						  </td>
 						</tr>
 						<tr>
@@ -574,7 +707,7 @@
 				  <td>
 					<div class="modal-content" style="width: 1000px;">
 					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>CURRÍCULO:</b></h5></center>
+						<center><h5 class="modal-title" id="exampleModalLongTitle"><b>CURRÍCULO:</b></h5></center>
 					 </div>
 				     <div class="modal-body" style="width: 900px; background-color: white;">
 					  <table>
@@ -596,43 +729,75 @@
 				  <td>
 					<div class="modal-content" style="width: 1000px;">
 					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>DISPONIBILIDADE:</b></h5></center>
+						<center><h5 class="modal-title" id="exampleModalLongTitle"><b>DISPONIBILIDADE:</b></h5></center>
 					 </div>
 				     <div class="modal-body" style="width: 900px; background-color: white;">
 					  <table border="0" style="width:950px;">
 						<tr>
 						 <td> POSSUI HABILITAÇÃO:
+						  @if(old('val9') == "on")
+						  <select style="width:300px;" disabled class="form-control" id="habilitacao" name="habilitacao">
+						   <option id="habilitacao" name="habilitacao" value="nao">Não</option>
+						   <option id="habilitacao" name="habilitacao" value="sim">Sim</option>
+						  </select>						  
+						  @else
 						  <select style="width:300px;" class="form-control" id="habilitacao" name="habilitacao">
 						   <option id="habilitacao" name="habilitacao" value="nao">Não</option>
 						   <option id="habilitacao" name="habilitacao" value="sim">Sim</option>
 						  </select>
+						  @endif
 						 </td>
 						 </tr>
 						<tr>
 						 <td> DISPONIBILIDADE PARA QUAL PERÍODO:
+						  @if(old('val9') == "on")
+						  <select style="width:300px;" disabled class="form-control" id="periodo" name="periodo">
+						   <option id="periodo" name="periodo" value="periodo_integral">Disponibilidade para período integral</option>
+						   <option id="periodo" name="periodo" value="periodo_noturno">Disponibilidade para período noturno</option>
+						   <option id="periodo" name="periodo" value="meio_periodo">Disponibilidade para meio período</option>
+						  </select>						  
+						  @else
 						  <select style="width:300px;" class="form-control" id="periodo" name="periodo">
 						   <option id="periodo" name="periodo" value="periodo_integral">Disponibilidade para período integral</option>
 						   <option id="periodo" name="periodo" value="periodo_noturno">Disponibilidade para período noturno</option>
 						   <option id="periodo" name="periodo" value="meio_periodo">Disponibilidade para meio período</option>
 						  </select>
+						  @endif
 					 	 </td> 
 						</tr>
 						<tr>
 						 <td> DISPONIBILIDADE PARA MUDAR DE CIDADE:
+						   @if(old('val9') == "on")
+						   <select style="width:300px;" disabled class="form-control" id="outra_cidade" name="outra_cidade">
+						    <option id="outra_cidade" name="outra_cidade" value="nao">Não</option>
+						    <option id="outra_cidade" name="outra_cidade" value="sim">Sim</option>
+						   </select>					  
+						   @else
 						   <select style="width:300px;" class="form-control" id="outra_cidade" name="outra_cidade">
 						    <option id="outra_cidade" name="outra_cidade" value="nao">Não</option>
 						    <option id="outra_cidade" name="outra_cidade" value="sim">Sim</option>
 						   </select>
+						   @endif
 						 </td>
 						</tr>
 						<tr>	
-						 <td> COMO SOUBE DA VAGA? </td><td>
-						  <select style= "width:200px;"onchange="comoSoube()" class="form-control" id="como_soube" name="como_soube"> 
+						 <td> COMO SOUBE DA VAGA? </td>
+						 <td>
+						   @if(old('val9') == "on")
+						   <select style= "width:200px;" disabled class="form-control" id="como_soube" name="como_soube"> 
+						    <option id="como_soube" name="como_soube" value="redes_sociais"> Redes Sociais </option>
+							<option id="como_soube" name="como_soube" value="site_hcpgestao"> Site HCP Gestão </option>  
+							<option id="como_soube" name="como_soube" value="indicacao"> Indicação </option>  
+							<option id="como_soube" name="como_soube" value="outros"> Outros </option>
+						   </select>					  
+						   @else
+						   <select style= "width:200px;"onchange="comoSoube()" class="form-control" id="como_soube" name="como_soube"> 
 							<option id="como_soube" name="como_soube" value="redes_sociais"> Redes Sociais </option>
 							<option id="como_soube" name="como_soube" value="site_hcpgestao"> Site HCP Gestão </option>  
 							<option id="como_soube" name="como_soube" value="indicacao"> Indicação </option>  
 							<option id="como_soube" name="como_soube" value="outros"> Outros </option>  
-						  </select>
+						   </select>
+						   @endif
 						 </td> 
 						 <td> 
 						   <input style= "width:200px;" type="text" id="como_soube2" name="como_soube2" class="form-control" maxlength="255" disabled required/> 
@@ -640,11 +805,19 @@
 						</tr>
 						<tr>
 						<td>
-						POSSUI PARENTESCO COM COLABORADOR DO HCP GESTÃO? </td><td>
-						<select style= "width:200px;" onchange="familiar()" class="form-control" id="parentesco" name="parentesco"> 
-							<option id="parentesco" name="parentesco" value="nao"> Não </option>  
-							<option id="parentesco" name="parentesco" value="sim"> Sim </option>  
+						POSSUI PARENTESCO COM COLABORADOR DO HCP GESTÃO? </td>
+						<td>
+						    @if(old('val9') == "on")
+						    <select style= "width:200px;" disabled class="form-control" id="parentesco" name="parentesco">  
+							 <option id="parentesco" name="parentesco" value="nao"> Não </option>  
+							 <option id="parentesco" name="parentesco" value="sim"> Sim </option>  
+						    </select>					  
+						    @else
+						    <select style= "width:200px;" onchange="familiar()" class="form-control" id="parentesco" name="parentesco"> 
+							 <option id="parentesco" name="parentesco" value="nao"> Não </option>  
+							 <option id="parentesco" name="parentesco" value="sim"> Sim </option>  
 							</select>	
+							@endif
 							<td> <input style= "width:200px;" type="text" id="parentesco_nome" name="parentesco_nome" class="form-control" maxlength="255" disabled required/> </td>
 						</td>
 						</tr>
@@ -682,15 +855,11 @@
 			//O parâmetro dentro da função se refere ao nome da variável
 			//que você vai dar para ler esse objeto.
 			success: function(resposta){
-				//Agora basta definir os valores que você deseja preencher
-				//automaticamente nos campos acima.
 				$("#rua").val(resposta.logradouro);
 				$("#complemento").val(resposta.complemento);
 				$("#bairro").val(resposta.bairro);
 				$("#cidade").val(resposta.localidade);
 				$("#estado").val(resposta.uf);
-				//Vamos incluir para que o Número seja focado automaticamente
-				//melhorando a experiência do usuário
 				$("#numero").focus();
 			}
 		});

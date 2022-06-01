@@ -68,6 +68,22 @@ class CandidatoController extends Controller
 		->get()->toArray();
 		return view('informativo', compact('unidades','processos','processos2'));
 	}
+
+	// Página Informações LGPD Cadastro Candidatos //
+	public function informativoLGPD($id_unidade, $id_processo)
+	{
+		$unidades = Unidade::where('id', $id_unidade)->get();
+		$processos = DB::table('processo_seletivo')
+		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
+		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
+		->where('processo_seletivo.id', $id_processo)
+		->get()->toArray();
+		$processos2 = DB::table('unidade')
+		->join('processo_seletivo', 'unidade.id', '=', 'processo_seletivo.unidade_id')
+		->select('unidade.id')
+		->get()->toArray();
+		return view('informativoLGPD', compact('unidades','processos','processos2'));
+	}
 	
 	// Página Confirmação Inscrição //
 	public function candidatoIndex_()
@@ -298,8 +314,8 @@ class CandidatoController extends Controller
 	}
 
 	public function validarCandidato($id, $id_processo, Request $request)
-	{
-		$input   = $request->all();
+	{  
+		$input   = $request->all(); 
 		$unidade = Unidade::find($id);
 		$processos = ProcessoSeletivo::where('id',$id_processo)->get();
 		$input['processo_nome'] = $processos[0]->nome;
@@ -334,43 +350,21 @@ class CandidatoController extends Controller
 				->withInput(session()->flashInput($request->input()));	
 		}
 		$validator = Validator::make($request->all(), [
-			'nome'  => 'required|max:150',
 			'cpf'   => 'required|digits:11',
 			'email' => 'required|max:255|email',
 			'vaga'  => 'required|max:400',
-			'telefone'      => 'required|max:30',
-			'lugar_nascimento'    => 'required|max:50',
-			'estado_nascimento'   => 'required|max:50',
-			'cidade_nascimento'   => 'required|max:100',
-			'data_nascimento'     => 'required|date',
-			'rua'				  => 'required|max:100',
-			'numero'			  => 'required|max:10',
-			'bairro'			  => 'required|max:100',
-			'cidade'			  => 'required|max:100',
-			'estado'			  => 'required|max:100',
-			'cep'				  => 'required|max:30',
-			'escolaridade'		  => 'required|max:100',
-			'status_escolaridade' => 'required|max:50',
-			'formacao'			  => 'required|max:150',
-			'cursos'			  => 'required|max:1000',
-			'deficiencia'		  => 'required|max:15',
-			'habilitacao' 		  => 'required|max:15',
-			'periodo' 	 		  => 'required|max:100',
-			'outra_cidade'		  => 'required|max:15',	
-			'como_soube'    	  => 'required|max:255',
-			'parentesco'   		  => 'required|max:255'
 		]);
 		if($validator->fails()){
-			return view('cadastro_candidatos', compact('unidade','processos'))
+			return view('cadastro_candidatos', compact('unidade','processos','vagas'))
 			->withErrors($validator)
 			->withInput(session()->flashInput($request->input()));	
 		}
-		$data_inicio = $input['data_inicio'];
-		$data_fim 	 = $input['data_fim'];
-		if($data_inicio !== NULL && $data_fim !== NULL) {
+		if(!empty($input['data_inicio'])){ $data_inicio = $input['data_inicio']; } else { $data_inicio = ""; } 
+		if(!empty($input['data_fim'])){ $data_fim = $input['data_fim']; } else { $data_fim = ""; }
+		if($data_inicio !== "" && $data_fim !== "") {
 			$anoI = date('Y-m-d', strtotime($data_inicio));
-			$anoF = date('Y-m-d', strtotime($data_fim));
-			if($anoI == $anoF || $anoF < $anoI) {
+			$anoF = date('Y-m-d', strtotime($data_fim)); 
+			if(strtotime($anoI) == strtotime($anoF) || strtotime($anoF) < strtotime($anoI)) {
 				$validator = 'Na Experiência 1 a Data Final não pode ser maior ou igual a Data Início!';
 				return view('cadastro_candidatos', compact('unidade','processos','vagas'))
 					->withErrors($validator)
@@ -400,9 +394,9 @@ class CandidatoController extends Controller
 					->withInput(session()->flashInput($request->input()));	
 			}
 		} else { $arquivo_ctps1 = ""; }
-		$data_inicio2 = $input['data_inicio2'];
-		$data_fim2 	  = $input['data_fim2'];
-		if($data_inicio2 !== NULL && $data_fim2 !== NULL) {
+		if(!empty($input['data_inicio2'])){ $data_inicio2 = $input['data_inicio2']; } else { $data_inicio2 = ""; }
+		if(!empty($input['data_fim2'])){ $data_fim2 = $input['data_fim2']; } else { $data_fim2 = ""; }
+		if($data_inicio2 !== "" && $data_fim2 !== "") {
 			$anoI = date('Y-m-d', strtotime($data_inicio2));
 			$anoF = date('Y-m-d', strtotime($data_fim2));
 			if($anoI == $anoF || $anoF < $anoI) {
@@ -435,9 +429,9 @@ class CandidatoController extends Controller
 					->withInput(session()->flashInput($request->input()));	
 			}
 		} else { $arquivo_ctps2 = ""; }
-		$data_inicio3 = $input['data_inicio3'];
-		$data_fim3 	  = $input['data_fim3'];
-		if($data_inicio3 !== NULL && $data_fim3 !== NULL) {
+		if(!empty($input['data_inicio3'])){ $data_inicio3 = $input['data_inicio3']; } else { $data_inicio3 = ""; }
+		if(!empty($input['data_fim3'])){ $data_fim3 = $input['data_fim3']; } else { $data_fim3 = ""; }
+		if($data_inicio3 !== "" && $data_fim3 !== "") {
 			$anoI = date('Y-m-d', strtotime($data_inicio3));
 			$anoF = date('Y-m-d', strtotime($data_fim3));
 			if($anoI == $anoF || $anoF < $anoI) {
@@ -470,6 +464,7 @@ class CandidatoController extends Controller
 					->withInput(session()->flashInput($request->input()));	
 			}
 		} else { $arquivo_ctps3 = ""; }
+
 		$deficiencia_status = $input['deficiencia_status'];
 		if($deficiencia_status == "sim") {
 			if($request->file('arquivo_deficiencia') === NULL) {	
@@ -583,10 +578,15 @@ class CandidatoController extends Controller
 		if($input['periodo'] == "periodo_noturno"){ $p1 = ""; $p2 = "periodo_noturno"; $p3 = ""; }
 		if($input['periodo'] == "meio_periodo"){ $p1 = ""; $p2 = ""; $p3 = "meio_periodo"; }
 		$outra_cidade = $input['outra_cidade']; $habilitacao = $input['habilitacao'];   
-		$empresa = addslashes($input['empresa']); $cargo = addslashes($input['cargo']); $atribuicao = addslashes($input['atribuicao']);
-		$empresa2 = addslashes($input['empresa2']); $cargo2 = addslashes($input['cargo2']); $atribuicao2 = addslashes($input['atribuicao2']);
-		$empresa3 = addslashes($input['empresa3']); $cargo3 = addslashes($input['cargo3']); $atribuicao3 = addslashes($input['atribuicao3']);
-		
+		if(!empty($input['empresa'])){ $empresa = addslashes($input['empresa']); }else{ $empresa = ""; }
+		if(!empty($input['cargo'])){ $cargo = addslashes($input['cargo']); }else{ $cargo = ""; }
+		if(!empty($input['atribuicao'])){ $atribuicao = addslashes($input['atribuicao']); }else{ $atribuicao = ""; }
+		if(!empty($input['empresa2'])){ $empresa2 = addslashes($input['empresa2']); }else{ $empresa2 = ""; }
+		if(!empty($input['cargo2'])){ $cargo2 = addslashes($input['cargo2']); }else{ $cargo2 = ""; }
+		if(!empty($input['atribuicao2'])){ $atribuicao2 = addslashes($input['atribuicao2']); }else{ $atribuicao2 = ""; }
+		if(!empty($input['empresa3'])){ $empresa3 = addslashes($input['empresa3']); }else{ $empresa3 = ""; }
+		if(!empty($input['cargo3'])){ $cargo3 = addslashes($input['cargo3']); }else{ $cargo3 = ""; }
+		if(!empty($input['atribuicao3'])){ $atribuicao3 = addslashes($input['atribuicao3']); }else{ $atribuicao3 = ""; }
 		DB::statement("INSERT INTO processo_seletivo_".$nprocesso."
 			(vaga,data_inscricao,nome, cpf, email, telefone_fixo, telefone, lugar_nascimento, estado_nascimento,
 			cidade_nascimento, data_nascimento, rua, numero, bairro, cidade, estado,
@@ -609,6 +609,14 @@ class CandidatoController extends Controller
 			'$cargo3','$atribuicao3','$arquivo_ctps3','$data_inicio3','$data_fim3',
 			'$como_soube','$parentesco','$parentesco_nome','$arquivo_deficiencia','','','','','','','','','','$arquivo','') ");
 			
+			$numero = DB::table('processo_seletivo_'.$nprocesso)->select('id')->where('cpf', $cpf)->get()->toArray();
+			$id2 = $numero[0]->id;
+			$numeroInscricao = $nprocesso.'-'.$id2;
+			Mail::send('email.resultadoCadastro', ['numeroInscricao' => $numeroInscricao], function($m) use ($email,$nome_processo) {
+				$m->from('processoseletivo.hcpgestao@gmail.com', 'PROCESSO SELETIVO HCP GESTÃO');
+				$m->subject('Seu cadastro no Processo Seletivo: '.$nome_processo. ' foi realizado');
+				$m->to($email);
+			});
 			$unidades = Unidade::all();
 			$processos = DB::table('processo_seletivo')
 			->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
@@ -618,9 +626,6 @@ class CandidatoController extends Controller
 			->join('processo_seletivo', 'unidade.id', '=', 'processo_seletivo.unidade_id')
 			->select('processo_seletivo.*', 'unidade.*')
 			->get()->toArray();
-			$numero = DB::table('processo_seletivo_'.$nprocesso)->select('id')->where('cpf', $cpf)->get()->toArray();
-			$id2 = $numero[0]->id;
-			$numeroInscricao = $nprocesso.'-'.$id2;
 			DB::statement("UPDATE processo_seletivo_".$nprocesso." SET numeroInscricao = '$numeroInscricao' WHERE id = '$id2' ");
 			return view('candidato_', compact('unidade','processos','numero','nprocesso'))
 				->withInput(session()->flashInput($request->input()));	
