@@ -5,8 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ ('assets/css/main.css') }}" />
-		
-	</head>
+	</head> <?php $qtd = sizeof($processos2); ?>
 	<body class="is-preload">
 			<div id="header">
 				<div class="top">
@@ -22,6 +21,9 @@
 								<li><a href="#about" id="about-link"><span class="icon solid fa-book-open">Editais em Curso</span></a></li>
 								<li><a href="#contact" id="about-link"><span class="icon solid fa-calendar-check">Result. de Processos Anter.</span></a></li>
 								<li><a href="#avisos" id="avisos-link"><span class="icon solid fa-check-square">Quadro de Avisos</span></a></li>
+								@if($qtd > 0)
+								 <li><a href="{{ url('areaCandidato') }}" id="avisos-link"><span class="icon solid fa-address-card">Área do Candidato</span></a></li>
+								@endif
 								<li><a href="#portfolio2" id="portfolio-link"><span class="icon solid fa-th">Sobre</span></a></li>
 							</ul>
 						</nav>
@@ -34,7 +36,7 @@
 							<header>
 								<span class=""><img src="images/avatar.jpg" alt="" style="margin-top: -180px" /></span>
 								<h2 class="alt">Processo Seletivo HCP Gestão</h2>
-								<p>Bem Vindo ao Processo Seletivo das Unidades da OS HCP.</p>
+								<p>Bem Vindo ao Processo Seletivo das Unidades da OS HCP</p>
 							</header>
 						</div>
 					</section>
@@ -61,29 +63,31 @@
 								   @if((strtotime($hoje) >= strtotime($ini)) && (strtotime($hoje) <= strtotime($fim)))
 								   <tr> 
 									<td style="width: 200px;" title=""><center>{{$processo->nome}}</center></td>
-									@if($processo->unidade_id == 2)
-									<td style="width: 240px;" title="Hospital da Mulher do Recife"><center>{{ 'HMR' }}</center></td>
-									@elseif($processo->unidade_id == 3)
-									<td style="width: 240px;" title="UPAE Belo Jardim"><center>{{ 'UPAE BELO JARDIM' }}</center></td>
-									@elseif($processo->unidade_id == 4)
-									<td style="width: 240px;" title="UPAE Arcoverde"><center>{{ 'UPAE ARCOVERDE' }}</center></td>
-									@elseif($processo->unidade_id == 5)
-									<td style="width: 240px;" title="UPAE Arruda"><center>{{ 'UPAE ARRUDA' }}</center></td>
-									@elseif($processo->unidade_id == 6)
-									<td style="width: 240px;" title="UPAE Caruaru"><center>{{ 'UPAE CARUARU' }}</center></td>
+									@if($processo->unidade_id == 8)
+									<td style="width: 240px;" title="Hospital Provisório do Recife I"><center>{{ 'HCA' }}</center></td>
 									@elseif($processo->unidade_id == 7)
 									<td style="width: 240px;" title="Hospital São Sebastião"><center>{{ 'HSS' }}</center></td>
-									@elseif($processo->unidade_id == 8)
-									<td style="width: 240px;" title="Hospital Provisório do Recife I"><center>{{ 'HPR' }}</center></td>
-									@elseif($processo->unidade_id == 9)
-									<td style="width: 240px;" title="UPA Igarassu"><center>{{ 'UPA IGARASSU' }}</center></td>
+									@elseif($processo->unidade_id == 6)
+									<td style="width: 240px;" title="UPAE Caruaru"><center>{{ 'UPAE CARUARU' }}</center></td>
+									@elseif($processo->unidade_id == 5)
+									<td style="width: 240px;" title="UPAE Arruda"><center>{{ 'UPAE ARRUDA' }}</center></td>
+									@elseif($processo->unidade_id == 4)
+									<td style="width: 240px;" title="UPAE Arcoverde"><center>{{ 'UPAE ARCOVERDE' }}</center></td>
+									@elseif($processo->unidade_id == 3)
+									<td style="width: 240px;" title="UPAE Belo Jardim"><center>{{ 'UPAE BELO JARDIM' }}</center></td>
+									@elseif($processo->unidade_id == 2)
+									<td style="width: 240px;" title="Hospital da Mulher do Recife"><center>{{ 'HMR' }}</center></td>
+									@elseif($processo->unidade_id == 1)
+                                    <td style="width: 240px;" title="Hospital do Câncer do Recife"><center>{{ 'HCP' }}</center></td>
+                                    @elseif($processo->unidade_id == 11)
+                                    <td style="width: 240px;" title="UPA Igarassu"><center>{{ 'UPA IGARASSU' }}</center></td>
 									@endif
 									<td style="width: 170px;" title=""><center>{{date('d-m-Y', (strtotime($processo->inscricao_fim)))}}</center></td>
 									<td style="width: 5px;" title="">
 									<center>
 									 <form method="get" action="{{asset('storage')}}/{{$processo->edital_caminho}}">	
 									  <center><button href="" target="_blank">Download</button></center>
-									 </form>
+									 </form> 
 									</center>
 									</td>
 									<td style="width: 5px;">
@@ -106,87 +110,17 @@
 							</header>
 							<table class="table table-responsive table-border" border="1"> 
 							<tr>
-							<?php $hoje = date('d-m-Y', strtotime('now')); $a = 0; ?> 
-							<?php $q1 = $result; $r1 = "1"; $s_0 = str_contains($q1, $r1); ?>
-							<?php $q2 = $result; $r2 = "2"; $s_1 = str_contains($q2, $r2); ?>
-							<?php $q3 = $result; $r3 = "3"; $s_2 = str_contains($q3, $r3); ?>
-							<?php $q4 = $result; $r4 = "4"; $s_3 = str_contains($q4, $r4); ?>
-							<?php $q5 = $result; $r5 = "5"; $s_4 = str_contains($q5, $r5); ?>
-							<?php $q6 = $result; $r6 = "6"; $s_5 = str_contains($q6, $r6); ?>
-							<?php $q7 = $result; $r7 = "7"; $s_6 = str_contains($q7, $r7); ?>
-							<?php $q8 = $result; $r8 = "8"; $s_7 = str_contains($q8, $r8); ?>
-							    @if($s_0 == true)
-								 <td width="300px">
-									<a href="{{ route('candidatoEditais', $unidades[0]->id) }}" title="{{ $unidades[0]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[0]->caminho}}" class="rounded-sm" width="80px"></a>
-								 </td>
-								@else
-								 <td width="300px">
-								    <a href="" title="{{ $unidades[0]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[0]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								 </td>
-								@endif
-								@if($s_1 == true)
-								 <td width="300px">
-								    <a href="{{ route('candidatoEditais', $unidades[1]->id) }}" title="{{ $unidades[1]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[1]->caminho}}" class="rounded-sm" width="80px"></a>
-								 </td>
-								@else
-								 <td width="300px">
-								   <a href="" title="{{ $unidades[1]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[1]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								 </td>
-								@endif
-								@if($s_2 == true)
-								 <td width="300px">
-								    <a href="{{ route('candidatoEditais', $unidades[2]->id) }}" title="{{ $unidades[2]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[2]->caminho}}" class="rounded-sm" width="80px"></a>
-								 </td>
-								@else
-								 <td width="300px">
-								    <a href="" title="{{ $unidades[2]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[2]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								 </td>
-								@endif
-								@if($s_3 == true)
-								 <td width="300px">
-								    <a href="{{ route('candidatoEditais', $unidades[3]->id) }}" title="{{ $unidades[3]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[3]->caminho}}" class="rounded-sm" width="80px"></a>
-								 </td>
-								@else
-								 <td width="300px">
-								    <a href="" title="{{ $unidades[3]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[3]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								 </td>
-								@endif
-								@if($s_4 == true)
-								 <td width="300px">
-								 	<a href="{{ route('candidatoEditais', $unidades[4]->id) }}" title="{{ $unidades[4]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[4]->caminho}}" class="rounded-sm" width="80px"></a>
-								 </td>
-								@else
-								 <td width="300px">
-									<a href="" title="{{ $unidades[4]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[4]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								 </td>
-								@endif
-								@if($s_5 == true)
-								 <td width="300px">
-								    <a href="{{ route('candidatoEditais', $unidades[5]->id) }}" title="{{ $unidades[5]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[5]->caminho}}" class="rounded-sm" width="80px"></a>
-								 </td>
-								@else
-								 <td width="300px">
-								    <a href="" title="{{ $unidades[5]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[5]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								 </td>
-								@endif
-								@if($s_6 == true)
-								 <td width="300px">
-									<a href="{{ route('candidatoEditais', $unidades[6]->id) }}" title="{{ $unidades[6]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[6]->caminho}}" class="rounded-sm" width="80px"></a>
-								 </td>
-								@else
-								 <td width="300px">
-									<a href="" title="{{ $unidades[6]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[6]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								 </td>
-								@endif
-								@if($s_7 == true)
-								 <td width="300px">
-									<a href="{{ route('candidatoEditais', $unidades[7]->id) }}" title="{{ $unidades[7]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[7]->caminho}}" class="rounded-sm" width="80px"></a>
-								 </td>
-								@else
-								 <td width="300px">
-								    <a href="" title="{{ $unidades[7]->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidades[7]->caminho}}" class="rounded-sm" style="opacity: 30%" width="80px"></a>
-								 </td>
-								@endif
+							@foreach($unidades as $unidade)
+    							 @if($unidade->id == 2)
+    							   <td width="300px">
+    								 <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm"  width="70px"></a>
+    							   </td>
+    							 @else
+    							   <td width="300px">
+    								 <a href="" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm"  width="70px" style="opacity: 20%;"></a>
+    							   </td>
+    							 @endif
+						    @endforeach
 						   </tr>
 						  </table>
 						</div>
@@ -201,7 +135,7 @@
 							<tr>
 							   @foreach($unidades as $unidade)
 							   <td width="300px">
-								 <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm"  width="80px"></a>
+								 <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm"  width="70px"></a>
 							   </td>
 							   @endforeach
 						   </tr>

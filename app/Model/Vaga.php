@@ -22,6 +22,7 @@ class Vaga extends Model
 		'created_at',
 		'updated_at',
 		'taxa',
-		'quantidade'
+		'quantidade',
+		'ativo'
 	];
 }

@@ -32,7 +32,7 @@
 					  <div class="container" style="width:100%;"> <br> <br>
 						 <table class="table table-borderless" align="center" border="0" width="500" bordercolor=DCDCDC >
 						    <tr>
-							  <td align="center"><p style="font-size: 20px; margin-top: 20px;">OLÁ CANDIDATO, SEU CADASTRO FOI CONCLUÍDO</p></td>
+							  <td align="center"><p style="font-size: 20px; margin-top: 20px;">OLÁ CANDIDATO, SUA ALTERAÇÃO FOI CONCLUÍDA</p></td>
 							</tr>
 						  </table>
 					  </div>
@@ -43,19 +43,13 @@
 			  </div>
 			  <table class="table table-sm" border="0" bordercolor=DCDCDC>
 			   <tr>
-			    <td> <b><u><center> Parabéns! Você foi cadastrado no Processo Seletivo:</u></b> <b>{{ $nprocesso }}</b>! </center> </td>
+			    <td> <b><u><center> Parabéns! Seu cadastrado foi alterado no Processo Seletivo:</u></b> <b>{{ $nprocesso }}</b>! </center> </td>
 			   </tr>
                <tr>			   
-				<td><b> <u><center> Você foi inscrito neste Processo Seletivo no dia:</u></b> <b><?php echo date('d-m-Y', strtotime('now')) ?></b> </center> </td>
+				<td><b> <u><center> Sua alteração foi feita neste Processo Seletivo no dia:</u></b> <b><?php echo date('d-m-Y', strtotime('now')) ?></b> </center> </td>
 			   </tr>
 			   <tr>
 				<td><b><u> <center> Seu Número de Inscrição é:</u></b> <b>{{ $nprocesso.'-'.$numero[0]->id }}</b> </center> </td>
-			   </tr>
-			   <tr>
-				<td><b><u><center> Você poderá alterar seus documentos enquanto este Processo Seletivo estiver em vigor. </center></u></b></td>
-			   </tr>
-			   <tr>
-				<td><b><u><center> *O E-mail pode chegar na sua Caixa de SPAM, consulte-a. </center></u></b></td>
 			   </tr>
 			   <tr>
 			    <td> <center> <br><a id="div" class="btn btn-primary" href="{{ route('candidatoIndex') }}">Voltar</a> </center> </td>

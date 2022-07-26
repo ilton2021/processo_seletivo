@@ -9,7 +9,6 @@
 </head>
 <div id="reflexo"> 			
     <body class="page homepage  ltr preset1 menu-homepage responsive bg hfeed clearfix">
-	   <br>
 	  <div class="container">
 		<div id="sp-page-builder" class="sp-page-builder page-1">
 		   <div class="page-content">
@@ -28,6 +27,9 @@
                             </tr>
                             <tr>
                               <td align="justify" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Fique de olho no e-mail (inclusive na caixa de spam) e telefone que você cadastrou para ficar sabendo dos próximos passos. Esperamos que esse retorno seja rápido.</p></td>
+                            </tr>
+							<tr>
+                              <td align="justify" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Você poderá alterar seus dados, enquanto este Processo Seletivo estiver em vigor.</b></p></td>
                             </tr>
 							<tr>
                               <td align="justify" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Boa sorte! Estamos torcendo por você. ;-) Seu <b>número de Inscrição é: {{ $numeroInscricao }}</b></p></td>

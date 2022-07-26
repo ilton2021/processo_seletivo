@@ -8,6 +8,10 @@ use App\Model\QuadroAvisos;
 Auth::routes();
 
 Route::get('/', 'CandidatoController@candidatoIndex')->name('candidatoIndex');
+Route::get('areaCandidato', 'CandidatoController@areaCandidato')->name('areaCandidato');
+Route::post('areaCandidato', 'CandidatoController@loginCandidato')->name('loginCandidato');
+Route::get('areaCandidato/alterar', 'CandidatoController@areaCandidatoAlterar')->name('areaCandidatoAlterar');
+Route::post('areaCandidato/alterar/{id}', 'CandidatoController@updateAreaCandidatoAlterar')->name('updateAreaCandidatoAlterar');
 Route::get('informativo/{id}/{id_p}', 'CandidatoController@informativo')->name('informativo'); 
 Route::get('informativoLGPD/{id}/{id_p}', 'CandidatoController@informativoLGPD')->name('informativoLGPD');
 Route::get('candidato/cadastro', 'CandidatoController@candidatoIndex_')->name('candidatoIndex_');
