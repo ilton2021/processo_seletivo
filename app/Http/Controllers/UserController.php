@@ -218,11 +218,23 @@ class UserController extends Controller
 				->withErrors($validator)
 				->withInput(session()->flashInput($request->input()));
 		} else {
+			$senha = $input['password'];
 			$input['password'] = Hash::make($input['password']);
-			$user = User::create($input);
+			$user  = User::create($input);
 			$validator = 'Usuário cadastrado com sucesso!';
-			$unidades = $this->unidade->all();
+			$unidades  = $this->unidade->all();
 			$processos = ProcessoSeletivo::all();
+			$email 	   = $input['email']; 
+			Mail::send('email.emailUsuarioLS', ['login' => $email, 'senha' => $senha], function($m) use ($email) {
+				$m->from('portal@hcpgestao.org.br', 'PORTAL Processo Seletivo');
+				$m->subject('Cadastro Processo Seletivo');
+				$m->to($email);
+			});
+			Mail::send('email.emailUsuario', [], function($m) use ($email) {
+				$m->from('portal@hcpgestao.org.br', 'PORTAL Processo Seletivo');
+				$m->subject('Cadastro de Novo Usuário - PORTAL Processo Seletivo');
+				$m->to($email);
+			});
 			return view('home', compact('processos'))
 				->withErrors($validator)
 				->withInput(session()->flashInput($request->input())); 						
