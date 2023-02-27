@@ -8,14 +8,17 @@
   <meta name="author" content="">
   <title>Processo Seletivo - Cadastro Candidato</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>	
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <link href="{{ asset('js/utils.js') }}" rel="stylesheet">
-  <link href="{{ asset('js/bootstrap.js') }}" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+  <script src="{{ asset('js/validacao.js') }}"> </script>
   <script>
-
    document.addEventListener('keydown', function(event) { //pega o evento de precionar uma tecla
 	  if(event.keyCode != 46 && event.keyCode != 8){//verifica se a tecla precionada nao e um backspace e delete
 		var i = document.getElementById("telefone").value.length; //aqui pega o tamanho do input
@@ -69,7 +72,7 @@
 				document.getElementById('deficiencia').disabled = false;  
 				document.getElementById('cid').disabled = false;
 				document.getElementById('arquivo_deficiencia').disabled = false;
-			} else if(x == "nao") {
+			} else if(x == "nao" || x == "") {
 				document.getElementById('deficiencia').disabled = true;
 				document.getElementById('cid').disabled = true;
 				document.getElementById('arquivo_deficiencia').disabled = true;
@@ -132,6 +135,33 @@
 				document.getElementById('arquivo_ctps3').disabled = true;
 			}
 		}
+
+		function habilitaComoSoube(valor) {
+			var x = document.getElementById('como_soube').value;
+			if(x == "outros") {  
+				document.getElementById('como_soube2').disabled = false;
+			} else {
+				document.getElementById('como_soube2').disabled = true;
+			}
+		}
+
+		function habilitaParente(valor) {
+			var x = document.getElementById('parentesco').value;
+			if(x == "sim") {
+				document.getElementById('parentesco_nome').disabled = false;
+			} else {
+				document.getElementById('parentesco_nome').disabled = true;
+			}
+		}
+
+		function habilitaTrabalhoOss(valor) {
+			var x = document.getElementById('trabalha_oss').value;
+			if(x == "sim") {
+				document.getElementById('trabalha_oss2').disabled = false;
+			} else {
+				document.getElementById('trabalha_oss2').disabled = true;
+			}
+		}
 	 </script>
 </head>
     <body>
@@ -139,17 +169,17 @@
 	   <div id="reflexo"> 
 	    <div id="sp-page-builder" class="sp-page-builder  page-1">
 		   <div class="page-content">
-			 <section  class="sppb-section " style="background-repeat:no-repeat;background-size:cover;background-attachment:fixed;background-position:0 0;">
+			 <section  class="sppb-section" style="background-repeat:no-repeat;background-size:cover;background-attachment:fixed;background-position:0 0;">
 			    <div class="sppb-addon-container" style="">
 				  <div class="sppb-addon-content">
 					<div class="custom">
 					  <div class="container" id='titulo'> <br> <br>
-					  	<table  class="table table-borderless" align="center" id="tabelatitulo"  style="margin-bottom: 15px;">
+					  	<table class="table table-borderless" align="center" id="tabelatitulo" style="margin-bottom: 15px;">
 						    <tr>
 								<td>
-								 <div style= "text-align:center; opacity:75%;border-radius: 25px; color: white;margin-top:-45px;height: 160px;background-color: #57D211;  margin-bottom: -25px; Font-family: Cambria, Georgia, serif."class="jumbotron jumbotron-fluid">
+								 <div style="text-align:center; opacity:75%;border-radius: 25px; color: white;margin-top:-45px;height: 160px;background-color: #57D211;  margin-bottom: -25px; Font-family: Cambria, Georgia, serif."class="jumbotron jumbotron-fluid">
 									<div class="container">
-										<h5 class="display-8"><p style="align: center"> <b>INSCRIÇÃO <br> PROCESSO SELETIVO: {{ $processos[0]->nome }}</b> <img id="hcp" width="120px;" style="margin-top: -30px;" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></p></td></h5>
+										<h5 class="display-8"><p style="align: center"><br><b>INSCRIÇÃO </p> <p style="align: center">  PROCESSO SELETIVO: {{ $processos[0]->nome }}</b> <br><img id="hcp" width="120px;" style="margin-top: 5px;" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></p></td></h5>
 									</div>
 								 </div>	
 								</td>
@@ -164,7 +194,8 @@
 			  <br><br>
 			  <table class="table table-borderless" border="0" width="500" id="inicio">
 				<tr>
-				<td align="center"><strong> Olá! Seja bem vindo ao processo seletivo simplificado {{ $processos[0]->nome }}. </strong></td>
+				<td align="center"><strong> Olá! Seja bem vindo ao processo seletivo simplificado {{ $processos[0]->nome }}. </strong> </td>
+				<td> <a href="javascript:history.back();" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a></td>
 				</tr>
 			  </table>
 			  @if($errors->any())
@@ -178,641 +209,790 @@
 		 	  @endif 
 		      </div>
 			  <?php $c = str_replace(' ','',$processos[0]->nome); ?>
-			  <br><Br>
-			  <table style= "margin-top:-50px; margin-left:40px; width:800px;" class="table table-borderless" border="0" bordercolor="DCDCDC">
-			  <form method="POST" action="{{ route('validarCandidato', array($unidade->id, $processos[0]->id)) }}" enctype="multipart/form-data">
-			    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-				<tr>
-				  <td>
-					<div class="modal-content" style="width: 1000px;">
+			  <br><br>
+
+			  <form method="POST"  action="{{ route('validarCandidato', array($unidade->id, $processos[0]->id)) }}" enctype="multipart/form-data">
+			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+		
+			  <div id="tabs" class="nav-tabs">
+			   <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="pill" href="#tabs1" role="tab" aria-selected="true">INFORMAÇÃO CANDIDATURA</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="pill" href="#tabs2" role="tab" aria-selected="false">DADOS PESSOAIS</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="pill" href="#tabs3" role="tab" aria-selected="false">ENDEREÇO</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="pill" href="#tabs4" role="tab" aria-selected="false">PCD</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="pill" href="#tabs5" role="tab" aria-selected="false">EXPERIÊNCIAS</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="pill" href="#tabs6" role="tab" aria-selected="false">CURRÍCULO</a>
+				</li>
+			   </ul>
+			  
+			  <div class="tab-content" id="pills-tabContent"> 
+		 		<div class="tab-pane fade show active" id="tabs1">
+				 <div class="modal-content">
+					<div class="modal-content">
 					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>DADOS PESSOAIS:</b></h5></center>
-					 </div>
-				     <div class="modal-body" style="width: 980px; background-color: white;">
-					  <table>
-						<tr>
-						 <td><b>NOME COMPLETO: (*campo obrigatório)</b>
-						  <input class="form-control" placeholder="NOME COMPLETO"  type="text" id="nome" name="nome" value="{{ old('nome') }}" required maxlength="150" />
-						 </td>
-						 <td style="width: 400px;"><b>E-MAIL: (*campo obrigatório)</b>
-						  <input id="email" style="width: 250px;" type="email" class="form-control" name="email" value="{{ old('email') }}" required placeholder="E-MAIL" maxlength="255">
-						 </td>
-						 <td style="width: 400px;"><b>CPF: (*campo obrigatório)</b>
-						  <input id="cpf" style="width: 250px;" type="text" maxlength="11" class="form-control" name="cpf" max="11" value="{{ old('cpf') }}" required placeholder="APENAS NÚMEROS" autocomplete="cpf" autofocus /> 
-						 </td>
-						</tr>
-						<tr>
-						 <td>  Selecione a <b>VAGA: (*campo obrigatório)</b>
-							<select class="form-control" id="vaga" name="vaga" style="width: 400px" required>
-							<option id="vaga" name="vaga" value="">Selecione...</option>
-							@if(!empty($vagas))
+						<center><h6 class="modal-title"id="exampleModalLongTitle"><b>INFORMAÇÃO CANDIDATURA: (* campos obrigatórios)</b></h6></center>
+				   	 </div>
+				     <div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+						<label for="inputState" class="form-label"><b><font size="2">Como você soube dessa vaga? (*)</font></b></label>
+						 <select class="form-select form-select-sm" id="como_soube" name="como_soube" onchange="habilitaComoSoube('sim')">
+						 	<option value="" selected >Selecione...</option>
+							@if(old('como_soube')=="google")<option value="google" selected>Google</option>@else<option value="google">Google</option>@endif
+							@if(old('como_soube')=="facebook")<option value="facebook" selected>Facebook</option>@else<option value="facebook">Facebook</option>@endif
+							@if(old('como_soube')=="instragram")<option value="instragram" selected>Instagram</option>@else<option value="instragram">Instagram</option>@endif
+							@if(old('como_soube')=="whatsapp")<option value="whatsapp" selected>WhatsApp</option>@else<option value="whatsapp">WhatsApp</option>@endif
+							@if(old('como_soube')=="indicacao")<option value="indicacao" selected>Indicação de parentes ou amigos</option>@else<option value="indicacao">Indicação de parentes ou amigos</option>@endif
+							@if(old('como_soube')=="sites")<option value="sites" selected>Sites de busca de empregos</option>@else<option value="sites">Sites de busca de empregos</option>@endif
+							@if(old('como_soube')=="outras_redes")<option value="outras_redes" selected>Outras redes sociais</option>@else<option value="outras_redes">Outras redes sociais</option>@endif
+							@if(old('como_soube')=="outros")<option value="outros" selected>Outros</option>@else<option value="outros">Outros</option>@endif
+						 </select>
+						 @if(old('como_soube')=="outros")
+						  <input class="form-control form-control-sm" type="text" id="como_soube2" name="como_soube2" value="{{ old('como_soube2') }}" required maxlength="50" />
+						 @else
+						  <input class="form-control form-control-sm" disabled type="text" id="como_soube2" name="como_soube2" value="{{ old('como_soube2') }}" required maxlength="50" />
+						 @endif
+					   </div>
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Você foi indicado por algum parente ou amigo para esta vaga? (*)</font></b></label>
+						 <select class="form-select form-select-sm" id="parentesco" name="parentesco" onchange="habilitaParente('sim')">
+						 	<option value="">Selecione...</option>
+							 @if(old('parentesco')=="sim")<option value="sim" selected>Sim</option>@else<option value="sim">Sim</option>@endif
+							 @if(old('parentesco')=="nao")<option value="nao" selected>Não</option>@else<option value="nao">Não</option>@endif
+							 @if(old('parentesco')=="nao_responder")<option value="nao_responder" selected>Prefiro não responder</option>@else<option value="nao_responder">Prefiro não responder</option>@endif
+						 </select>
+						 @if(old('parentesco') == "sim")
+						  <input class="form-control form-control-sm" type="text" id="parentesco_nome" name="parentesco_nome" value="{{ old('parentesco_nome') }}" required maxlength="50" />
+						 @else
+						  <input class="form-control form-control-sm" disabled type="text" id="parentesco_nome" name="parentesco_nome" value="{{ old('parentesco_nome') }}" required maxlength="50" />
+						 @endif
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Você trabalha ou trabalhou em alguma unidade da OSS HCP Gestão? (*)</font></b></label>
+						 <select class="form-select form-select-sm" id="trabalha_oss" name="trabalha_oss" onchange="habilitaTrabalhoOss('sim')">
+						 	<option value="">Selecione...</option>
+							 @if(old('trabalha_oss')=="sim")<option value="sim" selected>Sim</option>@else<option value="sim">Sim</option>@endif	
+							 @if(old('trabalha_oss')=="nao")<option value="nao" selected>Não</option>@else<option value="nao">Não</option>@endif
+							 @if(old('trabalha_oss')=="nao_responder")<option value="nao_responder" selected>Prefiro não responder</option>@else<option value="nao_responder">Prefiro não responder</option>@endif
+						 </select>
+						 @if(old('trabalha_oss') == "sim")
+						 <select class="form-select form-select-sm" id="trabalha_oss2" name="trabalha_oss2" required> 
+						   <option value="">Selecione...</option>
+						   @foreach($unidades as $unidade)
+						    @if($unidade->id == old('trabalha_oss2'))
+							 <option value="<?php echo $unidade->id; ?>" selected>{{ $unidade->nome }}</option>
+							@else
+							 <option value="<?php echo $unidade->id; ?>">{{ $unidade->nome }}</option>
+							@endif
+						   @endforeach
+						 </select>
+						 @else
+						 <select disabled class="form-select form-select-sm" id="trabalha_oss2" name="trabalha_oss2" required> 
+						   <option value="">Selecione...</option>
+						   @foreach($unidades as $unidade)
+						    @if($unidade->id == old('trabalha_oss2'))
+							 <option value="<?php echo $unidade->id; ?>" selected>{{ $unidade->nome }}</option>
+							@else
+							 <option value="<?php echo $unidade->id; ?>">{{ $unidade->nome }}</option>
+							@endif
+						   @endforeach
+						 </select>
+						 @endif
+					   </div>
+					   <div class="col"> 
+					   </div>
+					  </div>
+				     </div>
+				    </div>
+				  </div>
+				  <br>
+				  <div class="modal-content">
+				   <div class="modal-content">
+					 <div class="modal-header">
+						<center><h6 class="modal-title"id="exampleModalLongTitle"><b>DIVERSIDADE: (* campos obrigatórios)</b></h6></center>
+				   	 </div>
+				     <div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+						<label for="inputState" class="form-label"><b><font size="2">Nome Social (Nome que o(a) candidato(a) é chamado socialmente) (*)</font></b></label>
+						<input class="form-control form-control-sm" type="text" id="nome_social" name="nome_social" value="{{ old('nome_social') }}" required maxlength="100" />
+					   </div>
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Qual o pronome: (*)</font></b></label>
+						 <select class="form-select form-select-sm" id="pronome" name="pronome" required>
+							<option value="0">Selecione...</option>	
+							@if(old('pronome')=='ela_dela')<option value="ela_dela" selected>Ela/Dela</option>@else<option value="ela_dela">Ela/Dela</option>@endif
+						    @if(old('pronome')=='ele_dele')<option value="ele_dele" selected>Ele/Dele</option>@else<option value="ele_dele">Ele/Dele</option>@endif
+							@if(old('pronome')=='nao_responder')<option value="nao_responder" selected>Prefiro não responder</option>@else<option value="nao_responder">Prefiro não responder</option>@endif
+						 </select>
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Qual sua identidade de gênero: (*)</font></b></label>
+						 <select class="form-select form-select-sm" id="genero" name="genero" required>
+							<option value="0">Selecione...</option>	
+							@if(old('genero')=='assexual')<option value="assexual" selected>Assexual</option>@else<option value="assexual">Assexual</option>@endif
+							@if(old('genero')=='bissexual')<option value="bissexual" selected>Bissexual</option>@else<option value="bissexual">Bissexual</option>@endif
+							@if(old('genero')=='heterossexual')<option value="heterossexual" selected>Heterossexual</option>@else<option value="heterossexual">Heterossexual</option>@endif
+							@if(old('genero')=='homossexual')<option value="homossexual" selected>Homossexual</option>@else<option value="homossexual">Homossexual</option>@endif
+							@if(old('genero')=='pansexual')<option value="pansexual" selected>Pansexual</option>@else<option value="pansexual">Pansexual</option>@endif
+							@if(old('genero')=='nao_responder')<option value="nao_responder" selected>Prefiro não responder</option>@else<option value="nao_responder">Prefiro não responder</option>@endif
+				 		 </select>
+					   </div>
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Qual sua cor ou raça: (*)</font></b></label>
+						 <select class="form-select form-select-sm" id="cor" name="cor" required>
+							<option value="0">Selecione...</option>	
+							@if(old('cor')=='amarela')<option value="amarela" selected>Amarela</option>@else<option value="amarela">Amarela</option>@endif
+							@if(old('cor')=='branca')<option value="branca" selected>Branca</option>@else<option value="branca">Branca</option>@endif
+							@if(old('cor')=='indigena')<option value="indigena" selected>Indígena</option>@else<option value="indigena">Indígena</option>@endif
+							@if(old('cor')=='parda')<option value="parda" selected>Parda</option>@else<option value="parda">Parda</option>@endif
+							@if(old('cor')=='preta')<option value="preta" selected>Preta</option>@else<option value="preta">Preta</option>@endif
+							@if(old('cor')=='nao_responder')<option value="nao_responder" selected>Prefiro não responder</option>@else<option value="nao_responder">Prefiro não responder</option>@endif
+						 </select>
+					   </div> 
+					  </div>
+					  <div class="row">
+					   <div class="col"> <br>
+						<label for="inputState" class="form-label"><font size="2"><b> <p align="justify">Eu concordo em compartilhar esses dados com o HCP Gestão para que possam ser realizadas ações voltadas à promoção da diversidade: (*) </p></b></font></label>
+						<select id="aceito" name="aceito" class="form-select form-select-sm">
+						  <option value="0" selected>Selecione...</option>
+						  @if(old('aceito') == "nao")<option value="nao" selected>Não</option>@else<option value="nao">Não</option>@endif
+						  @if(old('aceito') == "sim")<option value="sim" selected>Sim</option>@else<option value="sim">Sim</option>@endif
+						</select>
+					   </div>
+					   <div class="col"> </div>
+					  </div>
+				     </div>
+				   </div>
+				  </div>
+				</div>
+			  
+			    <div class="tab-pane fade" id="tabs2">
+				 <div class="modal-content">
+				  <div class="modal-content">
+				    <div class="modal-header">
+					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>DADOS PESSOAIS: (* campos obrigatórios)</b></h6></center>
+				    </div>
+				    <div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+						<label for="inputState" class="form-label"><b><font size="2">Nome Completo: (*)</font></b></label>
+						<input class="form-control form-control-sm" type="text" id="nome" name="nome" placeholder="NOME COMPLETO" value="{{ old('nome') }}" required maxlength="150" />
+					   </div>
+					   <div class="col">
+						<label for="inputState" class="form-label"><b><font size="2">E-mail: (*)</font></b></label>
+						<input class="form-control form-control-sm" type="text" id="email" name="email" placeholder="E-MAIL" value="{{ old('email') }}" required maxlength="255" />
+					   </div>
+					   <div class="col">  
+					    <label for="inputState" class="form-label"><b><font size="2">CPF: (*)</font></b></label>
+					    <input class="form-control form-control-sm" type="text" id="cpf" name="cpf" placeholder="APENAS NÚMEROS" value="{{ old('cpf') }}" required maxlength="11" max="11" autocomplete="cpf" autofocus /> 
+					   </div>
+					  </div>
+					  <div class="row"> 
+						<div class="col"> 
+						 <label for="inputState" class="form-label"><b><font size="2">Selecione a VAGA: (*)</font></b></label>
+						 <select class="form-select form-select-sm" id="vaga" name="vaga" required>
+							<option value="0">Selecione...</option>	
+						    @if(!empty($vagas))
 								@foreach($vagas as $vaga)
 								 @if(old('vaga') == $vaga->nome))  
-								  <option id="vaga" name="vaga" value="<?php echo $vaga->nome ?>" selected>{{ $vaga->nome }} / {{ $vaga->carga_horaria }}</option>	 
+								  <option value="<?php echo $vaga->nome ?>" selected>{{ $vaga->nome }} / {{ $vaga->carga_horaria }}</option>	 
 								 @else
-								  <option id="vaga" name="vaga" value="<?php echo $vaga->nome ?>">{{ $vaga->nome }} / {{ $vaga->carga_horaria }}</option>	 
+								  <option value="<?php echo $vaga->nome ?>">{{ $vaga->nome }} / {{ $vaga->carga_horaria }}</option>	 
 								 @endif 
 								@endforeach
 							@endif
-							</select>
-						 </td>
-						 <td> <b>CELULAR: (*campo obrigatório)</b>
-						 <input class="form-control" style="200px;" placeholder="Ex: (81)98888-3333" type="text" maxlength="14" id="telefone" name="telefone" value="{{ old('telefone') }}" required />
-						 </td>
-						 <td> TELEFONE FIXO:
-						 <input class="form-control" style="200px;" placeholder="Ex: (81)2222-3333" type="text" id="fone_fixo" maxlength="13" name="fone_fixo" value="{{ old('fone_fixo') }}" />
-						 </td>
-						</tr>
-					  </table>
+						 </select>
+						</div>
+						<div class="col"> 
+						  <label for="inputState" class="form-label"><b><font size="2">Celular: (*)</font></b></label>
+						  <input class="form-control form-control-sm" id="telefone" name="telefone" type="text" placeholder="Ex: (81)98888-3333"  maxlength="14" value="{{ old('telefone') }}" required />
+						</div>
+						<div class="col"> 
+ 						  <label for="inputState" class="form-label"><font size="2">Telefone Fixo:</font></label>
+						  <input class="form-control form-control-sm" id="fone_fixo" name="fone_fixo" type="text" placeholder="Ex: (81)2222-3333"  maxlength="13" value="{{ old('fone_fixo') }}" />
+						</div>
+					  </div>
 					</div>
-				   </div>
-				</table>
-				<br><br>
-				<table style= "margin-top:-50px; margin-left:40px; width:800px;" class="table table-borderless" border="0" bordercolor="DCDCDC">
-			     <tr>
-				  <td>
-					<div class="modal-content" style="width: 1000px;">
-					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>NATURALIDADE:</b></h5></center>
-				   	 </div>
-				     <div class="modal-body" style="width: 900px; background-color: white;">
-					  <table>    	
-					   <tr>
-						<td> <b>CIDADE: (*campo obrigatório)</b>
-						 <input class="form-control" style="width:400px" placeholder="CIDADE" type="text" id="lugar_nascimento" name="lugar_nascimento" value="{{ old('lugar_nascimento') }}" required maxlength="100" />
-						</td>
-						<td> <b>ESTADO: (*campo obrigatório)</b>
-							<select class="form-control" id="estado_nascimento" name="estado_nascimento" style="width:400px" required>
-							 <option id="estado_nascimento" name="estado_nascimento" value="">Selecione...</option>	
-							 @foreach($estados as $estado)
-							  @if($estado->nome == old('estado_nascimento'))
-							    <option id="estado_nascimento" name="estado_nascimento" value="<?php echo $estado->nome; ?>" selected>{{ $estado->nome }}</option>
-							  @else
-							    <option id="estado_nascimento" name="estado_nascimento" value="<?php echo $estado->nome; ?>">{{ $estado->nome }}</option>
-							  @endif
-							 @endforeach
-							</select>
-						</td>
-						</tr>
-						<tr>
-						<td> <b>PAÍS: (*campo obrigatório)</b>
-						   <input class="form-control" placeholder="PAÍS" type="text" id="cidade_nascimento" name="cidade_nascimento" value="{{ old('cidade_nascimento') }}" required maxlength="50" />
-						</td>
-						<td> <b>DATA DE NASCIMENTO: (*campo obrigatório)</b>
-						    <input class="form-control" type="date" id="data_nascimento" name="data_nascimento" value="{{ old('data_nascimento') }}" required />
-						</td>
-				 	  </tr>
-					</table>
 				  </div>
 				 </div>
-				</table>
-				<br>
-				<table style= "margin-top:-50px; margin-left:40px; width:800px;" class="table table-borderless" border="0" bordercolor=DCDCDC>
-			    <tr>
-				  <td>
-					<div class="modal-content" style="width: 1000px;">
-					 <div class="modal-header">
-						<center><h5 class="modal-title" id="exampleModalLongTitle"><b>ENDEREÇO:</b></h5></center>
-					 </div>
-				     <div class="modal-body" style="width: 900px; background-color: white;">
-					  <table>  
-						<tr>
-							<td> <b> CEP: (*campo obrigatório)</b>
-							  <input style="width: 300px;" class="form-control" placeholder="CEP" type="text" id="cep" name="cep" value="{{ old('cep') }}" required maxlength="30" />
-							</td>
-							<td> <b> RUA: (*campo obrigatório)</b>  
-							  <input style="width:300px;" class="form-control" placeholder="RUA" type="text" id="rua" name="rua" value="{{ old('rua') }}" required maxlength="100" />
-							</td>
-							<td> <b> NÚMERO: (*campo obrigatório)</b>
-							  <input style="width:300px;" class="form-control" placeholder="NÚMERO" type="text" id="numero" name="numero" value="{{ old('numero') }}" required maxlength="10" />
-							</td>
-						</tr>
-						<tr>
-							<td> <b> BAIRRO: (*campo obrigatório)</b>
-							  <input style="width:300px;" class="form-control" placeholder="BAIRRO" type="text" id="bairro" name="bairro" value="{{ old('bairro') }}" required maxlength="100" />
-							</td>
-							<td> <b> CIDADE: (*campo obrigatório)</b>
-							  <input style="width:300px;" class="form-control" placeholder="CIDADE" type="text" id="cidade" name="cidade" value="{{ old('cidade') }}" required maxlength="100" />
-							</td>
-							<td> <b> ESTADO: (*campo obrigatório)</b>
-								<select class="form-control" id="estado" name="estado" style="width:300px" required>
-								 <option id="estado" name="estado" value="">Selecione...</option>
-								 @foreach($estados as $estado)
-								  @if($estado->nome == old('estado'))
-							       <option id="estado" name="estado" value="<?php echo $estado->nome; ?>" selected>{{ $estado->nome }}</option>
-								  @else
-								   <option id="estado" name="estado" value="<?php echo $estado->nome; ?>">{{ $estado->nome }}</option>
-								  @endif
-								 @endforeach
-							    </select>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2"> COMPLEMENTO:
-							  <input style="width:400px;" class="form-control" placeholder="COMPLEMENTO" type="text" id="complemento" name="complemento" value="{{ old('complemento') }}" maxlength="200" />
-							</td>				
-						</tr>
-					</table>
-				   </div>
-				  </div>
-				</table>
-				<br>
-				<table style= "margin-top:-50px; margin-left:40px; width:800px;" class="table table-borderless" border="0" bordercolor=DCDCDC>
-			     <tr>
-				  <td>
-					<div class="modal-content" style="width: 1000px;">
-					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle"><b>ESCOLARIDADE:</b></h5></center>	
-					 </div>
-				     <div class="modal-body" style="width: 900px; background-color: white;">
-					  <table>  
-				       <tr style="width:50px;">
-						<td> <b>ESCOLARIDADE: (*campo obrigatório)</b>
-						  <select style="width:450px;" id="escolaridade" name="escolaridade" class="form-control">
-						 	@if(old('escolaridade') == "Ensino Medio Completo")
-							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo" selected>Ensino Médio Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
-							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
-							@elseif(old('escolaridade') == "Superior Incompleto")
-							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Incompleto" selected>Superior Incompleto</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
-							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
-							@elseif(old('escolaridade') == "Superior Completo")
-							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Completo" selected>Superior Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
-							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
-							@elseif(old('escolaridade') == "Mestrado Completo")
-							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Mestrado Completo" selected>Mestrado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
-							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
-							@elseif(old('escolaridade') == "Doutorado Completo")
-							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Doutorado Completo" selected>Doutorado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
-							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
-							@elseif(old('escolaridade') == "Pos graduacao")
-							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Pos graduacao" selected>Pós-graduação</option> 
-							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
-							@elseif(old('escolaridade') == "Residencia")
-							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
-							<option id="escolaridade" name="escolaridade" value="Residencia" selected>Residência</option> 
-							@else
-							<option id="escolaridade" name="escolaridade" value="Ensino Medio Completo">Ensino Médio Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Incompleto">Superior Incompleto</option> 
-							<option id="escolaridade" name="escolaridade" value="Superior Completo">Superior Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Mestrado Completo">Mestrado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Doutorado Completo">Doutorado Completo</option> 
-							<option id="escolaridade" name="escolaridade" value="Pos graduacao">Pós-graduação</option> 
-							<option id="escolaridade" name="escolaridade" value="Residencia">Residência</option> 
-							@endif
+				 <br>
+				 <div class="modal-content">
+				  <div class="modal-content">
+				    <div class="modal-header">
+					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>NATURALIDADE: (* campos obrigatórios)</b></h6></center>
+				    </div>
+				    <div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col"> 
+					     <label for="inputState" class="form-label"><b><font size="2">Cidade: (*)</font></b></label>
+						 <input class="form-control form-select-sm" id="lugar_nascimento" name="lugar_nascimento" type="text" placeholder="CIDADE" value="{{ old('lugar_nascimento') }}" required maxlength="100" />
+					   </div>
+					   <div class="col"> 
+					     <label for="inputState" class="form-label"><b><font size="2">Estado: (*)</font></b></label>
+						 <select class="form-select form-select-sm" id="estado_nascimento" name="estado_nascimento" required>
+						   <option value="0">Selecione...</option>
+						    @foreach($estados as $estado)
+							 @if($estado->nome == old('estado_nascimento'))
+							  <option value="<?php echo $estado->nome; ?>" selected>{{ $estado->nome }}</option>
+							 @else
+							  <option value="<?php echo $estado->nome; ?>">{{ $estado->nome }}</option>
+							 @endif
+							@endforeach
 						 </select>
-						</td>
-						<td> <b>STATUS DA ESCOLARIDADE: (*campo obrigatório)</b>
-						  <select id="status_escolaridade" style="width:450px;" name="status_escolaridade" class="form-control">
-							@if(old('status_escolaridade') == "Em Andamento")
-						 	<option id="status_escolaridade" name="status_escolaridade" value="Em Andamento" selected>Em Andamento</option>
-							<option id="status_escolaridade" name="status_escolaridade" value="Trancado">Trancado</option>
-							<option id="status_escolaridade" name="status_escolaridade" value="Concluido">Concluído</option>
-							@elseif(old('status_escolaridade') == "Trancado")
-							<option id="status_escolaridade" name="status_escolaridade" value="Em Andamento">Em Andamento</option>
-							<option id="status_escolaridade" name="status_escolaridade" value="Trancado" selected>Trancado</option>
-							<option id="status_escolaridade" name="status_escolaridade" value="Concluido">Concluído</option>
-							@elseif(old('status_escolaridade') == "Concluido")
-							<option id="status_escolaridade" name="status_escolaridade" value="Em Andamento">Em Andamento</option>
-							<option id="status_escolaridade" name="status_escolaridade" value="Trancado">Trancado</option>
-							<option id="status_escolaridade" name="status_escolaridade" value="Concluido" selected>Concluído</option>
-							@else
-							<option id="status_escolaridade" name="status_escolaridade" value="Em Andamento">Em Andamento</option>
-							<option id="status_escolaridade" name="status_escolaridade" value="Trancado">Trancado</option>
-							<option id="status_escolaridade" name="status_escolaridade" value="Concluido">Concluído</option>
-							@endif
-						 </select>
-						</td>
-					   </tr>	
-					   <tr>
-						<td> <b>FORMAÇÃO EM QUAL CURSO? (*campo obrigatório)</b>
-						  <textarea class="form-control" style="width:450px;" placeholder="Formação em qual curso?" type="text" id="formacao" name="formacao" value="{{ old('formacao') }}" maxlength="150" required>{{ old('formacao') }}</textarea>
-						</td>
-						<td> <b>QUAIS CURSOS REALIZOU? (*campo obrigatório)</b>
-						  <textarea class="form-control" style="width:450px;" placeholder="quais cursos realizou?" type="text" id="cursos" name="cursos" value="{{ old('cursos') }}" maxlength="500" required>{{ old('cursos') }}</textarea>
-						</td>
-					   </tr>
-					</table>
-				   </div>
+					   </div> 
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+					     <label for="inputState" class="form-label"><b><font size="2">País: (*)</font></b></label>
+						 <input class="form-control form-control-sm" placeholder="PAÍS" type="text" id="cidade_nascimento" name="cidade_nascimento" value="{{ old('cidade_nascimento') }}" required maxlength="50" />
+					   </div>
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Data De Nascimento: (*)</font></b></label>
+						<input class="form-control form-control-sm" type="date" id="data_nascimento" name="data_nascimento" value="{{ old('data_nascimento') }}" required />
+					   </div> 
+					  </div>
+					</div>
 				  </div>
-				</table>
-				<br>
-				<table style= "margin-top:-50px; margin-left:40px; width:800px;" class="table table-borderless" border="0" bordercolor=DCDCDC>
-			     <tr>
-				  <td>
-					<div class="modal-content" style="width: 1000px;">
-					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle">PCD:</h5></center>
-					 </div>
-				     <div class="modal-body" style="width: 900px; background-color: white;">
-					  <table>  
-					   <tr>
-						<td colspan="2"> 
-							Você quer se candidatar para a vaga como Pessoa com Deficiência? 
-							<select id="deficiencia_status" name="deficiencia_status" class="form-control" style="width: 100px;" onchange="habilitaDeficiencia('sim')">
-							 <option id="deficiencia_status" name="deficiencia_status" value="nao" selected>NÃO</option>
-							 <option id="deficiencia_status" name="deficiencia_status" value="sim">SIM</option>  
-							</select>
-						</td>
-					   </tr>
-				       <tr>
-					    <td>ESPECIFIQUE SUA DEFICIÊNCIA:
-						    <select disabled id="deficiencia" name="deficiencia" class="form-control" style="width: 400px;">
-						      <option id="deficiencia" name="deficiencia" value="">Selecione..</option>
-						      <option id="deficiencia" name="deficiencia" value="Auditiva">Auditiva</option>
-							  <option id="deficiencia" name="deficiencia" value="Fisica">Física</option>
-							  <option id="deficiencia" name="deficiencia" value="Intelectual">Intelectual</option>
-							  <option id="deficiencia" name="deficiencia" value="Mental">Mental</option>
-							  <option id="deficiencia" name="deficiencia" value="Autista">Transtorno do Espectro Autista</option>
-							  <option id="deficiencia" name="deficiencia" value="Visual">Visual</option>
-							  <option id="deficiencia" name="deficiencia" value="Outros">Outros</option>
-						    </select>
-						</td>
-						<td colspan="2"> CID CORRESPONDENTE:
-							<input disabled style="width:400px;" class="form-control" placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="{{ old('cid') }}" maxlength="255" />
-						</td>	
-					   </tr>
-					   <tr>
-						<td>
-						 <p align="justify">Envie o laudo PCD para complementar o seu cadastro no HCP GESTÃO</p>
-						 <p align="justify">O Laudo PCD é importante para garantir que processos seletivos destinados a pessoas com deficiência sejam justos e que deles participem apenas pessoas que tenham alguma deficiência. Desta forma, o HCP Gestão terá como identificar rapidamente aplicações inadequadas, tornando o processo de seleção mais ágil e justo. 
+		  	     </div>
+				</div>
+
+			    <div class="tab-pane fade" id="tabs3">
+				 <div class="modal-content">
+				  <div class="modal-content">
+				    <div class="modal-header">
+					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>ENDEREÇO: (* campos obrigatórios)</b></h6></center>
+				    </div>
+					<div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+						<label for="inputState" class="form-label"><b><font size="2">CEP: (*)</font></b></label>
+						<input class="form-control form-control-sm" placeholder="CEP" type="text" id="cep" name="cep" value="{{ old('cep') }}" required maxlength="30" />
+					   </div>
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Rua: (*)</font></b></label>
+						<input class="form-control form-control-sm" placeholder="RUA" type="text" id="rua" name="rua" value="{{ old('rua') }}" required maxlength="100" />
+					   </div>
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Número: (*)</font></b></label>
+						<input class="form-control form-control-sm" placeholder="NÚMERO" type="text" id="numero" name="numero" value="{{ old('numero') }}" required maxlength="10" />
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Bairro: (*)</font></b></label>
+						<input class="form-control form-control-sm" placeholder="BAIRRO" type="text" id="bairro" name="bairro" value="{{ old('bairro') }}" required maxlength="100" />
+					   </div>
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Cidade: (*)</font></b></label>
+						<input class="form-control form-control-sm" placeholder="CIDADE" type="text" id="cidade" name="cidade" value="{{ old('cidade') }}" required maxlength="100" />
+					   </div>
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Estado: (*)</font></b></label>
+						 <select id="estado" name="estado" class="form-select form-select-sm">
+						 	<option value="" selected>Selecione...</option>
+							 @foreach($estados as $estado)
+							  @if($estado->nome == old('estado'))
+							    <option value="<?php echo $estado->nome; ?>" selected>{{ $estado->nome }}</option>
+							  @else
+							    <option value="<?php echo $estado->nome; ?>">{{ $estado->nome }}</option>
+							  @endif
+						     @endforeach
+						 </select>
+					   </div>
+					  </div>
+					  <div class="row">
+					    <div class="col">
+						 <label for="inputState" class="form-label"><font size="2">Complemento:</font></label>
+						 <input class="form-control form-control-sm" placeholder="COMPLEMENTO" type="text" id="complemento" name="complemento" value="{{ old('complemento') }}" maxlength="200" />
+					    </div>
+					  </div>
+				    </div>
+				  </div>
+				 </div>
+				 <br>
+				 <div class="modal-content">
+				  <div class="modal-content">
+				    <div class="modal-header">
+					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>ESCOLARIDADE: (* campos obrigatórios)</b></h6></center>
+				   	</div>
+				    <div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+						<label for="inputState" class="form-label"><b><font size="2">Escolaridade: (*)</font></b></label>
+						 <select id="escolaridade" name="escolaridade" class="form-select form-select-sm">
+						    <option value="">Selecione..</option>
+						    @if(old('escolaridade') == "Ensino Medio Completo")<option value="Ensino Medio Completo" selected>Ensino Médio Completo</option>@else<option value="Ensino Medio Completo">Ensino Médio Completo</option>@endif
+							@if(old('escolaridade') == "Superior Incompleto")<option value="Superior Incompleto" selected>Superior Incompleto</option>@else<option value="Superior Incompleto">Superior Incompleto</option>@endif
+							@if(old('escolaridade') == "Superior Completo")<option value="Superior Completo" selected>Superior Completo</option>@else<option value="Superior Completo">Superior Completo</option>@endif
+							@if(old('escolaridade') == "Mestrado Completo")<option value="Mestrado Completo" selected>Mestrado Completo</option>@else<option value="Mestrado Completo">Mestrado Completo</option>@endif
+							@if(old('escolaridade') == "Doutorado Completo")<option value="Doutorado Completo" selected>Doutorado Completo</option>@else<option value="Doutorado Completo">Doutorado Completo</option>@endif
+							@if(old('escolaridade') == "Pos graduacao")<option value="Pos graduacao" selected>Pós-graduação</option>@else<option value="Pos graduacao">Pós-graduação</option>@endif
+							@if(old('escolaridade') == "Residencia")<option value="Residencia" selected>Residência</option>@else<option value="Residencia">Residência</option>@endif
+						 </select>
+					   </div>
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Status Da Escolaridade: (*)</font></b></label>
+						 <select id="status_escolaridade" name="status_escolaridade" class="form-select form-select-sm">
+						    <option value="">Selecione..</option>
+						    @if(old('status_escolaridade') == "Em Andamento")<option value="Em Andamento" selected>Em Andamento</option>@else<option value="Em Andamento">Em Andamento</option>@endif
+							@if(old('status_escolaridade') == "Trancado")<option value="Trancado" selected>Trancado</option>@else<option value="Trancado">Trancado</option>@endif
+							@if(old('status_escolaridade') == "Concluido")<option value="Concluido" selected>Concluído</option>@else<option value="Concluido">Concluído</option>@endif
+						 </select>
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Formação Em Qual Curso? (*)</font></b></label>
+					    <textarea class="form-control form-control-sm" placeholder="Formação em qual curso?" type="text" id="formacao" name="formacao" value="{{ old('formacao') }}" maxlength="150" required>{{ old('formacao') }}</textarea>
+					   </div>
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Quais Cursos Realizou? (*)</font></b></label>
+					    <textarea class="form-control form-control-sm" placeholder="quais cursos realizou?" type="text" id="cursos" name="cursos" value="{{ old('cursos') }}" maxlength="500" required>{{ old('cursos') }}</textarea>
+					   </div>
+					  </div>
+				    </div>
+				  </div>
+				 </div>
+			    </div>
+
+			    <div class="tab-pane fade" id="tabs4">
+				 <div class="modal-content">
+				  <div class="modal-content">
+				    <div class="modal-header">
+					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>PCD:</b></h6></center>
+				    </div>
+					<div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Você quer se candidatar para a vaga como Pessoa com Deficiência?</font></b></label>
+						<select id="deficiencia_status" name="deficiencia_status" class="form-select form-select-sm" onchange="habilitaDeficiencia('sim')">
+						  <option value="" selected>Selecione...</option>
+						  @if(old('deficiencia_status') == "nao")<option value="nao" selected>NÃO</option>@else<option value="nao">NÃO</option>@endif
+						  @if(old('deficiencia_status') == "sim")<option value="sim" selected>SIM</option>@else<option value="sim">SIM</option>@endif
+						</select>
+					   </div>
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Especifique Sua Deficiência:</font></b></label>
+						@if(old('deficiencia_status') == "" || old('deficiencia_status') == "nao")
+						<select disabled id="deficiencia" name="deficiencia" class="form-select form-select-sm">
+						  <option value="">Selecione..</option>
+						  @if(old('deficiencia') == "Auditiva")<option value="Auditiva" selected>Auditiva</option>@else<option value="Auditiva">Auditiva</option>@endif
+						  @if(old('deficiencia') == "Fisica")<option value="Fisica" selected>Física</option>@else<option value="Fisica">Física</option>@endif
+						  @if(old('deficiencia') == "Intelectual")<option value="Intelectual" selected>Intelectual</option>@else<option value="Intelectual">Intelectual</option>@endif
+						  @if(old('deficiencia') == "Mental")<option value="Mental" selected>Mental</option>@else<option value="Mental">Mental</option>@endif
+						  @if(old('deficiencia') == "Autista")<option value="Autista" selected>Autista</option>@else<option value="Autista">Autista</option>@endif
+						  @if(old('deficiencia') == "Visual")<option value="Visual" selected>Visual</option>@else<option value="Visual">Visual</option>@endif
+						  @if(old('deficiencia') == "Outros")<option value="Outros" selected>Outros</option>@else<option value="Outros">Outros</option>@endif
+						</select>
+						@else
+						<select id="deficiencia" name="deficiencia" class="form-select form-select-sm">
+						  <option value="">Selecione..</option>
+						  @if(old('deficiencia') == "Auditiva")<option value="Auditiva" selected>Auditiva</option>@else<option value="Auditiva">Auditiva</option>@endif
+						  @if(old('deficiencia') == "Fisica")<option value="Fisica" selected>Física</option>@else<option value="Fisica">Física</option>@endif
+						  @if(old('deficiencia') == "Intelectual")<option value="Intelectual" selected>Intelectual</option>@else<option value="Intelectual">Intelectual</option>@endif
+						  @if(old('deficiencia') == "Mental")<option value="Mental" selected>Mental</option>@else<option value="Mental">Mental</option>@endif
+						  @if(old('deficiencia') == "Autista")<option value="Autista" selected>Autista</option>@else<option value="Autista">Autista</option>@endif
+						  @if(old('deficiencia') == "Visual")<option value="Visual" selected>Visual</option>@else<option value="Visual">Visual</option>@endif
+						  @if(old('deficiencia') == "Outros")<option value="Outros" selected>Outros</option>@else<option value="Outros">Outros</option>@endif
+						</select>
+						@endif
+					   </div>
+					  </div>
+					  <div class="row">   
+					   <div class="col">  
+					    <label for="inputState" class="form-label"><b><font size="2">CID Correspondente:</font></b></label>
+					    @if(old('deficiencia_status') == "" || old('deficiencia_status') == "nao")
+						<input disabled class="form-control form-control-sm" placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="{{ old('cid') }}" maxlength="255" />
+						@else
+						<input class="form-control form-control-sm" placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="{{ old('cid') }}" maxlength="255" />
+						@endif
+					   </div>
+					   <div class="col"><br><p align="justify"><font size="2" color="red"><b>* Envie o laudo PCD para complementar o seu cadastro no HCP GESTÃO</b></font></p></div>
+					  </div>
+					  <div class="row">   
+					   <div class="col">  
+					     <br>
+						 <p align="justify"><font size="2" color="red"><b>O Laudo PCD é importante para garantir que processos seletivos destinados a pessoas com deficiência sejam justos e que deles participem apenas pessoas que tenham alguma deficiência. Desta forma, o HCP Gestão terá como identificar rapidamente aplicações inadequadas, tornando o processo de seleção mais ágil e justo. 
 						 Como o envio do laudo médico não é obrigatório, você não será automaticamente desclassificado do processo seletivo. No entanto, esse controle será exclusivo do HCP GESTÃO que poderá utilizar esse documento para evitar fraudes. O laudo será coletado e armazenado com base no seu consentimento. Este documento será compartilhado apenas 
-						 para o processo seletivo em questão conforme nossa Política de Privacidade.</p>
-						 ANEXE O LAUDO MÉDICO
-						 <input disabled style="width:450px;" class="form-control" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" maxlength="600"> 
-					 	 <br><p><b>Esse documento pode ser nos formatos: PNG, JPG, JPEG, DOC, DOCX ou PDF.</b></p>
-						</td>
-					   </tr>
-					  </table>
-					 </div>
-					</div>
-				  </td>
-				 </tr>
-				</table>
-				<br>
-				<table style= "margin-top:-50px; margin-left:40px; width:800px;" class="table table-borderless" border="0" bordercolor=DCDCDC>
-			     <tr>
-				  <td>
-					<div class="modal-content" style="width: 1000px;">
-					 <div class="modal-header">
-						<center><h5 class="modal-title"id="exampleModalLongTitle">EXPERIÊNCIAS: </h5></center>
-					 </div>
-				     <div class="modal-body" style="width: 900px; background-color: white;">
-					  <table>
-					   	<tr>
-						  <td colspan="3" align="left"><strong><center> EXPERIÊNCIA 01: </center></strong>
-						    @if(old('val6') == "on")
-						      <p align="right"><input type="checkbox" checked onclick="desabilitar6('sim')" id="val6" name="val6" /> Habilitar campos</p></td>
-					        @else
-						      <p align="right"><input type="checkbox" onclick="desabilitar6('sim')" id="val6" name="val6" /> Habilitar campos</p></td>
-						    @endif
-						</tr>
-						<tr>
-						  <td> EMPRESA:
-							@if(old('val6') == "on")
-							  <input style="width:450px;" class="form-control" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" required />
-							@else
-							  <input style="width:450px;" disabled class="form-control" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" required />
-							@endif
-						  </td>
-						  <td> CARGO:
-						    @if(old('val6') == "on")
-							  <input style="width: 400px;" class="form-control" placeholder="CARGO" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" required />
-							@else
-							  <input style="width: 400px;" disabled class="form-control" placeholder="CARGO" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" required />
-							@endif
-						  </td>
-						</tr>				
-						<tr>
-						  <td> DATA INÍCIO:
-						    @if(old('val6') == "on")
-							  <input style="width:400px;" class="form-control" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" required />
-							@else
-							  <input style="width:400px;" disabled class="form-control" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" required />
-							@endif
-						  </td>
-						  <td> DATA FIM:
-						    @if(old('val6') == "on")
-							  <input style="width:400px;" class="form-control" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" required />
-							@else
-							  <input style="width:400px;" disabled class="form-control" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" required />
-							@endif  
-						  </td>
-						</tr>
-						<tr>
-						  <td> SUAS ATRIBUIÇÕES:
-						    @if(old('val6') == "on")
-							  <textarea style="width:450px;" class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" required></textarea>
-							@else
-							  <textarea style="width:450px;" disabled class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" required></textarea>
-							@endif
-						   Restam: <span class="caracteres">300 </span> caracteres.<br>
-		  				  </td>
-						  <td> CTPS OU CONTRA CHEQUE </br> <b>.doc, .docx e .pdf</b>
-						    @if(old('val6') == "on")
-							  <input class="form-control" type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600" > 
-							@else
-							  <input class="form-control" disabled type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600"> 
-							@endif
-						  </td>
-						</tr>
-						<tr>
-						  <td colspan="2">
-							<center><strong>ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</strong></center>
-						  </td>
-						</tr>
-						<tr>
-						  <td colspan="3" align="left"><strong><center> EXPERIÊNCIA 02: </center></strong>
-						    @if(old('val7') == "on")
-							  <p align="right"><input type="checkbox" checked onclick="desabilitar7('sim')" id="val7" name="val7" /> Habilitar campos</p></td>
-							@else
-							  <p align="right"><input type="checkbox" onclick="desabilitar7('sim')" id="val7" name="val7" /> Habilitar campos</p></td>
-							@endif
-						</tr>
-						<tr>
-						  <td> EMPRESA:
-						    @if(old('val7') == "on")
-							  <input style="width:450px;" class="form-control" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" required />
-							@else
-							  <input style="width:450px;" disabled class="form-control" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" required />
-							@endif
-						  </td>
-						  <td> CARGO:
-						    @if(old('val7') == "on")
-							  <input style="width: 400px;" class="form-control" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" required />
-							@else
-							  <input style="width: 400px;" disabled class="form-control" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" required />
-							@endif
-						  </td>
-						</tr>
-						<tr>
-						  <td> DATA INÍCIO:
-						    @if(old('val7') == "on")
-							  <input style="width:400px;" class="form-control" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" required />
-							@else
-							  <input style="width:400px;" disabled class="form-control" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" required />
-							@endif
-						  </td>
-						  <td> DATA FIM:
-						    @if(old('val7') == "on")
-							  <input style="width: 400px;" class="form-control" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" required />
-							@else
-							  <input style="width: 400px;" disabled class="form-control" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" required />
-							@endif							
-						  </td>
-						</tr>
-						<tr>
-						  <td> SUAS ATRIBUIÇÕES:
-						    @if(old('val7') == "on")
-							  <textarea style="width:450px;" class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" required></textarea>
-							@else
-							  <textarea style="width:450px;" disabled class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" required></textarea>
-							@endif
-							Restam: <span class="caracteres">300 </span> caracteres.<br>
-						  </td>
-						  <td> CTPS OU CONTRA CHEQUE </br> <b>.doc, .docx e .pdf</b>
-						    @if(old('val7') == "on")
-							  <input class="form-control" type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
-							@else
-							  <input class="form-control" disabled type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
-							@endif
-						  </td>
-						</tr>
-						<tr>
-						  <td colspan="2"><center><strong>ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</center></strong></td>
-						</tr>
-						<tr>
-						  <td colspan="2" align="left"><strong><center> EXPERIÊNCIA 03: </center></strong>
-						    @if(old('val8') == "on")
-							  <p align="right"><input type="checkbox" checked onclick="desabilitar8('sim')" id="val8" name="val8" /> Habilitar campos</p></td>
-							@else
-							  <p align="right"><input type="checkbox" onclick="desabilitar8('sim')" id="val8" name="val8" /> Habilitar campos</p></td>
-							@endif
-						</tr>
-						<tr>
-						  <td> EMPRESA:
-						    @if(old('val8') == "on")
-							  <input style="width:450px;" class="form-control" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" required />
-							@else
-							  <input style="width:450px;" disabled class="form-control" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" required />
-							@endif
-						  </td>
-						  <td> CARGO:
-						    @if(old('val8') == "on")
-							  <input style="width: 400px;" class="form-control" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" required />
-							@else
-							  <input style="width: 400px;" disabled class="form-control" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" required />
-							@endif
-						  </td>
-						</tr>
-						<tr>
-						   <td> DATA INÍCIO:
-						    @if(old('val8') == "on")
-							  <input style="width:400px;" class="form-control" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" required />
-							@else
-							  <input style="width:400px;" disabled class="form-control" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" required />
-							@endif
-						  </td>
-						  <td> DATA FIM:
-						    @if(old('val8') == "on")
-							  <input style="width: 400px;" class="form-control" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" required />
-							@else
-							  <input style="width: 400px;" disabled class="form-control" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" required />
-							@endif
-						  </td>
-						</tr>
-						<tr>					
-						<tr>
-						  <td> SUAS ATRIBUIÇÕES:
-						    @if(old('val8') == "on")
-							  <textarea style="width:450px;" class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" required></textarea>
-							@else
-							  <textarea style="width:450px;" disabled class="form-control" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" required></textarea>
-							@endif
-						   Restam: <span class="caracteres">300 </span> caracteres.<br>
-						  </td>
-						  <td> CTPS OU CONTRA CHEQUE </br> <b>.doc, .docx e .pdf</b>
-						    @if(old('val8') == "on")
-							  <input class="form-control" type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
-							@else
-							  <input class="form-control" disabled type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
-							@endif
-						  </td>
-						</tr>
-						<tr>
-						  <td colspan="4"><center><strong>ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</center></strong></td>
-						</tr>
-					 </table>			
-				   </div>
+						 para o processo seletivo em questão conforme nossa Política de Privacidade.</b></font></p>
+						 <font size="2"><br>ANEXE O LAUDO MÉDICO</font>
+						 @if(old('deficiencia_status') == "" || old('deficiencia_status') == "nao")
+						 <input disabled class="form-control form-control-sm" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" maxlength="600" value="{{ old('arquivo_deficiencia') }}"> 
+						 <input hidden class="form-control form-control-sm" type="text" id="arquivo_deficiencia_" name="arquivo_deficiencia_" maxlength="600" value=""> 
+						 @else
+						 <input class="form-control form-control-sm" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" maxlength="600" value="{{ old('arquivo_deficiencia') }}"> 
+						 <input hidden class="form-control form-control-sm" type="text" id="arquivo_deficiencia_" name="arquivo_deficiencia_" maxlength="600" value=""> 
+						 @endif
+					 	 <br><p><b><font size="2" color="red">* Esse documento pode ser nos formatos: PNG, JPG, JPEG, DOC, DOCX ou PDF.</font></b></p>
+					   </div>
+					  </div>
+				    </div>
 				  </div>
-				</table>
-				<br>
-				<table style= "margin-top:-50px; margin-left:40px; width:800px;" class="table table-borderless" border="0" bordercolor=DCDCDC>
-			     <tr>
-				  <td>
-					<div class="modal-content" style="width: 1000px;">
-					 <div class="modal-header">
-						<center><h5 class="modal-title" id="exampleModalLongTitle"><b>CURRÍCULO:</b></h5></center>
-					 </div>
-				     <div class="modal-body" style="width: 900px; background-color: white;">
-					  <table>
-						<tr>
-						 <td><strong> Os arquivos permitidos são: .doc, .docx e .pdf </strong></td>
-						</tr>
-						<tr>
-						 <td> <b>(*campo obrigatório)</b>
-						  <input class="form-control" type="file" id="arquivo" name="arquivo" required style="width:500px" maxlength="200" />
-						 </td>	
-						</tr>
-					  </table>
-					 </div>
+				 </div>
+				</div>
+
+			    <div class="tab-pane fade" id="tabs5">
+				 <div class="modal-content">
+				  <div class="modal-content">
+				    <div class="modal-header">
+					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>EXPERIÊNCIAS:</b></h6></center>
+				    </div>
+					<div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+					   <b> 
+						<p><font color="red" size="2">Atenção!!! </p>
+						<p><font size="2">Prezado(a) candidato(a):</font></p>
+						<p align="justify" size="2">Ao cadastrar as suas experiências profissionais no formulário de inscrição do processo seletivo, você estará participando do nosso ranking de classificação. Cada experiência cadastrada gera uma pontuação que leva em consideração o seu tempo de experiência profissional. O somatório das suas experiências cadastradas gera uma pontuação total e através dessa pontuação você terá uma colocação no ranking de classificação. <br><br>
+						- Só serão consideradas experiências profissionais comprovadas na função; <br>
+						- Não serão consideradas experiências profissionais em funções fora do perfil da vaga ofertada; <br>
+						- Os candidatos que não cadastrarem as experiências profissionais no formulário de inscrição, não terão pontos computados no ranking de classificação. </p></font>
+					   </b>
+					   </div>
+					  </div>
 					</div>
-				</table>
-				<br>
-				<table style= "margin-top:-50px; margin-left:40px; width:1000px;" class="table table-borderless" border="0" bordercolor=DCDCDC>
-			     <tr>
-				  <td>
-					<div class="modal-content" style="width: 1000px;">
-					 <div class="modal-header">
-						<center><h5 class="modal-title" id="exampleModalLongTitle"><b>DISPONIBILIDADE:</b></h5></center>
-					 </div>
-				     <div class="modal-body" style="width: 900px; background-color: white;">
-					  <table border="0" style="width:950px;">
-						<tr>
-						 <td> POSSUI HABILITAÇÃO:
-						  @if(old('val9') == "on")
-						  <select style="width:300px;" disabled class="form-control" id="habilitacao" name="habilitacao">
-						   <option id="habilitacao" name="habilitacao" value="nao">Não</option>
-						   <option id="habilitacao" name="habilitacao" value="sim">Sim</option>
-						  </select>						  
-						  @else
-						  <select style="width:300px;" class="form-control" id="habilitacao" name="habilitacao">
-						   <option id="habilitacao" name="habilitacao" value="nao">Não</option>
-						   <option id="habilitacao" name="habilitacao" value="sim">Sim</option>
-						  </select>
-						  @endif
-						 </td>
-						 </tr>
-						<tr>
-						 <td> DISPONIBILIDADE PARA QUAL PERÍODO:
-						  @if(old('val9') == "on")
-						  <select style="width:300px;" disabled class="form-control" id="periodo" name="periodo">
-						   <option id="periodo" name="periodo" value="periodo_integral">Disponibilidade para período integral</option>
-						   <option id="periodo" name="periodo" value="periodo_noturno">Disponibilidade para período noturno</option>
-						   <option id="periodo" name="periodo" value="meio_periodo">Disponibilidade para meio período</option>
-						  </select>						  
-						  @else
-						  <select style="width:300px;" class="form-control" id="periodo" name="periodo">
-						   <option id="periodo" name="periodo" value="periodo_integral">Disponibilidade para período integral</option>
-						   <option id="periodo" name="periodo" value="periodo_noturno">Disponibilidade para período noturno</option>
-						   <option id="periodo" name="periodo" value="meio_periodo">Disponibilidade para meio período</option>
-						  </select>
-						  @endif
-					 	 </td> 
-						</tr>
-						<tr>
-						 <td> DISPONIBILIDADE PARA MUDAR DE CIDADE:
-						   @if(old('val9') == "on")
-						   <select style="width:300px;" disabled class="form-control" id="outra_cidade" name="outra_cidade">
-						    <option id="outra_cidade" name="outra_cidade" value="nao">Não</option>
-						    <option id="outra_cidade" name="outra_cidade" value="sim">Sim</option>
-						   </select>					  
-						   @else
-						   <select style="width:300px;" class="form-control" id="outra_cidade" name="outra_cidade">
-						    <option id="outra_cidade" name="outra_cidade" value="nao">Não</option>
-						    <option id="outra_cidade" name="outra_cidade" value="sim">Sim</option>
-						   </select>
-						   @endif
-						 </td>
-						</tr>
-						<tr>	
-						 <td> COMO SOUBE DA VAGA? </td>
-						 <td>
-						   @if(old('val9') == "on")
-						   <select style= "width:200px;" disabled class="form-control" id="como_soube" name="como_soube"> 
-						    <option id="como_soube" name="como_soube" value="redes_sociais"> Redes Sociais </option>
-							<option id="como_soube" name="como_soube" value="site_hcpgestao"> Site HCP Gestão </option>  
-							<option id="como_soube" name="como_soube" value="indicacao"> Indicação </option>  
-							<option id="como_soube" name="como_soube" value="outros"> Outros </option>
-						   </select>					  
-						   @else
-						   <select style= "width:200px;" onchange="comoSoube()" class="form-control" id="como_soube" name="como_soube"> 
-							<option id="como_soube" name="como_soube" value="redes_sociais"> Redes Sociais </option>
-							<option id="como_soube" name="como_soube" value="site_hcpgestao"> Site HCP Gestão </option>  
-							<option id="como_soube" name="como_soube" value="indicacao"> Indicação </option>  
-							<option id="como_soube" name="como_soube" value="outros"> Outros </option>  
-						   </select>
-						   @endif
-						 </td> 
-						 <td> 
-						   <input style= "width:200px;" type="text" id="como_soube2" name="como_soube2" class="form-control" maxlength="255" disabled required/> 
-						 </td>
-						</tr>
-						<tr>
-						<td>
-						POSSUI PARENTESCO COM COLABORADOR DO HCP GESTÃO? </td>
-						<td>
-						    @if(old('val9') == "on")
-						    <select style= "width:200px;" disabled class="form-control" id="parentesco" name="parentesco">  
-							 <option id="parentesco" name="parentesco" value="nao"> Não </option>  
-							 <option id="parentesco" name="parentesco" value="sim"> Sim </option>  
-						    </select>					  
-						    @else
-						    <select style= "width:200px;" onchange="familiar()" class="form-control" id="parentesco" name="parentesco"> 
-							 <option id="parentesco" name="parentesco" value="nao"> Não </option>  
-							 <option id="parentesco" name="parentesco" value="sim"> Sim </option>  
-							</select>	
-							@endif
-							<td> <input style= "width:200px;" type="text" id="parentesco_nome" name="parentesco_nome" class="form-control" maxlength="255" disabled required/> </td>
-						</td>
-						</tr>
-						<tr> <br>
-						 <td colspan="3" align="right">
-							<input type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" value="Salvar" id="Salvar" name="Salvar" /> </p>
-						 </td>
-						</tr>
-					</table>
-				   </div>
+					<div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2"><center>EXPERIÊNCIA 01:</center></font></b></label>
+						 @if(old('val6') == "on")
+						  <p align="right"><input type="checkbox" checked onclick="desabilitar6('sim')" id="val6" name="val6" /><font size="2"> Habilitar campos</font></p></td>
+					     @else
+						  <p align="right"><input type="checkbox" onclick="desabilitar6('sim')" id="val6" name="val6" /><font size="2"> Habilitar campos</font></p></td>
+						 @endif
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Empresa:</font></b></label>
+						 @if(old('val6') == "on")
+						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" required />
+						 @endif
+					   </div>
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Cargo:</font></b></label>
+						 @if(old('val6') == "on")
+						  <input class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" required />
+						 @endif
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b><font size="2">Data Início:</font></b></label>
+						 @if(old('val6') == "on")
+						  <input class="form-control form-control-sm" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" required />
+				 		 @else
+						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" required />
+				  		 @endif
+					   </div>
+					   <div class="col">
+						<label for="inputState" class="form-label"><b><font size="2">Data Fim:</font></b></label>
+						 @if(old('val6') == "on")
+						  <input class="form-control form-control-sm" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" required />
+						 @endif 
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Suas Atribuições:</font></b></label>
+						 @if(old('val6') == "on")
+						   <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" required></textarea>
+						 @else
+						   <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" required></textarea>
+						 @endif
+						 <font size="2">Restam: <span class="caracteres">300 </span> caracteres.</font><br>
+					   </div>
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><b><font size="2">CTPS Ou Contra Cheque (.doc, .docx e .pdf)</font></b></label>
+						 @if(old('val6') == "on")
+						  <input class="form-control form-control-sm" type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600"> 
+						  <input hidden class="form-control form-control-sm" type="text" id="arquivo_ctps1_" name="arquivo_ctps1_" value="" maxlength="600"> 
+						 @else
+						  <input class="form-control form-control-sm" disabled type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600">
+						  <input hidden class="form-control form-control-sm" type="text" id="arquivo_ctps1_" name="arquivo_ctps1_" value="" maxlength="600">  
+						 @endif
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col">
+					     <center><strong><font size="2" color="red">ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</font></strong></center>
+					   </div>
+					  </div> <br>
+					  <div class="row">
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><b><font size="2">EXPERIÊNCIA 02:</font></b></label>
+						 @if(old('val7') == "on")
+						  <p align="right"><input type="checkbox" checked onclick="desabilitar7('sim')" id="val7" name="val7" /><font size="2"> Habilitar campos </font></p></td>
+						 @else
+						  <p align="right"><input type="checkbox" onclick="desabilitar7('sim')" id="val7" name="val7" /><font size="2"> Habilitar campos </font></p></td>
+						 @endif
+					   </div> 
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"><b>Empresa:</b></font></label>
+						 @if(old('val7') == "on")
+						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" required />
+						 @endif
+					   </div> 
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"><b>Cargo:</b></font></label>
+						 @if(old('val7') == "on")
+					 	  <input class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" required />
+						 @endif
+					   </div> 
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"><b>Data Início:</b></font></label>
+						 @if(old('val7') == "on")
+						  <input class="form-control form-control-sm" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" required />
+						 @endif
+					   </div> 
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"><b>Data Fim:</b></font></label>
+						 @if(old('val7') == "on")
+						  <input class="form-control form-control-sm" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" required />
+						 @endif	 
+					   </div> 
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"><b>Suas Atribuições:</b></font></label>
+						 @if(old('val7') == "on")
+						  <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" required></textarea>
+						 @else
+						  <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" required></textarea>
+						 @endif
+						 <font size="2">Restam: <span class="caracteres">300 </span> caracteres.</font><br>
+					   </div> 
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"><b>CTPS Ou Contra Cheque (.doc, .docx e .pdf)</b></font></label>
+						 @if(old('val7') == "on")
+						  <input class="form-control form-control-sm" type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
+						  <input hidden class="form-control form-control-sm" type="text" id="arquivo_ctps2_" name="arquivo_ctps2_" value="" maxlength="600">
+						 @else
+						  <input class="form-control form-control-sm" disabled type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600">
+						  <input hidden class="form-control form-control-sm" type="text" id="arquivo_ctps2_" name="arquivo_ctps2_" value="" maxlength="600"> 
+						 @endif
+					   </div> 
+					  </div>
+					  <div class="row">
+					  	<div class="col">
+					     <center><strong><font size="2" color="red">ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</font></strong></center>
+					   </div> <br><br>
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"> <b>EXPERIÊNCIA 03:</b></font></label>
+						 @if(old('val8') == "on")
+						  <p align="right"><input type="checkbox" checked onclick="desabilitar8('sim')" id="val8" name="val8" /><font size="2"> Habilitar campos </font></p></td>
+						 @else
+						  <p align="right"><input type="checkbox" onclick="desabilitar8('sim')" id="val8" name="val8" /><font size="2"> Habilitar campos </font></p></td>
+						 @endif
+					   </div> 
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"> <b>Empresa:</b></font></label>
+						 @if(old('val8') == "on")
+						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" required />
+						 @endif
+					   </div> 
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"> <b>Cargo:</b></font></label>
+						 @if(old('val8') == "on")
+						  <input class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" required />
+						 @endif
+					   </div> 
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"> <b>Data Início:</b></font></label>
+						 @if(old('val8') == "on")
+						  <input class="form-control form-control-sm" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" required />
+						 @endif
+					   </div> 
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"> <b>Data Fim:</b></font></label>
+						 @if(old('val8') == "on")
+						  <input class="form-control form-control-sm" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" required />
+						 @else
+						  <input disabled class="form-control form-control-sm" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" required />
+						 @endif
+					   </div> 
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"> <b>Suas Atribuições:</b></font></label>
+						 @if(old('val8') == "on")
+						  <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" required></textarea>
+						 @else
+						  <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" required></textarea>
+						 @endif
+						 <font size="2"> Restam: <span class="caracteres">300 </span> caracteres. </font><br>
+					   </div> 
+					   <div class="col"> 
+						<label for="inputState" class="form-label"><font size="2"> <b>CTPS Ou Contra Cheque (.doc, .docx e .pdf)</b></font></label>
+						 @if(old('val8') == "on")
+						  <input class="form-control form-control-sm" type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
+						  <input hidden class="form-control form-control-sm" type="text" id="arquivo_ctps3_" name="arquivo_ctps3_" value="" maxlength="600"> 
+						 @else
+						  <input class="form-control form-control-sm" disabled type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
+						  <input hidden class="form-control form-control-sm" type="text" id="arquivo_ctps3_" name="arquivo_ctps3_" value="" maxlength="600"> 
+						 @endif
+					   </div> 
+					  </div>
+					  <div class="row">
+					  	<div class="col">
+					     <center><strong><font size="2" color="red">ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</font></strong></center>
+					   </div>
+					  </div>
+					</div>
 				  </div>
-				</table>
-				<input hidden type="text" id="candidato_id" name="candidato_id" value="" />
-				<input hidden type="text" id="processo_seletivo_id" name="processo_seletivo_id" value="" />
-				<input hidden type="text" id="data_inscricao" name="data_inscricao" value="" />
-			</table>
+				 </div>
+				</div>
+				
+				<div class="tab-pane fade" id="tabs6">
+				 <div class="modal-content">
+				  <div class="modal-content">
+				    <div class="modal-header">
+					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>CURRÍCULO: (*campo obrigatório)</b></h6></center>
+				    </div>
+					<div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b>Currículo:</b><font size="2" color="red"> <b>(Os arquivos permitidos são: .doc, .docx e .pdf)</b></font> <b>(*)</b></label>
+						<input class="form-control form-control-sm" type="file" id="arquivo" name="arquivo" required maxlength="200" />
+					   </div>
+					   <div class="col">
+					    <label for="inputState" class="form-label"><b>Foto: </b><font size="2" color="red"> <b>(Foto 3x4)</b></font> <b>(*)</b></label>
+						<input class="form-control form-control-sm" type="file" id="foto" name="foto" required maxlength="200" value="{{ old('foto') }}" />
+					   </div>
+					  </div>
+					</div>
+				  </div>
+				 </div>
+				 <br>
+				 <div class="modal-content">
+				  <div class="modal-content">
+				    <div class="modal-header">
+					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>DISPONIBILIDADE: (*campos obrigatórios)</b></h6></center>
+				    </div>
+				 	<div class="modal-body" style="background-color: white;">
+					  <div class="row">
+					   <div class="col">
+					    <label for="inputState" class="form-label"><font size="2"> <b>POSSUI HABILITAÇÃO: (*)</b></font></label>
+						 @if(old('val9') == "on")
+						  <select disabled class="form-select form-select-sm" id="habilitacao" name="habilitacao" required>
+						    <option value="">Selecione...</option> 
+							@if(old('habilitacao')=="nao")<option value="nao" selected>Não</option>@else<option value="nao">Não</option>@endif
+							@if(old('habilitacao')=="sim")<option value="sim" selected>Sim</option>@else<option value="sim">Sim</option>@endif
+						  </select>						  
+						 @else
+						  <select class="form-select form-select-sm" id="habilitacao" name="habilitacao" required>
+						    <option value="">Selecione...</option> 
+							@if(old('habilitacao')=="nao")<option value="nao" selected>Não</option>@else<option value="nao">Não</option>@endif
+							@if(old('habilitacao')=="sim")<option value="sim" selected>Sim</option>@else<option value="sim">Sim</option>@endif
+						  </select>
+						 @endif
+					   </div>
+					   <div class="col">
+					    <label for="inputState" class="form-label"><font size="2"><b>DISPONIBILIDADE PARA QUAL PERÍODO: (*)</b></font></label>
+						 @if(old('val9') == "on")
+						  <select disabled class="form-select form-select-sm" id="periodo" name="periodo" required>
+						    <option value="">Selecione...</option> 
+							@if(old('periodo')=="periodo_integral")<option value="periodo_integral" selected>Disponibilidade para período integral</option>@else<option value="periodo_integral">Disponibilidade para período integral</option>@endif
+							@if(old('periodo')=="periodo_noturno")<option value="periodo_noturno" selected>Disponibilidade para período noturno</option>@else<option value="periodo_noturno">Disponibilidade para período noturno</option>@endif
+							@if(old('periodo')=="meio_periodo")<option value="meio_periodo" selected>Disponibilidade para meio período</option>@else<option value="meio_periodo">Disponibilidade para meio período</option>@endif
+						  </select>						  
+						 @else
+						  <select class="form-select form-select-sm" id="periodo" name="periodo" required>
+						    <option value="">Selecione...</option> 
+						    @if(old('periodo')=="periodo_integral")<option value="periodo_integral" selected>Disponibilidade para período integral</option>@else<option value="periodo_integral">Disponibilidade para período integral</option>@endif
+							@if(old('periodo')=="periodo_noturno")<option value="periodo_noturno" selected>Disponibilidade para período noturno</option>@else<option value="periodo_noturno">Disponibilidade para período noturno</option>@endif
+							@if(old('periodo')=="meio_periodo")<option value="meio_periodo" selected>Disponibilidade para meio período</option>@else<option value="meio_periodo">Disponibilidade para meio período</option>@endif
+						  </select>
+						 @endif
+					   </div>
+				       <div class="col">
+					    <label for="inputState" class="form-label"><font size="2"><b>DISPONIBILIDADE PARA MUDAR DE CIDADE: (*)</b></font></label>
+						 @if(old('val9') == "on")
+						  <select disabled class="form-select form-select-sm" id="outra_cidade" name="outra_cidade" required>
+						    <option value="">Selecione...</option> 
+							@if(old('outra_cidade')=="nao")<option value="nao" selected>Não</option>@else<option value="nao">Não</option>@endif
+							@if(old('outra_cidade')=="sim")<option value="sim" selected>Sim</option>@else<option value="sim">Sim</option>@endif
+					      </select>					  
+						 @else
+						  <select class="form-select form-select-sm" id="outra_cidade" name="outra_cidade" required>
+						    <option value="">Selecione...</option> 
+						    @if(old('outra_cidade')=="nao")<option value="nao" selected>Não</option>@else<option value="nao">Não</option>@endif
+							@if(old('outra_cidade')=="sim")<option value="sim" selected>Sim</option>@else<option value="sim">Sim</option>@endif
+						  </select>
+						 @endif
+					   </div>
+				      </div>
+					  
+					</div>
+				  </div>
+				 </div> <br>
+				 <div class="modal-content">
+				  <div class="modal-content">
+				    <div class="modal-body" style="background-color: white;">
+				     <div class="row">
+					  <div class="col">
+					    <p align="center">
+							<input type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" onclick="validar()" value="SALVAR" id="Salvar" name="Salvar" /> 
+						</p>
+					  </div>
+					 </div>
+				    </div>
+				  </div>
+				 </div>
+				</div>
+			  </div>
+			  </div>
+			  
+		  	  <input hidden type="text" id="candidato_id" name="candidato_id" value="" />
+			  <input hidden type="text" id="processo_seletivo_id" name="processo_seletivo_id" value="" />
+			  <input hidden type="text" id="data_inscricao" name="data_inscricao" value="" />
 			</form> 
 		  </div>
 		</div>
@@ -852,15 +1032,6 @@ function habilitar(){
 		document.getElementById('data_fim').disabled = false;
 	}
 }
-
-function comoSoube(){
-	var optionSelect = document.getElementById("como_soube").value;
-	if(optionSelect == "outros"){
-		document.getElementById("como_soube2").disabled = false;
-	} else {
-		document.getElementById("como_soube2").disabled = true;
-	}
-}
 		
 function familiar(){
 	var parente = document.getElementById("parentesco").value;
@@ -873,5 +1044,4 @@ function familiar(){
 </script>
 	 
 </body>
-
 </html>

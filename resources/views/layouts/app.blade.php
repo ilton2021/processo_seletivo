@@ -39,7 +39,8 @@
 						  Cadastros
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						  <a class="dropdown-item" href="#">Processo Seletivo</a>
+						  <a class="dropdown-item" href="{{ route('cadastroPerguntas') }}">Perguntas</a>
+						  <a class="dropdown-item" href="{{ route('cadastroProcesso') }}">Processo Seletivo</a>
 						  <a class="dropdown-item" href="{{ route('cadastroUnidade') }}">Unidade</a>
 						</div>
 					  </li>

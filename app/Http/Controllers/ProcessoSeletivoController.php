@@ -160,6 +160,14 @@ class ProcessoSeletivoController extends Controller
 						como_soube varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						parentesco varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						parentesco_nome varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						trabalha_oss varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						trabalha_oss2 varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						nome_social varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						pronome varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						genero varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						cor varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						aceito varchar(5) COLLATE utf8mb4_unicode_ci NULL,
+						foto varchar(600) COLLATE utf8mb4_unicode_ci NULL,
 						nomearquivo varchar(600) COLLATE utf8mb4_unicode_ci NULL,
 						status varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						status_avaliacao varchar(50) COLLATE utf8mb4_unicode_ci NULL,
@@ -173,6 +181,27 @@ class ProcessoSeletivoController extends Controller
 						nomearquivo2 varchar(1000) COLLATE utf8mb4_unicode_ci NULL,
 						numeroInscricao varchar(100) COLLATE utf8mb4_unicode_ci NULL
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; ");
+
+						$q = DB::statement("CREATE TABLE IF NOT EXISTS questionario_".$nome."
+										(id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+										processo_seletivo_id bigint(20) UNSIGNED NOT NULL,
+										candidato_id bigint(20) UNSIGNED NOT NULL,
+										resposta1 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta2 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta3 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta4 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta5 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta6 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta7 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta8 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta9 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta10 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL)
+									ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; ");
+					   
+					   $q1 = DB::statement("ALTER TABLE questionario_".$nome."
+						 		ADD KEY `questionario_processo_seletivo_foreign` (`processo_seletivo_id`),
+						 		ADD KEY `questionario_candidato_foreign` (`candidato_id`); ");
+
 						$input['origem'] = 1;
 						$processo_seletivo = ProcessoSeletivo::create($input);
 						$lastUpdated = $processo_seletivo->max('updated_at');

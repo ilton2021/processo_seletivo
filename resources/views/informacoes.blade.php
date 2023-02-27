@@ -43,13 +43,22 @@
                       <td>Currículo:</td>
                       <td>
 					  @if($processos[0]->origem == 1)
-					  <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/curriculo')}}/{{($processos[0]->nome)}}/{{($processos2[0]->nomearquivo2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					   <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/curriculo')}}/{{($processos[0]->nome)}}/{{($processos2[0]->nomearquivo2)}}"> <i class="fas fa-file-alt"></i></a>
 					  @else
-					  <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" 
-						href="{{asset('http://hcp.org.br/processoseletivo')}}/{{($processos[0]->nome)}}/{{('admin/lab/uploads')}}/{{($processos2[0]->nomearquivo2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					   <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" 
+						 href="{{asset('http://hcp.org.br/processoseletivo')}}/{{($processos[0]->nome)}}/{{('admin/lab/uploads')}}/{{($processos2[0]->nomearquivo2)}}"> <i class="fas fa-file-alt"></i>
+					   </a>
 					  @endif
 					  </td>
 				    </tr>
+					@if($qtdResp > 0)
+					<tr>
+					  <td>Questionário:</td>
+					  <td>
+					   <a class="btn btn-warning btn-sm" style="color: #FFFFFF;" href="{{ route('questionarioVisualizar', array($idP, $candidato)) }}"><i class="fas fa-clipboard-check"></i></a>
+					  </td>
+					</tr>
+					@endif
 					<tr>
 					 <td colspan="2"><b>Endereço:</b></td> 
 					</tr>
@@ -84,7 +93,7 @@
                       <td>CTPS:</td>
 					  <td>
 					    @if(!empty($processos2[0]->arquivo_ctps1))
-						<a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps1)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+						<a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/')}}//{{($processos2[0]->arquivo_ctps1)}}"> <i class="fas fa-file-alt"></i></a></center></th>
 						@endif
 					  </td>
                     </tr>
@@ -113,7 +122,7 @@
                       <td>CTPS:</td>
 					  <td>
 					   @if(!empty($processos2[0]->arquivo_ctps2))
-					    <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					    <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/')}}//{{($processos2[0]->arquivo_ctps2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
 					   @endif
 					  </td>
                     </tr>
@@ -143,7 +152,7 @@
                       <td>CTPS:</td>
 					  <td>
 					    @if(!empty($processos2[0]->arquivo_ctps3))
-					     <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/ctps1')}}/{{($processos[0]->nome)}}/{{($processos2[0]->arquivo_ctps3)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+					     <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/')}}/{{($processos2[0]->arquivo_ctps2)}}"> <i class="fas fa-file-alt"></i></a></center></th>
 						@endif
 					  </td>
                     </tr>
@@ -155,6 +164,31 @@
                       <td>Data Fim:</td>
 					  <td>{{ $processos2[0]->exp_03_data_fim }}</td>
                     </tr>
+					@endif
+					@if(!empty($processos2[0]->deficiencia))
+					@if($processos2[0]->deficiencia != "0" || $processos2[0]->deficiencia != "nao")
+					<tr>
+                      <td colspan="2"><b>Pessoa Com Deficiência:</b></td>
+				    </tr>
+					<tr>
+                      <td>TIPO DE PCD:</td>
+					  <td>{{ $processos2[0]->deficiencia }}</td>
+                    </tr>
+					<tr>
+                      <td>CID:</td>
+					  <?php if(!empty($processos2[0]->cid)) { ?>
+					  <td>{{ $processos2[0]->cid }}</td>
+					  <?php } ?>
+                    </tr>
+					<tr>
+                      <td>Arquivo:</td>
+					  <td>
+					    @if(!empty($processos2[0]->nomearquivo))
+					     <a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/')}}//{{($processos2[0]->arquivo_ctps3)}}"> <i class="fas fa-file-alt"></i></a></center></th>
+						@endif
+					  </td>
+                    </tr>
+					@endif
 					@endif
 					<tr>
 					<td>&nbsp;</td>

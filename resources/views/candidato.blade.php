@@ -79,7 +79,7 @@
 									<td style="width: 240px;" title="Hospital da Mulher do Recife"><center>{{ 'HMR' }}</center></td>
 									@elseif($processo->unidade_id == 1)
                                     <td style="width: 240px;" title="Hospital do Câncer do Recife"><center>{{ 'HCP' }}</center></td>
-                                    @elseif($processo->unidade_id == 11)
+                                    @elseif($processo->unidade_id == 9)
                                     <td style="width: 240px;" title="UPA Igarassu"><center>{{ 'UPA IGARASSU' }}</center></td>
 									@endif
 									<td style="width: 170px;" title=""><center>{{date('d-m-Y', (strtotime($processo->inscricao_fim)))}}</center></td>
@@ -110,18 +110,23 @@
 							</header>
 							<table class="table table-responsive table-border" border="1"> 
 							<tr>
-							@foreach($unidades as $unidade)
-    							 @if($unidade->id == 2)
-    							   <td width="300px">
-    								 <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm"  width="70px"></a>
-    							   </td>
-    							 @else
-    							   <td width="300px">
-    								 <a href="" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm"  width="70px" style="opacity: 20%;"></a>
-    							   </td>
-    							 @endif
-						    @endforeach
-						   </tr>
+							<td>
+							  @foreach($unidades as $unidade)
+							   <?php for($a = 0; $a < $qtdP; $a++) { ?>
+							  	@if($processos2[$a]->id == $unidade->id)	
+    								<a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px"></a>
+    							   &nbsp;&nbsp;&nbsp;&nbsp;
+								   @break
+								@else
+								    <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px" style="opacity: 50%"></a>
+    							   &nbsp;&nbsp;&nbsp;&nbsp;
+								   @break   
+    							@endif
+								
+							   <?php } ?>
+							  @endforeach
+						   </td>
+							</tr>
 						  </table>
 						</div>
 					</section>
