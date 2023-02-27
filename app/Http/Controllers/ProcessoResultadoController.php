@@ -71,9 +71,70 @@ class ProcessoResultadoController extends Controller
 		$processos  = ProcessoSeletivo::where('id', $id)->get();
 		$nome 		= $processos[0]->nome;
 		$processos2 = DB::table('processo_seletivo_'.$nome)->where('id',$id_candidato)->get();
-		$idP  = $id;
-		$candidato = $id_candidato;
-		return view('informacoes', compact('candidato','processos','processos2','idP'));
+		$idP  		= $id;
+		$candidato  = $id_candidato;
+		$hoje 		= date('Y-m-d', strtotime('2023-01-29'));
+		$tableExists = DB::table('processo_seletivo')->where('created_at','>',$hoje)->get();
+		$qtdResp 	= sizeof($tableExists);
+		if($qtdResp > 0) {
+		    $qst = DB::table('questionario_'.$nome)->where('candidato_id',$id_candidato)->get();
+		    $qtdResp = sizeof($qst);
+		}
+		return view('informacoes', compact('candidato','processos','processos2','idP','qtdResp'));
+	}
+
+	public function ranking($id)
+	{
+		$processos  = ProcessoSeletivo::where('id', $id)->get();
+		$nome 		= $processos[0]->nome;
+		$processos2 = DB::table('processo_seletivo_'.$nome)->orderby('nome', 'ASC')->get();
+		$qtd        = sizeof($processos2);
+		for($a = 0; $a < $qtd; $a++) {
+			
+			$data_i  = date('Y-m-d', strtotime($processos2[$a]->exp_01_data_ini));
+			$data_f  = date('Y-m-d', strtotime($processos2[$a]->exp_01_data_fim));
+			$data1   = new \DateTime($data_i);
+			$data2   = new \DateTime($data_f);
+			$intervalo = $data1->diff($data2);
+			$a1      = $intervalo->format('%a'); 
+			$data_i2 = date('Y-m-d', strtotime($processos2[$a]->exp_02_data_ini));
+			$data_f2 = date('Y-m-d', strtotime($processos2[$a]->exp_02_data_fim));
+			$data3   = new \DateTime($data_i2);
+			$data4   = new \DateTime($data_f2);
+			$intervalo = $data3->diff($data4);
+			$a2      = $intervalo->format('%a');
+			$data_i3 = date('Y-m-d', strtotime($processos2[$a]->exp_03_data_ini));
+			$data_f3 = date('Y-m-d', strtotime($processos2[$a]->exp_03_data_fim));
+			$data5   = new \DateTime($data_i3);
+			$data6   = new \DateTime($data_f3);
+			$intervalo = $data5->diff($data6);
+			$a3      = $intervalo->format('%a');
+			$soma    = $a1 + $a2 + $a3;
+			$somaT   = ($soma / 30) * 0.083;		
+
+			$candidatos[$a] = array(
+				'soma' => $somaT,
+				'id'   => $processos2[$a]->id,
+				'nome' => $processos2[$a]->nome,
+				'cpf'  => $processos2[$a]->cpf,
+				'emp1' => $processos2[$a]->exp_01_empresa,
+				'crg1' => $processos2[$a]->exp_01_cargo,
+				'dtI1' => $processos2[$a]->exp_01_data_ini,
+				'dtF1' => $processos2[$a]->exp_01_data_fim,
+				'emp2' => $processos2[$a]->exp_02_empresa,
+				'crg2' => $processos2[$a]->exp_02_cargo,
+				'dtI2' => $processos2[$a]->exp_02_data_ini,
+				'dtF2' => $processos2[$a]->exp_02_data_fim,
+				'emp3' => $processos2[$a]->exp_03_empresa,
+				'crg3' => $processos2[$a]->exp_03_cargo,
+				'dtI3' => $processos2[$a]->exp_03_data_ini,
+				'dtF3' => $processos2[$a]->exp_03_data_fim,
+				'a1'   => $a1,
+				'a2'   => $a2,
+				'a3'   => $a3
+			);
+		}
+		return view('ranking', compact('processos','processos2','candidatos'));
 	}
 	
 	// Página Cadastro de Resultados //

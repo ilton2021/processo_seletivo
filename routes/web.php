@@ -10,6 +10,7 @@ Auth::routes();
 Route::get('/', 'CandidatoController@candidatoIndex')->name('candidatoIndex');
 Route::get('areaCandidato', 'CandidatoController@areaCandidato')->name('areaCandidato');
 Route::post('areaCandidato', 'CandidatoController@loginCandidato')->name('loginCandidato');
+
 Route::get('areaCandidato/alterar', 'CandidatoController@areaCandidatoAlterar')->name('areaCandidatoAlterar');
 Route::post('areaCandidato/alterar/{id}', 'CandidatoController@updateAreaCandidatoAlterar')->name('updateAreaCandidatoAlterar');
 Route::get('informativo/{id}/{id_p}', 'CandidatoController@informativo')->name('informativo'); 
@@ -22,6 +23,9 @@ Route::get('/candidato/resultados_listas/{id}/{id_escolha}/{nome}', 'CandidatoCo
 Route::post('/candidato/resultados_listas/{id}/{id_escolha}/{nome}/', 'CandidatoController@pesquisarCandidatoResultado')->name('pesquisarCandidatoResultado');
 Route::get('/candidato/cadastroCandidato/{id}/{id_processo}', 'CandidatoController@cadastroCandidato')->name('cadastroCandidato');
 Route::post('/candidato/cadastroCandidato/{id}/{id_processo}', 'CandidatoController@validarCandidato')->name('validarCandidato');
+
+Route::get('/candidato/cadastroCandidato/{id}/{id_processo}/{id_c}/questionario','PerguntasController@questionario')->name('questionario');
+Route::post('/candidato/cadastroCandidato/{id}/{id_processo}/{id_c}/questionario','PerguntasController@storeQuestionario')->name('storeQuestionario');
 Route::post('/candidato/cadastroCandidato/{id}/{id_processo}/validar/{a}', 'CandidatoController@validar')->name('validar');
 
 Route::get('/cadastro/avaliacaoL/{id}/{id_c}','ProcessoCandidatoController@avaliacaoGestorLideranca')->name('avaliacaoGestorLideranca');
@@ -88,10 +92,12 @@ Route::middleware(['auth'])->group( function() {
 		//ResultadosProcessos
 		Route::get('/resultado_processos/{id}/cadastro','ProcessoResultadoController@cadastrarResultados')->name('cadastrarResultados');
 		Route::get('/resultado_processos/{id}/informacoes/{id_cand}','ProcessoResultadoController@informacoes')->name('informacoes');
+		Route::get('/resultado_processos/{id}/informacoes/{id_cand}/questionarioVisualizar','PerguntasController@questionarioVisualizar')->name('questionarioVisualizar');
 		Route::get('/resultado_processos/{id}/cadastro/resultadoA/{id_candidato}/', 'ProcessoResultadoController@resultadoProcessosA')->name('resultadoProcessosA');
 		Route::post('/resultado_processos/{id}/cadastro/resultadoA/{id_candidato}/storeAvaliacaoA', 'ProcessoResultadoController@storeAvaliacaoA')->name('storeAvaliacaoA');
 		Route::post('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
 		Route::get('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
+		Route::get('/resultado_processos/{id}/cadastro/ranking', 'ProcessoResultadoController@ranking')->name('ranking');
 		Route::get('/resultado_processos/{id}/cadastro/exportCandidatos/{nome}', 'ProcessoResultadoController@exportCandidatos')->name('exportCandidatos');
 		Route::get('/resultado_processos/exibirResultados', 'ProcessoResultadoController@exibirResultados')->name('exibirResultados');
 		
@@ -112,6 +118,16 @@ Route::middleware(['auth'])->group( function() {
 		Route::post('/quadroAvisos/cadastro/alterar/{id}','QuadroAvisosController@updateQuadroAvisos')->name('updateQuadroAvisos');
 		Route::get('/quadroAvisos/cadastro/excluir/{id}','QuadroAvisosController@quadroAvisosExcluir')->name('quadroAvisosExcluir');
 		Route::post('/quadroAvisos/cadastro/excluir/{id}','QuadroAvisosController@deleteQuadroAvisos')->name('deleteQuadroAvisos');
+		////
+
+		//Perguntas
+		Route::get('/perguntas/cadastro','PerguntasController@cadastroPerguntas')->name('cadastroPerguntas');
+		Route::get('/perguntas/cadastro/novo','PerguntasController@perguntasNovo')->name('perguntasNovo');
+		Route::post('/perguntas/cadastro/novo','PerguntasController@storePerguntas')->name('storePerguntas');
+		Route::get('/perguntas/cadastro/alterar/{id}','PerguntasController@perguntasAlterar')->name('perguntasAlterar');
+		Route::post('/perguntas/cadastro/alterar/{id}','PerguntasController@updatePerguntas')->name('updatePerguntas');
+		Route::get('/perguntas/cadastro/excluir/{id}','PerguntasController@perguntasExcluir')->name('perguntasExcluir');
+		Route::post('/perguntas/cadastro/excluir/{id}','PerguntasController@destroyPerguntas')->name('destroyPerguntas');
 		////
 	});
 });

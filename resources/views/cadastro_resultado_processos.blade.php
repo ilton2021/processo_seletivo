@@ -82,8 +82,8 @@
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<thead>
 								<tr>
-									<td style="width: 600px">
-										<input style="width: 560px;margin-top:10px;margin-left:10px;font-family:arial black;" type="text" id="pesq" name="pesq" class="form-control" placeholder="Digite aqui..." />
+									<td style="width: 500px">
+										<input style="width: 500px;margin-top:10px;margin-left:10px;font-family:arial black;" type="text" id="pesq" name="pesq" class="form-control" placeholder="Digite aqui..." />
 									</td>
 									<td>
 										<select style="margin-top:10px;font-family:arial black;" class="form-control" id="tipo" name="tipo">
@@ -94,11 +94,14 @@
 									<td>
 										<input type="submit" style="margin-top: 15px;background-color:#1d68a7;" class="btn btn-info btn-sm" value="Pesquisar" id="Pesquisar" name="Pesquisar" />
 									</td>
-									<td align="right" colspan="0" border="0">
-										<a href="{{route('pesquisaAvaliacao')}}" id="Voltar" name="Voltar" type="button" style="margin-top: 15px; color: #FFFFFF; background-color:#e06500;" class="btn btn-warning btn-sm"> Voltar <i class="fas fa-undo-alt"></i> </a>
-									</td>
 									<td>
 										<a class="text-success" style="margin-left:5px;" href="{{route('exportCandidatos', array($pseletivo[0]->id, $pseletivo[0]->nome))}}" title="Download"><img src="{{asset('img/csv.png')}}" alt="" width="60"></a>
+									</td>
+									<td>
+									    <a class="btn btn-info btn-sm" title="Ranking" style="color: #FFFFFF;margin-top:10px;font-size: 25px;" href="{{ route('ranking', $pseletivo[0]->id) }}"> <i class="fas fa-list-ol"></i></a>
+									</td>
+									<td align="right" colspan="0" border="0">
+										<a href="{{route('pesquisaAvaliacao')}}" id="Voltar" name="Voltar" type="button" style="margin-top: 15px; color: #FFFFFF; background-color:#e06500;" class="btn btn-warning btn-sm"> Voltar <i class="fas fa-undo-alt"></i> </a>
 									</td>
 								</tr>
 							</thead>
@@ -138,7 +141,7 @@
 								<th>
 									<center>
 										@if($pseletivo[0]->origem == 1)
-										<a class="btn btn-info btn-sm" style="color: #FFFFFF;" target="_blank" href="{{asset('storage/candidato/curriculo')}}/{{($pseletivo[0]->nome)}}/{{($proc->nomearquivo2)}}"> <i class="fas fa-file"></i></a>
+										<a class="btn btn-info btn-sm" style="color: #FFFFFF;margin-top:10px;font-size: 25px;" target="_blank" href="{{asset('storage/candidato/curriculo')}}/{{($pseletivo[0]->nome)}}/{{($proc->nomearquivo2)}}"> <i class="fas fa-file"></i></a>
 									</center>
 								</th>
 								@else
