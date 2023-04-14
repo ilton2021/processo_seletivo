@@ -80,7 +80,7 @@
 				  <a style="margin-left: 30px;" href="javascript:history.back();" id="Voltar" name="Voltar" type="button" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a>
 				</td>
 				<td align="right">
-			   	  <form method="get" action="{{ route('cadastroCandidato', array($processos[0]->unidade_id, $processos[0]->id)) }}">	
+			   	  <form method="get" action="{{ route('cadastroVagaCandidato', array($processos[0]->unidade_id, $processos[0]->id)) }}">	
 					<button style="margin-right: 30px;" id="div" href="" class='btn btn-success btn-sm' target="_blank">INSCRIÇÃO</button> 	
 				  </form>
 				</td>

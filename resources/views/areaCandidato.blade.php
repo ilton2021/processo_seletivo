@@ -28,7 +28,8 @@
                   </div>
                    <form class="user" method="POST" action="{{ route('loginCandidato') }}">
 				            @csrf
-                      <select id="processo_seletivo" name="processo_seletivo" class="form-control form-control-user">
+                      <select id="processo_seletivo" name="processo_seletivo" class="form-control form-control-user" required>
+                      <option value="">Selecione..</option>
                         @foreach($processos as $processo)
                           <option id="processo_seletivo" name="processo_seletivo" value="<?php echo $processo->nome; ?>">{{ $processo->nome }}</option>
                         @endforeach

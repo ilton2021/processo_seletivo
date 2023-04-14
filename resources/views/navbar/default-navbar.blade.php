@@ -35,7 +35,7 @@
             <a class="dropdown-item" href="{{ route('cadastroUnidade') }}">Unidade</a>
             <a class="dropdown-item" href="{{ route('cadastroProcesso') }}">Processo Seletivo</a>
             <a class="dropdown-item" href="{{ route('cadastroQuadroAvisos') }}">Quadro de Avisos</a>
-            <!--a class="dropdown-item" href="{{ route('cadastroPerguntas') }}">Perguntas</a-->
+            <a class="dropdown-item" href="{{ route('cadastroPerguntas') }}">Perguntas</a>
           </div>
         </li>
         <li class="nav-item dropdown">

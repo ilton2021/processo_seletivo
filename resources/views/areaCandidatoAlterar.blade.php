@@ -150,8 +150,12 @@
 			var x = document.getElementById('parentesco').value;
 			if(x == "sim") {
 				document.getElementById('parentesco_nome').disabled = false;
+				document.getElementById('grau_parentesco').disabled = false;
+				document.getElementById('grau_parentesco_nome').disabled = false;
 			} else {
 				document.getElementById('parentesco_nome').disabled = true;
+				document.getElementById('grau_parentesco').disabled = true;
+				document.getElementById('grau_parentesco_nome').disabled = true;
 			}
 		}
 
@@ -180,7 +184,7 @@
 								<td>
 								 <div style="text-align:center; opacity:75%;border-radius: 25px; color: white;margin-top:-45px;height: 160px;background-color: #57D211;  margin-bottom: -25px; Font-family: Cambria, Georgia, serif."class="jumbotron jumbotron-fluid">
 									<div class="container">
-										<h5 class="display-8"><p style="align: center"><br><b>INSCRIÇÃO </p> <p style="align: center">  PROCESSO SELETIVO: {{ $processos[0]->nome }}</b> <br><img id="hcp" width="120px;" style="margin-top: 5px;" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></p></td></h5>
+										<h5 class="display-8"><p style="align: center"><br><b>INSCRIÇÃO </p> <p style="align: center">  PROCESSO SELETIVO: {{ $processo[0]->nome }}</b> <br><img id="hcp" width="120px;" style="margin-top: 5px;" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></p></td></h5>
 									</div>
 								 </div>	
 								</td>
@@ -195,9 +199,8 @@
 			  <br><br>
 			  <table class="table table-borderless" border="0" width="500" id="inicio">
 				<tr>
-				  <td align="center"><strong> Olá! Seja bem vindo ao processo seletivo simplificado {{ $processos[0]->nome }}. </strong></td>
+				  <td align="center"><strong> Olá! Seja bem vindo ao processo seletivo simplificado {{ $processo[0]->nome }}. </strong></td>
 				  <td>
-					
 					<a href="javascript:history.back();" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a>
 				  </td>
 				</tr>
@@ -226,10 +229,10 @@
 			  </div>
 		 	  @endif 
 		      </div>
-			  <?php $c = str_replace(' ','',$processos[0]->nome); ?>
+			  <?php $c = str_replace(' ','',$processo[0]->nome); ?>
 			  <br><br>
 
-			  <form method="POST" action="{{ route('updateAreaCandidatoAlterar', $processos[0]->id) }}" enctype="multipart/form-data">
+			  <form method="POST" action="{{ route('updateAreaCandidatoAlterar', $processo[0]->id) }}" enctype="multipart/form-data">
 			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 
@@ -251,7 +254,7 @@
 					<a class="nav-link" data-toggle="pill" href="#tabs5" role="tab" aria-selected="false">EXPERIÊNCIAS</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" data-toggle="pill" href="#tabs6" role="tab" aria-selected="false">CURRÍCULO</a>
+					<a class="nav-link" data-toggle="pill" href="#tabs6" role="tab" aria-selected="false">DISPONIBILIDADE</a>
 				</li>
 			   </ul>
 			  
@@ -284,7 +287,7 @@
 						 <?php } ?>
 					   </div>
 					   <div class="col">
-					    <label for="inputState" class="form-label"><b><font size="2">Você foi indicado por algum parente ou amigo para esta vaga? (*)</font></b></label>
+					    <label for="inputState" class="form-label"><b><font size="2">Você tem algum parente que trabalhe em alguma unidade gerida pelo HCP Gestão?</font></b></label>
 						 <select id="parentesco" name="parentesco" class="form-select form-select-sm" onchange="habilitaParente('sim')">
 						 	<option value="">Selecione...</option>  
 							 <?php if($user[0]->parentesco == "sim") { ?><option value="sim" selected>Sim</option><?php } else { ?> <option value="sim">Sim</option><?php } ?>
@@ -292,10 +295,19 @@
 							 <?php if($user[0]->parentesco == "nao_responder") { ?><option value="nao_responder" selected>Prefiro não responder</option><?php } else { ?> <option value="nao_responder">Prefiro não responder</option><?php } ?>
 						 </select>
 						 <?php if($user[0]->parentesco == "sim") { ?>
-						  <input class="form-control form-control-sm" type="text" id="parentesco_nome" name="parentesco_nome" value="<?php echo $user[0]->parentesco_nome; ?>" required maxlength="50" />
+							<select class="form-select form-select-sm" id="parentesco_nome" name="parentesco_nome" required> 
 						 <?php } else { ?>
-						  <input class="form-control form-control-sm" disabled type="text" id="parentesco_nome" name="parentesco_nome" value="{{ old('parentesco_nome') }}" required maxlength="50" />
+							<select disabled class="form-select form-select-sm" id="parentesco_nome" name="parentesco_nome" required> 
 						 <?php } ?>
+						 <option value="">Selecione...</option>
+						   @foreach($unidades as $unidade)
+						    <?php if($unidade->id == $user[0]->parentesco_nome) {  ?>
+							 <option value="<?php echo $unidade->id; ?>" selected>{{ $unidade->nome }}</option>
+							<?php } else { ?>
+							 <option value="<?php echo $unidade->id; ?>">{{ $unidade->nome }}</option>
+							<?php } ?>
+						   @endforeach
+						  </select>
 					   </div>
 					  </div>
 					  <div class="row">
@@ -323,6 +335,34 @@
 						  </select>
 					   </div>
 					   <div class="col"> 
+					   <label for="inputState" class="form-label"><b><font size="2">Grau de Parentesco? (*)</font></b></label>
+					      <?php if($user[0]->parentesco == "sim") { ?>
+					   	   <select class="form-select form-select-sm" id="grau_parentesco" name="grau_parentesco" onchange="habilitaParente('sim')">
+						 	<option value="">Selecione...</option>
+							 <?php if($user[0]->grau_parentesco=="irmao") { ?><option value="irmao" selected>Irmã(o)</option><?php } else { ?><option value="irmao">Irmã(o)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="primo") { ?><option value="primo" selected>Primo(a)</option><?php } else { ?><option value="primo">Primo(a)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="mae") { ?><option value="mae" selected>Mãe</option><?php } else { ?><option value="mae">Mãe</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="pai") { ?><option value="pai" selected>Pai</option><?php } else { ?><option value="pai">Pai</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="cunhado") { ?><option value="cunhado" selected>Cunhado(a)</option><?php } else { ?><option value="cunhado">Cunhado(a)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="sogro") { ?><option value="sogro" selected>Sogro(a)</option><?php } else { ?><option value="sogro">Sogro(a)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="tio") { ?><option value="tio" selected>Tio(a)</option><?php } else { ?><option value="tio">Tio(a)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="conjugue") { ?><option value="conjugue" selected>Conjuguê</option><?php } else { ?><option value="conjugue">Conjuguê</option><?php } ?>
+						 </select>
+						 <input class="form-control form-control-sm" type="text" id="grau_parentesco_nome" name="grau_parentesco_nome" value="<?php echo $user[0]->grau_parentesco_nome; ?>" maxlength="100" />
+						 <?php } else { ?>
+						  <select disabled class="form-select form-select-sm" id="grau_parentesco" name="grau_parentesco" onchange="habilitaParente('sim')">
+						 	<option value="">Selecione...</option>
+							 <?php if($user[0]->grau_parentesco=="irmao") { ?><option value="irmao" selected>Irmã(o)</option><?php } else { ?><option value="irmao">Irmã(o)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="primo") { ?><option value="primo" selected>Primo(a)</option><?php } else { ?><option value="primo">Primo(a)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="mae") { ?><option value="mae" selected>Mãe</option><?php } else { ?><option value="mae">Mãe</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="pai") { ?><option value="pai" selected>Pai</option><?php } else { ?><option value="pai">Pai</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="cunhado") { ?><option value="cunhado" selected>Cunhado(a)</option><?php } else { ?><option value="cunhado">Cunhado(a)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="sogro") { ?><option value="sogro" selected>Sogro(a)</option><?php } else { ?><option value="sogro">Sogro(a)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="tio") { ?><option value="tio" selected>Tio(a)</option><?php } else { ?><option value="tio">Tio(a)</option><?php } ?>
+							 <?php if($user[0]->grau_parentesco=="conjugue") { ?><option value="conjugue" selected>Conjuguê</option><?php } else { ?><option value="conjugue">Conjuguê</option><?php } ?>
+						  </select>
+						 <input disabled class="form-control form-control-sm" type="text" id="grau_parentesco_nome" name="grau_parentesco_nome" value="<?php echo $user[0]->grau_parentesco_nome; ?>" maxlength="100" />		
+						 <?php } ?>
 					   </div>
 					  </div>
 				     </div>
@@ -417,7 +457,6 @@
 						<div class="col"> 
 						 <label for="inputState" class="form-label"><b><font size="2">Selecione a VAGA: (*)</font></b></label>
 						 <select class="form-select form-select-sm" id="vaga" name="vaga" required>
-							<option value="">Selecione...</option>	
 						    @if(!empty($vagas))
 								@foreach($vagas as $vaga)
 								 <?php if($user[0]->vaga == $vaga->nome) { ?>
@@ -482,7 +521,6 @@
 		  	     </div>
 				</div>
 
-				<br>
 			    <div class="tab-pane fade" id="tabs3">
 				 <div class="modal-content">
 				  <div class="modal-content">
@@ -725,16 +763,18 @@
 						 <?php } ?>
 						 <font size="2">Restam: <span class="caracteres">300 </span> caracteres.</font><br>
 					   </div>
+					  </div>
+					  @if($vagasExp)
+					  <div class="row">
 					   <div class="col"> 
-						<label for="inputState" class="form-label"><b><font size="2">CTPS Ou Contra Cheque (.doc, .docx e .pdf)</font></b></label>
-						 <?php if($user[0]->arquivo_ctps1 != "") { ?>
-						  <input readonly class="form-control form-control-sm" type="text" id="arquivo_ctps1_" name="arquivo_ctps1_" value="<?php echo $user[0]->arquivo_ctps1; ?>" maxlength="600"> 
-						  <input class="form-control form-control-sm" type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600"> 
-						 <?php } else { ?>
-						  <input class="form-control form-control-sm" disabled type="file" id="arquivo_ctps1" name="arquivo_ctps1" value="" maxlength="600"> 
-						 <?php } ?>
+					    <label for="inputState" class="form-label"><b><font size="2">Nesta Experiência você obteve alguma dessas competências:</font></b></label> <br>
+						 @foreach($vagasExp as $vagaExp)
+						   <input type='checkbox' class="vaga_exp1" id="vaga_exp1[]" name="vaga_exp1[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						 @endforeach
+						<input type='checkbox' class="vaga_exp1" id="vaga_exp1[]" name="vaga_exp1[]" value="0" /> Nenhuma Competência &nbsp;</input>
 					   </div>
 					  </div>
+					  @endif
 					  <div class="row">
 					   <div class="col">
 					     <center><strong><font size="2" color="red">ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</font></strong></center>
@@ -796,16 +836,18 @@
 						 <?php } ?>
 						 <font size="2">Restam: <span class="caracteres">300 </span> caracteres.</font><br>
 					   </div> 
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"><b>CTPS Ou Contra Cheque (.doc, .docx e .pdf)</b></font></label>
-						 <?php if($user[0]->arquivo_ctps2 != "") { ?>
-						  <input class="form-control form-control-sm" type="text" readonly id="arquivo_ctps2_" name="arquivo_ctps2_" value="<?php echo $user[0]->arquivo_ctps2; ?>" maxlength="600"> 
-						  <input class="form-control form-control-sm" type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
-						 <?php } else { ?>
-						  <input class="form-control form-control-sm" disabled type="file" id="arquivo_ctps2" name="arquivo_ctps2" value="" maxlength="600"> 
-						 <?php } ?>
-					   </div> 
 					  </div>
+					  @if($vagasExp)
+					  <div class="row">
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Nesta Experiência você obteve alguma dessas competências:</font></b></label> <br>
+						 @foreach($vagasExp as $vagaExp)
+						   <input type='checkbox' class="vaga_exp2" id="vaga_exp2[]" name="vaga_exp2[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						 @endforeach
+						<input type='checkbox' class="vaga_exp2" id="vaga_exp2[]" name="vaga_exp2[]" value="0" /> Nenhuma Competência &nbsp;</input>
+					   </div>
+					  </div>
+					  @endif
 					  <div class="row">
 					  	<div class="col">
 					     <center><strong><font size="2" color="red">ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</font></strong></center>
@@ -867,16 +909,18 @@
 						 <?php } ?>
 						 <font size="2"> Restam: <span class="caracteres">300 </span> caracteres. </font><br>
 					   </div> 
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"> <b>CTPS Ou Contra Cheque (.doc, .docx e .pdf)</b></font></label>
-						 <?php if($user[0]->arquivo_ctps3 != "") { ?>
-						  <input class="form-control form-control-sm" type="text" readonly id="arquivo_ctps3_" name="arquivo_ctps3_" value="<?php echo $user[0]->arquivo_ctps3; ?>" maxlength="600"> 
-						  <input class="form-control form-control-sm" type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
-						 <?php } else { ?>
-						  <input class="form-control form-control-sm" disabled type="file" id="arquivo_ctps3" name="arquivo_ctps3" value="" maxlength="600"> 
-						 <?php } ?>
-					   </div> 
 					  </div>
+					  @if($vagasExp)
+					  <div class="row">
+					   <div class="col"> 
+					    <label for="inputState" class="form-label"><b><font size="2">Nesta Experiência você obteve alguma dessas competências:</font></b></label> <br>
+						 @foreach($vagasExp as $vagaExp)
+						   <input type='checkbox' class="vaga_exp3" id="vaga_exp3[]" name="vaga_exp3[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						 @endforeach
+						<input type='checkbox' class="vaga_exp3" id="vaga_exp3[]" name="vaga_exp3[]" value="0" /> Nenhuma Competência &nbsp;</input>
+					   </div>
+					  </div>
+					  @endif
 					  <div class="row">
 					  	<div class="col">
 					     <center><strong><font size="2" color="red">ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</font></strong></center>
@@ -891,39 +935,24 @@
 				 <div class="modal-content">
 				  <div class="modal-content">
 				    <div class="modal-header">
-					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>CURRÍCULO: (*campo obrigatório)</b></h6></center>
-				    </div>
-					<div class="modal-body" style="background-color: white;">
-					  <div class="row">
-					   <div class="col">
-					    <label for="inputState" class="form-label"><b>Currículo:</b><font size="2" color="red"> <b>(Os arquivos permitidos são: .doc, .docx e .pdf)</b></font> <b>(*)</b></label>
-						<input class="form-control form-control-sm" type="text" readonly id="arquivo_" name="arquivo_" value="<?php echo $user[0]->nomearquivo2; ?>" required maxlength="200" />
-						<input class="form-control form-control-sm" type="file" id="arquivo" name="arquivo" maxlength="200" />
-					   </div>
-					   <div class="col">
-					    <label for="inputState" class="form-label"><b>Foto: </b><font size="2" color="red"> <b>(Foto 3x4)</b></font> <b>(*)</b></label>
-						<input class="form-control form-control-sm" type="text" readonly id="foto_" name="foto_" required maxlength="200" value="<?php echo $user[0]->foto; ?>" />
-						<input class="form-control form-control-sm" type="file" id="foto" name="foto" maxlength="200" value="{{ old('foto') }}" />
-					   </div>
-					  </div>
-					</div>
-				  </div>
-				 </div>
-				 <br>
-				 <div class="modal-content">
-				  <div class="modal-content">
-				    <div class="modal-header">
 					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>DISPONIBILIDADE: (*campos obrigatórios)</b></h6></center>
 				    </div>
 				 	<div class="modal-body" style="background-color: white;">
 					  <div class="row">
 					   <div class="col">
-					    <label for="inputState" class="form-label"><font size="2"> <b>POSSUI HABILITAÇÃO: (*)</b></font></label>
-						  <select class="form-select form-select-sm" id="habilitacao" name="habilitacao" required>
+					    <label for="inputState" class="form-label"><font size="2"> <b>POSSUI REGISTRO PROFISSIONAL:</b></font></label>
+						<select class="form-select form-select-sm" id="habilitacao" name="habilitacao">
 						    <option value="">Selecione...</option> 
-							<?php if($user[0]->habilitacao == "nao") { ?><option value="nao" selected>Não</option><?php } else { ?><option value="nao">Não</option><?php } ?>
-							<?php if($user[0]->habilitacao == "sim") { ?><option value="sim" selected>Sim</option><?php } else { ?><option value="sim">Sim</option><?php } ?>
-						  </select>						  
+							<?php if($user[0]->habilitacao=="crm") { ?><option value="crm" selected>CRM</option><?php } else { ?><option value="crm">CRM</option><?php } ?>
+							<?php if($user[0]->habilitacao=="crefito") { ?><option value="crefito" selected>CREFITO</option><?php } else { ?><option value="crefito">CREFITO</option><?php } ?>
+							<?php if($user[0]->habilitacao=="crc") { ?><option value="crc" selected>CRC</option><?php } else { ?><option value="crc">CRC</option><?php } ?>
+							<?php if($user[0]->habilitacao=="corem") { ?><option value="corem" selected>COREM</option><?php } else { ?><option value="corem">COREM</option><?php } ?>
+							<?php if($user[0]->habilitacao=="crp") { ?><option value="crp" selected>CRP</option><?php } else { ?><option value="crp">CRP</option><?php } ?>
+							<?php if($user[0]->habilitacao=="crn") { ?><option value="crn" selected>CRN</option><?php } else { ?><option value="crn">CRN</option><?php } ?>
+							<?php if($user[0]->habilitacao=="crf") { ?><option value="crf" selected>CRF</option><?php } else { ?><option value="crf">CRF</option><?php } ?>
+							<?php if($user[0]->habilitacao=="cress") { ?><option value="cress" selected>CRESS</option><?php } else { ?><option value="cress">CRESS</option><?php } ?>
+							<?php if($user[0]->habilitacao=="crea") { ?><option value="crea" selected>CREA</option><?php } else { ?><option value="crea">CREA</option><?php } ?>
+						  </select>					  
 					   </div>
 					   <div class="col">
 					    <label for="inputState" class="form-label"><font size="2"><b>DISPONIBILIDADE PARA QUAL PERÍODO: (*)</b></font></label>

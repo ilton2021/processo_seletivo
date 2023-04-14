@@ -20,14 +20,14 @@ class QuadroAvisosController extends Controller
         ->join('processo_seletivo','processo_seletivo.id','=','quadro_avisos.processo_seletivo_id')
         ->select('quadro_avisos.*','processo_seletivo.nome as processo')->get();
         $processos = ProcessoSeletivo::all();
-        return view('cadastro_quadro_avisos', compact('quadros','processos'));
+        return view('quadro_avisos/cadastro_quadro_avisos', compact('quadros','processos'));
     }
 
     //Tela de Cadastro de Novo Aviso
     public function quadroAvisosNovo()
     {
         $processos = ProcessoSeletivo::all();
-        return view('cadastro_quadro_avisos_novo', compact('processos'));
+        return view('quadro_avisos/cadastro_quadro_avisos_novo', compact('processos'));
     }
 
     //Método para Cadastrar um Novo Aviso
@@ -39,7 +39,7 @@ class QuadroAvisosController extends Controller
         $processos = ProcessoSeletivo::all();
 		if($request->file('arquivo') === NULL) {	
 			$validator = 'Informe o arquivo do Quadro de Aviso!';
-			return view('cadastro_quadro_avisos_novo', compact('processos'))
+			return view('quadro_avisos/cadastro_quadro_avisos_novo', compact('processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
 		} else {
@@ -49,7 +49,7 @@ class QuadroAvisosController extends Controller
 					'processo_seletivo_id' => 'required'
 				]);
 				if ($validator->fails()) {
-					return view('cadastro_quadro_avisos_novo', compact('processos'))
+					return view('quadro_avisos/cadastro_quadro_avisos_novo', compact('processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
 				} else { 										
@@ -64,14 +64,14 @@ class QuadroAvisosController extends Controller
                     ->select('quadro_avisos.*','processo_seletivo.nome as processo')->get();
                     $processos = ProcessoSeletivo::all();
                     $validator = "Aviso cadastrado com sucesso!!";
-                    return view('cadastro_quadro_avisos', compact('processos','quadros'))
+                    return view('quadro_avisos/cadastro_quadro_avisos', compact('processos','quadros'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
 
                 }
             } else {
                 $validator = 'o Arquivo tem que ser do formato .pdf!';
-			    return view('cadastro_quadro_avisos_novo', compact('processos'))
+			    return view('quadro_avisos/cadastro_quadro_avisos_novo', compact('processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
             }
@@ -83,7 +83,7 @@ class QuadroAvisosController extends Controller
     {
         $quadros   = QuadroAvisos::where('id',$id)->get();
         $processos = ProcessoSeletivo::all();
-        return view('cadastro_quadro_avisos_alterar', compact('quadros','processos'));
+        return view('quadro_avisos/cadastro_quadro_avisos_alterar', compact('quadros','processos'));
     }
 
     //Método de Alteração de Aviso
@@ -96,7 +96,7 @@ class QuadroAvisosController extends Controller
 		    $extensao = pathinfo($nomeA, PATHINFO_EXTENSION); 
             if($extensao != 'pdf') {
                 $validator = "O Novo Arquivo tem que ser do formato .pdf";
-                return view('cadastro_quadro_avisos_alterar', compact('processos'))
+                return view('quadro_avisos/cadastro_quadro_avisos_alterar', compact('processos'))
                 ->withErrors($validator)
                 ->withInput(session()->flashInput($request->input()));
             } else {
@@ -120,7 +120,7 @@ class QuadroAvisosController extends Controller
         ]);
         if ($validator->fails()) {
 
-            return view('cadastro_quadro_avisos_alterar', compact('processos','quadros'))
+            return view('quadro_avisos/cadastro_quadro_avisos_alterar', compact('processos','quadros'))
                 ->withErrors($validator)
                 ->withInput(session()->flashInput($request->input()));
         } else {
@@ -134,7 +134,7 @@ class QuadroAvisosController extends Controller
               ->select('quadro_avisos.*','processo_seletivo.nome as processo')
               ->get();
             $validator = "Aviso alterado com sucesso!!";
-            return view('cadastro_quadro_avisos', compact('processos','quadros'))
+            return view('quadro_avisos/cadastro_quadro_avisos', compact('processos','quadros'))
 			    ->withErrors($validator)
 				->withInput(session()->flashInput($request->input()));
         }
@@ -145,7 +145,7 @@ class QuadroAvisosController extends Controller
     {
         $quadros = QuadroAvisos::where('id',$id)->get();
         $processos = ProcessoSeletivo::all();
-        return view('cadastro_quadro_avisos_excluir', compact('quadros','processos'));
+        return view('quadro_avisos/cadastro_quadro_avisos_excluir', compact('quadros','processos'));
     }
 
     //Método de Exclusão de Aviso
@@ -163,7 +163,7 @@ class QuadroAvisosController extends Controller
               ->select('quadro_avisos.*','processo_seletivo.nome as processo')
               ->get();
         $validator = "Aviso excluído com sucesso!!";
-        return view('cadastro_quadro_avisos', compact('processos','quadros'))
+        return view('quadro_avisos/cadastro_quadro_avisos', compact('processos','quadros'))
 			    ->withErrors($validator)
 				->withInput(session()->flashInput($request->input()));
     }

@@ -54,7 +54,6 @@
 				 </tr>
 				</table>
                 <table class="table" width="100%" cellspacing="0">
-					
 					<?php $a = 1; ?>
 					@foreach($perguntas as $pergunta)
 					<thead class="thead-dark">
@@ -66,40 +65,40 @@
 					@if($a == 1) 
 					<tr>
 					  <td>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="A"> Passividade. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="B"> Capacidade de trabalhar em equipe. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="C"> Objetividade. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="D"> Ética profissional. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="E"> Organização. </p>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="A"> Passividade. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="B"> Capacidade de trabalhar em equipe. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="C"> Objetividade. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="D"> Ética profissional. </p>
+					    <p align="justify">E) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="E"> Organização. </p>
 					  </td>
 					</tr>
 					@elseif($a == 2)
 					<tr>
 					  <td> 
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="A"> Ter lealdade profissional e honrar a própria profissão ou a instituição na qual exerce a atividade laboral. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="B"> Formar uma consciência profissional e agir em conformidade com os princípios que a função e/ou profissão define. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="C"> Manter sempre segredo profissional em relação a situações, informações e acontecimentos para os quais a atividade profissional exigir sigilo. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="D"> Seguir as normas administrativas definidas na instituição na qual trabalha para o exercício profissional. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="E"> Utilizar informações privilegiadas conseguidas na atividade laboral para obter vantagens pessoais. </p>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="A"> Ter lealdade profissional e honrar a própria profissão ou a instituição na qual exerce a atividade laboral. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="B"> Formar uma consciência profissional e agir em conformidade com os princípios que a função e/ou profissão define. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="C"> Manter sempre segredo profissional em relação a situações, informações e acontecimentos para os quais a atividade profissional exigir sigilo. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="D"> Seguir as normas administrativas definidas na instituição na qual trabalha para o exercício profissional. </p>
+					    <p align="justify">E) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="E"> Utilizar informações privilegiadas conseguidas na atividade laboral para obter vantagens pessoais. </p>
 					  </td>
 					</tr>
 					@elseif($a == 3)
 					<tr>
 					  <td>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="A"> Respeito às Normas. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="B"> Trabalho em Equipe. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="C"> Organização. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="D"> Responsabilidade. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="E"> Individualismo. </p>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="A"> Respeito às Normas. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="B"> Trabalho em Equipe. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="C"> Organização. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="D"> Responsabilidade. </p>
+					    <p align="justify">E) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="E"> Individualismo. </p>
 					  </td>
 					</tr>
 					@elseif($a == 4)
 					<tr>
 					  <td>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="A"> Se colocar no lugar das outras pessoas em qualquer situação. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="B"> Os elogios frequentes e a divisão do sucesso com todos. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="C"> Críticas a colegas na frente de outras pessoas ou responsabilizá-los na ausência. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="D"> Fazer comentários sobre a ação ou atitude de alguém em particular. </p> 
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="A"> Se colocar no lugar das outras pessoas em qualquer situação. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="B"> Os elogios frequentes e a divisão do sucesso com todos. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="C"> Críticas a colegas na frente de outras pessoas ou responsabilizá-los na ausência. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="D"> Fazer comentários sobre a ação ou atitude de alguém em particular. </p> 
 					  </td>
 					</tr>
 					@elseif($a == 5)
@@ -108,19 +107,19 @@
 					</tr>
 					<tr>
 					  <td>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="A"> Independentemente da ocupação, todos os profissionais precisam cuidar da imagem. A imagem não está ligada apenas ao visual, mas também ao comportamento do agente. </p> 
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="B"> A simpatia é um dos melhores canais de sucesso no bom atendimento. As pessoas em geral gostam de quem as tratam bem, sendo cordial, afetuoso, entusiástico, indiferente e educado. </p> 
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="C"> É importante que o profissional tenha conteúdo, saber o que dizer, possuir conhecimento, mostrar a que veio e transmiti-lo de forma natural. </p> 
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="D"> Ter uma comunicação impecável é crucial para qualquer profissão e mais ainda quando se trata de garantir uma boa imagem diante do seu usuário. </p>  
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="A"> Independentemente da ocupação, todos os profissionais precisam cuidar da imagem. A imagem não está ligada apenas ao visual, mas também ao comportamento do agente. </p> 
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="B"> A simpatia é um dos melhores canais de sucesso no bom atendimento. As pessoas em geral gostam de quem as tratam bem, sendo cordial, afetuoso, entusiástico, indiferente e educado. </p> 
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="C"> É importante que o profissional tenha conteúdo, saber o que dizer, possuir conhecimento, mostrar a que veio e transmiti-lo de forma natural. </p> 
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="D"> Ter uma comunicação impecável é crucial para qualquer profissão e mais ainda quando se trata de garantir uma boa imagem diante do seu usuário. </p>  
 					  </td>
 					</tr>
 					@elseif($a == 6)
 					<tr>
 					  <td>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="A"> O Sigilo Profissional trata de resguardar informações acerca do histórico de trabalho do funcionário, em suas passagens por outras empresas. </p> 
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="B"> O Sigilo Profissional trata de resguardar informações importantes ou valiosas sobre conteúdos da vida empresarial, inclusive quando essas informações representarem alguma transgressão a Lei. </p> 
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="C"> O Sigilo Profissional trata de uma conduta requerida dos funcionários comuns, não sendo, pois, requerido das funções de chefia e direção das empresas. </p> 
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="D"> O Sigilo Profissional trata de uma informação a ser protegida, impõe uma relação entre privacidade e publicidade, cujo dever profissional se estabelece desde a se ater ao estritamente necessário ao cumprimento de seu trabalho, a não informar a matéria sigilosa. </p> 
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="A"> O Sigilo Profissional trata de resguardar informações acerca do histórico de trabalho do funcionário, em suas passagens por outras empresas. </p> 
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="B"> O Sigilo Profissional trata de resguardar informações importantes ou valiosas sobre conteúdos da vida empresarial, inclusive quando essas informações representarem alguma transgressão a Lei. </p> 
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="C"> O Sigilo Profissional trata de uma conduta requerida dos funcionários comuns, não sendo, pois, requerido das funções de chefia e direção das empresas. </p> 
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="D"> O Sigilo Profissional trata de uma informação a ser protegida, impõe uma relação entre privacidade e publicidade, cujo dever profissional se estabelece desde a se ater ao estritamente necessário ao cumprimento de seu trabalho, a não informar a matéria sigilosa. </p> 
 				      </td>
 					</tr>
 					@elseif($a == 7)
@@ -137,29 +136,29 @@
 					</tr>
 					<tr>
 					  <td>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="A"> Todas as afirmativas são verdadeiras. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="B"> Somente as afirmativas I e IV são verdadeiras. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="C"> Somente as afirmativas I, II e IV são verdadeiras. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="D"> Somente as afirmativas II e IV são verdadeiras.
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="A"> Todas as afirmativas são verdadeiras. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="B"> Somente as afirmativas I e IV são verdadeiras. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="C"> Somente as afirmativas I, II e IV são verdadeiras. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="D"> Somente as afirmativas II e IV são verdadeiras.
 					   </td>
 					</tr>
 					@elseif($a == 8)
 					<tr>
 					  <td>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="A"> Agir com parcialidade. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="B"> Prestar serviços com agilidade e precisão. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="C"> Cercear exercício profissional de outrem. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="D"> Contravir normas internas, condutas éticas específicas e legislações da sua profissão. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="E"> Agir com integridade, ambiguidade e desrespeito com os demais colegas de profissão.
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="A"> Agir com parcialidade. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="B"> Prestar serviços com agilidade e precisão. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="C"> Cercear exercício profissional de outrem. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="D"> Contravir normas internas, condutas éticas específicas e legislações da sua profissão. </p>
+					    <p align="justify">E) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="E"> Agir com integridade, ambiguidade e desrespeito com os demais colegas de profissão.
 					  </td>
 					</tr>
 					@elseif($a == 9)
 					<tr>
 					  <td>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="A"> Rede social é algo pessoal o qual o indivíduo é livre para se expressar. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="B"> Faltou profissionalismo por parte da secretária municipal, demonstrou falta de liderança ao destacar seu favoritismo pessoal perdendo a credibilidade dos demais. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="C"> Ela deveria ter citado o nome de todos os seus subordinados demonstrando sua real afetividade pelos mesmos. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="D"> Uma pessoa pública não pode ter redes sociais deixando explicito sua vida pessoal. </p>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="A"> Rede social é algo pessoal o qual o indivíduo é livre para se expressar. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="B"> Faltou profissionalismo por parte da secretária municipal, demonstrou falta de liderança ao destacar seu favoritismo pessoal perdendo a credibilidade dos demais. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="C"> Ela deveria ter citado o nome de todos os seus subordinados demonstrando sua real afetividade pelos mesmos. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="D"> Uma pessoa pública não pode ter redes sociais deixando explicito sua vida pessoal. </p>
 					  </td>
 					</tr>
 					@elseif($a == 10)
@@ -168,11 +167,87 @@
 					</tr>
 					<tr>
 					  <td>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="A"> O líder deve ser arbitrário em suas decisões. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="B"> As críticas devem ser evitadas. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="C"> A equipe deve respeitar as divergências e diversidades. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="D"> As opiniões deverão ser ignoradas. </p>
-					    <p align="justify"><input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="E"> As responsabilidades devem ser delegadas.
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="A"> O líder deve ser arbitrário em suas decisões. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="B"> As críticas devem ser evitadas. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="C"> A equipe deve respeitar as divergências e diversidades. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="D"> As opiniões deverão ser ignoradas. </p>
+					    <p align="justify">E) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="E"> As responsabilidades devem ser delegadas.
+					  </td>
+					</tr>
+					</tbody>
+					@elseif($a == 11)
+					<tr>
+					  <td>
+						<b>
+						   <p align="justify">I. Uso de pias de trabalho para fins diversos dos previstos. </p>
+						   <p align="justify">II. Uso de adornos nos postos de trabalho. </p>
+						   <p align="justify">III. Uso de calçados fechados. </p>
+						   <p align="justify">IV. Consumo de alimentos e bebidas nos postos de trabalho. </p>
+						   <p align="justify">Estão CORRETOS: </p>
+						</b>
+					  </td>
+					</tr>
+					<tr>
+					  <td>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="A"> Somente os itens I, II e IV. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="B"> Somente os itens I e III. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="C"> Somente os itens I, III e IV. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="D"> Somente os itens II, III e IV. </p>
+					  </td>
+					</tr>
+					</tbody>
+					@elseif($a == 12)
+					<tr>
+					  <td>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="A"> Em caso de exposição acidental ou incidental, não é necessário adotar medidas de proteção e prevenção de novos acidentes, visto que se aprende com os erros e eles dificilmente se repetem. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="B"> O uso de luvas substitui a higiene de mãos, que só deve ocorrer após o uso desse EPI. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="C"> Com ou sem afastamento do trabalhador é obrigatória a emissão de Comunicação de Acidente de Trabalho (CAT). </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="D"> Trabalhadores com feridas ou lesões nas mãos podem iniciar suas atividades assim que as lesões pararem de doer, não sendo necessária a avaliação de nenhum profissional da saúde liberando para o trabalho. </p>
+					    <p align="justify">E) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="E"> O trabalhador só deve comunicar o acidente de trabalho se ele for muito grave ou com exposição a um agente biológico que possa lhe causar algum dano a longo prazo. </p>
+					  </td>
+					</tr>
+					</tbody>
+					@elseif($a == 13)
+					<tr>
+					  <td>
+						<b>
+						   <p align="justify">I. A confirmação da identificação do paciente deve ser realizada antes de qualquer cuidado. </p>
+						   <p align="justify">II. O cumprimento do protocolo não é obrigatório para todos os pacientes internados </p>
+						   <p align="justify">III. Na pulseira de identificação deve constar no mínimo 3 identificadores. </p>
+						   <p align="justify">IV. Quando não houver a informação do nome completo, utilizar a penas o número do leito que o paciente está alocado. </p>
+						   <p align="justify">Está correto o que se afirma em: </p> 
+						</b>
+					  </td>
+					</tr>
+					<tr>
+					  <td>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="A"> I, apenas. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="B"> I, II, III e IV. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="C"> II e IV, apenas. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="D"> I e III, apenas. </p>
+					    <p align="justify">E) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="E"> I e IV, apenas. </p>
+					  </td>
+					</tr>
+					</tbody>
+					@elseif($a == 14)
+					<tr>
+					  <td>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="A"> O uso de luvas de procedimento substitui totalmente a higienização das mãos. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="B"> A higienização das mãos com água e sabão deve ser realizada apenas 2 vezes por dia. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="C"> O uso de solução alcoólica (líquida ou gel) substitui totalmente a higienização das mãos. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="D"> A higienização das mãos com água e sabão só deverá ser realizada quando houver sujidade aparente. </p>
+					    <p align="justify">E) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="E"> A higienização das mãos com água e sabão deverá ser realizada quando necessário e sempre houver sujidade aparente. </p>
+					  </td>
+					</tr>
+					</tbody>
+					@elseif($a == 15)
+					<tr>
+					  <td>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="A"> De forma antiética. </p>
+					    <p align="justify">B) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="B"> Com morosidade. </p>
+					    <p align="justify">C) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="C"> Com abuso de poder. </p>
+					    <p align="justify">D) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="D"> De forma desidiosa. </p>
+					    <p align="justify">E) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="E"> De forma ética. </p>
 					  </td>
 					</tr>
 					</tbody>

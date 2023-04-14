@@ -24,14 +24,14 @@ class UnidadeController extends Controller
 	{
 		$unidades = $this->unidade->paginate(10);
 		$processos = ProcessoSeletivo::all();
-		return view('cadastro_unidade', compact('unidades','processos'));
+		return view('unidades/cadastro_unidade', compact('unidades','processos'));
 	}
 	
 	// Página Nova Unidade //
 	public function unidadeNovo()
 	{
 		$processos = ProcessoSeletivo::all();
-		return view('cadastro_unidade_novo', compact('processos'));
+		return view('unidades/cadastro_unidade_novo', compact('processos'));
 	}
 	
 	// Página Alterar Unidade //
@@ -41,7 +41,7 @@ class UnidadeController extends Controller
 		$idE = $unidades[0]->id;
 		$endereco = Endereco::where('id_tabela',1)->where('id_interno',$idE)->get();
 		$processos = ProcessoSeletivo::all();
-		return view('cadastro_unidade_alterar', compact('unidades','endereco','processos'));
+		return view('unidades/cadastro_unidade_alterar', compact('unidades','endereco','processos'));
 	}
 	
 	// Página Excluir Unidade //
@@ -50,7 +50,7 @@ class UnidadeController extends Controller
 		$unidades = Unidade::where('id', $id)->get();
 		$endereco = Endereco::where('id_tabela',1)->where('id_interno',$unidades[0]->id)->get();
 		$processos = ProcessoSeletivo::all();
-		return view('cadastro_unidade_excluir', compact('unidades','endereco','processos'));
+		return view('unidades/cadastro_unidade_excluir', compact('unidades','endereco','processos'));
 	}
 	
 	// Pesquisar Unidade //
@@ -60,7 +60,7 @@ class UnidadeController extends Controller
 		$nome = $input['pesq'];
 		$unidades = $this->unidade->where('nome', 'LIKE', '%' . $nome . '%')->paginate(10);
 		$processos = ProcessoSeletivo::all();
-		return view('cadastro_unidade', compact('unidades','processos'));
+		return view('unidades/cadastro_unidade', compact('unidades','processos'));
 	}
 	
 	// Salvar Unidade //
@@ -72,7 +72,7 @@ class UnidadeController extends Controller
 		$processos = ProcessoSeletivo::all();
 		if($request->file('imagem') === NULL) {	
 			$validator = 'Informe a imagem da Unidade!';		
-			return view('cadastro_unidade_novo', compact('processos'))
+			return view('unidades/cadastro_unidade_novo', compact('processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		} else {
@@ -88,7 +88,7 @@ class UnidadeController extends Controller
 					'cep' 	 => 'required|max:15'
 				]);
 				if ($validator->fails()) {
-					return view('cadastro_unidade_novo', compact('processos'))
+					return view('unidades/cadastro_unidade_novo', compact('processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 				} else { 					
@@ -107,13 +107,13 @@ class UnidadeController extends Controller
 					$unidades  = $this->unidade->paginate(10);
 					$validator = 'Unidade cadastrado com Sucesso!!';
 					$processos = ProcessoSeletivo::all();
-					return view('cadastro_unidade', compact('unidades','processos'))
+					return view('unidades/cadastro_unidade', compact('unidades','processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 				}
 			}else {
 				$validator = 'Só é suportado arquivos: png ou jpg!';		
-				return view('cadastro_unidade_novo', compact('processos'))
+				return view('unidades/cadastro_unidade_novo', compact('processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 			}
@@ -138,7 +138,7 @@ class UnidadeController extends Controller
 			'cep' 	 => 'required|max:15'
 		]);
 		if ($validator->fails()) {
-			return view('cadastro_unidade_alterar', compact('unidades','endereco','processos'))
+			return view('unidades/cadastro_unidade_alterar', compact('unidades','endereco','processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		} else {
@@ -160,7 +160,7 @@ class UnidadeController extends Controller
 				$unidades = $this->unidade->paginate(10);
 				$validator = 'Unidade alterada com Sucesso!!';
 				$processos = ProcessoSeletivo::all();
-				return view('cadastro_unidade', compact('unidades','processos'))
+				return view('unidades/cadastro_unidade', compact('unidades','processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 			} else {
@@ -182,7 +182,7 @@ class UnidadeController extends Controller
 					$endereco = Endereco::where('id_tabela',1)->where('id_interno',$unidades[0]->id)->get();
 					$lastUpdated = $unidades->max('updated_at');
 					$validator = 'Unidade alterada com Sucesso!!';
-					return view('cadastro_unidade', compact('unidades','processos'))	
+					return view('unidades/cadastro_unidade', compact('unidades','processos'))	
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 				} else {
@@ -190,7 +190,7 @@ class UnidadeController extends Controller
 					$endereco  = Endereco::where('id_tabela',1)->where('id_interno',$unidades[0]->id)->get();
 					$validator = 'Só é suportado arquivos: png ou jpg!';		
 					$processos = ProcessoSeletivo::all();
-					return view('cadastro_unidade_alterar', compact('unidades','endereco','processos'))
+					return view('unidades/cadastro_unidade_alterar', compact('unidades','endereco','processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 				}
@@ -212,7 +212,7 @@ class UnidadeController extends Controller
 		$unidades = $this->unidade->paginate(10);
 		$validator = 'Unidade excluído com sucesso!';
 		$processos = ProcessoSeletivo::all();
-		return view('cadastro_unidade', compact('unidades','processos'))
+		return view('unidades/cadastro_unidade', compact('unidades','processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 	}

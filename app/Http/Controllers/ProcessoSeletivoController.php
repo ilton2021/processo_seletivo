@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\ProcessoSeletivo;
 use App\Model\Unidade;
 use App\Model\Vaga;
+use App\Model\ExperienciasVaga;
 use DB;
 use App\Model\Loggers;
 use Illuminate\Support\Facades\Redirect;
@@ -17,7 +18,7 @@ class ProcessoSeletivoController extends Controller
     public function __construct(ProcessoSeletivo $processo_seletivo)
 	{
 		$this->processo_seletivo = $processo_seletivo;
-		return view('cadastro_processo');
+		return view('processo_seletivo/cadastro_processo');
 	}
 	
 	// Página Cadastro de Processo Seletivo //
@@ -25,7 +26,7 @@ class ProcessoSeletivoController extends Controller
 	{
 		$processos = DB::table('processo_seletivo')->paginate(10);
 		$input = $request->all(); 
-		return view('cadastro_processo', compact('processos'));
+		return view('processo_seletivo/cadastro_processo', compact('processos'));
 	}
 	
 	// Página Alterar Vaga //
@@ -33,7 +34,7 @@ class ProcessoSeletivoController extends Controller
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$vaga = Vaga::where('id', $id_vaga)->get();
-		return view('cadastro_vaga_alterar', compact('processos','vaga'));
+		return view('processo_seletivo/cadastro_vaga_alterar', compact('processos','vaga'));
 	}
 	
 	// Página Excluir Vaga //
@@ -41,7 +42,7 @@ class ProcessoSeletivoController extends Controller
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$vaga = Vaga::where('id', $id_vaga)->get();
-		return view('cadastro_vaga_excluir', compact('processos','vaga'));
+		return view('processo_seletivo/cadastro_vaga_excluir', compact('processos','vaga'));
 	}
 
 
@@ -56,7 +57,7 @@ class ProcessoSeletivoController extends Controller
 			$pesq = $input['pesq'];
 			$processos = $this->processo_seletivo->where('nome', 'LIKE', '%' . $pesq . '%')->paginate(10);	
 		}
-		return view('cadastro_processo', compact('processos','pesq'));
+		return view('processo_seletivo/cadastro_processo', compact('processos','pesq'));
 	}
 	
 	// Página Cadastrar Novo Processo Seletivo //
@@ -64,7 +65,7 @@ class ProcessoSeletivoController extends Controller
 	{
 		$unidades = Unidade::all();
 		$processos = ProcessoSeletivo::all(); 
-		return view('cadastro_processo_novo', compact('unidades','processos'));
+		return view('processo_seletivo/cadastro_processo_novo', compact('unidades','processos'));
 	}
 	
 	// Salvar Processo Seletivo //
@@ -79,13 +80,13 @@ class ProcessoSeletivoController extends Controller
 		if($input['inscricao_inicio'] > $input['inscricao_fim'] || $input['inscricao_inicio'] == $input['inscricao_fim'])
 		{
 			$validator = 'Data da Inscrição Inicial não pode ser maior ou igual que a Data da Inscrição Final!';		
-			return view('cadastro_processo_novo', compact('unidades','processos'))
+			return view('processo_seletivo/cadastro_processo_novo', compact('unidades','processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
 		}
 		if($request->file('edital') === NULL) {	
 			$validator = 'Informe o arquivo do Edital!';
-			return view('cadastro_processo_novo', compact('unidades','processos'))
+			return view('processo_seletivo/cadastro_processo_novo', compact('unidades','processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
 		} else {
@@ -97,7 +98,7 @@ class ProcessoSeletivoController extends Controller
 					'data_resultado'   => 'required|date'
 				]);
 				if ($validator->fails()) {
-					return view('cadastro_processo_novo', compact('unidades','processos'))
+					return view('processo_seletivo/cadastro_processo_novo', compact('unidades','processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
 				} else { 										
@@ -142,32 +143,38 @@ class ProcessoSeletivoController extends Controller
 						exp_01_empresa varchar(150) COLLATE utf8mb4_unicode_ci NULL,
 						exp_01_cargo varchar(150) COLLATE utf8mb4_unicode_ci NULL,
 						exp_01_atribuicoes varchar(500) COLLATE utf8mb4_unicode_ci NULL,
-						arquivo_ctps1 varchar(500) COLLATE utf8mb4_unicode_ci NULL,
 						exp_01_data_ini varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						exp_01_data_fim varchar(15) COLLATE utf8mb4_unicode_ci NULL,
+						exp_01_competencias varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						exp_01_soma varchar(20) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_empresa varchar(150) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_cargo varchar(150) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_atribuicoes varchar(500) COLLATE utf8mb4_unicode_ci NULL,
-						arquivo_ctps2 varchar(500) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_data_ini varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_data_fim varchar(15) COLLATE utf8mb4_unicode_ci NULL,
+						exp_02_competencias varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						exp_02_soma varchar(20) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_empresa varchar(150) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_cargo varchar(150) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_atribuicoes varchar(500) COLLATE utf8mb4_unicode_ci NULL,
-						arquivo_ctps3 varchar(500) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_data_ini varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_data_fim varchar(15) COLLATE utf8mb4_unicode_ci NULL,
+						exp_03_competencias varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						exp_03_soma varchar(20) COLLATE utf8mb4_unicode_ci NULL,
+						exps_soma varchar(20) COLLATE utf8mb4_unicode_ci NULL,
+						soma_quest varchar(20) COLLATE utf8mb4_unicode_ci NULL,
 						como_soube varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						parentesco varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						parentesco_nome varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						trabalha_oss varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						trabalha_oss2 varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						grau_parentesco varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						grau_parentesco_nome varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						nome_social varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						pronome varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						genero varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						cor varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						aceito varchar(5) COLLATE utf8mb4_unicode_ci NULL,
-						foto varchar(600) COLLATE utf8mb4_unicode_ci NULL,
 						nomearquivo varchar(600) COLLATE utf8mb4_unicode_ci NULL,
 						status varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						status_avaliacao varchar(50) COLLATE utf8mb4_unicode_ci NULL,
@@ -195,7 +202,13 @@ class ProcessoSeletivoController extends Controller
 										resposta7 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
 										resposta8 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
 										resposta9 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
-										resposta10 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL)
+										resposta10 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta11 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta12 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta13 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta14 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										resposta15 varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+										soma varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL)
 									ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; ");
 					   
 					   $q1 = DB::statement("ALTER TABLE questionario_".$nome."
@@ -209,19 +222,19 @@ class ProcessoSeletivoController extends Controller
 						$input['user_id'] = Auth::user()->id;
 						$loggers = Loggers::create($input);
 						$validator = 'Processo Seletivo cadastrado com Sucesso!!';
-						return view('cadastro_processo', compact('processos'))
+						return view('processo_seletivo/cadastro_processo', compact('processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
 					} else {
 						$validator = "Este Processo Seletivo já existe!";
-						return view('cadastro_processo_novo', compact('unidades','processos'))
+						return view('processo_seletivo/cadastro_processo_novo', compact('unidades','processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));	
 					}
 				}
 			} else {
 				$validator = 'Só é suportado arquivos: pdf!';		
-				return view('cadastro_processo_novo', compact('unidades','processos'))
+				return view('processo_seletivo/cadastro_processo_novo', compact('unidades','processos'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
 			}
@@ -234,7 +247,7 @@ class ProcessoSeletivoController extends Controller
 		$processos = ProcessoSeletivo::where('id', $id)->get();
 		$id_u 	   = $processos[0]->unidade_id;
 		$unidades  = Unidade::where('id',$id_u)->get();
-		return view('cadastro_processo_alterar', compact('processos','unidades'));
+		return view('processo_seletivo/cadastro_processo_alterar', compact('processos','unidades'));
 	}
 	
 	// Alterar Processo Seletivo //
@@ -247,7 +260,7 @@ class ProcessoSeletivoController extends Controller
 		if($input['inscricao_inicio'] > $input['inscricao_fim'] || $input['inscricao_inicio'] == $input['inscricao_fim'])
 		{
 			$validator = 'Data da Inscrição Inicial não pode ser maior ou igual que a Data da Inscrição Final!';		
-			return view('cadastro_processo_alterar', compact('unidades','processos'))
+			return view('processo_seletivo/cadastro_processo_alterar', compact('unidades','processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		}
@@ -259,7 +272,7 @@ class ProcessoSeletivoController extends Controller
 			'data_resultado'   => 'required|date'
 		]);
 		if ($validator->fails()) {
-			return view('cadastro_processo_alterar', compact('unidades'))
+			return view('processo_seletivo/cadastro_processo_alterar', compact('unidades'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		} else {
@@ -273,7 +286,7 @@ class ProcessoSeletivoController extends Controller
 				$loggers = Loggers::create($input);
 				$lastUpdated = $processos->max('updated_at');
 				$validator = 'Processo Seletivo alterado com Sucesso!!';
-				return view('cadastro_processo', compact('processos'))
+				return view('processo_seletivo/cadastro_processo', compact('processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 			} else {
@@ -290,13 +303,13 @@ class ProcessoSeletivoController extends Controller
 					$loggers = Loggers::create($input);
 					$lastUpdated = $processos->max('updated_at');
 					$validator = 'Processo Seletivo alterado com Sucesso!!';
-					return view('cadastro_processo', compact('processos'))
+					return view('processo_seletivo/cadastro_processo', compact('processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 				} else {
 					$processos = ProcessoSeletivo::where('id', $id)->get();
 					$validator = 'Só é suportado arquivos: pdf!';
-					return view('cadastro_processo_alterar', compact('processos'))
+					return view('processo_seletivo/cadastro_processo_alterar', compact('processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 				}
@@ -310,7 +323,7 @@ class ProcessoSeletivoController extends Controller
 		$processos = ProcessoSeletivo::where('id', $id)->get();
 		$id_u 	   = $processos[0]->unidade_id;
 		$unidades  = Unidade::where('id',$id_u)->get();
-		return view('cadastro_processo_excluir', compact('processos','unidades'));
+		return view('processo_seletivo/cadastro_processo_excluir', compact('processos','unidades'));
 	}
 	
 	// Excluir Processo Seletivo //
@@ -322,7 +335,7 @@ class ProcessoSeletivoController extends Controller
 		$input['user_id'] = Auth::user()->id;
 		$loggers = Loggers::create($input);
 		$validator = 'Processo Seletivo excluído com sucesso!';
-		return view('cadastro_processo', compact('processos'))
+		return view('processo_seletivo/cadastro_processo', compact('processos'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 	}
@@ -332,7 +345,7 @@ class ProcessoSeletivoController extends Controller
 	{
 		$processos = ProcessoSeletivo::where('id', $id)->get();
 		$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
-		return view('cadastro_vaga_processo', compact('processos','vagas'));
+		return view('processo_seletivo/cadastro_vaga_processo', compact('processos','vagas'));
 	}
 	
 	// Salvar Nova Vaga //
@@ -356,7 +369,7 @@ class ProcessoSeletivoController extends Controller
 		]);
 		if ($validator->fails()) {
 			$vagas     = Vaga::where('processo_seletivo_id',$id)->get();
-			return view('cadastro_vaga_processo', compact('processos','vagas'))
+			return view('processo_seletivo/cadastro_vaga_processo', compact('processos','vagas'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		} else {
@@ -371,7 +384,7 @@ class ProcessoSeletivoController extends Controller
 			$loggers = Loggers::create($input);
 			$vagas   = Vaga::where('processo_seletivo_id',$id)->get();
 			$validator = 'Vaga cadastrada com sucesso!';
-			return view('cadastro_vaga_processo', compact('processos','vagas'))
+			return view('processo_seletivo/cadastro_vaga_processo', compact('processos','vagas'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		}
@@ -396,7 +409,7 @@ class ProcessoSeletivoController extends Controller
 			$id 	   = $input['processo_seletivo_id'];
 			$processos = ProcessoSeletivo::where('id', $id)->get();
 			$vagas 	   = Vaga::where('processo_seletivo_id',$id)->get();
-			return view('cadastro_vaga_processo', compact('processos','vagas'))
+			return view('processo_seletivo/cadastro_vaga_processo', compact('processos','vagas'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		} else { 
@@ -447,4 +460,103 @@ class ProcessoSeletivoController extends Controller
 		}
 	}
 
+	public function cadastroVagaExperiencias($id, $id_vaga, Request $request)
+	{
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$vaga      = Vaga::where('id',$id_vaga)->get();
+		$unidades  = Unidade::all();
+		$vagasExp  = ExperienciasVaga::where('vaga_id',$id_vaga)->get();
+		$qtd	   = sizeof($vagasExp);
+		return view('processo_seletivo/cadastro_visualizar_vagaExp',compact('unidades','processos','vaga','vagasExp','qtd'));
+	}
+
+	public function vagaExperienciasNovo($id, $id_vaga)
+	{
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$vaga      = Vaga::where('id',$id_vaga)->get();
+		$unidades  = Unidade::all();
+		return view('processo_seletivo/cadastro_vaga_experiencias',compact('unidades','processos','vaga'));
+	}
+
+	public function vagaExperienciasAlterar($id, $id_vaga, $id_vagaE)
+	{
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$vaga      = Vaga::where('id',$id_vaga)->get();
+		$unidades  = Unidade::all();
+		$vagaExp   = ExperienciasVaga::where('id',$id_vagaE)->get();
+		return view('processo_seletivo/cadastro_alterar_vagaExp',compact('unidades','processos','vaga','vagaExp'));
+	}
+
+	public function vagaExperienciasExcluir($id, $id_vaga, $id_vagaE)
+	{
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$vaga      = Vaga::where('id',$id_vaga)->get();
+		$unidades  = Unidade::all();
+		$vagaExp   = ExperienciasVaga::where('id',$id_vagaE)->get();
+		return view('processo_seletivo/cadastro_deletar_vagaExp',compact('unidades','processos','vaga','vagaExp'));
+	}
+
+	public function storeVagaExp($id, $id_vaga, Request $request)
+	{
+		$input = $request->all();
+		
+		if($input['exp1']) {
+			$input['descricao'] = $input['exp1'];
+			$expVaga = ExperienciasVaga::create($input); 
+		}
+
+		if($input['exp2']) {
+			$input['descricao'] = $input['exp2'];
+			$expVaga = ExperienciasVaga::create($input); 
+		}
+
+		if($input['exp3']) {
+			$input['descricao'] = $input['exp3'];
+			$expVaga = ExperienciasVaga::create($input); 
+		}
+
+		if($input['exp4']) {
+			$input['descricao'] = $input['exp4'];
+			$expVaga = ExperienciasVaga::create($input); 
+		}
+
+		if($input['exp5']) {
+			$input['descricao'] = $input['exp5'];
+			$expVaga = ExperienciasVaga::create($input); 
+		}
+		
+		$input['user_id'] = Auth::user()->id;
+		$loggers = Loggers::create($input);
+		$vagas   = Vaga::where('processo_seletivo_id',$id)->get();
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$validator = 'Experiência(s) da Vaga cadastrada com sucesso!';
+		return redirect()->route('cadastroVagaExperiencias', [$id, $id_vaga])->with($validator);
+	}
+
+	public function updateVagaExp($id, $id_vaga, $id_vagaE, Request $request)
+	{
+		$input	   = $request->all();
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$vagas     = Vaga::where('id',$id_vaga)->get();
+		$unidades  = Unidade::all();
+		$vagaExp   = ExperienciasVaga::find($id_vagaE);
+		$vagaExp->update($input);
+		$vagasExp  = ExperienciasVaga::where('vaga_id',$id_vaga)->get();
+		$qtd	   = sizeof($vagasExp);
+		$validator = 'Experiência(s) da Vaga alterada com sucesso!';
+		return redirect()->route('cadastroVagaExperiencias', [$id, $id_vaga])->with($validator);
+	}
+
+	public function deletarVagaExp($id, $id_vaga, $id_vagaE, Request $request)
+	{
+		$input	   = $request->all();
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$vagas     = Vaga::where('id',$id_vaga)->get();
+		$unidades  = Unidade::all();
+		ExperienciasVaga::find($id_vagaE)->delete();
+		$vagasExp  = ExperienciasVaga::where('vaga_id',$id_vaga)->get();
+		$qtd	   = sizeof($vagasExp);
+		$validator = 'Experiência(s) da Vaga excluída com sucesso!';
+		return redirect()->route('cadastroVagaExperiencias', [$id, $id_vaga])->with($validator);
+	}
 }

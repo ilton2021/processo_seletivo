@@ -52,7 +52,7 @@
 									<th scope="col"><center>Processo</center></th>
 									<th scope="col"><center>Unidade</center></th>
 									<th scope="col"><center>Fim Inscrição</center></th>
-									<th scope="col"><center>Edital</center></th>
+									<!--th scope="col"><center>Edital</center></th-->
 									<th scope="col"><center>Inscrição</center></th>
 								  </tr>
 								</thead>
@@ -83,15 +83,8 @@
                                     <td style="width: 240px;" title="UPA Igarassu"><center>{{ 'UPA IGARASSU' }}</center></td>
 									@endif
 									<td style="width: 170px;" title=""><center>{{date('d-m-Y', (strtotime($processo->inscricao_fim)))}}</center></td>
-									<td style="width: 5px;" title="">
-									<center>
-									 <form method="get" action="{{asset('storage')}}/{{$processo->edital_caminho}}">	
-									  <center><button href="" target="_blank">Download</button></center>
-									 </form> 
-									</center>
-									</td>
 									<td style="width: 5px;">
-									 <form method="get" action="{{ route('informativo', array($processo->unidade_id, $processo->id)) }}">	
+									 <form method="get" action="{{ route('informativoPDF', array($processo->unidade_id, $processo->id)) }}">	
 									  <center><button id="div" href="" target="_blank">Inscrição</button></center>
 									 </form>
 									</td>
@@ -122,7 +115,6 @@
     							   &nbsp;&nbsp;&nbsp;&nbsp;
 								   @break   
     							@endif
-								
 							   <?php } ?>
 							  @endforeach
 						   </td>

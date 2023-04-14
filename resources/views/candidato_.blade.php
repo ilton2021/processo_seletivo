@@ -23,16 +23,16 @@
 	   </div></div>
 	  </header>
 	  <div class="container">
-		<div id="sp-page-builder" class="sp-page-builder  page-1">
+		<div id="sp-page-builder" class="sp-page-builder page-1">
 		   <div class="page-content">
 			 <section  class="sppb-section " style="background-repeat:no-repeat;background-size:cover;background-attachment:fixed;background-position:0 0;">
 			   <div class="sppb-addon-container" style="">
 				  <div class="sppb-addon-content">
 					<div class="custom">
-					  <div class="container" style="width:100%;"> <br> <br>
+					  <div class="container" style="width:100%;"> <br> 
 						 <table class="table table-borderless" align="center" border="0" width="500" bordercolor=DCDCDC >
 						    <tr>
-							  <td align="center"><p style="font-size: 20px; margin-top: 20px;">OLÁ CANDIDATO, SEU CADASTRO FOI CONCLUÍDO</p></td>
+							  <td align="center"><p style="font-size: 20px; margin-top: 20px;">OLÁ CANDIDATO, SEU CADASTRO FOI REALIZADO</p></td>
 							</tr>
 						  </table>
 					  </div>
@@ -43,25 +43,13 @@
 			  </div>
 			  <table class="table table-sm" border="0" bordercolor=DCDCDC>
 			   <tr>
-			    <td><b><u><center> Parabéns! Você foi cadastrado no Processo Seletivo:</u></b> <b>{{ $nprocesso }}</b>!</center></td>
+			    <td><b><u><center><font color="red"> Parabéns! Você foi cadastrado no Processo Seletivo:</u></b> <b>{{ $nprocesso }}</b>!</font></center></td>
 			   </tr>
-               <tr>			   
-				<td><b> <u><center> Você foi inscrito neste Processo Seletivo no dia:</u></b> <b><?php echo date('d-m-Y', strtotime('now')) ?></b></center></td>
-			   </tr>
-			   <tr>
-				<td><b><u><center> Seu Número de Inscrição é:</u></b> <b>{{ $nprocesso.'-'.$numero[0]->id }}</b> </center></td>
+               <tr>
+				<td><b><u><center><font color="red">* Você deverá cadastrar suas experiências, responder o questionário e informar sobre o PCD.</font></center></u></b></td>
 			   </tr>
 			   <tr>
-				<td><b><u><center> Você poderá alterar seus documentos enquanto este Processo Seletivo estiver em vigor. </center></u></b></td>
-			   </tr>
-			   <tr>
-				<td><b><u><center> *O E-mail pode chegar na sua Caixa de SPAM, consulte-a. </center></u></b></td>
-			   </tr>
-			   <tr>
-				<td><b><u><center> *Agora você terá que responder ao questionário* </center></u></b></td>
-			   </tr>
-			   <tr>
-			    <td> <center> <a id="div" class="btn btn-primary" href="{{ route('questionario', array($unidade->id, $processo[0]->id, $numero[0]->id)) }}">Questionário</a></center></td>
+			    <td><br> <center> <a id="div" class="btn btn-primary" href="{{ route('painelCandidato', array($unidade->id, $processo[0]->id, $id2)) }}">Painel do Candidato</a></center></td>
 			   </tr>
 	  		  </table>
 	    </section>

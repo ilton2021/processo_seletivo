@@ -23,7 +23,6 @@
                 <td align="right" colspan="4" border="0">
                   <a href="{{route('home')}}" style="color: #FFFFFF; margin-top: 5px;" id="Voltar" name="Voltar" type="button" class="btn btn-warning btn-sm" style="color: #FFFFFF;"> Voltar <i class="fas fa-undo-alt"></i> </a>
                   <a class="btn btn-dark btn-sm" style="color: #FFFFFF; margin-top: 5px;" href="{{route('perguntasNovo')}}"> Novo <i class="fas fa-check"></i></a>
-                  <a class="btn btn-dark btn-sm" style="color: #FFFFFF; margin-top: 5px;" href="{{route('questionario')}}"> Questionário <i class="fas fa-check"></i></a>
                 </td>
               </tr>
             </table>

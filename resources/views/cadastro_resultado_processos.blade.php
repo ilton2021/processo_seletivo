@@ -95,10 +95,14 @@
 										<input type="submit" style="margin-top: 15px;background-color:#1d68a7;" class="btn btn-info btn-sm" value="Pesquisar" id="Pesquisar" name="Pesquisar" />
 									</td>
 									<td>
-										<a class="text-success" style="margin-left:5px;" href="{{route('exportCandidatos', array($pseletivo[0]->id, $pseletivo[0]->nome))}}" title="Download"><img src="{{asset('img/csv.png')}}" alt="" width="60"></a>
+										 <a class="text-success" style="margin-left:5px;" href="{{route('exportCandidatos', array($pseletivo[0]->id, $pseletivo[0]->nome))}}" title="Download"><img src="{{asset('img/csv.png')}}" alt="" width="50"></a>
 									</td>
 									<td>
-									    <a class="btn btn-info btn-sm" title="Ranking" style="color: #FFFFFF;margin-top:10px;font-size: 25px;" href="{{ route('ranking', $pseletivo[0]->id) }}"> <i class="fas fa-list-ol"></i></a>
+										@if($pseletivo[0]->created_at > '2023-04-11')
+										 <a class="btn btn-info btn-sm" title="Ranking" style="color: #FFFFFF;margin-top:10px;font-size: 25px;" href="{{ route('ranking', $pseletivo[0]->id) }}"> <i class="fas fa-list-ol"></i></a>
+										@else
+										 <a class="btn btn-info btn-sm" title="Ranking" style="color: #FFFFFF;margin-top:10px;font-size: 25px;" href="{{ route('rankingVagas', $pseletivo[0]->id) }}"> <i class="fas fa-list-ol"></i></a>
+										@endif
 									</td>
 									<td align="right" colspan="0" border="0">
 										<a href="{{route('pesquisaAvaliacao')}}" id="Voltar" name="Voltar" type="button" style="margin-top: 15px; color: #FFFFFF; background-color:#e06500;" class="btn btn-warning btn-sm"> Voltar <i class="fas fa-undo-alt"></i> </a>

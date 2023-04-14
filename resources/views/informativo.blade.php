@@ -68,13 +68,14 @@
 					<ul style="text-align: left;">
 				 	  <li style="padding: 2px;"><b>Ler todo o edital com atenção: <a href="{{asset('storage')}}/{{$processos[0]->edital_caminho}}" target='_blank'>Regulamento - {{ $processos[0]->nome }}</a>.</b></li>
 					  <li style="padding: 2px;"><b>Ler toda documentação necessária para admissão: <a href="{{ asset('storage/doc.pdf')}}" target='_blank'>Documentos</a></b></li>
-					  <li style="padding: 2px;"><b>Anexar seu currículo atualizado em formato de arquivo PDF ou DOC.</b></li>
+					  <li style="padding: 2px;"><b>Anexar sua foto atualizada em formato de arquivo jpg, jpeg, png ou pdf.</b></li>
 					  <li style="padding: 2px;"><b>Caso seja PCD (Pessoas com Deficiência), anexar declaração de portador de deficiência em formato de arquivo PDF ou DOC.</b></li>
 					  <li style="padding: 2px;"><b>Informar seus dados corretamente, você poderá ser excluído do Processo Seletivo.</b></li>
 					  <li style="padding: 2px;"><b>Sem estes dados não é possível completar o Processo Seletivo.</b></li>
 					  <li style="padding: 2px;" align="justify"><b>Todos os dados informados pelo candidato serão tratados pela área de recursos humanos de forma segura e exclusiva para o processo seletivo vigente, o mesmo possui <br> a validade de 6 meses a contar da data fim de inscrição. Após este prazo os dados serão armazenados pelo mesmo período e após 1 ano excluídos de nossa base.</b></li>
 					  <li style="padding: 2px;"><b><font color="red">Inscrição de {{ date('d/m/Y', strtotime($processos[0]->inscricao_inicio)) }} até {{ date('d/m/Y', strtotime($processos[0]->inscricao_fim)) }}</font></b></li>
 					  <li style="padding: 2px;"><b>Caso ocorra algum erro na inscrição do processo seletivo enviar um e-mail para <b style="color:red;">processoseletivo.hcpgestao@gmail.com</b></li>
+					  <li style="padding: 2px;"><b>Ao realizar sua inscrição você irá realizar o questionário, senão conseguir vá na aba Área do Candidato e terá a opção do questionário.</b></li>
 					</ul>
 				 </p>
 				</td>

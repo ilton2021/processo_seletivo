@@ -38,7 +38,7 @@ class ProcessoCandidatoController extends Controller
 		$processos = ProcessoSeletivo::where('id',$id)->get();
 		$nomeP     = $processos[0]->nome;
 		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get(); 
-		return view('avaliacao', compact('processos','candidato'));
+		return view('avaliacao/avaliacao', compact('processos','candidato'));
 	}
 
 	public function avaliacaoGestorLideranca($id, $id_c)
@@ -48,7 +48,7 @@ class ProcessoCandidatoController extends Controller
 		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get(); 
 		$avaliacao = AvaliacaoLideranca::where('processo_seletivo_id',$id)->where('id_candidato',$id_c)->get();
 		$pergAvaLid = PerguntaAvaliacaoLideranca::where('processo_seletivo_id',$id)->where('candidato_id',$id_c)->get();
-		return view('avaliacaoLiderancaGestor', compact('processos','candidato','avaliacao','pergAvaLid'));
+		return view('avaliacao/avaliacaoLiderancaGestor', compact('processos','candidato','avaliacao','pergAvaLid'));
 	}
 
 	public function updateAvaliacaoLideranca($id, $id_c, Request $request)
@@ -71,7 +71,7 @@ class ProcessoCandidatoController extends Controller
 				$m->subject('O Gestor respondeu a Avaliação de Liderança!');
 				$m->to($email);
 		});
-		return view('avaliacaoGestor', compact('candidato'))
+		return view('avaliacao/avaliacaoGestor', compact('candidato'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 	}
@@ -83,7 +83,7 @@ class ProcessoCandidatoController extends Controller
 		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get(); 
 		$avaliacao = AvaliacaoOperacional::where('processo_seletivo_id',$id)->where('id_candidato',$id_c)->get();
 		$pergAvaOp = PerguntaAvaliacaoOperacional::where('processo_seletivo_id',$id)->where('candidato_id',$id_c)->get();
-		return view('avaliacaoOperacionalGestor', compact('processos','candidato','avaliacao','pergAvaOp'));
+		return view('avaliacao/avaliacaoOperacionalGestor', compact('processos','candidato','avaliacao','pergAvaOp'));
 	}
 
 	public function updateAvaliacaoOperacional($id, $id_c, Request $request)
@@ -106,7 +106,7 @@ class ProcessoCandidatoController extends Controller
 				$m->subject('O Gestor respondeu a Avaliação Operacional!');
 				$m->to($email);
 		}); 
-		return view('avaliacaoGestor', compact('candidato'))
+		return view('avaliacao/avaliacaoGestor', compact('candidato'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 	}
@@ -120,9 +120,9 @@ class ProcessoCandidatoController extends Controller
 		$pergAvaLid = PerguntaAvaliacaoLideranca::where('processo_seletivo_id',$id)->where('candidato_id',$id_c)->get();
  		$qtd = sizeof($avaliacao); 
 		if($qtd > 0){
-			return view('avaliacaoLiderancaVisualizar', compact('processos','candidato','avaliacao','pergAvaLid'));
+			return view('avaliacao/avaliacaoLiderancaVisualizar', compact('processos','candidato','avaliacao','pergAvaLid'));
 		} else {
-			return view('avaliacaoLideranca', compact('processos','candidato'));
+			return view('avaliacao/avaliacaoLideranca', compact('processos','candidato'));
 		}
 	}
 
@@ -143,7 +143,7 @@ class ProcessoCandidatoController extends Controller
 			$processos = ProcessoSeletivo::where('id',$id)->get();
 			$nomeP     = $processos[0]->nome;
 			$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get();
-			return view('avaliacaoLideranca', compact('processos','candidato'))
+			return view('avaliacao/avaliacaoLideranca', compact('processos','candidato'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		} else {
@@ -220,7 +220,7 @@ class ProcessoCandidatoController extends Controller
 					$m->subject('O RH realizou uma Avaliação de Liderança!');
 					$m->to($email);
 			}); 
-			return view('avaliacao', compact('processos','candidato'))
+			return view('avaliacao/avaliacao', compact('processos','candidato'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		}
@@ -235,9 +235,9 @@ class ProcessoCandidatoController extends Controller
 		$pergAvaOp = PerguntaAvaliacaoOperacional::where('processo_seletivo_id',$id)->where('candidato_id',$id_c)->get();
  		$qtd = sizeof($avaliacao); 
 		if($qtd > 0){
-			return view('avaliacaoOperacionalVisualizar', compact('processos','candidato','avaliacao','pergAvaOp'));
+			return view('avaliacao/avaliacaoOperacionalVisualizar', compact('processos','candidato','avaliacao','pergAvaOp'));
 		} else {
-			return view('avaliacaoOperacional', compact('processos','candidato'));
+			return view('avaliacao/avaliacaoOperacional', compact('processos','candidato'));
 		}	
 	}
 
@@ -258,7 +258,7 @@ class ProcessoCandidatoController extends Controller
 			$processos = ProcessoSeletivo::where('id',$id)->get();
 			$nomeP     = $processos[0]->nome;
 			$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get();
-			return view('avaliacaoLideranca', compact('processos','candidato'))
+			return view('avaliacao/avaliacaoLideranca', compact('processos','candidato'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		} else {
@@ -334,7 +334,7 @@ class ProcessoCandidatoController extends Controller
 					$m->subject('O RH realizou uma Avaliação Operacional!');
 					$m->to($email);
 			}); 
-			return view('avaliacao', compact('processos','candidato'))
+			return view('avaliacao/avaliacao', compact('processos','candidato'))
 					  ->withErrors($validator)
                       ->withInput(session()->flashInput($request->input()));
 		}
