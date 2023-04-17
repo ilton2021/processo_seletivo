@@ -618,8 +618,8 @@ class CandidatoController extends Controller
     			'$bairro','$cidade','$estado','$cep','$complemento','$escolaridade','$status_escolaridade',
 				'$formacao','$cursos','','','$habilitacao','$p1','$p2',
     			'$p3','$outra_cidade','','','','','',
-    			'','','','','','','','','','','','','', '','','','',
-				'','$como_soube','$parentesco','$parentesco_nome',
+    			'','','','','','','','','','','','','', '','','','0',
+				'0','$como_soube','$parentesco','$parentesco_nome',
 				'$trabalho','$trabalho2','$nome_social','$pronome','$genero','$cor','$aceito',
 				'$grau_parentesco','$grau_parentesco_nome','','','','','','','','','','','','') ");
 				
@@ -641,6 +641,7 @@ class CandidatoController extends Controller
     						->withInput(session()->flashInput($request->input()));	
 	    } catch(Throwable $e) {
 			$validator = "Algo está errado!! Verifique os campos novamente!";
+			dd($e); exit();
 			DB::table('processo_seletivo_'.$nome_processo)->where('email',$email)->delete();
 			return view('cadastro_candidatos', compact('unidade','processos','vagas','estados','unidades','vagasExp'))
 						->withErrors($validator)
