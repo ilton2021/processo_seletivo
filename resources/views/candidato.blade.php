@@ -22,7 +22,7 @@
 								<li><a href="#contact" id="about-link"><span class="icon solid fa-calendar-check">Result. de Processos Anter.</span></a></li>
 								<li><a href="#avisos" id="avisos-link"><span class="icon solid fa-check-square">Quadro de Avisos</span></a></li>
 								@if($qtd > 0)
-								 <li><a href="{{ url('areaCandidato') }}" id="avisos-link"><span class="icon solid fa-address-card">Área do Candidato</span></a></li>
+								<li><a href="#about2" id="about-link"><span class="icon solid fa-book-open">Área do Candidato</span></a></li>
 								@endif
 								<li><a href="#portfolio2" id="portfolio-link"><span class="icon solid fa-th">Sobre</span></a></li>
 							</ul>
@@ -140,7 +140,7 @@
 						</div>
 				 </section>
 
-				 <section id="avisos" class="four" style="width:100%; overflow: scroll;">
+				 <section id="avisos" class="five" style="width:100%; overflow: scroll;">
 						<div class="container">
 							<header>
 								<h2>Quadro de Avisos:</h2>
@@ -160,8 +160,26 @@
 						    </table>
 						</div>
 				 </section>
+
+				 <section id="about2" class="six" style="width: 100%; overflow: scroll;">
+						<div class="container">
+							<header>
+								<h2>Área do Candidato</h2>
+							</header>
+							<table class="table table-responsive table-border" border="1"> 
+							<tr>
+							<td> 
+								<center>Passo a Passo para acessar a Área do Candidato <a href="{{asset('storage/questionario2.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."></a></center>
+							</td>
+							<td>
+							  <a href="{{ url('areaCandidato') }}" id="avisos-link"> Área do Candidato <span width="40" class="icon solid fa-address-card"></span></a>
+						    </td>
+							</tr>
+						  </table>
+						</div>
+					</section>
 				 
-				 <section id="portfolio2" class="five">
+				 <section id="portfolio2" class="seven">
 						<div class="container">
 							<header>
 								<h2><b>Sobre</b></h2>
