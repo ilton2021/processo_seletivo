@@ -5,7 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ ('assets/css/main.css') }}" />
-	</head> <?php $qtd = sizeof($processos2); ?>
+	</head> 
 	<body class="is-preload">
 			<div id="header">
 				<div class="top">
@@ -21,9 +21,10 @@
 								<li><a href="#about" id="about-link"><span class="icon solid fa-book-open">Editais em Curso</span></a></li>
 								<li><a href="#contact" id="about-link"><span class="icon solid fa-calendar-check">Result. de Processos Anter.</span></a></li>
 								<li><a href="#avisos" id="avisos-link"><span class="icon solid fa-check-square">Quadro de Avisos</span></a></li>
-								@if($qtd > 0)
-								<li><a href="#about2" id="about-link"><span class="icon solid fa-book-open">Área do Candidato</span></a></li>
+								@if($qtdP > 0)
+								<li><a href="#about2" id="about-link"><span class="icon solid fa-user">Área do Candidato</span></a></li>
 								@endif
+								<li><a href="#about3" id="about-link"><span class="icon solid fa-user">Área de Dúvidas</span></a></li>
 								<li><a href="#portfolio2" id="portfolio-link"><span class="icon solid fa-th">Sobre</span></a></li>
 							</ul>
 						</nav>
@@ -52,7 +53,6 @@
 									<th scope="col"><center>Processo</center></th>
 									<th scope="col"><center>Unidade</center></th>
 									<th scope="col"><center>Fim Inscrição</center></th>
-									<!--th scope="col"><center>Edital</center></th-->
 									<th scope="col"><center>Inscrição</center></th>
 								  </tr>
 								</thead>
@@ -63,24 +63,26 @@
 								   @if((strtotime($hoje) >= strtotime($ini)) && (strtotime($hoje) <= strtotime($fim)))
 								   <tr> 
 									<td style="width: 200px;" title=""><center>{{$processo->nome}}</center></td>
-									@if($processo->unidade_id == 8)
-									<td style="width: 240px;" title="Hospital Provisório do Recife I"><center>{{ 'HCA' }}</center></td>
-									@elseif($processo->unidade_id == 7)
-									<td style="width: 240px;" title="Hospital São Sebastião"><center>{{ 'HSS' }}</center></td>
-									@elseif($processo->unidade_id == 6)
-									<td style="width: 240px;" title="UPAE Caruaru"><center>{{ 'UPAE CARUARU' }}</center></td>
-									@elseif($processo->unidade_id == 5)
-									<td style="width: 240px;" title="UPAE Arruda"><center>{{ 'UPAE ARRUDA' }}</center></td>
-									@elseif($processo->unidade_id == 4)
-									<td style="width: 240px;" title="UPAE Arcoverde"><center>{{ 'UPAE ARCOVERDE' }}</center></td>
-									@elseif($processo->unidade_id == 3)
-									<td style="width: 240px;" title="UPAE Belo Jardim"><center>{{ 'UPAE BELO JARDIM' }}</center></td>
+									@if($processo->unidade_id == 1)
+                                    <td style="width: 240px;" title="Hospital do Câncer do Recife"><center>{{ 'HCP' }}</center></td>
 									@elseif($processo->unidade_id == 2)
 									<td style="width: 240px;" title="Hospital da Mulher do Recife"><center>{{ 'HMR' }}</center></td>
-									@elseif($processo->unidade_id == 1)
-                                    <td style="width: 240px;" title="Hospital do Câncer do Recife"><center>{{ 'HCP' }}</center></td>
-                                    @elseif($processo->unidade_id == 9)
+									@elseif($processo->unidade_id == 3)
+									<td style="width: 240px;" title="UPAE Belo Jardim"><center>{{ 'UPAE BELO JARDIM' }}</center></td>
+									@elseif($processo->unidade_id == 4)
+									<td style="width: 240px;" title="UPAE Arcoverde"><center>{{ 'UPAE ARCOVERDE' }}</center></td>
+									@elseif($processo->unidade_id == 5)
+									<td style="width: 240px;" title="UPAE Arruda"><center>{{ 'UPAE ARRUDA' }}</center></td>
+									@elseif($processo->unidade_id == 6)
+									<td style="width: 240px;" title="UPAE Caruaru"><center>{{ 'UPAE CARUARU' }}</center></td>
+									@elseif($processo->unidade_id == 7)
+									<td style="width: 240px;" title="Hospital São Sebastião"><center>{{ 'HSS' }}</center></td>
+									@elseif($processo->unidade_id == 8)
+									<td style="width: 240px;" title="Hospital Provisório do Recife I"><center>{{ 'HCA' }}</center></td>
+									@elseif($processo->unidade_id == 9)
                                     <td style="width: 240px;" title="UPA Igarassu"><center>{{ 'UPA IGARASSU' }}</center></td>
+									@elseif($processo->unidade_id == 10)
+                                    <td style="width: 240px;" title="UPAE Palmares"><center>{{ 'UPAE PALMARES' }}</center></td>
 									@endif
 									<td style="width: 170px;" title=""><center>{{date('d-m-Y', (strtotime($processo->inscricao_fim)))}}</center></td>
 									<td style="width: 5px;">
@@ -88,7 +90,7 @@
 									  <center><button id="div" href="" target="_blank">Inscrição</button></center>
 									 </form>
 									</td>
-								  </tr>							 
+								   </tr>							 
 								  @endif
 								 @endforeach
 								</tbody>
@@ -98,27 +100,36 @@
 
 					<section id="about" class="three" style="width: 100%; overflow: scroll;">
 						<div class="container">
-							<header>
-								<h2>Editais em Curso</h2>
-							</header>
-							<table class="table table-responsive table-border" border="1"> 
-							<tr>
-							<td>
+						  <header>
+							<h2>Editais em Curso</h2>
+						  </header>
+						  <table class="table table-responsive table-border" border="1"> 
+						   <tr> <?php $t = ''; $idUn = 1; ?>
+							<td width="300px">
 							  @foreach($unidades as $unidade)
-							   <?php for($a = 0; $a < $qtdP; $a++) { ?>
-							  	@if($processos2[$a]->id == $unidade->id)	
-    								<a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px"></a>
-    							   &nbsp;&nbsp;&nbsp;&nbsp;
-								   @break
-								@else
-								    <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px" style="opacity: 50%"></a>
-    							   &nbsp;&nbsp;&nbsp;&nbsp;
-								   @break   
-    							@endif
+							    @if($qtdP == 0) <?php $t = '0'; ?> 
+								 @elseif($qtdP == 1) <?php $t = ''.$processos2[0]->id == $unidade->id; ?>	
+								 @elseif($qtdP == 2) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id; ?>
+								 @elseif($qtdP == 3) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id; ?>
+								 @elseif($qtdP == 4) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id; ?>
+								 @elseif($qtdP == 5) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id; ?>
+								 @elseif($qtdP == 6) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id || $processos2[5]->id == $unidade->id; ?>
+								 @elseif($qtdP == 6) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id || $processos2[5]->id == $unidade->id || $processos2[6]->id == $unidade->id; ?>
+								 @elseif($qtdP == 6) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id || $processos2[5]->id == $unidade->id || $processos2[6]->id == $unidade->id || $processos2[7]->id == $unidade->id; ?>
+								@endif
+
+								@if($t != '' && $t != '0')
+    							  <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px"></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								@elseif($t == '')
+								  <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px" style="opacity: 50%"></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								@endif
+							   <?php if($qtdP == 0 && $idUn <= 9) { ?>
+							      <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px" style="opacity: 50%"></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							   <?php } ?>
+							   <?php $idUn += 1; ?>
 							  @endforeach
-						   </td>
-							</tr>
+						    </td>
+						   </tr>
 						  </table>
 						</div>
 					</section>
@@ -129,7 +140,7 @@
 								<h2>Resultado de Processos Anteriores</h2>
 							</header>
 							<table class="table table-responsive table-border" border="1"> 
-							<tr>
+							<tr> 
 							   @foreach($unidades as $unidade)
 							   <td width="300px">
 								 <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm"  width="70px"></a>
@@ -168,13 +179,60 @@
 							</header>
 							<table class="table table-responsive table-border" border="1"> 
 							<tr>
-							<td> 
-								<center>Passo a Passo para acessar a Área do Candidato <a href="{{asset('storage/questionario2.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."></a></center>
-							</td>
-							<td>
-							  <a href="{{ url('areaCandidato') }}" id="avisos-link"> Área do Candidato <span width="40" class="icon solid fa-address-card"></span></a>
-						    </td>
+							 <td>
+							   <center><a href="{{ url('areaCandidato') }}" id="avisos-link"> Área do Candidato <span width="40" class="icon solid fa-address-card"></span></a></center>
+						     </td>
 							</tr>
+						  </table>
+						</div>
+					</section>
+
+					<section id="about3" class="six" style="width: 100%; overflow: scroll;">
+						<div class="container">
+							<header>
+								<h2>Área de Dúvidas do Candidato</h2>
+							</header>
+							<table class="table table-responsive table-border" border="1"> 
+							<tr>
+							 <td> 
+							 <a href="{{asset('storage/pdfs/Inscricao.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."> Como se inscrever no Processo Seletivo?</a>
+							 </td>
+						    </tr>
+							<tr>
+							 <td> 
+							 <a href="{{asset('storage/pdfs/InscricaoErro.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."> Não consigo me inscrever e agora?</a> 
+							 </td>
+						    </tr>
+							<tr>
+							 <td> 
+							 <a href="{{asset('storage/pdfs/importanciaExperiencias.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."> A importância de cadastrar minhas experiências?</a> 
+							 </td>
+						    </tr>
+							<tr>
+							 <td> 
+							 <a href="{{asset('storage/pdfs/acessarÁreaCandidato.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."> Como acessar a área do candidato?</a>
+							 </td>
+						    </tr>
+							<tr>
+							 <td> 
+							 <a href="{{asset('storage/pdfs/alterarInformacoes.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."> Como alterar meus dados de inscrição?</a>
+							 </td>
+						    </tr>
+							<tr>
+							 <td> 
+							 <a href="{{asset('storage/pdfs/naoConseguiuQuestionario.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."> Não conseguir responder o questionário e cadastrar minhas experiências, e agora?</a>
+							 </td>
+						    </tr>
+							<tr>
+							 <td> 
+							 <a href="{{asset('storage/pdfs/resultadosProcessos.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."> Como ver os resultados dos Processos Seletivos?</a>
+							 </td>
+						    </tr>
+							<tr>
+							 <td> 
+							 <a href="{{asset('storage/pdfs/anexarDocumentos.pdf')}}" target="_blank"><img width="40" id="img-unity" src="{{asset('img')}}/{{('pdf.png')}}" class="rounded-sm" alt="..."> Como cadastrar meus documentos, se for aprovado.</a>
+							 </td>
+						    </tr>						  
 						  </table>
 						</div>
 					</section>
@@ -257,5 +315,5 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-	</body>
+    </body>
 </html>

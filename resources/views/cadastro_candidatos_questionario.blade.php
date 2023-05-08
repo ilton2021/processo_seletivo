@@ -66,7 +66,7 @@
 		      </div>
 			  <?php $c = str_replace(' ','',$processos[0]->nome); ?>
 			  <br>
-			  <form method="POST" action="{{ route('validarCandidatoQuestionario', array($unidade[0]->id, $processos[0]->id, $candidato[0]->id)) }}">
+			  <form method="POST" action="{{ route('validarCandidatoQuestionario', array($unidade[0]->id, $processos[0]->id, $candidato[0]->id, $tela)) }}">
 			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 			  <div class="tab-content" id="pills-tabContent"> 

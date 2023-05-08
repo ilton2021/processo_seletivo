@@ -68,8 +68,19 @@
 			var x = document.getElementById('trabalha_oss').value;
 			if(x == "sim") {
 				document.getElementById('trabalha_oss2').disabled = false;
+				document.getElementById('rpa').disabled 		  = false;
 			} else {
 				document.getElementById('trabalha_oss2').disabled = true;
+				document.getElementById('rpa').disabled 		  = true;
+			}
+		}
+
+		function habilitaTrabalhoRPA(valor) {
+			var x = document.getElementById('rpa').value; 
+			if(x == "sim") {
+				document.getElementById('rpa_setor').disabled = false;
+			} else { 
+				document.getElementById('rpa_setor').disabled = true;
 			}
 		}
 
@@ -133,10 +144,9 @@
 			  <form method="POST"  action="{{ route('validarCandidato', array($unidade->id, $processos[0]->id)) }}" enctype="multipart/form-data">
 			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-		
 			  <div id="tabs" class="nav-tabs">
 				
-			   <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+			   <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist" style="margin-left: 300px;">
 				<li class="nav-item">
 					<a class="nav-link active" data-toggle="pill" href="#tabs1" role="tab" aria-selected="true">INFORMAÇÃO CANDIDATURA</a>
 				</li>
@@ -200,7 +210,6 @@
 							<?php } ?>
 						   @endforeach
 						  </select>
-						  
 					   </div>
 					  </div>
 					  <div class="row">
@@ -213,7 +222,7 @@
 						 </select>
 						 @if(old('trabalha_oss') == "sim")
 						 <select class="form-select form-select-sm" id="trabalha_oss2" name="trabalha_oss2" required> 
-						   <option value="">Selecione...</option>
+						   <option value="">Em qual Unidade...</option>
 						   @foreach($unidades as $unidade)
 						    @if($unidade->id == old('trabalha_oss2'))
 							 <option value="<?php echo $unidade->id; ?>" selected>{{ $unidade->nome }}</option>
@@ -224,7 +233,7 @@
 						 </select>
 						 @else
 						 <select disabled class="form-select form-select-sm" id="trabalha_oss2" name="trabalha_oss2" required> 
-						   <option value="">Selecione...</option>
+						   <option value="">Em qual Unidade...</option>
 						   @foreach($unidades as $unidade)
 						    @if($unidade->id == old('trabalha_oss2'))
 							 <option value="<?php echo $unidade->id; ?>" selected>{{ $unidade->nome }}</option>
@@ -233,6 +242,35 @@
 							@endif
 						   @endforeach
 						 </select>
+						 @endif
+						 <label for="inputState" class="form-label"><b><font size="2">Trabalha ou Trabalhou como RPA?</font></b></label>
+						 @if(old('trabalha_oss') == "sim")
+						  <select class="form-select form-select-sm" id="rpa" name="rpa" required onchange="habilitaTrabalhoRPA('sim')"> 
+						   <option value="">Selecione...</option>
+						    @if(old('rpa') == 'nao')
+							 <option value="sim">Sim</option>
+							 <option value="nao">Não</option>
+							@else
+							 <option value="sim">Sim</option>
+							 <option value="nao">Não</option>
+							@endif
+						 </select>
+						 @else
+						 <select disabled class="form-select form-select-sm" id="rpa" name="rpa" required onchange="habilitaTrabalhoRPA('sim')"> 
+						   <option value="">Selecione...</option>
+						    @if(old('rpa') == 'nao')
+							 <option value="sim">Sim</option>
+							 <option value="nao">Não</option>
+							@else
+							 <option value="sim">Sim</option>
+							 <option value="nao">Não</option>
+							@endif
+						 </select>
+						 @endif
+						 @if(old('trabalha_oss')=="sim")
+						  <input class="form-control form-control-sm" placeholder="Qual Setor?" type="text" id="rpa_setor" name="rpa_setor" value="{{ old('rpa_setor') }}" required maxlength="50" />
+						 @else
+						  <input class="form-control form-control-sm" placeholder="Qual Setor?" disabled type="text" id="rpa_setor" name="rpa_setor" value="{{ old('rpa_setor') }}" required maxlength="50" />
 						 @endif
 					   </div>
 					   <div class="col"> 
@@ -578,7 +616,7 @@
 						  </select>
 						 @endif
 					   </div>
-				       <div class="col">
+				       <!--div class="col">
 					    <label for="inputState" class="form-label"><font size="2"><b>DISPONIBILIDADE PARA MUDAR DE CIDADE: (*)</b></font></label>
 						 @if(old('val9') == "on")
 						  <select disabled class="form-select form-select-sm" id="outra_cidade" name="outra_cidade" required>
@@ -594,8 +632,7 @@
 						  </select>
 						 @endif
 					   </div>
-				      </div>
-					  
+				      </div-->
 					</div>
 				  </div>
 				 </div> <br>

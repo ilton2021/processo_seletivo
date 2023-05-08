@@ -45,98 +45,6 @@
 	
   </script>
   <script> 
-		$(document).on("keydown", "#atribuicao", function () {
-			var caracteresRestantes = 300;
-			var caracteresDigitados = parseInt($(this).val().length);
-			var caracteresRestantes = caracteresRestantes - caracteresDigitados;
-
-			$(".caracteres").text(caracteresRestantes);
-		});
-		$(document).on("keydown", "#atribuicao2", function () {
-			var caracteresRestantes = 300;
-			var caracteresDigitados = parseInt($(this).val().length);
-			var caracteresRestantes = caracteresRestantes - caracteresDigitados;
-
-			$(".caracteres").text(caracteresRestantes);
-		});
-		$(document).on("keydown", "#atribuicao3", function () {
-			var caracteresRestantes = 300;
-			var caracteresDigitados = parseInt($(this).val().length);
-			var caracteresRestantes = caracteresRestantes - caracteresDigitados;
-
-			$(".caracteres").text(caracteresRestantes);
-		});
-		function habilitaDeficiencia(valor) {
-
-			var x = document.getElementById('deficiencia_status').value; 
-			if(x == "sim") {
-				document.getElementById('deficiencia').disabled = false;  
-				document.getElementById('cid').disabled = false;
-				document.getElementById('arquivo_deficiencia').disabled = false;
-			} else if(x == "nao" || x == "") {
-				document.getElementById('deficiencia').disabled = true;
-				document.getElementById('cid').disabled = true;
-				document.getElementById('arquivo_deficiencia').disabled = true;
-			}
-		}
-
-		function desabilitar6(valor) {
-			var x = document.getElementById('val6').checked;
-			if(x == true){
-				document.getElementById('empresa').disabled  	  = false;
-				document.getElementById('cargo').disabled 		  = false;
-				document.getElementById('data_inicio').disabled   = false;
-				document.getElementById('data_fim').disabled 	  = false;
-				document.getElementById('atribuicao').disabled    = false;
-				document.getElementById('arquivo_ctps1').disabled = false;
-			} else {
-				document.getElementById('empresa').disabled  	  = true;
-				document.getElementById('cargo').disabled 		  = true;
-				document.getElementById('data_inicio').disabled   = true;
-				document.getElementById('data_fim').disabled 	  = true;
-				document.getElementById('atribuicao').disabled    = true;
-				document.getElementById('arquivo_ctps1').disabled = true;
-			}
-		}
-
-		function desabilitar7(valor) {
-			var x = document.getElementById('val7').checked;
-			if(x == true){
-				document.getElementById('empresa2').disabled  	  = false;
-				document.getElementById('cargo2').disabled 		  = false;
-				document.getElementById('data_inicio2').disabled  = false;
-				document.getElementById('data_fim2').disabled 	  = false;
-				document.getElementById('atribuicao2').disabled   = false;
-				document.getElementById('arquivo_ctps2').disabled = false;
-			} else {
-				document.getElementById('empresa2').disabled  	  = true;
-				document.getElementById('cargo2').disabled 		  = true;
-				document.getElementById('data_inicio2').disabled  = true;
-				document.getElementById('data_fim2').disabled 	  = true;
-				document.getElementById('atribuicao2').disabled   = true;
-				document.getElementById('arquivo_ctps2').disabled = true;
-			}
-		}
-
-		function desabilitar8(valor) {
-			var x = document.getElementById('val8').checked;
-			if(x == true){
-				document.getElementById('empresa3').disabled  	  = false;
-				document.getElementById('cargo3').disabled 		  = false;
-				document.getElementById('data_inicio3').disabled  = false;
-				document.getElementById('data_fim3').disabled 	  = false;
-				document.getElementById('atribuicao3').disabled   = false;
-				document.getElementById('arquivo_ctps3').disabled = false;
-			} else {
-				document.getElementById('empresa3').disabled  	  = true;
-				document.getElementById('cargo3').disabled 		  = true;
-				document.getElementById('data_inicio3').disabled  = true;
-				document.getElementById('data_fim3').disabled 	  = true;
-				document.getElementById('atribuicao3').disabled   = true;
-				document.getElementById('arquivo_ctps3').disabled = true;
-			}
-		}
-
 		function habilitaComoSoube(valor) {
 			var x = document.getElementById('como_soube').value;
 			if(x == "outros") {  
@@ -163,8 +71,19 @@
 			var x = document.getElementById('trabalha_oss').value;
 			if(x == "sim") {
 				document.getElementById('trabalha_oss2').disabled = false;
+				document.getElementById('rpa').disabled 		  = false;
 			} else {
 				document.getElementById('trabalha_oss2').disabled = true;
+				document.getElementById('rpa').disabled 		  = true;
+			}
+		}
+
+		function habilitaTrabalhoRPA(valor) {
+			var x = document.getElementById('rpa').value; 
+			if(x == "sim") {
+				document.getElementById('rpa_setor').disabled = false;
+			} else { 
+				document.getElementById('rpa_setor').disabled = true;
 			}
 		}
 	 </script>
@@ -204,15 +123,6 @@
 					<a href="javascript:history.back();" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a>
 				  </td>
 				</tr>
-				@if($valida == true)
-				<tr>
-				  <td colspan="2"> 
-					<center>
-				      <a href="{{ route('questionario', array($unidade[0]->id, $processo[0]->id, $user[0]->id)) }}" class="btn btn-success btn-sm" style="margin-top: 10px; color: #FFFFFF;"> QUESTIONÁRIO </a>	 
-					</center>
-			 	  </td>
-				</tr>
-				@endif 
 			  </table>
 			  <table class="table table-borderless" border="0" width="500" id="inicio">
 				<tr>
@@ -232,12 +142,12 @@
 			  <?php $c = str_replace(' ','',$processo[0]->nome); ?>
 			  <br><br>
 
-			  <form method="POST" action="{{ route('updateAreaCandidatoAlterar', $processo[0]->id) }}" enctype="multipart/form-data">
+			  <form method="POST" action="{{ route('updateAreaCandidatoAlterar', array($unidade[0]->id,$processo[0]->id,$user[0]->id)) }}">
 			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 
 			  <div id="tabs" class="nav-tabs">
-			   <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist" style="margin-left: 160px;">
+			   <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist" style="margin-left: 300px;">
 				<li class="nav-item">
 					<a class="nav-link active" data-toggle="pill" href="#tabs1" role="tab" aria-selected="true">INFORMAÇÃO CANDIDATURA</a>
 				</li>
@@ -248,13 +158,7 @@
 					<a class="nav-link" data-toggle="pill" href="#tabs3" role="tab" aria-selected="false">ENDEREÇO</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" data-toggle="pill" href="#tabs4" role="tab" aria-selected="false">PCD</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="pill" href="#tabs5" role="tab" aria-selected="false">EXPERIÊNCIAS</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="pill" href="#tabs6" role="tab" aria-selected="false">DISPONIBILIDADE</a>
+					<a class="nav-link" data-toggle="pill" href="#tabs4" role="tab" aria-selected="false">DISPONIBILIDADE</a>
 				</li>
 			   </ul>
 			  
@@ -333,6 +237,35 @@
 							<?php } ?>
 						   @endforeach
 						  </select>
+						  <label for="inputState" class="form-label"><b><font size="2">Trabalha ou Trabalhou como RPA?</font></b></label>
+						  <?php if($user[0]->trabalha_oss == "sim") { ?>
+						  <select class="form-select form-select-sm" id="rpa" name="rpa" required onchange="habilitaTrabalhoRPA('sim')"> 
+						   <option value="">Selecione...</option>
+						    <?php if($user[0]->rpa == "sim") { ?>
+							 <option value="sim" selected>Sim</option>
+							 <option value="nao">Não</option>
+							<?php } else { ?>
+							 <option value="sim">Sim</option>
+							 <option value="nao" selected>Não</option>
+							<?php } ?>
+						 </select>
+						 <?php } else { ?>
+						 <select disabled class="form-select form-select-sm" id="rpa" name="rpa" required onchange="habilitaTrabalhoRPA('sim')"> 
+						   <option value="">Selecione...</option>
+						    <?php if($user[0]->rpa == "sim") { ?>
+							 <option value="sim" selected>Sim</option>
+							 <option value="nao">Não</option>
+							<?php } else { ?>
+							 <option value="sim">Sim</option>
+							 <option value="nao" selected>Não</option>
+							<?php } ?>
+						 </select>
+						 <?php } ?>
+						 <?php if($user[0]->trabalha_oss == "sim" && $user[0]->rpa == "sim") { ?>
+						  <input class="form-control form-control-sm" placeholder="Qual Setor?" type="text" id="rpa_setor" name="rpa_setor" value="<?php echo $user[0]->rpa_setor; ?>" required maxlength="50" />
+						 <?php } else { ?>
+						  <input class="form-control form-control-sm" placeholder="Qual Setor?" disabled type="text" id="rpa_setor" name="rpa_setor" value="<?php echo $user[0]->rpa_setor; ?>" required maxlength="50" />
+						 <?php } ?>
 					   </div>
 					   <div class="col"> 
 					   <label for="inputState" class="form-label"><b><font size="2">Grau de Parentesco? (*)</font></b></label>
@@ -620,318 +553,7 @@
 				 </div>
 			    </div>
 
-			    <div class="tab-pane fade" id="tabs4">
-				 <div class="modal-content">
-				  <div class="modal-content">
-				    <div class="modal-header">
-					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>PCD:</b></h6></center>
-				    </div>
-					<div class="modal-body" style="background-color: white;">
-					  <div class="row">
-					   <div class="col">
-					    <label for="inputState" class="form-label"><b><font size="2">Você quer se candidatar para a vaga como Pessoa com Deficiência?</font></b></label>
-						<select id="deficiencia_status" name="deficiencia_status" class="form-select form-select-sm" onchange="habilitaDeficiencia('sim')">
-						  <option value="" selected>Selecione...</option>  
-						  <?php if($user[0]->deficiencia == "0") { ?><option value="nao" selected>NÃO</option><?php } else { ?> <option value="nao">NÃO</option><?php } ?>
-						  <?php if($user[0]->deficiencia != "0") { ?><option value="sim" selected>SIM</option><?php } else { ?> <option value="sim">SIM</option><?php } ?>
-						</select>
-					   </div>
-					   <div class="col">
-					    <label for="inputState" class="form-label"><b><font size="2">Especifique Sua Deficiência:</font></b></label>
-						<?php if($user[0]->deficiencia == "0") { ?>
-						 <select disabled id="deficiencia" name="deficiencia" class="form-select form-select-sm">
-					    <?php } else { ?>
-						 <select id="deficiencia" name="deficiencia" class="form-select form-select-sm">
-						<?php } ?>
-						  <option value="">Selecione..</option>   
-						  <?php if($user[0]->deficiencia == "Auditiva") { ?><option value="Auditiva" selected>Auditiva</option><?php } else { ?><option value="Auditiva">Auditiva</option><?php } ?>
-						  <?php if($user[0]->deficiencia == "Fisica") { ?><option value="Fisica" selected>Física</option><?php } else { ?><option value="Fisica">Física</option><?php } ?>
-						  <?php if($user[0]->deficiencia == "Intelectual") { ?><option value="Intelectual" selected>Intelectual</option><?php } else { ?><option value="Intelectual">Intelectual</option><?php } ?>
-						  <?php if($user[0]->deficiencia == "Mental") { ?><option value="Mental" selected>Mental</option><?php } else { ?><option value="Mental">Mental</option><?php } ?>
-						  <?php if($user[0]->deficiencia == "Autista") { ?><option value="Autista" selected>Autista</option><?php } else { ?><option value="Autista">Autista</option><?php } ?>
-						  <?php if($user[0]->deficiencia == "Visual") { ?><option value="Visual" selected>Visual</option><?php } else { ?><option value="Visual">Visual</option><?php } ?>
-						  <?php if($user[0]->deficiencia == "Outros") { ?><option value="Outros" selected>Outros</option><?php } else { ?><option value="Outros">Outros</option><?php } ?>
-						</select>
-					   </div>
-					  </div>
-					  <div class="row">   
-					   <div class="col">  
-					    <label for="inputState" class="form-label"><b><font size="2">CID Correspondente:</font></b></label>
-					    <?php if($user[0]->deficiencia == "0") { ?>
-						 <input disabled class="form-control form-control-sm" placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="{{ old('cid') }}" maxlength="255" />
-						<?php } else { ?> 
-						 <input class="form-control form-control-sm" placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="<?php echo $user[0]->cid; ?>" maxlength="255" />
-						<?php } ?>
-					   </div>
-					   <div class="col"><br><p align="justify"><font size="2" color="red"><b>* Envie o laudo PCD para complementar o seu cadastro no HCP GESTÃO</b></font></p></div>
-					  </div>
-					  <div class="row">   
-					   <div class="col">  
-					     <br>
-						 <p align="justify"><font size="2" color="red"><b>O Laudo PCD é importante para garantir que processos seletivos destinados a pessoas com deficiência sejam justos e que deles participem apenas pessoas que tenham alguma deficiência. Desta forma, o HCP Gestão terá como identificar rapidamente aplicações inadequadas, tornando o processo de seleção mais ágil e justo. 
-						 Como o envio do laudo médico não é obrigatório, você não será automaticamente desclassificado do processo seletivo. No entanto, esse controle será exclusivo do HCP GESTÃO que poderá utilizar esse documento para evitar fraudes. O laudo será coletado e armazenado com base no seu consentimento. Este documento será compartilhado apenas 
-						 para o processo seletivo em questão conforme nossa Política de Privacidade.</b></font></p>
-						 <font size="2"><br>ANEXE O LAUDO MÉDICO</font>
-						 <?php if($user[0]->deficiencia == "0") { ?>
-						  <input disabled class="form-control form-control-sm" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" maxlength="600" value="{{ old('arquivo_deficiencia') }}"> 
-						 <?php } else { ?>
-						   <input class="form-control form-control-sm" readonly type="text" id="arquivo_deficiencia_" name="arquivo_deficiencia_" maxlength="600" value="<?php echo $user[0]->nomearquivo; ?>"> 
-						   <input class="form-control form-control-sm" type="file" id="arquivo_deficiencia" name="arquivo_deficiencia" maxlength="600" value="<?php echo $user[0]->nomearquivo; ?>"> 
-						 <?php } ?>
-					 	 <br><p><b><font size="2" color="red">* Esse documento pode ser nos formatos: PNG, JPG, JPEG, DOC, DOCX ou PDF.</font></b></p>
-					   </div>
-					  </div>
-				    </div>
-				  </div>
-				 </div>
-				</div>
-
-			    <div class="tab-pane fade" id="tabs5">
-				 <div class="modal-content">
-				  <div class="modal-content">
-				    <div class="modal-header">
-					  <center><h6 class="modal-title"id="exampleModalLongTitle"><b>EXPERIÊNCIAS:</b></h6></center>
-				    </div>
-					<div class="modal-body" style="background-color: white;">
-					  <div class="row">
-					   <div class="col">
-					   <b> 
-						<p><font color="red" size="2">Atenção!!! </p>
-						<p><font size="2">Prezado(a) candidato(a):</font></p>
-						<p align="justify" size="2">Ao cadastrar as suas experiências profissionais no formulário de inscrição do processo seletivo, você estará participando do nosso ranking de classificação. Cada experiência cadastrada gera uma pontuação que leva em consideração o seu tempo de experiência profissional. O somatório das suas experiências cadastradas gera uma pontuação total e através dessa pontuação você terá uma colocação no ranking de classificação. <br><br>
-						- Só serão consideradas experiências profissionais comprovadas na função; <br>
-						- Não serão consideradas experiências profissionais em funções fora do perfil da vaga ofertada; <br>
-						- Os candidatos que não cadastrarem as experiências profissionais no formulário de inscrição, não terão pontos computados no ranking de classificação. </p></font>
-					   </b>
-					   </div>
-					  </div>
-					</div>
-					<div class="modal-body" style="background-color: white;">
-					  <div class="row">
-					   <div class="col">
-					    <label for="inputState" class="form-label"><b><font size="2"><center>EXPERIÊNCIA 01:</center></font></b></label>
-						 <?php if($user[0]->exp_01_empresa != "") { ?>
-						  <p align="right"><input type="checkbox" checked onclick="desabilitar6('sim')" id="val6" name="val6" /><font size="2"> Habilitar campos</font></p></td>
-					     <?php } else { ?>
-						  <p align="right"><input type="checkbox" onclick="desabilitar6('sim')" id="val6" name="val6" /><font size="2"> Habilitar campos</font></p></td>
-						 <?php } ?>
-					   </div>
-					  </div>
-					  <div class="row">
-					   <div class="col">
-					    <label for="inputState" class="form-label"><b><font size="2">Empresa:</font></b></label>
-						 <?php if($user[0]->exp_01_empresa != "") { ?>
-						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="<?php echo $user[0]->exp_01_empresa; ?>" maxlength="150" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" required />
-						 <?php } ?>
-					   </div>
-					   <div class="col">
-					    <label for="inputState" class="form-label"><b><font size="2">Cargo:</font></b></label>
-						 <?php if($user[0]->exp_01_cargo != "") { ?>
-						  <input class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo" name="cargo" value="<?php echo $user[0]->exp_01_cargo; ?>" maxlength="150" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" required />
-						 <?php } ?>
-					   </div>
-					  </div>
-					  <div class="row">
-					   <div class="col">
-					    <label for="inputState" class="form-label"><b><font size="2">Data Início:</font></b></label>
-						 <?php if($user[0]->exp_01_data_ini != "") { ?>
-						  <input class="form-control form-control-sm" type="date" id="data_inicio" name="data_inicio" value="<?php echo $user[0]->exp_01_data_ini; ?>" maxlength="15" required />
-				 		 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" required />
-						 <?php } ?>
-					   </div>
-					   <div class="col">
-						<label for="inputState" class="form-label"><b><font size="2">Data Fim:</font></b></label>
-						 <?php if($user[0]->exp_01_data_fim != "") { ?>
-						  <input class="form-control form-control-sm" type="date" id="data_fim" name="data_fim" value="<?php echo $user[0]->exp_01_data_fim; ?>" maxlength="15" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" required />
-						 <?php } ?>
-					   </div>
-					  </div>
-					  <div class="row">
-					   <div class="col"> 
-					    <label for="inputState" class="form-label"><b><font size="2">Suas Atribuições:</font></b></label>
-						 <?php if($user[0]->exp_01_atribuicoes != "") { ?>
-						   <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="<?php echo $user[0]->exp_01_atribuicoes; ?>" maxlength="300" required>{{ $user[0]->exp_01_atribuicoes }}</textarea>
-						 <?php } else { ?>
-						   <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" required></textarea>
-						 <?php } ?>
-						 <font size="2">Restam: <span class="caracteres">300 </span> caracteres.</font><br>
-					   </div>
-					  </div>
-					  @if($vagasExp)
-					  <div class="row">
-					   <div class="col"> 
-					    <label for="inputState" class="form-label"><b><font size="2">Nesta Experiência você obteve alguma dessas competências:</font></b></label> <br>
-						 @foreach($vagasExp as $vagaExp)
-						   <input type='checkbox' class="vaga_exp1" id="vaga_exp1[]" name="vaga_exp1[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
-						 @endforeach
-						<input type='checkbox' class="vaga_exp1" id="vaga_exp1[]" name="vaga_exp1[]" value="0" /> Nenhuma Competência &nbsp;</input>
-					   </div>
-					  </div>
-					  @endif
-					  <div class="row">
-					   <div class="col">
-					     <center><strong><font size="2" color="red">ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</font></strong></center>
-					   </div>
-					  </div> <br>
-					  <div class="row">
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><b><font size="2">EXPERIÊNCIA 02:</font></b></label>
-						 <?php if($user[0]->exp_02_empresa != "") { ?>
-						  <p align="right"><input type="checkbox" checked onclick="desabilitar7('sim')" id="val7" name="val7" /><font size="2"> Habilitar campos </font></p></td>
-						 <?php } else { ?>
-						  <p align="right"><input type="checkbox" onclick="desabilitar7('sim')" id="val7" name="val7" /><font size="2"> Habilitar campos </font></p></td>
-						 <?php } ?>
-					   </div> 
-					  </div>
-					  <div class="row">
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"><b>Empresa:</b></font></label>
-						 <?php if($user[0]->exp_02_empresa != "") { ?>
-						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="<?php echo $user[0]->exp_02_empresa; ?>" maxlength="150" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" required />
-						 <?php } ?>
-					   </div> 
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"><b>Cargo:</b></font></label>
-						 <?php if($user[0]->exp_02_cargo != "") { ?>
-					 	  <input class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="<?php echo $user[0]->exp_02_cargo; ?>" maxlength="150" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" required />
-						 <?php } ?>
-					   </div> 
-					  </div>
-					  <div class="row">
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"><b>Data Início:</b></font></label>
-						 <?php if($user[0]->exp_02_data_ini != "") { ?>
-						  <input class="form-control form-control-sm" type="date" id="data_inicio2" name="data_inicio2" value="<?php echo $user[0]->exp_02_data_ini; ?>" maxlength="15" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" required />
-						 <?php } ?>
-					   </div> 
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"><b>Data Fim:</b></font></label>
-						 <?php if($user[0]->exp_02_data_fim != "") { ?>
-						  <input class="form-control form-control-sm" type="date" id="data_fim2" name="data_fim2" value="<?php echo $user[0]->exp_02_data_fim; ?>" maxlength="15" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" required />
-						 <?php } ?>	 
-					   </div> 
-					  </div>
-					  <div class="row">
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"><b>Suas Atribuições:</b></font></label>
-						 <?php if($user[0]->exp_02_atribuicoes != "") { ?>
-						  <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="<?php echo $user[0]->exp_02_atribuicoes; ?>" maxlength="300" required>{{ $user[0]->exp_02_atribuicoes }}</textarea>
-						 <?php } else { ?>
-						  <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" required></textarea>
-						 <?php } ?>
-						 <font size="2">Restam: <span class="caracteres">300 </span> caracteres.</font><br>
-					   </div> 
-					  </div>
-					  @if($vagasExp)
-					  <div class="row">
-					   <div class="col"> 
-					    <label for="inputState" class="form-label"><b><font size="2">Nesta Experiência você obteve alguma dessas competências:</font></b></label> <br>
-						 @foreach($vagasExp as $vagaExp)
-						   <input type='checkbox' class="vaga_exp2" id="vaga_exp2[]" name="vaga_exp2[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
-						 @endforeach
-						<input type='checkbox' class="vaga_exp2" id="vaga_exp2[]" name="vaga_exp2[]" value="0" /> Nenhuma Competência &nbsp;</input>
-					   </div>
-					  </div>
-					  @endif
-					  <div class="row">
-					  	<div class="col">
-					     <center><strong><font size="2" color="red">ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</font></strong></center>
-					   </div> <br><br>
-					  </div>
-					  <div class="row">
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"> <b>EXPERIÊNCIA 03:</b></font></label>
-						 <?php if($user[0]->exp_03_empresa != "") { ?>
-						  <p align="right"><input type="checkbox" checked onclick="desabilitar8('sim')" id="val8" name="val8" /><font size="2"> Habilitar campos </font></p></td>
-						 <?php } else { ?>
-						  <p align="right"><input type="checkbox" onclick="desabilitar8('sim')" id="val8" name="val8" /><font size="2"> Habilitar campos </font></p></td>
-						 <?php } ?>
-					   </div> 
-					  </div>
-					  <div class="row">
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"> <b>Empresa:</b></font></label>
-						 <?php if($user[0]->exp_03_empresa != "") { ?>
-						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="<?php echo $user[0]->exp_03_empresa; ?>" maxlength="150" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" required />
-						 <?php } ?>
-					   </div> 
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"> <b>Cargo:</b></font></label>
-						 <?php if($user[0]->exp_03_cargo != "") { ?>
-						  <input class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="<?php echo $user[0]->exp_03_cargo; ?>" maxlength="150" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" required />
-						 <?php } ?>
-					   </div> 
-					  </div>
-					  <div class="row">
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"> <b>Data Início:</b></font></label>
-						 <?php if($user[0]->exp_03_data_ini != "") { ?>
-						  <input class="form-control form-control-sm" type="date" id="data_inicio3" name="data_inicio3" value="<?php echo $user[0]->exp_03_data_ini; ?>" maxlength="15" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" required />
-						 <?php } ?>
-					   </div> 
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"> <b>Data Fim:</b></font></label>
-						 <?php if($user[0]->exp_03_data_fim != "") { ?>
-						  <input class="form-control form-control-sm" type="date" id="data_fim3" name="data_fim3" value="<?php echo $user[0]->exp_03_data_fim; ?>" maxlength="15" required />
-						 <?php } else { ?>
-						  <input disabled class="form-control form-control-sm" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" required />
-						 <?php } ?>
-					   </div> 
-					  </div>
-					  <div class="row">
-					   <div class="col"> 
-						<label for="inputState" class="form-label"><font size="2"> <b>Suas Atribuições:</b></font></label>
-						 <?php if($user[0]->exp_03_atribuicoes != "") { ?>
-						  <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="<?php echo $user[0]->exp_03_atribuicoes; ?>" maxlength="300" required>{{ $user[0]->exp_03_atribuicoes }}</textarea>
-						 <?php } else { ?>
-						  <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" required></textarea>
-						 <?php } ?>
-						 <font size="2"> Restam: <span class="caracteres">300 </span> caracteres. </font><br>
-					   </div> 
-					  </div>
-					  @if($vagasExp)
-					  <div class="row">
-					   <div class="col"> 
-					    <label for="inputState" class="form-label"><b><font size="2">Nesta Experiência você obteve alguma dessas competências:</font></b></label> <br>
-						 @foreach($vagasExp as $vagaExp)
-						   <input type='checkbox' class="vaga_exp3" id="vaga_exp3[]" name="vaga_exp3[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
-						 @endforeach
-						<input type='checkbox' class="vaga_exp3" id="vaga_exp3[]" name="vaga_exp3[]" value="0" /> Nenhuma Competência &nbsp;</input>
-					   </div>
-					  </div>
-					  @endif
-					  <div class="row">
-					  	<div class="col">
-					     <center><strong><font size="2" color="red">ATENÇÃO - O preenchimento das datas é obrigatório caso possua experiência.</font></strong></center>
-					   </div>
-					  </div>
-					</div>
-				  </div>
-				 </div>
-				</div>
-				
-				<div class="tab-pane fade" id="tabs6">
+				<div class="tab-pane fade" id="tabs4">
 				 <div class="modal-content">
 				  <div class="modal-content">
 				    <div class="modal-header">
@@ -963,14 +585,14 @@
 							<?php if($user[0]->meio_periodo == "meio_periodo") { ?><option value="meio_periodo" selected>Disponibilidade para meio período</option><?php } else { ?><option value="meio_periodo">Disponibilidade para meio período</option><?php } ?>
 						  </select>						  
 					   </div>
-				       <div class="col">
+				       <!--div class="col">
 					    <label for="inputState" class="form-label"><font size="2"><b>DISPONIBILIDADE PARA MUDAR DE CIDADE: (*)</b></font></label>
 						  <select class="form-select form-select-sm" id="outra_cidade" name="outra_cidade" required>
 						    <option value="">Selecione...</option> 
 							<?php if($user[0]->outra_cidade == "nao") { ?><option value="nao" selected>Não</option><?php } else { ?><option value="nao">Não</option><?php } ?>
 							<?php if($user[0]->outra_cidade == "sim") { ?><option value="sim" selected>Sim</option><?php } else { ?><option value="sim">Sim</option><?php } ?>
 					      </select>					  
-					   </div>
+					   </div-->
 				      </div>
 					</div>
 				  </div>
@@ -1023,23 +645,22 @@
 		});
 	 });
 
-
-function habilitar(){
-	if(document.getElementById('check').checked){
-		document.getElementById('data_fim').disabled = true;
-	} else {
-		document.getElementById('data_fim').disabled = false;
+	function habilitar(){
+		if(document.getElementById('check').checked){
+			document.getElementById('data_fim').disabled = true;
+		} else {
+			document.getElementById('data_fim').disabled = false;
+		}
 	}
-}
-		
-function familiar(){
-	var parente = document.getElementById("parentesco").value;
-	if(parente == "sim"){
-		document.getElementById("parentesco_nome").disabled = false;
-	}else{
-		document.getElementById("parentesco_nome").disabled = true;
+			
+	function familiar(){
+		var parente = document.getElementById("parentesco").value;
+		if(parente == "sim"){
+			document.getElementById("parentesco_nome").disabled = false;
+		}else{
+			document.getElementById("parentesco_nome").disabled = true;
+		}
 	}
-}
 </script>
 	 
 </body>

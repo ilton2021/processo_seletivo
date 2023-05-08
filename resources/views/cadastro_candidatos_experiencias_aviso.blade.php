@@ -145,7 +145,7 @@
 		 	  @endif 
 		      </div>
 			  <?php $c = str_replace(' ','',$processos[0]->nome); ?>
-			  <form method="POST"  action="{{ route('validarCandidatoExperiencias', array($unidade[0]->id, $processos[0]->id, $candidato[0]->id)) }}" enctype="multipart/form-data">
+			  <form method="POST"  action="{{ route('validarCandidatoExperiencias', array($unidade[0]->id, $processos[0]->id, $candidato[0]->id, $tela)) }}" enctype="multipart/form-data">
 			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
 	  
 			  <div class="tab-content" id="pills-tabContent"> 
@@ -173,7 +173,7 @@
 					 <div class="row">
 					  <div class="col">
 						<p align="center">
-						<a href="{{ route('painelCandidatoExperiencias', array($unidade[0]->id,$processos[0]->id,$candidato[0]->id)) }}" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-success btn-sm"> ACEITO </a> 
+						<a href="{{ route('painelCandidatoExperiencias', array($unidade[0]->id,$processos[0]->id,$candidato[0]->id, $tela)) }}" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-success btn-sm"> ACEITO </a> 
 						</p>
 					  </div>
 					 </div>

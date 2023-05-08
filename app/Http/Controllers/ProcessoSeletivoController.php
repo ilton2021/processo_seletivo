@@ -168,6 +168,8 @@ class ProcessoSeletivoController extends Controller
 						parentesco_nome varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						trabalha_oss varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						trabalha_oss2 varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						rpa varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						rpa_setor varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						grau_parentesco varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						grau_parentesco_nome varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						nome_social varchar(255) COLLATE utf8mb4_unicode_ci NULL,

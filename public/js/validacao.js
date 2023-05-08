@@ -17,14 +17,24 @@ function validar(valor) {
     if(valida) {
         var x = document.getElementById('parentesco').value;
         var y = document.getElementById('parentesco_nome').value;
+        var z = document.getElementById('grau_parentesco').value;
+        var c = document.getElementById('grau_parentesco_nome').value;
         if(x == "") {
             $('.nav-tabs a[href="#tabs1"]').tab('show');
-            alert('Informe se você foi indicado!');
+            alert('Informe se você possui algum parente no HCP Gestão!');
             valoresCampos();
             valida = false;
         } else if (x == "sim" && y == "") {
             $('.nav-tabs a[href="#tabs1"]').tab('show');
-            alert('Informe se você foi indicado!');
+            alert('Informe em qual unidade seu parente trabalha!');
+            valida = false;
+        } else if (x == "sim" && z == "") {
+            $('.nav-tabs a[href="#tabs1"]').tab('show');
+            alert('Informe o grau de parentesco com seu parente!');
+            valida = false;
+        } else if (x == "sim" && c == "") {
+            $('.nav-tabs a[href="#tabs1"]').tab('show');
+            alert('Informe qual nome do seu parente!');
             valida = false;
         }
     } else { valoresCampos(); }
@@ -32,6 +42,8 @@ function validar(valor) {
     if(valida) {
         var x = document.getElementById('trabalha_oss').value;
         var y = document.getElementById('trabalha_oss2').value;
+        var z = document.getElementById('rpa').value;
+        var c = document.getElementById('rpa_setor').value;
         if(x == "") {
             $('.nav-tabs a[href="#tabs1"]').tab('show');
             alert('Informe se você trabalha/trabalhou em alguma unidade do HCP Gestão!');
@@ -40,6 +52,13 @@ function validar(valor) {
         } else if (x == "sim" && y == "") {
             $('.nav-tabs a[href="#tabs1"]').tab('show');
             alert('Informe em qual unidade você trabalha ou trabalhou!');
+            valida = false;
+        } else if (x == "sim" && z == "") {
+            $('.nav-tabs a[href="#tabs1"]').tab('show');
+            alert('Informe se você trabalhou como RPA!');
+        } else if (x == "sim" && z == "sim" && c == "") {
+            $('.nav-tabs a[href="#tabs1"]').tab('show');
+            alert('Informe qual setor você trabalhou como RPA!');
             valida = false;
         }
     } else { valoresCampos(); }
@@ -198,182 +217,25 @@ function validar(valor) {
         }
     }
     
-    // Aba 4: PCD
-
     if(valida) {
-        var x = document.getElementById('deficiencia_status').value;
-        var y = document.getElementById('deficiencia').value;
-        var z = document.getElementById('cid').value;
-        var t = document.getElementById('arquivo_deficiencia').value;
-        var h = document.getElementById('arquivo_deficiencia_').value;
-        
-        if(x == "") {
-            $('.nav-tabs a[href="#tabs4"]').tab('show');
-            alert('Informe se você quer se candidatar para vaga de PCD!');
-            valida = false;
-        } else if (x == "sim" && y == "") {
-            $('.nav-tabs a[href="#tabs4"]').tab('show');
-            alert('Informe seu tipo de PCD!');
-            valida = false;
-        } else if (x == "sim" && z == "") {
-            $('.nav-tabs a[href="#tabs4"]').tab('show');
-            alert('Informe seu CID da PCD!');
-            valida = false;
-        } else if (x == "sim" && h == "") {
-            if(x == "sim" && t == "") {
-                $('.nav-tabs a[href="#tabs4"]').tab('show');
-                alert('Informe o laudo médico da PCD!');
-                valida = false;
-            }
-        }
-    }
-
-    // Aba 5: EXPERIÊNCIAS
-
-    if(valida) {
-        var x = document.getElementById('val6').checked;
-        if(x == true) {
-            var empresa1 = document.getElementById('empresa').value;
-            var cargo1   = document.getElementById('cargo').value;
-            var data_in1 = document.getElementById('data_inicio').value;
-            var data_fi1 = document.getElementById('data_fim').value;
-            var atrib1   = document.getElementById('atribuicao').value;
-            var ctps1    = document.getElementById('arquivo_ctps1').value;
-            var ctps1_   = document.getElementById('arquivo_ctps1_').value;
-    
-            if(empresa1 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe o nome da empresa da 1º experiência!');
-                valida = false;
-            } else if(cargo1 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe o nome do cargo da 1º experiência!');
-                valida = false;
-            } else if(data_in1 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe a data início da 1º experiência!');
-                valida = false;
-            } else if(data_fi1 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe a data fim da 1º experiência!');
-                valida = false;
-            } else if(atrib1 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe a sua atribuição da 1º experiência!');
-                valida = false;
-            } else if(ctps1_ == "") {
-                if(ctps1 == "") {
-                    $('.nav-tabs a[href="#tabs5"]').tab('show');
-                    alert('Informe o arquivo CTPS da 1º Experiência!');
-                    valida = false;
-                }
-            }
-        }
-
-        var x = document.getElementById('val7').checked;
-        if(x == true) {
-            var empresa2 = document.getElementById('empresa2').value;
-            var cargo2   = document.getElementById('cargo2').value;
-            var data_in2 = document.getElementById('data_inicio2').value;
-            var data_fi2 = document.getElementById('data_fim2').value;
-            var atrib2   = document.getElementById('atribuicao2').value;
-            var ctps2    = document.getElementById('arquivo_ctps2').value;
-            var ctps2_   = document.getElementById('arquivo_ctps2_').value;
-
-            if(empresa2 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe o nome da empresa da 2º experiência!');
-                valida = false;
-            } else if(cargo2 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe o nome do cargo da 2º experiência!');
-                valida = false;
-            } else if(data_in2 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe a data início da 2º experiência!');
-                valida = false;
-            } else if(data_fi2 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe a data fim da 2º experiência!');
-                valida = false;
-            } else if(atrib2 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe a sua atribuição da 2º experiência!');
-                valida = false;
-            } else if(ctps2_ == "") {
-                if(ctps2 == "") {
-                    $('.nav-tabs a[href="#tabs5"]').tab('show');
-                    alert('Informe o arquivo CTPS da 2º Experiência!');
-                    valida = false;
-                }
-            }
-        } else { valoresCampos(); }
-
-        var x = document.getElementById('val8').checked;
-        if(x == true) {
-            var empresa3 = document.getElementById('empresa3').value;
-            var cargo3   = document.getElementById('cargo3').value;
-            var data_in3 = document.getElementById('data_inicio3').value;
-            var data_fi3 = document.getElementById('data_fim3').value;
-            var atrib3   = document.getElementById('atribuicao3').value;
-            var ctps3    = document.getElementById('arquivo_ctps3').value;
-            var ctps3_   = document.getElementById('arquivo_ctps3_').value;
-    
-            if(empresa3 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe o nome da empresa da 3º experiência!');
-                valida = false;
-            } else if(cargo3 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe o nome do cargo da 3º experiência!');
-                valida = false;
-            } else if(data_in3 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe a data início da 3º experiência!');
-                valida = false;
-            } else if(data_fi3 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe a data fim da 3º experiência!');
-                valida = false;
-            } else if(atrib3 == "") {
-                $('.nav-tabs a[href="#tabs5"]').tab('show');
-                alert('Informe a sua atribuição da 3º experiência!');
-                valida = false;
-            } else if(ctps3_ == "") {
-                if(ctps3 == "") {
-                    $('.nav-tabs a[href="#tabs5"]').tab('show');
-                    alert('Informe o arquivo CTPS da 3º Experiência!');
-                    valida = false;
-                }
-            }
-        }  
-    }
-    
-    // Aba 6: CURRÍCULO e DISPONIBILIDADE
-
-    if(valida) {
-        var x1  = document.getElementById('arquivo').value;
-        var x2  = document.getElementById('foto').value;
+        //var x1  = document.getElementById('arquivo').value;
+        //var x2  = document.getElementById('foto').value;
         var x3  = document.getElementById('habilitacao').value;
         var x4  = document.getElementById('periodo').value;
-        var x5  = document.getElementById('outra_cidade').value;
     
-        if(x1 == "") {
+        /*if(x1 == "") {
             $('.nav-tabs a[href="#tabs6"]').tab('show');
             alert('Anexe o seu currículo!');
         } else if(x2 == "") {
             $('.nav-tabs a[href="#tabs6"]').tab('show');
             alert('Anexe a sua foto!');
-        } else if(x3 == "") {
+        } else */ if(x3 == "") {
             $('.nav-tabs a[href="#tabs6"]').tab('show');
             alert('Informe se você possui habilitação!');
         } else if(x4 == "") {
             $('.nav-tabs a[href="#tabs6"]').tab('show');
             alert('Informe se tem disponibilidade de período!');
-        } else if(x5 == "") {
-            $('.nav-tabs a[href="#tabs6"]').tab('show');
-            alert('Informe se tem disponibilidade de mudar de cidade!');
-        }
+        } 
     }
 }
 
@@ -443,80 +305,5 @@ function valoresCampos() {
     }
     if(document.getElementById('cursos').value == ""){
         document.getElementById('cursos').value = " ";
-    }
-    if(document.getElementById('empresa').value == "") {
-        document.getElementById('empresa').value =  " ";
-    }
-    if(document.getElementById('cargo').value == "") {
-        document.getElementById('cargo').value = " ";
-    }
-    if(document.getElementById('atribuicao').value == "") {
-        document.getElementById('atribuicao').value = " ";
-    }
-    if(document.getElementById('data_inicio').value == ""){
-        const hoje = new Date()
-        const dia  = hoje.getDate().toString().padStart(2,'0')
-        const mes  = String(hoje.getMonth() + 1).padStart(2,'0')
-        const ano  = hoje.getFullYear()
-        const dataAtual = `${ano}-${mes}-${dia}`
-        document.getElementById('data_inicio').value = dataAtual;
-    }
-    if(document.getElementById('data_fim').value == ""){
-        const hoje = new Date()
-        const dia  = hoje.getDate().toString().padStart(2,'0')
-        const mes  = String(hoje.getMonth() + 1).padStart(2,'0')
-        const ano  = hoje.getFullYear()
-        const dataAtual = `${ano}-${mes}-${dia}`
-        document.getElementById('data_fim').value = dataAtual;
-    }
-    if(document.getElementById('empresa2').value == "") {
-        document.getElementById('empresa2').value =  " ";
-    }
-    if(document.getElementById('cargo2').value == "") {
-        document.getElementById('cargo2').value = " ";
-    }
-    if(document.getElementById('atribuicao2').value == "") {
-        document.getElementById('atribuicao2').value = " ";
-    }
-    if(document.getElementById('data_inicio2').value == ""){
-        const hoje = new Date()
-        const dia  = hoje.getDate().toString().padStart(2,'0')
-        const mes  = String(hoje.getMonth() + 1).padStart(2,'0')
-        const ano  = hoje.getFullYear()
-        const dataAtual = `${ano}-${mes}-${dia}`
-        document.getElementById('data_inicio2').value = dataAtual;
-    }
-    if(document.getElementById('data_fim2').value == ""){
-        const hoje = new Date()
-        const dia  = hoje.getDate().toString().padStart(2,'0')
-        const mes  = String(hoje.getMonth() + 1).padStart(2,'0')
-        const ano  = hoje.getFullYear()
-        const dataAtual = `${ano}-${mes}-${dia}`
-        document.getElementById('data_fim2').value = dataAtual;
-    }
-    if(document.getElementById('empresa3').value == "") {
-        document.getElementById('empresa3').value =  " ";
-    }
-    if(document.getElementById('cargo3').value == "") {
-        document.getElementById('cargo3').value = " ";
-    }
-    if(document.getElementById('atribuicao3').value == "") {
-        document.getElementById('atribuicao3').value = " ";
-    }
-    if(document.getElementById('data_inicio3').value == ""){
-        const hoje = new Date()
-        const dia  = hoje.getDate().toString().padStart(2,'0')
-        const mes  = String(hoje.getMonth() + 1).padStart(2,'0')
-        const ano  = hoje.getFullYear()
-        const dataAtual = `${ano}-${mes}-${dia}`
-        document.getElementById('data_inicio3').value = dataAtual;
-    }
-    if(document.getElementById('data_fim3').value == ""){
-        const hoje = new Date()
-        const dia  = hoje.getDate().toString().padStart(2,'0')
-        const mes  = String(hoje.getMonth() + 1).padStart(2,'0')
-        const ano  = hoje.getFullYear()
-        const dataAtual = `${ano}-${mes}-${dia}`
-        document.getElementById('data_fim3').value = dataAtual;
     }
 }

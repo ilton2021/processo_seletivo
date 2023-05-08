@@ -45,6 +45,9 @@
 			   <tr>
 			    <td><b><u><center><font color="red"> Parabéns! Você foi cadastrado no Processo Seletivo:</u></b> <b>{{ $nprocesso }}</b>!</font></center></td>
 			   </tr>
+			   <tr>
+			    <td><b><u><center><font color="red"> Seu Número de Inscrição é:</u></b> <b>{{ $numeroInscricao }}</b>!</font></center></td>
+			   </tr>
                <tr>
 				<td><b><u><center><font color="red">* Você deverá cadastrar suas experiências, responder o questionário e informar sobre o PCD.</font></center></u></b></td>
 			   </tr>

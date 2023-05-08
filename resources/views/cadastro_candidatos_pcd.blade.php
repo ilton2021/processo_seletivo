@@ -79,7 +79,7 @@
 		      </div>
 			  <?php $c = str_replace(' ','',$processos[0]->nome); ?>
 			  <br>
-			  <form method="POST"  action="{{ route('validarCandidatoPCD', array($unidade[0]->id, $processos[0]->id, $candidato[0]->id)) }}" enctype="multipart/form-data">
+			  <form method="POST"  action="{{ route('validarCandidatoPCD', array($unidade[0]->id, $processos[0]->id, $candidato[0]->id, $tela)) }}" enctype="multipart/form-data">
 			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
 			 	<div class="tab-pane" id="tabs4">
 				 <div class="modal-content">

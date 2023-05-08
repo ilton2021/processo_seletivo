@@ -107,7 +107,7 @@
 						 <div class="progress-bar bg-danger w-0">0%</div>
 						@endif
 					</div> <br>
-				  	<a href="{{ route('painelCandidatoExperienciasAviso', array($unidade[0]->id,$processos[0]->id,$candidato[0]->id)) }}">
+				  	<a href="{{ route('painelCandidatoExperienciasAviso', array($unidade[0]->id, $processos[0]->id, $candidato[0]->id, 1)) }}">
 					 <img src="{{ asset('img/painel/experiencias.jpg') }}" width="100px" height="100px">
 					</a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>EXPERIÊNCIAS *</b></h6></center>
@@ -120,7 +120,7 @@
 						 <div class="progress-bar bg-danger w-0">0%</div>
 						@endif
 					</div> <br>
-				  	<a href="{{ route('painelCandidatoQuestionario', array($unidade[0]->id,$processos[0]->id,$candidato[0]->id)) }}">
+				  	<a href="{{ route('painelCandidatoQuestionario', array($unidade[0]->id, $processos[0]->id, $candidato[0]->id, 1)) }}">
 					 <img src="{{ asset('img/painel/questionario.png') }}" width="100px" height="100px"> 
 					</a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>QUESTIONÁRIO *</b></h6></center>
@@ -133,7 +133,7 @@
 						 <div class="progress-bar bg-danger w-0">0%</div>
 						@endif
 					</div> <br>
-				    <a href="{{ route('painelCandidatoPCD', array($unidade[0]->id,$processos[0]->id,$candidato[0]->id)) }}">
+				    <a href="{{ route('painelCandidatoPCD', array($unidade[0]->id, $processos[0]->id, $candidato[0]->id, 1)) }}">
 					 <img src="{{ asset('img/painel/pcd.png') }}" width="100px" height="100px"> 
 					</a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>PCD *</b></h6></center>
