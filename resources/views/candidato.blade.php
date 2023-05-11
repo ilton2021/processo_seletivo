@@ -114,17 +114,17 @@
 								 @elseif($qtdP == 4) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id; ?>
 								 @elseif($qtdP == 5) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id; ?>
 								 @elseif($qtdP == 6) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id || $processos2[5]->id == $unidade->id; ?>
-								 @elseif($qtdP == 6) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id || $processos2[5]->id == $unidade->id || $processos2[6]->id == $unidade->id; ?>
-								 @elseif($qtdP == 6) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id || $processos2[5]->id == $unidade->id || $processos2[6]->id == $unidade->id || $processos2[7]->id == $unidade->id; ?>
+								 @elseif($qtdP == 7) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id || $processos2[5]->id == $unidade->id || $processos2[6]->id == $unidade->id; ?>
+								 @elseif($qtdP == 8) <?php $t = ''.$processos2[0]->id == $unidade->id || $processos2[1]->id == $unidade->id || $processos2[2]->id == $unidade->id || $processos2[3]->id == $unidade->id || $processos2[4]->id == $unidade->id || $processos2[5]->id == $unidade->id || $processos2[6]->id == $unidade->id || $processos2[7]->id == $unidade->id; ?>
 								@endif
 
 								@if($t != '' && $t != '0')
-    							  <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px"></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    							  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px"></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								@elseif($t == '')
-								  <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px" style="opacity: 50%"></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								  <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px" style="opacity: 50%"></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								@endif
 							   <?php if($qtdP == 0 && $idUn <= 9) { ?>
-							      <a href="{{ route('candidatoResultados', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px" style="opacity: 50%"></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							      <a href="{{ route('candidatoEditais', $unidade->id) }}" title="{{ $unidade->nome }}"><img id="img-unity" src="{{asset('img')}}/{{$unidade->caminho}}" class="rounded-sm" width="70px" style="opacity: 50%"></a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							   <?php } ?>
 							   <?php $idUn += 1; ?>
 							  @endforeach

@@ -62,10 +62,7 @@
 				  </tr>
 				</thead>
 				<tbody>
-				  <?php $hoje = date('d-m-Y', strtotime('now')); ?> 
 				   @foreach($processos as $prc)
-					 <?php $data_resultado = date('d-m-Y', strtotime($prc->data_resultado)); ?> 
-					  @if(strtotime($hoje) <= strtotime($data_resultado)) 
 					   <tr>
 						<td>{{ $prc->nome }}</td>
 						@if($prc->unidade_id == 1) <td><center>HCP Gestão</center></td> 
@@ -75,15 +72,14 @@
 						@elseif($prc->unidade_id == 5) <td><center>UPAE ARRUDA</center></td> 
 						@elseif($prc->unidade_id == 6) <td><center>UPAE CARUARU</center></td> 
 						@elseif($prc->unidade_id == 7) <td><center>HSS</center></td> 
-						@elseif($prc->unidade_id == 8) <td><center>HPR</center></td> @endif
-						
+						@elseif($prc->unidade_id == 8) <td><center>HPR</center></td> 
+						@elseif($prc->unidade_id == 9) <td><center>IGARASSU</center></td> 
+						@elseif($prc->unidade_id == 12) <td><center>PALMARES</center></td> @endif
 						<td><center>{{ $prc->inscricao_inicio }}</center></td>
 						<td><center>{{ $prc->inscricao_fim }}</center></td>
 						<td style="width: 40px;" title=""><center><a target="_blank" class="btn btn-success" href="{{asset('storage/')}}/{{($prc->edital_caminho)}}"><strong>Download</strong></a></center></td>
 					   </tr>   
-					  @endif
-				   @endforeach
-				   
+				  @endforeach
 			    </tbody>
 			</table>
 	    </section>

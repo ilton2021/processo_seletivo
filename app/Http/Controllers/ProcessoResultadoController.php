@@ -68,6 +68,7 @@ class ProcessoResultadoController extends Controller
 		return view('resultado_processosC', compact('processos','idP','candidato','resultado','processos2'));
 	}
 	
+	//Página de Informações do Candidato
 	public function informacoes($id, $id_candidato)
 	{
 		$processos  = ProcessoSeletivo::where('id', $id)->get();
@@ -85,6 +86,7 @@ class ProcessoResultadoController extends Controller
 		return view('informacoes', compact('candidato','processos','processos2','idP','qtdResp'));
 	}
 
+	// Página Ranking - Pesquisa Vaga
 	public function rankingVagas($id)
 	{
 		$processos = ProcessoSeletivo::where('id', $id)->get();
@@ -97,6 +99,7 @@ class ProcessoResultadoController extends Controller
 
 	}
 
+	// Página Ranking
 	public function ranking($id, Request $request)
 	{
 		$input = $request->all();
@@ -109,6 +112,7 @@ class ProcessoResultadoController extends Controller
 		return view('ranking', compact('processos','processos2','vagas','quest'));
 	}
 
+	// Página Ranking - Pesquisar 
 	public function pesquisarRanking($id, Request $request)
 	{ 	
 		$input = $request->all(); 
@@ -148,6 +152,7 @@ class ProcessoResultadoController extends Controller
 		return view('cadastro_resultado_processos', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2'));
 	}
 	
+	// Página de Pesquisa do Candidato
 	public function pesquisarCandidato($id, Request $request)
 	{
 		$input      = $request->all();
@@ -299,6 +304,7 @@ class ProcessoResultadoController extends Controller
 		}	
 	}
 	
+	// Página Exportar Candidatos
 	public function exportCandidatos($id, $nome) 
     {
 		return (new CandidatoExports($id, $nome))->download('candidatos.csv', \Maatwebsite\Excel\Excel::CSV, [
@@ -306,6 +312,7 @@ class ProcessoResultadoController extends Controller
         ]);
     }
 
+	// Página Exportar Candidatos Old
 	public function exportCandidatosOld($id, $nome)
 	{
 		return (new CandidatoExportsOld($id, $nome))->download('candidatos.csv', \Maatwebsite\Excel\Excel::CSV, [
@@ -313,6 +320,7 @@ class ProcessoResultadoController extends Controller
         ]);
 	}
 
+	// Página Exportar Candidatos Ranking
 	public function exportCandidatosRank($id, $nome, $vaga)
 	{
 		return (new CandidatoExportsRank($id, $nome, $vaga))->download('candidatos.csv', \Maatwebsite\Excel\Excel::CSV, [

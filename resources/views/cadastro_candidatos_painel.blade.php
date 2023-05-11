@@ -86,19 +86,6 @@
 					</div> <br><br>
 				</div>
 				<div class="row">
-				  <!--div class="col">
-				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-						@if($candidato[0]->nomearquivo2 != "")
-						 <div class="progress-bar bg-success w-100">100%</div>
-						@else
-						 <div class="progress-bar bg-danger w-0">0%</div>
-						@endif
-					</div> <br>
-				  	<a href="{{ route('painelCandidatoCurriculo', array($unidade[0]->id,$processos[0]->id,$candidato[0]->id)) }}">
-					 <img src="{{ asset('img/painel/curriculo.jfif') }}" width="100px" height="100px"> 
-					</a> <br><br>
-					<center> <h6 class="modal-title"id="exampleModalLongTitle"><b>CURRÍCULO *</b></h6> </center>	
-				  </div-->
 				  <div class="col">
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
 						@if($candidato[0]->exp_01_soma != "")

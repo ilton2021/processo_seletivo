@@ -33,6 +33,7 @@ class ProcessoCandidatoController extends Controller
 		return view('numero_inscritos', compact('processos','qtd','processo','vagas'));
 	}
 
+	//Página de Avaliação
 	public function avaliacao($id,$id_c)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
@@ -41,6 +42,7 @@ class ProcessoCandidatoController extends Controller
 		return view('avaliacao/avaliacao', compact('processos','candidato'));
 	}
 
+	//Página de Avaliação Gestor de Liderança
 	public function avaliacaoGestorLideranca($id, $id_c)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
@@ -51,6 +53,7 @@ class ProcessoCandidatoController extends Controller
 		return view('avaliacao/avaliacaoLiderancaGestor', compact('processos','candidato','avaliacao','pergAvaLid'));
 	}
 
+	//Página de Atualizar Avaliação de Liderança
 	public function updateAvaliacaoLideranca($id, $id_c, Request $request)
 	{
 		$input = $request->all();
@@ -76,6 +79,7 @@ class ProcessoCandidatoController extends Controller
                       ->withInput(session()->flashInput($request->input()));
 	}
 
+	//Página de Avaliação de Gestor Operacional
 	public function avaliacaoGestorOperacional($id, $id_c)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
@@ -86,6 +90,7 @@ class ProcessoCandidatoController extends Controller
 		return view('avaliacao/avaliacaoOperacionalGestor', compact('processos','candidato','avaliacao','pergAvaOp'));
 	}
 
+	//Página de Atualizar Avaliação Operacional
 	public function updateAvaliacaoOperacional($id, $id_c, Request $request)
 	{
 		$input = $request->all();
@@ -111,6 +116,7 @@ class ProcessoCandidatoController extends Controller
                       ->withInput(session()->flashInput($request->input()));
 	}
 
+	//Página de Avaliação de Liderança
 	public function avaliacaoLideranca($id, $id_c)
 	{
 		$processos  = ProcessoSeletivo::where('id',$id)->get();
@@ -126,6 +132,7 @@ class ProcessoCandidatoController extends Controller
 		}
 	}
 
+	//Página Salvar Avaliação de Liderança 
 	public function storeAvaliacaoLideranca($id, $id_c, Request $request)
 	{
 		$input = $request->all();  
@@ -226,6 +233,7 @@ class ProcessoCandidatoController extends Controller
 		}
 	}
 
+	//Página de Avaliação Operacional
 	public function avaliacaoOperacional($id, $id_c)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
@@ -241,6 +249,7 @@ class ProcessoCandidatoController extends Controller
 		}	
 	}
 
+	//Página Salvar Avaliação Operacional
 	public function storeAvaliacaoOperacional($id, $id_c, Request $request)
 	{
 		$input = $request->all();

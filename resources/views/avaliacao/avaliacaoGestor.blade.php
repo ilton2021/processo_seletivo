@@ -26,22 +26,21 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <tr>
-					 <td><b><center> Sua Resposta foi enviada para o RH! </center></b></td>
-					</tr>
+                  <tr>
+                    <td><b><center> Sua Resposta foi enviada para o RH! </center></b></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><p align="right"><br> <a href="{{ url('/') }}" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> Voltar <i class="fas fa-undo-alt"></i> </a> </p></td>
+                  </tr>
+                </table>
 
-					<tr>
-					 <td colspan="2"><p align="right"><br> <a href="{{ url('/') }}" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> Voltar <i class="fas fa-undo-alt"></i> </a> </p></td>
-					</tr>
-				</table>
-
-				<table border=0 width=1000>
-				  <tr>
-				   <td colspan="2" align="right">
-				   </td>
-				  </tr>
-				</table>
-			  </div>
+                <table border=0 width=1000>
+                  <tr>
+                    <td colspan="2" align="right">
+                    </td>
+                  </tr>
+                </table>
+			        </div>
             </div>
           </div>
         </div>

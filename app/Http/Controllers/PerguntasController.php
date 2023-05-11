@@ -50,6 +50,7 @@ class PerguntasController extends Controller
             compact('perguntas','processo','unidade','respostas','candidato'));
     }
 
+    // Tela de Mensagem do Questionário
     public function questionarioMsg($id_u, $id, $idC)
     {
         $unidade   = Unidade::where('id',$id_u)->get();

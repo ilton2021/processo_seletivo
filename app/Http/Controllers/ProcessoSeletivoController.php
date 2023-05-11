@@ -462,6 +462,7 @@ class ProcessoSeletivoController extends Controller
 		}
 	}
 
+	// Página Vaga Experiências
 	public function cadastroVagaExperiencias($id, $id_vaga, Request $request)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
@@ -472,6 +473,7 @@ class ProcessoSeletivoController extends Controller
 		return view('processo_seletivo/cadastro_visualizar_vagaExp',compact('unidades','processos','vaga','vagasExp','qtd'));
 	}
 
+	// Página Vaga Experiências - Novo
 	public function vagaExperienciasNovo($id, $id_vaga)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
@@ -480,6 +482,7 @@ class ProcessoSeletivoController extends Controller
 		return view('processo_seletivo/cadastro_vaga_experiencias',compact('unidades','processos','vaga'));
 	}
 
+	// Página Vaga Experiências - Alterar
 	public function vagaExperienciasAlterar($id, $id_vaga, $id_vagaE)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
@@ -489,6 +492,7 @@ class ProcessoSeletivoController extends Controller
 		return view('processo_seletivo/cadastro_alterar_vagaExp',compact('unidades','processos','vaga','vagaExp'));
 	}
 
+	// Página Vaga Experiências - Excluir
 	public function vagaExperienciasExcluir($id, $id_vaga, $id_vagaE)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
@@ -498,6 +502,7 @@ class ProcessoSeletivoController extends Controller
 		return view('processo_seletivo/cadastro_deletar_vagaExp',compact('unidades','processos','vaga','vagaExp'));
 	}
 
+	// Página Vaga Experiências - Função Salvar
 	public function storeVagaExp($id, $id_vaga, Request $request)
 	{
 		$input = $request->all();
@@ -535,6 +540,7 @@ class ProcessoSeletivoController extends Controller
 		return redirect()->route('cadastroVagaExperiencias', [$id, $id_vaga])->with($validator);
 	}
 
+	// Página Vaga Experiências - Função Alterar 
 	public function updateVagaExp($id, $id_vaga, $id_vagaE, Request $request)
 	{
 		$input	   = $request->all();
@@ -549,6 +555,7 @@ class ProcessoSeletivoController extends Controller
 		return redirect()->route('cadastroVagaExperiencias', [$id, $id_vaga])->with($validator);
 	}
 
+	// Página Vaga Experiências - Função Deletar
 	public function deletarVagaExp($id, $id_vaga, $id_vagaE, Request $request)
 	{
 		$input	   = $request->all();

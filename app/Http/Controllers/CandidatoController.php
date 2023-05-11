@@ -46,6 +46,7 @@ class CandidatoController extends Controller
 		return view('candidato', compact('unidades','processos','processos2','quadros','qtdP'));
 	}
 	
+	//Tela da Área do Candidato
 	public function areaCandidato()
 	{
 		$unidades  = Unidade::all();
@@ -69,6 +70,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Login da Área do Candidato
 	public function loginCandidato(Request $request)
 	{
 		$input     = $request->all(); 
@@ -120,6 +122,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Tela de Alterar Formulário de Inscrição
 	public function areaCandidatoAlterar($idU, $idP, $idC)
 	{
 		$estados  = Estado::all();
@@ -132,6 +135,7 @@ class CandidatoController extends Controller
 		return view('areaCandidatoAlterar', compact('unidades','user','vagas','estados','unidade','processo','vagasExp'));
 	}
 
+	//Tela de Escolha dos Documentos do Candidato
 	public function areaCandidatoDocumentosEscolha($idU, $idP, $idC)
 	{
 		$unidade  = Unidade::where('id',$idU)->get();
@@ -153,6 +157,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Função para validar Candidato
 	function validaCandidato($nomeP, $idC)
 	{
 		$aprovado = DB::table('processo_seletivo_'.$nomeP)
@@ -162,6 +167,7 @@ class CandidatoController extends Controller
 		return $qtd;
 	}
 
+	//Tela de Documentos do Candidato
 	public function areaCandidatoDocumentos($idU, $idP, $idC)
 	{
 		$unidade  = Unidade::where('id',$idU)->get();
@@ -187,6 +193,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Tela de Cadastro de Documentos do Candidato
 	public function cadastrarDocumento($idU, $idP, $idC, $tela)
 	{
 		$docs = DocumentosCandidatos::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
@@ -234,6 +241,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Função de Cadastrar Novo Documento
 	public function cadastrarDocumentoNovo($idU, $idP, $idC, $tela, Request $request)
 	{
 		$input 	   = $request->all();
@@ -302,6 +310,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Tela de Cadastro de Documentos de Dependentes do Candidato
 	public function areaCandidatoDocumentosDependentes($idU, $idP, $idC)
 	{
 		$unidade  = Unidade::where('id',$idU)->get();
@@ -324,8 +333,7 @@ class CandidatoController extends Controller
 		}
 	}
 
-	
-
+	//Tela de Cadastro de Novo Documento dos Dependentes do Candidato
 	public function cadastrarDocumentoDep($idU, $idP, $idC, $tela)
 	{
 		$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
@@ -363,6 +371,7 @@ class CandidatoController extends Controller
 		}		
 	}
 
+	//Função de Salvar Novo Documento dos Dependentes do Candidato 
 	public function cadastrarDocumentoDepNovo($idU, $idP, $idC, $tela, Request $request)
 	{
 		  
@@ -489,7 +498,11 @@ class CandidatoController extends Controller
 	// Página Editais em Curso - Candidatos //
 	public function candidatoEditais($id)
 	{
-		$processos = ProcessoSeletivo::where('unidade_id', $id)->get();
+		$hoje = date('Y-m-d', strtotime('now'));
+		$processos = DB::table('processo_seletivo')
+		->where('processo_seletivo.unidade_id', $id)
+		->where('processo_seletivo.inscricao_fim','>=',$hoje)
+		->where('processo_seletivo.inscricao_inicio','<=',$hoje)->get();
 		$unidade   = Unidade::find($id);
 		return view('resultados_editais', compact('processos','unidade'));
 	}
@@ -504,6 +517,7 @@ class CandidatoController extends Controller
 		return view('resultados_listas', compact('processos','unidade','id'));
 	}
 
+	// Página de Salvar Candidatos (Adm)
 	public function cadastroCandidato2($id)
 	{
 		$processos = ProcessoSeletivo::where('id',$id)->get();
@@ -511,6 +525,7 @@ class CandidatoController extends Controller
 		return view('cadastro_candidato2', compact('processos','vagas'));
 	}
 
+	// Função de Salvar Candidatos (Adm)
 	public function storeCandidato2(Request $request, $id)
 	{
 		$input = $request->all();
@@ -627,6 +642,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Função de Pesquisar o Resultado do Candidato
 	public function pesquisarCandidatoResultado($id, $idE, $nome, Request $request)
 	{
 		$input = $request->all();
@@ -720,6 +736,7 @@ class CandidatoController extends Controller
 		return view('cadastro_candidatos', compact('unidade','processos','vagas','a','estados','unidades','vagasExp'));
 	}
 
+	//Função de Escolher a Vaga do Processo Seletivo
 	public function storeCadastroVagaCandidato($id, $id_processo, Request $request)
 	{
 		$input = $request->all();
@@ -737,6 +754,7 @@ class CandidatoController extends Controller
 		return view('cadastro_candidatos', compact('unidade','processos','vagas','a','estados','unidades','vagasExp'));
 	}
 
+	//Função para Cadastrar Candidato - Formulário
 	public function validarCandidato($id, $id_processo, Request $request)
 	{ 
 	    try{ 
@@ -1151,6 +1169,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Página do Painel do Candidato
 	public function painelCandidato($id_u, $id, $id_c) 
 	{
 		$unidades = Unidade::all();
@@ -1167,6 +1186,7 @@ class CandidatoController extends Controller
 		return view('cadastro_candidatos_painel', compact('unidades','unidade','processos','candidato','qtdQ'));
 	}
 
+	//Página do Painel do Candidato - PCD
 	public function painelCandidatoPCD($id_u, $id, $id_c, $tela)
 	{
 		$unidades = Unidade::all();
@@ -1183,6 +1203,7 @@ class CandidatoController extends Controller
 		return view('cadastro_candidatos_pcd', compact('unidades','unidade','processos','candidato','qtdQ','tela'));
 	}
 
+	//Página do Painel do Candidato - Salvar PCD
 	public function validarCandidatoPCD($id_u, $id, $id_c, $tela, Request $request)
 	{
 		$input     = $request->all();
@@ -1284,6 +1305,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Página do Painel do Candidato - Questionário
 	public function painelCandidatoQuestionario($id_u, $id, $id_c, $tela)
 	{
 		$unidades = Unidade::all();
@@ -1301,6 +1323,7 @@ class CandidatoController extends Controller
 		return view('cadastro_candidatos_questionario', compact('unidades','unidade','processos','candidato','perguntas','qtdQ','tela'));
 	}
 
+	//Página do Painel do Candidato - Salvar Questionário
 	public function validarCandidatoQuestionario($id_u, $id, $id_c, $tela, Request $request)
 	{
 		$input     = $request->all(); 
@@ -1397,6 +1420,7 @@ class CandidatoController extends Controller
          }
 	}
 
+	//Página do Painel do Candidato - Experiências
 	public function painelCandidatoExperiencias($id_u, $id, $id_c, $tela)
 	{
 		$unidades = Unidade::all();
@@ -1417,6 +1441,7 @@ class CandidatoController extends Controller
 		return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','qtdQ','tela'));
 	}
 
+	//Página do Painel do Candidato - Aviso Experiências
 	public function painelCandidatoExperienciasAviso($id_u, $id, $id_c, $tela)
 	{
 		$unidades = Unidade::all();
@@ -1437,6 +1462,7 @@ class CandidatoController extends Controller
 		return view('cadastro_candidatos_experiencias_aviso', compact('unidades','unidade','processos','vagasExp','candidato','qtdQ','tela'));
 	}
 
+	//Página do Painel do Candidato - Salvar Experiências
 	public function validarCandidatoExperiencias($id_u, $id, $id_c, $tela, Request $request)
 	{
 		$input     = $request->all();
@@ -1637,6 +1663,7 @@ class CandidatoController extends Controller
 		}
 	}
 
+	//Página do Painel do Candidato - Currículo
 	public function painelCandidatoCurriculo($id_u, $id, $id_c)
 	{
 		$unidades = Unidade::all();
@@ -1653,6 +1680,7 @@ class CandidatoController extends Controller
 		return view('cadastro_candidatos_curriculo', compact('unidades','unidade','processos','candidato','qtdQ'));
 	}
 
+	//Página do Painel do Candidato - Salvar Currículo
 	public function validarCandidatoCurriculo($id_u, $id, $id_c, Request $request)
 	{
 		$input = $request->all();
@@ -1711,6 +1739,7 @@ class CandidatoController extends Controller
 						 ->withErrors($validator);
 	}
 
+	//Página do Painel do Candidato - Confirmar Inscrição
 	public function validarCandidatoConfirmar($id_u, $id, $id_c, Request $request)
 	{
 		$unidade   = Unidade::where('id',$id_u)->get();

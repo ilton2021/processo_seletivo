@@ -60,7 +60,7 @@ Route::get('/cadastro/avaliacaoGestor/','ProcessoCandidatoController@avaliacaoGe
 Route::get('/auth/login','UserController@telaLogin')->name('telaLogin');
 Route::post('/auth/login/', 'UserController@Login')->name('Login');
 Route::get('/auth/register','UserController@telaRegistro')->name('telaRegistro');
-Route::post('/auth/register/','UserController@store')->name('store');
+Route::post('/auth/register/','UserController@store')->name('store') ;
 Route::get('/auth/passwords/reset','UserController@telaReset')->name('telaReset');	
 Route::post('/telaReset','UserController@resetarSenha')->name('resetarSenha');
 Route::get('/auth/passwords/email','UserController@telaEmail')->name('telaEmail');
@@ -116,8 +116,6 @@ Route::middleware(['auth'])->group( function() {
 		Route::get('/processo_seletivo/vagaCadastro/{id}/excluir_experiencias/{id_vaga}/{id_vagaE}','ProcessoSeletivoController@vagaExperienciasExcluir')->name('vagaExperienciasExcluir');
 		Route::post('/processo_seletivo/vagaCadastro/{id}/excluir_experiencias/{id_vaga}/{id_vagaE}','ProcessoSeletivoController@deletarVagaExp')->name('deletarVagaExp');
 	
-		////
-		
 		//ProcessoCandidato
 		Route::get('/processo_candidato/{id}','ProcessoCandidatoController@numeroInscritos')->name('numeroInscritos');
 		////
