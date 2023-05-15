@@ -25,7 +25,7 @@ use Exception;
 
 class CandidatoController extends Controller
 {
-	// Página Inicial - Candidatos //
+	// Página Inicial do Sistema - Candidatos //
     function candidatoIndex()
 	{
 		$unidades = Unidade::all();
@@ -46,11 +46,11 @@ class CandidatoController extends Controller
 		return view('candidato', compact('unidades','processos','processos2','quadros','qtdP'));
 	}
 	
-	//Tela da Área do Candidato
+	//Área do Candidato
 	public function areaCandidato()
 	{
 		$unidades  = Unidade::all();
-		$dia = date('Y-m-d', strtotime('2023-04-01'));
+		$dia = date('Y-m-d', strtotime('2023-05-01'));
 		$processos = DB::table('processo_seletivo')
 		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
@@ -75,7 +75,7 @@ class CandidatoController extends Controller
 	{
 		$input     = $request->all(); 
 		$unidades  = Unidade::all();
-		$dia       = date('Y-m-d', strtotime('2023-04-01'));
+		$dia       = date('Y-m-d', strtotime('2023-05-01'));
 		$processos = DB::table('processo_seletivo')
 		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
@@ -114,7 +114,7 @@ class CandidatoController extends Controller
 					->withInput(session()->flashInput($request->input())); 					
 			} else {
 				$processo = ProcessoSeletivo::where('nome',$processoSeletivo)->get();
-				$unidade    = Unidade::where('id',$processo[0]->unidade_id)->get();
+				$unidade  = Unidade::where('id',$processo[0]->unidade_id)->get();
 				return view('cadastro_candidatos_painel_alterar', compact('unidades','user','processos','unidade','valida','processo'))
 					->withErrors($validator)
 				  	->withInput(session()->flashInput($request->input())); 					
@@ -122,7 +122,7 @@ class CandidatoController extends Controller
 		}
 	}
 
-	//Tela de Alterar Formulário de Inscrição
+	//Página para Alterar Formulário de Inscrição
 	public function areaCandidatoAlterar($idU, $idP, $idC)
 	{
 		$estados  = Estado::all();
@@ -135,7 +135,7 @@ class CandidatoController extends Controller
 		return view('areaCandidatoAlterar', compact('unidades','user','vagas','estados','unidade','processo','vagasExp'));
 	}
 
-	//Tela de Escolha dos Documentos do Candidato
+	//Página de Escolha dos Documentos do Candidato ou Documentos dos Dependentes
 	public function areaCandidatoDocumentosEscolha($idU, $idP, $idC)
 	{
 		$unidade  = Unidade::where('id',$idU)->get();
@@ -157,7 +157,7 @@ class CandidatoController extends Controller
 		}
 	}
 
-	//Função para validar Candidato
+	//Função para saber se o candidato é Aprovado(a)
 	function validaCandidato($nomeP, $idC)
 	{
 		$aprovado = DB::table('processo_seletivo_'.$nomeP)
@@ -167,7 +167,7 @@ class CandidatoController extends Controller
 		return $qtd;
 	}
 
-	//Tela de Documentos do Candidato
+	//Página de Documentos do Candidato
 	public function areaCandidatoDocumentos($idU, $idP, $idC)
 	{
 		$unidade  = Unidade::where('id',$idU)->get();
@@ -193,7 +193,7 @@ class CandidatoController extends Controller
 		}
 	}
 
-	//Tela de Cadastro de Documentos do Candidato
+	//Página de Cadastro de Novo Documento do Candidato
 	public function cadastrarDocumento($idU, $idP, $idC, $tela)
 	{
 		$docs = DocumentosCandidatos::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
@@ -241,7 +241,7 @@ class CandidatoController extends Controller
 		}
 	}
 
-	//Função de Cadastrar Novo Documento
+	//Função de cadastrar Novo Documento do Candidato
 	public function cadastrarDocumentoNovo($idU, $idP, $idC, $tela, Request $request)
 	{
 		$input 	   = $request->all();
@@ -310,7 +310,7 @@ class CandidatoController extends Controller
 		}
 	}
 
-	//Tela de Cadastro de Documentos de Dependentes do Candidato
+	//Página de Cadastro de Documentos de Dependentes do Candidato
 	public function areaCandidatoDocumentosDependentes($idU, $idP, $idC)
 	{
 		$unidade  = Unidade::where('id',$idU)->get();
@@ -333,7 +333,7 @@ class CandidatoController extends Controller
 		}
 	}
 
-	//Tela de Cadastro de Novo Documento dos Dependentes do Candidato
+	//Página de Cadastro de Novo Documento dos Dependentes do Candidato
 	public function cadastrarDocumentoDep($idU, $idP, $idC, $tela)
 	{
 		$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
@@ -371,7 +371,7 @@ class CandidatoController extends Controller
 		}		
 	}
 
-	//Função de Salvar Novo Documento dos Dependentes do Candidato 
+	//Função de cadastrar um Novo Documento dos Dependentes do Candidato 
 	public function cadastrarDocumentoDepNovo($idU, $idP, $idC, $tela, Request $request)
 	{
 		  
@@ -437,7 +437,7 @@ class CandidatoController extends Controller
 					->withInput(session()->flashInput($request->input()));
 	}
 
-	// Página Informações Cadastro Candidatos //
+	// Página das Informações do Processo Seletivo //
 	public function informativo($id_unidade, $id_processo)
 	{
 		$unidades = Unidade::where('id', $id_unidade)->get();
@@ -453,7 +453,7 @@ class CandidatoController extends Controller
 		return view('informativo', compact('unidades','processos','processos2'));
 	}
 
-	// Página Informações Cadastro Candidatos //
+	// Página do Edital do Processo Seletivo //
 	public function informativoPDF($id_unidade, $id_processo)
 	{
 		$unidades = Unidade::where('id', $id_unidade)->get();
@@ -466,7 +466,7 @@ class CandidatoController extends Controller
 		return view('informativoPDF', compact('unidades','processos'));
 	}
 
-	// Página Informações LGPD Cadastro Candidatos //
+	// Página das Informações LGPD do Processo Seletivo //
 	public function informativoLGPD($id_unidade, $id_processo)
 	{
 		$unidades = Unidade::where('id', $id_unidade)->get();
@@ -977,7 +977,7 @@ class CandidatoController extends Controller
 		}
 	}
 
-	// Validação da Alteração da Inscrição do Candidato
+	// Validação da Alteração da Inscrição do Candidato - Formulário
 	public function updateAreaCandidatoAlterar($idU, $idP, $idC, Request $request)
 	{
 		try{  

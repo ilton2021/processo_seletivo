@@ -16,11 +16,6 @@ use Illuminate\Support\Facades\Mail;
 
 class ProcessoCandidatoController extends Controller
 {
-	public function __construct()
-	{
-		
-	}
-	
 	// Página Número de Inscritos - Processo Seletivo //
     public function numeroInscritos($id)
 	{
