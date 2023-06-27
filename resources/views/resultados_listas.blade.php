@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <head>
     <title>Processo Seletivo - HCP</title>
-	<link rel='stylesheet' href="{{ asset('../js/bootstrap.js') }}"/>
-	<link rel='stylesheet' href="{{ asset('../js/utils.js') }}" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">	
+	<link href="{{ asset('css/teste.css') }}" rel="stylesheet" type="text/css" />
+	<script type="{{ asset('text/javascript') }}"> </script>        
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
     <body class="page homepage ltr preset1 menu-homepage responsive bg hfeed clearfix">
 	  <div class="container">
@@ -14,17 +14,18 @@
 				  <div class="sppb-addon-content">
 					<div class="custom">
 					  <div class="container" style="width:100%;"> <br> <br>
-						 <table align="center" border="0" width="800" bordercolor=DCDCDC>
-						    <tr>
-							  <td align="center"><img width="180" class="sppb-img-responsive" src="{{asset('img/gestao.png')}}" alt="Hospital do Câncer de Pernambuco" title="Hospital do Câncer de Pernambuco"></td>
-							  <td align="center" width="600"><p style="font-size: 20px; margin-top: 20px; font-family: Lucida Console, Courier, monospace;">{{ 'Processo Seletivo: '. $processos[0]->nome }} </p></td>
-							  <td align="center"><img width="180" class="sppb-img-responsive" src="{{asset('img')}}/{{$unidade[0]->caminho}}" alt="{{ $unidade[0]->nome }}" title="{{ $unidade[0]->nome }}"></td>
-							<tr><td colspan="3">&nbsp;&nbsp;</td></tr>
-							</tr>
-							<tr>
-							 <td colspan="3"><center>A coordenação de recrutamento e seleção divulga os resultado parcial do {{ 'Processo Seletivo: '. $processos[0]->nome }}.</center></td>
-							</tr>
-						  </table>
+						  <header id="sp-header-wrapper" class=" "><div class="container"><div class="row-fluid" id="header">
+						  <div class="container text-center">
+							<div class="row"> 
+								<div class="col"><br> <img width="150px" style="margin-left: 110px" src="{{ asset('img/gestao.png') }}" alt=""> </div>
+								<div class="col"><b><font style="margin-top: 40px; margin-left: -20px; font-size: 17px; font-family: Lucida Console, Courier, monospace;"> {{ 'Processo Seletivo: '. $processos[0]->nome }} </font></b></div>
+								<div class="col"><br> <img width="150px" style="margin-left: 50px" class="sppb-img-responsive" src="{{asset('img')}}/{{$unidade[0]->caminho}}" alt="{{ $unidade[0]->nome }}" title="{{ $unidade[0]->nome }}"> </div>
+							</div>
+							<div class="row">
+							  <div class="col"> <br><br><font style="margin-left: -20px; font-size: 15px"> A coordenação de recrutamento e seleção divulga o resultado parcial do {{ 'Processo Seletivo: '. $processos[0]->nome }}. </font></div>
+							</div>
+						  </div>
+						  </header>
 					  </div>
 					 </div>
 				   </div>
@@ -40,39 +41,23 @@
 				</ul>
 				</div>
 			  @endif
-			  <p align="right"><a href="{{route('candidatoResultados', $processos[0]->unidade_id)}}" class="btn btn-warning btn-sm" style="margin-top: 10px; color: #FFFFFF;"> Voltar <i class="fas fa-undo-alt"></i> </a></p>
+			  <p align="right"><a href="{{route('candidatoResultados', $processos[0]->unidade_id)}}" class="btn btn-warning btn-sm" style="margin-top: 10px; color: #FFFFFF;"> VOLTAR <i class="fas fa-undo-alt"></i> </a></p>
 			  <br><br>
 			  <div class="tab-content" id="myTabContent">
-				<table class="table table-bordered table-striped" border="2" width="500px;" bordercolor=DCDCDC>
+				<table class="table table-bordered table-striped" border="2" bordercolor=DCDCDC>
 				<thead>
 				 <tr>
-				  <td colspan="4"><center><h3>Escolha uma opção:</h3></center></td>
+				  <td colspan="4"><center><h4>Escolha uma opção:</h4></center></td>
 				 </tr>
                 </thead>
 				<tbody> 
 				@foreach($processos as $processo)
 				 <tr>
-				  <td><center><a href="{{ route('candidatoListasOpcao', array($processo->id, 1, $processo->nome)) }}">Avaliação de Conhecimento</a></center></td>
-				  <td><center><a href="{{ route('candidatoListasOpcao', array($processo->id, 2, $processo->nome)) }}">Entrevista Profissional</a></center></td>
-				  <td><center><a href="{{ route('candidatoListasOpcao', array($processo->id, 3, $processo->nome)) }}">Aprovados</a></center></td>
-				  <td><center><a href="{{ route('candidatoListasOpcao', array($processo->id, 4, $processo->nome)) }}">Cadastro de Reserva</a></center></td>
+				  <td><center><a class="btn btn-success btn-sm" href="{{ route('candidatoListasOpcao', array($processo->id, 1, $processo->nome)) }}"><strong>AVALIAÇÃO DE CONHECIMENTO</strong></a></center></td>
+				  <td><center><a class="btn btn-success btn-sm" href="{{ route('candidatoListasOpcao', array($processo->id, 2, $processo->nome)) }}"><strong>ENTREVISTA PROFISSIONAL</strong></a></center></td>
+				  <td><center><a class="btn btn-success btn-sm" href="{{ route('candidatoListasOpcao', array($processo->id, 3, $processo->nome)) }}"><strong>APROVADOS</strong></a></center></td>
+				  <td><center><a class="btn btn-success btn-sm" href="{{ route('candidatoListasOpcao', array($processo->id, 4, $processo->nome)) }}"><strong>CADASTRO DE RESERVA</strong></a></center></td>
 				 </tr>
-				 
-				 @if($processo->id == 100)
-			       <tr>
-			           <td colspan='4'><br><br><center>O Resultado dos Candidatos Aprovados deste Processo Seletivo sairá até o dia <b>02/02/2021</b>.</center></td>
-			       </tr>
-			     @endif
-			     @if($processo->id == 122)
-			       <tr>
-			           <td colspan='4'><br><br><center>O Resultado dos Candidatos Aprovados deste Processo Seletivo sairá até o dia <b>12/04/2021</b>.</center></td>
-			       </tr>
-			     @endif
-			     @if($processo->id == 115)
-			       <tr>
-			           <td colspan="8"><br><br><center>O Processo Seletivo: UPAE CARUARU 01/2021 foi cancelado. <a href="{{asset('storage')}}/{{'Cancelamento Seleção pessoal HCP Gestão UPAE CARUARU - 01.2021.pdf'}}">clique aqui.</a></center></td>
-			       </tr>
-			     @endif
 				@endforeach
 				</tbody>
 			  </table>

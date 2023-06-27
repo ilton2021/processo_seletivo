@@ -44,57 +44,57 @@
 		function desabilitar6(valor) {
 			var x = document.getElementById('val6').checked;
 			if(x == true){
-				document.getElementById('empresa').disabled  	  = false;
-				document.getElementById('cargo').disabled 		  = false;
-				document.getElementById('data_inicio').disabled   = false;
-				document.getElementById('data_fim').disabled 	  = false;
-				document.getElementById('atribuicao').disabled    = false;
-				document.getElementById('arquivo_ctps1').disabled = false;
-			} else {
 				document.getElementById('empresa').disabled  	  = true;
 				document.getElementById('cargo').disabled 		  = true;
 				document.getElementById('data_inicio').disabled   = true;
 				document.getElementById('data_fim').disabled 	  = true;
 				document.getElementById('atribuicao').disabled    = true;
 				document.getElementById('arquivo_ctps1').disabled = true;
+			} else {
+				document.getElementById('empresa').disabled  	  = false;
+				document.getElementById('cargo').disabled 		  = false;
+				document.getElementById('data_inicio').disabled   = false;
+				document.getElementById('data_fim').disabled 	  = false;
+				document.getElementById('atribuicao').disabled    = false;
+				document.getElementById('arquivo_ctps1').disabled = false;
 			}
 		}
 		
 		function desabilitar7(valor) {
 			var x = document.getElementById('val7').checked;
 			if(x == true){
-				document.getElementById('empresa2').disabled  	  = false;
-				document.getElementById('cargo2').disabled 		  = false;
-				document.getElementById('data_inicio2').disabled  = false;
-				document.getElementById('data_fim2').disabled 	  = false;
-				document.getElementById('atribuicao2').disabled   = false;
-				document.getElementById('arquivo_ctps2').disabled = false;
-			} else {
 				document.getElementById('empresa2').disabled  	  = true;
 				document.getElementById('cargo2').disabled 		  = true;
 				document.getElementById('data_inicio2').disabled  = true;
 				document.getElementById('data_fim2').disabled 	  = true;
 				document.getElementById('atribuicao2').disabled   = true;
 				document.getElementById('arquivo_ctps2').disabled = true;
+			} else {
+				document.getElementById('empresa2').disabled  	  = false;
+				document.getElementById('cargo2').disabled 		  = false;
+				document.getElementById('data_inicio2').disabled  = false;
+				document.getElementById('data_fim2').disabled 	  = false;
+				document.getElementById('atribuicao2').disabled   = false;
+				document.getElementById('arquivo_ctps2').disabled = false;
 			}
 		}
 
 		function desabilitar8(valor) {
 			var x = document.getElementById('val8').checked;
 			if(x == true){
-				document.getElementById('empresa3').disabled  	  = false;
-				document.getElementById('cargo3').disabled 		  = false;
-				document.getElementById('data_inicio3').disabled  = false;
-				document.getElementById('data_fim3').disabled 	  = false;
-				document.getElementById('atribuicao3').disabled   = false;
-				document.getElementById('arquivo_ctps3').disabled = false;
-			} else {
 				document.getElementById('empresa3').disabled  	  = true;
 				document.getElementById('cargo3').disabled 		  = true;
 				document.getElementById('data_inicio3').disabled  = true;
 				document.getElementById('data_fim3').disabled 	  = true;
 				document.getElementById('atribuicao3').disabled   = true;
 				document.getElementById('arquivo_ctps3').disabled = true;
+			} else {
+				document.getElementById('empresa3').disabled  	  = false;
+				document.getElementById('cargo3').disabled 		  = false;
+				document.getElementById('data_inicio3').disabled  = false;
+				document.getElementById('data_fim3').disabled 	  = false;
+				document.getElementById('atribuicao3').disabled   = false;
+				document.getElementById('arquivo_ctps3').disabled = false;
 			}
 		}
 	 </script>
@@ -130,8 +130,11 @@
 			  <br><br>
 			  <table class="table table-borderless" border="0" width="500" id="inicio">
 				<tr>
-				<td align="center"><strong> Olá! Seja bem vindo ao processo seletivo simplificado {{ $processos[0]->nome }}. </strong> </td>
-				<td> <a href="javascript:history.back();" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a></td>
+				  <td align="center"><strong> Olá! Seja bem vindo ao processo seletivo simplificado {{ $processos[0]->nome }}. </strong> </td>
+				  <td> <a href="javascript:history.back();" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a></td>
+				</tr>
+				<tr>
+				  <td align="center"><b>* Marque as competências que mais se identifica no seu perfil.</b></td>
 				</tr>
 			  </table>
 			  @if($errors->any())
@@ -160,9 +163,9 @@
 					   <div class="col">
 					    <label for="inputState" class="form-label"><b><font size="2"><center>EXPERIÊNCIA 01:</center></font></b></label>
 						 @if(old('val6') == "on")
-						  <p align="right"><input type="checkbox" checked onclick="desabilitar6('sim')" id="val6" name="val6" /><font size="2"> Habilitar campos</font></p></td>
+						  <p align="right"><input type="checkbox" checked onclick="desabilitar6('sim')" id="val6" name="val6" /><font size="2"> Desabilitar campos</font></p></td>
 					     @else
-						  <p align="right"><input type="checkbox" onclick="desabilitar6('sim')" id="val6" name="val6" /><font size="2"> Habilitar campos</font></p></td>
+						  <p align="right"><input type="checkbox" onclick="desabilitar6('sim')" id="val6" name="val6" /><font size="2"> Desabilitar campos</font></p></td>
 						 @endif
 					   </div>
 					  </div>
@@ -170,17 +173,43 @@
 					   <div class="col">
 					    <label for="inputState" class="form-label"><b><font size="2">Empresa:</font></b></label>
 						 @if(old('val6') == "on")
-						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" required />
+						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_01_empresa; } else { ?> {{ old('exp_01_empresa') }} <?php } ?>" maxlength="150" required />
 						 @else
-						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="{{ old('empresa') }}" maxlength="150" required />
+						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa" name="empresa" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_01_empresa; } else { ?> {{ old('exp_01_empresa') }} <?php } ?>" maxlength="150" required />
 						 @endif
 					   </div>
 					   <div class="col">
 					    <label for="inputState" class="form-label"><b><font size="2">Cargo:</font></b></label>
 						 @if(old('val6') == "on")
-						  <input class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" required />
+						  <select class="form-select form-select-sm" id="cargo" name="cargo" required> 
+							<option value="">Selecione...</option>
+						    @foreach($cargos as $cargo)
+							 @if($qtdC > 0)
+							  @if($cargo->nome == $candidato[0]->exp_01_cargo)
+							   <option value="<?php echo $cargo->nome; ?>" selected> {{ $cargo->nome }}</option>
+							  @else
+							   <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							  @endif
+							 @else
+							 <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							 @endif
+						    @endforeach
+						  </select>
 						 @else
-						  <input disabled class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" maxlength="150" required />
+						  <select class="form-select form-select-sm" id="cargo" name="cargo" required> 
+							<option value="">Selecione...</option>
+							@foreach($cargos as $cargo)
+							 @if($qtdC > 0)
+							  @if($cargo->nome == $candidato[0]->exp_01_cargo)
+							   <option value="<?php echo $cargo->nome; ?>" selected> {{ $cargo->nome }}</option>
+							  @else
+							   <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							  @endif
+							 @else
+							 <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							 @endif
+						    @endforeach
+						  </select>
 						 @endif
 					   </div>
 					  </div>
@@ -188,17 +217,17 @@
 					   <div class="col">
 					    <label for="inputState" class="form-label"><b><font size="2">Data Início:</font></b></label>
 						 @if(old('val6') == "on")
-						  <input class="form-control form-control-sm" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" required />
+						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio" name="data_inicio" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_01_data_ini; } else { ?> {{ old('exp_01_data_ini') }} <?php } ?>" maxlength="15" required />
 				 		 @else
-						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') }}" maxlength="15" required />
+						  <input class="form-control form-control-sm" type="date" id="data_inicio" name="data_inicio" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_01_data_ini; } else { ?> {{ old('exp_01_data_ini') }} <?php } ?>" maxlength="15" required />
 				  		 @endif
 				 	   </div>
 					   <div class="col">
 						<label for="inputState" class="form-label"><b><font size="2">Data Fim:</font></b></label>
 						 @if(old('val6') == "on")
-						  <input class="form-control form-control-sm" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" required />
+						  <input disabled class="form-control form-control-sm" type="date" id="data_fim" name="data_fim" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_01_data_fim; } else { ?> {{ old('exp_01_data_fim') }} <?php } ?>" maxlength="15" required />
 						 @else
-						  <input disabled class="form-control form-control-sm" type="date" id="data_fim" name="data_fim" value="{{ old('data_fim') }}" maxlength="15" required />
+						  <input class="form-control form-control-sm" type="date" id="data_fim" name="data_fim" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_01_data_fim; } else { ?> {{ old('exp_01_data_fim') }} <?php } ?>" maxlength="15" required />
 						 @endif 
 					   </div>
 					  </div>
@@ -206,21 +235,49 @@
 					   <div class="col"> 
 					    <label for="inputState" class="form-label"><b><font size="2">Suas Atribuições:</font></b></label>
 					     @if(old('val6') == "on")
-						   <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" required>{{ old('atribuicao') }}</textarea>
+						   <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" maxlength="300" required><?php if($qtdC > 0) { echo $candidato[0]->exp_01_atribuicoes; } else { ?> {{ old('atribuicao') }} <?php } ?></textarea>
 						 @else
-						   <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" value="{{ old('atribuicao') }}" maxlength="300" required>{{ old('atribuicao') }}</textarea>
+						   <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao" name="atribuicao" maxlength="300" required><?php if($qtdC > 0) { echo $candidato[0]->exp_01_atribuicoes; } else { ?> {{ old('atribuicao') }} <?php } ?></textarea>
 						 @endif
 					    <font size="2">Restam: <span class="caracteres">300 </span> caracteres.</font><br>
 					   </div>
 					  </div>
+					  @if($exp1)
+					  <b><font size="2">Competências escolhidas:</font></b> <br>
+						@foreach($vagasExp as $vagaE)
+						 @foreach($exp1 as $exp)
+							@if($vagaE->descricao == $exp->descricao)
+							  - {{ $vagaE->descricao }} <br>
+							@endif
+						 @endforeach
+						 @foreach($exp1_1 as $exp)
+							@if($vagaE->descricao == $exp->descricao)
+							  - {{ $vagaE->descricao }} <br>	
+							@endif
+						 @endforeach
+						@endforeach
+					  @endif
 					  @if($vagasExp)
 					  <div class="row">
 					   <div class="col"> 
 					    <label for="inputState" class="form-label"><b><font size="2">Nesta Experiência você obteve alguma dessas competências:</font></b></label> <br>
+						<b><font size="2">Competências Necessárias:</font></b><br> 
 						@foreach($vagasExp as $vagaExp)
-						  <input type='checkbox' class="vaga_exp1" id="vaga_exp1[]" name="vaga_exp1[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						  @if($vagaExp->tipo == 1)
+						 	&nbsp;&nbsp;<input type='checkbox' class="vaga_exp1" id="vaga_exp1[]" name="vaga_exp1[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						  @endif
 						@endforeach
-						<input type='checkbox' class="vaga_exp1" id="vaga_exp1[]" name="vaga_exp1[]" value="0" /> Nenhuma Competência &nbsp;</input> 
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+					    <b><font size="2">Competências Desejadas:</font></b><br>	
+					    @foreach($vagasExp as $vagaExp)
+						  @if($vagaExp->tipo == 2)
+						    &nbsp;&nbsp;<input type='checkbox' class="vaga_exp1_1" id="vaga_exp1_1[]" name="vaga_exp1_1[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						  @endif
+						@endforeach
+						<input type='checkbox' class="vaga_exp1" id="vaga_exp1[]" name="vaga_exp1[]" value="-" /> Nenhuma Competência &nbsp;</input> 
 					   </div>
 					  </div>
 					  @endif
@@ -233,9 +290,9 @@
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><b><font size="2">EXPERIÊNCIA 02:</font></b></label>
 						 @if(old('val7') == "on")
-						  <p align="right"><input type="checkbox" checked onclick="desabilitar7('sim')" id="val7" name="val7" /><font size="2"> Habilitar campos </font></p></td>
+						  <p align="right"><input type="checkbox" checked onclick="desabilitar7('sim')" id="val7" name="val7" /><font size="2"> Desabilitar campos </font></p></td>
 						 @else
-						  <p align="right"><input type="checkbox" onclick="desabilitar7('sim')" id="val7" name="val7" /><font size="2"> Habilitar campos </font></p></td>
+						  <p align="right"><input type="checkbox" onclick="desabilitar7('sim')" id="val7" name="val7" /><font size="2"> Desabilitar campos </font></p></td>
 						 @endif
 					   </div> 
 					  </div>
@@ -243,17 +300,43 @@
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"><b>Empresa:</b></font></label>
 						 @if(old('val7') == "on")
-						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" required />
+						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_02_empresa; } else { ?> {{ old('exp_02_empresa') }} <?php } ?>" maxlength="150" required />
 						 @else
-						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="{{ old('empresa2') }}" maxlength="150" required />
+						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa2" name="empresa2" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_02_empresa; } else { ?> {{ old('exp_02_empresa') }} <?php } ?>" maxlength="150" required />
 						 @endif
 					   </div> 
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"><b>Cargo:</b></font></label>
 						 @if(old('val7') == "on")
-					 	  <input class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" required />
+						  <select class="form-select form-select-sm" id="cargo2" name="cargo2" required> 
+							<option value="">Selecione...</option>
+						    @foreach($cargos as $cargo)
+							 @if($qtdC > 0)
+							  @if($cargo->nome == $candidato[0]->exp_02_cargo)
+							   <option value="<?php echo $cargo->nome; ?>" selected> {{ $cargo->nome }}</option>
+							  @else
+							   <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							  @endif
+							 @else
+							 <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							 @endif
+						    @endforeach
+						  </select>
 						 @else
-						  <input disabled class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo2" name="cargo2" value="{{ old('cargo2') }}" maxlength="150" required />
+						  <select class="form-select form-select-sm" id="cargo2" name="cargo2" required> 
+							<option value="">Selecione...</option>
+							@foreach($cargos as $cargo)
+							 @if($qtdC > 0)
+							  @if($cargo->nome == $candidato[0]->exp_02_cargo)
+							   <option value="<?php echo $cargo->nome; ?>" selected> {{ $cargo->nome }}</option>
+							  @else
+							   <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							  @endif
+							 @else
+							 <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							 @endif
+						    @endforeach
+						  </select>
 						 @endif
 					   </div> 
 					  </div>
@@ -261,17 +344,17 @@
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"><b>Data Início:</b></font></label>
 						 @if(old('val7') == "on")
-						  <input class="form-control form-control-sm" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" required />
+						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio2" name="data_inicio2" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_02_data_ini; } else { ?> {{ old('data_inicio2') }} <?php } ?>" maxlength="15" required />
 						 @else
-						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio2" name="data_inicio2" value="{{ old('data_inicio2') }}" maxlength="15" required />
+						  <input class="form-control form-control-sm" type="date" id="data_inicio2" name="data_inicio2" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_02_data_ini; } else { ?> {{ old('data_inicio2') }} <?php } ?>" maxlength="15" required />
 						 @endif
 					   </div> 
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"><b>Data Fim:</b></font></label>
 						 @if(old('val7') == "on")
-						  <input class="form-control form-control-sm" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" required />
+						  <input disabled class="form-control form-control-sm" type="date" id="data_fim2" name="data_fim2" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_02_data_fim; } else { ?> {{ old('data_fim2') }} <?php } ?>" maxlength="15" required />
 						 @else
-						  <input disabled class="form-control form-control-sm" type="date" id="data_fim2" name="data_fim2" value="{{ old('data_fim2') }}" maxlength="15" required />
+						  <input class="form-control form-control-sm" type="date" id="data_fim2" name="data_fim2" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_02_data_fim; } else { ?> {{ old('data_fim2') }} <?php } ?>" maxlength="15" required />
 						 @endif	 
 					   </div> 
 					  </div>
@@ -279,21 +362,49 @@
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"><b>Suas Atribuições:</b></font></label>
 						 @if(old('val7') == "on")
-						  <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" required>{{ old('atribuicao2') }}</textarea>
+						  <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" maxlength="300" required><?php if($qtdC > 0) { echo $candidato[0]->exp_02_atribuicoes; } else { ?> {{ old('atribuicao2') }} <?php } ?></textarea>
 						 @else
-						  <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" value="{{ old('atribuicao2') }}" maxlength="300" required>{{ old('atribuicao2') }}</textarea>
+						  <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao2" name="atribuicao2" maxlength="300" required><?php if($qtdC > 0) { echo $candidato[0]->exp_02_atribuicoes; } else { ?> {{ old('atribuicao2') }} <?php } ?></textarea>
 						 @endif
 						 <font size="2">Restam: <span class="caracteres">300 </span> caracteres.</font><br>
 					   </div> 
 					  </div>
+					  @if($exp2)
+					  <b><font size="2">Competências escolhidas:</font></b> <br>
+						@foreach($vagasExp as $vagaE)
+						 @foreach($exp2 as $exp)
+							@if($vagaE->descricao == $exp->descricao)
+							 - {{ $vagaE->descricao }} <br>	
+							@endif
+						 @endforeach
+						 @foreach($exp2_1 as $exp)
+							@if($vagaE->descricao == $exp->descricao)
+							 - {{ $vagaE->descricao }} <br>	
+							@endif
+						 @endforeach
+						@endforeach
+					  @endif
 					  @if($vagasExp)
 					  <div class="row">
 					   <div class="col"> 
 					    <label for="inputState" class="form-label"><b><font size="2">Nesta Experiência você obteve alguma dessas competências:</font></b></label> <br>
+						<b><font size="2">Competências Necessárias:</font></b><br> 
 						@foreach($vagasExp as $vagaExp)
-							<input type='checkbox' class="vaga_exp2" id="vaga_exp2[]" name="vaga_exp2[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						  @if($vagaExp->tipo == 1)
+						 	&nbsp;&nbsp;<input type='checkbox' class="vaga_exp2" id="vaga_exp2[]" name="vaga_exp2[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						  @endif
 						@endforeach
-						<input type='checkbox' class="vaga_exp2" id="vaga_exp2[]" name="vaga_exp2[]" value="0" /> Nenhuma Competência &nbsp;</input>
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+					    <b><font size="2">Competências Desejadas:</font></b><br>	
+					    @foreach($vagasExp as $vagaExp)
+						  @if($vagaExp->tipo == 2)
+						    &nbsp;&nbsp;<input type='checkbox' class="vaga_exp2_1" id="vaga_exp2_1[]" name="vaga_exp2_1[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						  @endif
+						@endforeach
+						<input type='checkbox' class="vaga_exp2" id="vaga_exp2[]" name="vaga_exp2[]" value="-" /> Nenhuma Competência &nbsp;</input> 
 					   </div>
 					  </div>
 					  @endif
@@ -306,9 +417,9 @@
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"> <b>EXPERIÊNCIA 03:</b></font></label>
 						 @if(old('val8') == "on")
-						  <p align="right"><input type="checkbox" checked onclick="desabilitar8('sim')" id="val8" name="val8" /><font size="2"> Habilitar campos </font></p></td>
+						  <p align="right"><input type="checkbox" checked onclick="desabilitar8('sim')" id="val8" name="val8" /><font size="2"> Desabilitar campos </font></p></td>
 						 @else
-						  <p align="right"><input type="checkbox" onclick="desabilitar8('sim')" id="val8" name="val8" /><font size="2"> Habilitar campos </font></p></td>
+						  <p align="right"><input type="checkbox" onclick="desabilitar8('sim')" id="val8" name="val8" /><font size="2"> Desabilitar campos </font></p></td>
 						 @endif
 					   </div> 
 					  </div>
@@ -316,17 +427,43 @@
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"> <b>Empresa:</b></font></label>
 						 @if(old('val8') == "on")
-						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" required />
+						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_03_empresa; } else { ?> {{ old('empresa3') }} <?php } ?>" maxlength="150" required />
 						 @else
-						  <input disabled class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="{{ old('empresa3') }}" maxlength="150" required />
+						  <input class="form-control form-control-sm" placeholder="EMPRESA" type="text" id="empresa3" name="empresa3" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_03_empresa; } else { ?> {{ old('empresa3') }} <?php } ?>" maxlength="150" required />
 						 @endif
 					   </div> 
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"> <b>Cargo:</b></font></label>
 						 @if(old('val8') == "on")
-						  <input class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" required />
+						  <select class="form-select form-select-sm" id="cargo3" name="cargo3" required> 
+							<option value="">Selecione...</option>
+						    @foreach($cargos as $cargo)
+							 @if($qtdC > 0)
+							  @if($cargo->nome == $candidato[0]->exp_03_cargo)
+							   <option value="<?php echo $cargo->nome; ?>" selected> {{ $cargo->nome }}</option>
+							  @else
+							   <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							  @endif
+							 @else
+							 <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							 @endif
+						    @endforeach
+						  </select>
 						 @else
-						  <input disabled class="form-control form-control-sm" placeholder="CARGO" type="text" id="cargo3" name="cargo3" value="{{ old('cargo3') }}" maxlength="150" required />
+						  <select class="form-select form-select-sm" id="cargo3" name="cargo3" required> 
+							<option value="">Selecione...</option>
+							@foreach($cargos as $cargo)
+							 @if($qtdC > 0)
+							  @if($cargo->nome == $candidato[0]->exp_03_cargo)
+							   <option value="<?php echo $cargo->nome; ?>" selected> {{ $cargo->nome }}</option>
+							  @else
+							   <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							  @endif
+							 @else
+							 <option value="<?php echo $cargo->nome; ?>"> {{ $cargo->nome }}</option>
+							 @endif
+						    @endforeach
+						  </select>
 						 @endif
 					   </div> 
 					  </div>
@@ -334,17 +471,17 @@
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"> <b>Data Início:</b></font></label>
 						 @if(old('val8') == "on")
-						  <input class="form-control form-control-sm" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" required />
+						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio3" name="data_inicio3" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_03_data_ini; } else { ?> {{ old('data_inicio3') }} <?php } ?>" maxlength="15" required />
 						 @else
-						  <input disabled class="form-control form-control-sm" type="date" id="data_inicio3" name="data_inicio3" value="{{ old('data_inicio3') }}" maxlength="15" required />
+						  <input class="form-control form-control-sm" type="date" id="data_inicio3" name="data_inicio3" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_03_data_ini; } else { ?> {{ old('data_inicio3') }} <?php } ?>" maxlength="15" required />
 						 @endif
 					   </div> 
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"> <b>Data Fim:</b></font></label>
 						 @if(old('val8') == "on")
-						  <input class="form-control form-control-sm" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" required />
+						  <input disabled class="form-control form-control-sm" type="date" id="data_fim3" name="data_fim3" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_03_data_fim; } else { ?> {{ old('data_fim3') }} <?php } ?>" maxlength="15" required />
 						 @else
-						  <input disabled class="form-control form-control-sm" type="date" id="data_fim3" name="data_fim3" value="{{ old('data_fim3') }}" maxlength="15" required />
+						  <input class="form-control form-control-sm" type="date" id="data_fim3" name="data_fim3" value="<?php if($qtdC > 0) { echo $candidato[0]->exp_03_data_fim; } else { ?> {{ old('data_fim3') }} <?php } ?>" maxlength="15" required />
 						 @endif
 					   </div> 
 					  </div>
@@ -352,21 +489,49 @@
 					   <div class="col"> 
 						<label for="inputState" class="form-label"><font size="2"> <b>Suas Atribuições:</b></font></label>
 						 @if(old('val8') == "on")
-						  <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" required>{{ old('atribuicao3') }}</textarea>
+						  <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" maxlength="300" required><?php if($qtdC > 0) { echo $candidato[0]->exp_03_atribuicoes; } else { ?> {{ old('atribuicao3') }} <?php } ?></textarea>
 						 @else
-						  <textarea disabled class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" value="{{ old('atribuicao3') }}" maxlength="300" required>{{ old('atribuicao3') }}</textarea>
+						  <textarea class="form-control form-control-sm" placeholder="SUAS ATRIBUIÇÕES" type="text" id="atribuicao3" name="atribuicao3" maxlength="300" required><?php if($qtdC > 0) { echo $candidato[0]->exp_03_atribuicoes; } else { ?> {{ old('atribuicao3') }} <?php } ?></textarea>
 						 @endif
 						 <font size="2"> Restam: <span class="caracteres">300 </span> caracteres. </font><br>
 					   </div> 
 					  </div>
+					  @if($exp3)
+					  <b><font size="2">Competências escolhidas:</font></b> <br>
+						@foreach($vagasExp as $vagaE)
+						 @foreach($exp3 as $exp)
+							@if($vagaE->descricao == $exp->descricao)
+							 - {{ $vagaE->descricao }} <br>	
+							@endif
+						 @endforeach
+						 @foreach($exp3_1 as $exp)
+							@if($vagaE->descricao == $exp->descricao)
+							 - {{ $vagaE->descricao }} <br>	
+							@endif
+						 @endforeach
+						@endforeach
+					  @endif
 					  @if($vagasExp)
 					  <div class="row">
 					   <div class="col"> 
 					    <label for="inputState" class="form-label"><b><font size="2">Nesta Experiência você obteve alguma dessas competências:</font></b></label> <br>
-						 @foreach($vagasExp as $vagaExp)
-						   <input type='checkbox' class="vaga_exp3" id="vaga_exp3[]" name="vaga_exp3[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
-						 @endforeach
-						<input type='checkbox' class="vaga_exp3" id="vaga_exp3[]" name="vaga_exp3[]" value="0" /> Nenhuma Competência &nbsp;</input>
+						<b><font size="2">Competências Necessárias:</font></b><br> 
+						@foreach($vagasExp as $vagaExp)
+						  @if($vagaExp->tipo == 1)
+						 	&nbsp;&nbsp;<input type='checkbox' class="vaga_exp3" id="vaga_exp3[]" name="vaga_exp3[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						  @endif
+						@endforeach
+					   </div>
+					  </div>
+					  <div class="row">
+					   <div class="col"> 
+					    <b><font size="2">Competências Desejadas:</font></b><br>	
+					    @foreach($vagasExp as $vagaExp)
+						  @if($vagaExp->tipo == 2)
+						    &nbsp;&nbsp;<input type='checkbox' class="vaga_exp3_1" id="vaga_exp3_1[]" name="vaga_exp3_1[]" value="<?php echo $vagaExp->id; ?>" /> {{$vagaExp->descricao}} &nbsp;</input> <br>
+						  @endif
+						@endforeach
+						<input type='checkbox' class="vaga_exp3" id="vaga_exp3[]" name="vaga_exp3[]" value="-" /> Nenhuma Competência &nbsp;</input> 
 					   </div>
 					  </div>
 					  @endif
@@ -392,6 +557,9 @@
 			  <input hidden type="text" id="candidato_id" name="candidato_id" value="" />
 			  <input hidden type="text" id="processo_seletivo_id" name="processo_seletivo_id" value="" />
 			  <input hidden type="text" id="data_inscricao" name="data_inscricao" value="" />
+			  <input hidden type="text" id="exp_01_soma" name="exp_01_soma" value="0" />
+			  <input hidden type="text" id="exp_02_soma" name="exp_02_soma" value="0" />
+			  <input hidden type="text" id="exp_03_soma" name="exp_03_soma" value="0" />
 			</form> 
 		  </div>
 		</div>

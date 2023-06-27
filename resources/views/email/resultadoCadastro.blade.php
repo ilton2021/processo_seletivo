@@ -38,6 +38,9 @@
                               <td align="justify" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Obrigado(a), novamente, por dedicar um tempo para se inscrever. <br><br>Boa sorte! Seu número de inscrição é: <b>{{ $numeroInscricao }}</b></p></td>
                       		</tr>
 							<tr>
+                              <td align="justify" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Se você não respondeu o questionário, nem o preencheu as experiências. entre na Área do Candidato com os seus dados cadastrados.</p></td>
+                      		</tr>
+							<tr>
 							  <td align="center" colspan="2"><p style="font-size: 14px; margin-top: 10px;">Acesse o portal para acompanhar a sua candidatura! <a href="https://hcpgestao.org.br/processo_seletivo_hcpgestao/public/">https://hcpgestao.org.br/processo_seletivo_hcpgestao/public/</a></p></td>
                             </tr>
 						  </table>

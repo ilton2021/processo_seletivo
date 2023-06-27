@@ -146,7 +146,7 @@
 
 			  <div id="tabs" class="nav-tabs">
 				
-			   <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist" style="margin-left: 300px;">
+			   <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" data-toggle="pill" href="#tabs1" role="tab" aria-selected="true">INFORMAÇÃO CANDIDATURA</a>
 				</li>
@@ -616,60 +616,17 @@
 						  </select>
 						 @endif
 					   </div>
-				       <!--div class="col">
-					    <label for="inputState" class="form-label"><font size="2"><b>DISPONIBILIDADE PARA MUDAR DE CIDADE: (*)</b></font></label>
-						 @if(old('val9') == "on")
-						  <select disabled class="form-select form-select-sm" id="outra_cidade" name="outra_cidade" required>
-						    <option value="">Selecione...</option> 
-							@if(old('outra_cidade')=="nao")<option value="nao" selected>Não</option>@else<option value="nao">Não</option>@endif
-							@if(old('outra_cidade')=="sim")<option value="sim" selected>Sim</option>@else<option value="sim">Sim</option>@endif
-					      </select>					  
-						 @else
-						  <select class="form-select form-select-sm" id="outra_cidade" name="outra_cidade" required>
-						    <option value="">Selecione...</option> 
-						    @if(old('outra_cidade')=="nao")<option value="nao" selected>Não</option>@else<option value="nao">Não</option>@endif
-							@if(old('outra_cidade')=="sim")<option value="sim" selected>Sim</option>@else<option value="sim">Sim</option>@endif
-						  </select>
-						 @endif
-					   </div>
-				      </div-->
 					</div>
 				  </div>
 				 </div> <br>
-				 <div class="modal-content">
-				  <div class="modal-content">
-				    <div class="modal-body" style="background-color: white;">
-				     <div class="row">
-					  <div class="col">
-					    <p align="center">
-						<button title="Detalhes Experiências" type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-						  <i class="fas fa-file-alt">CONFIRMAR</i>
-						</button>
-						<div class="modal fade bd-example-modal-xl" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						 <div class="modal-dialog modal-xl" width="1000px;">
-						  <div class="modal-content">
-							<div class="modal-header">
-							  <h5 class="modal-title" id="staticBackdropLabel"></h5>
-							  <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-							  <center>
-								<b>Você concorda com as informações inseridas??</b> <br><br>
-								<b>Você só poderá alterar as informações quando concluir sua inscrição!</b><br><br>
-								<b>Na Área do Candidato!</b><br><br>
-								<b>Clique em SIM para confirmar seu cadastro.</b>   <br><br>
-								<input type="submit" class="btn btn-success btn-sm" onclick="validar()" value="SIM" id="Salvar" name="Salvar" /> &nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" aria-label="Close">NÃO</button>
-							  </center>
-							</div>
-						  </div>
-						 </div>
-						</div>
-						</p>
-					  </div>
-					 </div>
-				    </div>
-				  </div>
+				 <center>
+					<b><font color="red">Você só poderá alterar as informações quando concluir sua inscrição! (Na Área do Candidato!)</font></b><br><br>
+					<b><font color="red">Qualquer dúvida ou erro acesse a Área de Dúvidas para maiores informações!</font></b><br><br>
+					<b><font color="red">Clique em SIM para confirmar seu cadastro.</font></b><br><br>
+					<b><font color="red">Em seguida, responda o Questionário, suas experiências e o PCD!</font></b> <br><br>
+					<b><font color="red">Na próxima página será exibido seu Número de Inscrição (ANOTE!)</font></b> <br><br>
+				 </center>
+				 <input type="submit" class="btn btn-success btn-sm" onclick="validar()" value="SIM" id="Salvar" name="Salvar" /> <br><br>
 				 </div>
 				</div>
 			  </div>

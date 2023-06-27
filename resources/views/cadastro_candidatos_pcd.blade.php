@@ -96,6 +96,9 @@
 						  @if(old('deficiencia_status') == "nao")<option value="nao" selected>NÃO</option>@else<option value="nao">NÃO</option>@endif
 						  @if(old('deficiencia_status') == "sim")<option value="sim" selected>SIM</option>@else<option value="sim">SIM</option>@endif
 						</select>
+						@if($candidato[0]->deficiencia != "0" || $candidato[0]->deficiencia != "0")
+						  <input disabled class="form-control form-control-sm" type="text" value="<?php echo "SIM"; ?>" />
+						@endif
 					   </div>
 					   <div class="col">
 					    <label for="inputState" class="form-label"><b><font size="2">Especifique Sua Deficiência:</font></b></label>
@@ -122,6 +125,9 @@
 						  @if(old('deficiencia') == "Outros")<option value="Outros" selected>Outros</option>@else<option value="Outros">Outros</option>@endif
 						</select>
 						@endif
+						@if($candidato[0]->deficiencia != "0" || $candidato[0]->deficiencia != "")
+						 <input disabled class="form-control form-control-sm" type="text" id="deficiencia" name="deficiencia" value="<?php echo $candidato[0]->deficiencia; ?>" />
+						@endif
 					   </div>
 					  </div>
 					  <div class="row">   
@@ -131,6 +137,9 @@
 						<input disabled class="form-control form-control-sm" placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="{{ old('cid') }}" maxlength="255" />
 						@else
 						<input class="form-control form-control-sm" placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="{{ old('cid') }}" maxlength="255" required />
+						@endif
+						@if($candidato[0]->deficiencia != "0" || $candidato[0]->deficiencia != "")
+						 <input disabled class="form-control form-control-sm" placeholder="CID CORRESPONDENTE" type="text" id="cid" name="cid" value="<?php echo $candidato[0]->cid; ?>" maxlength="255" required />
 						@endif
 					   </div>
 					   <div class="col"><br><p align="justify"><font size="2" color="red"><b>* Envie o laudo PCD para complementar o seu cadastro no HCP GESTÃO</b></font></p></div>
@@ -150,6 +159,9 @@
 						 <input hidden class="form-control form-control-sm" type="text" id="arquivo_deficiencia_" name="arquivo_deficiencia_" maxlength="600" value=""> 
 						 @endif
 					 	 <br><p><b><font size="2" color="red">* Esse documento pode ser nos formatos: PNG, JPG, JPEG, DOC, DOCX ou PDF.</font></b></p>
+						  @if($candidato[0]->deficiencia != "0" || $candidato[0]->deficiencia != "")
+						   <input disabled class="form-control form-control-sm" type="text" value="<?php echo $candidato[0]->nomearquivo; ?>"> 
+						  @endif
 					   </div>
 					  </div>
 				    </div>

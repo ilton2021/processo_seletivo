@@ -109,7 +109,8 @@ class ProcessoResultadoController extends Controller
 		$processos2 = DB::table('processo_seletivo_'.$nome)->where('vaga',$vaga)->orderby('exps_soma','DESC')->paginate('200');
 		$vagas      = Vaga::where('nome',$vaga)->where('processo_seletivo_id',$id)->get();
 		$quest      = DB::table('questionario_'.$nome)->where('processo_seletivo_id',$id)->get();
-		return view('ranking', compact('processos','processos2','vagas','quest'));
+		$exp_vagas  = DB::table('experiencias_vaga')->where('processo_seletivo_id',$id)->get();
+		return view('ranking', compact('processos','processos2','vagas','quest','exp_vagas'));
 	}
 
 	// Página Ranking - Pesquisar 

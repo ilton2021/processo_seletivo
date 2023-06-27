@@ -146,6 +146,7 @@ class ProcessoSeletivoController extends Controller
 						exp_01_data_ini varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						exp_01_data_fim varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						exp_01_competencias varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						exp_01_competencias_desejadas varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						exp_01_soma varchar(20) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_empresa varchar(150) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_cargo varchar(150) COLLATE utf8mb4_unicode_ci NULL,
@@ -153,6 +154,7 @@ class ProcessoSeletivoController extends Controller
 						exp_02_data_ini varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_data_fim varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_competencias varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						exp_02_competencias_desejadas varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						exp_02_soma varchar(20) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_empresa varchar(150) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_cargo varchar(150) COLLATE utf8mb4_unicode_ci NULL,
@@ -160,6 +162,7 @@ class ProcessoSeletivoController extends Controller
 						exp_03_data_ini varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_data_fim varchar(15) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_competencias varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+						exp_03_competencias_desejadas varchar(255) COLLATE utf8mb4_unicode_ci NULL,
 						exp_03_soma varchar(20) COLLATE utf8mb4_unicode_ci NULL,
 						exps_soma decimal(10,2) COLLATE utf8mb4_unicode_ci NULL,
 						soma_quest int(20) COLLATE utf8mb4_unicode_ci NULL,
@@ -506,29 +509,58 @@ class ProcessoSeletivoController extends Controller
 	public function storeVagaExp($id, $id_vaga, Request $request)
 	{
 		$input = $request->all();
+
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$unidades  = Unidade::all();
+		$vaga      = Vaga::where('id',$id_vaga)->get();
 		
 		if($input['exp1']) {
 			$input['descricao'] = $input['exp1'];
+			$input['tipo']      = $input['tipo1'];
 			$expVaga = ExperienciasVaga::create($input); 
 		}
 
 		if($input['exp2']) {
 			$input['descricao'] = $input['exp2'];
+			if($input['tipo2'] == "-") { 
+				$validator = 'Informe o Tipo da 2ª Competência!';
+				return view('processo_seletivo/cadastro_vaga_experiencias', compact('unidades','processos','vaga'))
+					->withErrors($validator)
+                	->withInput(session()->flashInput($request->input()));
+			}
 			$expVaga = ExperienciasVaga::create($input); 
 		}
 
 		if($input['exp3']) {
 			$input['descricao'] = $input['exp3'];
+			if($input['tipo3'] == "-") { 
+				$validator = 'Informe o Tipo da 3ª Competência!';
+				return view('processo_seletivo/cadastro_vaga_experiencias', compact('unidades','processos','vaga'))
+					->withErrors($validator)
+                	->withInput(session()->flashInput($request->input()));
+			}
 			$expVaga = ExperienciasVaga::create($input); 
 		}
 
 		if($input['exp4']) {
 			$input['descricao'] = $input['exp4'];
+			if($input['tipo4'] == "-") { 
+				$validator = 'Informe o Tipo da 4ª Competência!';
+				return view('processo_seletivo/cadastro_vaga_experiencias', compact('unidades','processos','vaga'))
+					->withErrors($validator)
+                	->withInput(session()->flashInput($request->input()));
+			}
 			$expVaga = ExperienciasVaga::create($input); 
 		}
 
 		if($input['exp5']) {
 			$input['descricao'] = $input['exp5'];
+			if($input['tipo5'] == "-") { 
+				$validator = 'Informe o Tipo da 5ª Competência!';
+				return view('processo_seletivo/cadastro_vaga_experiencias', compact('unidades','processos','vaga'))
+					->withErrors($validator)
+                	->withInput(session()->flashInput($request->input()));
+			}
 			$expVaga = ExperienciasVaga::create($input); 
 		}
 		

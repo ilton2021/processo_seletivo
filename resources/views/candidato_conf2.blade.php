@@ -43,19 +43,22 @@
 			  </div>
 			  <table class="table table-sm" border="0" bordercolor=DCDCDC>
 			   <tr>
-			    <td><b><u><center> Parabéns! Você foi cadastrado no Processo Seletivo:</u></b> <b>{{ $nprocesso }}</b>!</center></td>
+			    <td><b><u><center> Parabéns! Você foi cadastrado no Processo Seletivo:</u></b><b>{{ $nprocesso }}</b>!</center></td>
 			   </tr>
                <tr>			   
-				<td><b> <u><center> Você foi inscrito neste Processo Seletivo no dia:</u></b> <b><?php echo date('d/m/Y', strtotime('now')) ?></b></center></td>
+				<td><b><u><center> Você foi inscrito neste Processo Seletivo no dia:</u></b><b><?php echo date('d/m/Y', strtotime('now')) ?></b></center></td>
 			   </tr>
 			   <tr>
-				<td><b><u><center> Seu Número de Inscrição é:</u></b> <b>{{ $nprocesso.'-'.$numero[0]->id }}</b> </center></td>
+				<td><b><u><center> Seu Número de Inscrição é:</u></b> <b>{{ $nprocesso.'-'.$numero[0]->id }}</b></center></td>
 			   </tr>
 			   <tr>
-				<td><b><u><center> Seu E-mail é Inválido, você não receberá o E-mail de Confirmação! </center></u></b></td>
+				<td><b><u><center> Use este número para entrar na Área do Candidato:</center></u></b></td>
+			   </tr>
+			   <tr>
+				<td><b><u><center> Seu E-mail é Inválido, você não receberá o E-mail de Confirmação!</center></u></b></td>
 			   </tr>  
 			   <tr>
-			    <td> <center> <a id="div" class="btn btn-warning" href="{{ url('/') }}">Voltar</a></center></td>
+			    <td><center><a id="div" class="btn btn-warning" href="{{ url('/') }}">Voltar</a></center></td>
 			   </tr>
 	  		  </table>
 	    </section>

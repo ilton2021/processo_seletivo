@@ -112,6 +112,24 @@
                            <td><center>{{ date('d/m/Y', strtotime($cand2->exp_01_data_fim)) }}</center></td>
                            <td><center> {{ $cand2->exp_01_soma }} </center></td>
                           </tr>
+                          <tr>
+                            <td colspan="5">- {{ $cand2->exp_01_atribuicoes }} </td>
+                          </tr>
+                          <?php 
+                            $a = explode(",", $cand2->exp_01_competencias);
+                            $qtd = sizeof($a);
+                          ?>
+                          <tr>
+                           <td colspan="5">
+                            @foreach($exp_vagas as $ev)
+                            <?php for($b = 0; $b < $qtd; $b++) { ?>
+                              @if($ev->id == $a[$b])
+                              . {{ $ev->descricao }} <br>
+                              @endif
+                            <?php } ?>
+                            @endforeach
+                           </td>
+                          </tr>
                          </tbody>
                         </table> 
                         <table class="table table-striped table-dark" border="2">
@@ -135,6 +153,24 @@
                            <td><center>{{ date('d/m/Y', strtotime($cand2->exp_02_data_fim)) }}</center></td>
                            <td><center> {{ $cand2->exp_02_soma }} </center></td>
                           </tr>
+                          <tr>
+                            <td colspan="5">- {{ $cand2->exp_02_atribuicoes }} </td>
+                          </tr>
+                          <?php 
+                            $a = explode(",", $cand2->exp_02_competencias);
+                            $qtd = sizeof($a);
+                          ?>
+                          <tr>
+                           <td colspan="5">
+                            @foreach($exp_vagas as $ev)
+                            <?php for($b = 0; $b < $qtd; $b++) { ?>
+                              @if($ev->id == $a[$b])
+                              . {{ $ev->descricao }} <br>
+                              @endif
+                            <?php } ?>
+                            @endforeach
+                           </td>
+                          </tr>
                          </tbody>
                         </table>
                         <table class="table table-striped table-dark" border="2">
@@ -157,6 +193,24 @@
                            <td><center>{{ date('d/m/Y', strtotime($cand2->exp_03_data_ini)) }}</center></td>
                            <td><center>{{ date('d/m/Y', strtotime($cand2->exp_03_data_fim)) }}</center></td>
                            <td><center> {{ $cand2->exp_03_soma }} </center></td>
+                          </tr>
+                          <tr>
+                            <td colspan="5">- {{ $cand2->exp_03_atribuicoes }} </td>
+                          </tr>
+                          <?php 
+                            $a = explode(",", $cand2->exp_03_competencias);
+                            $qtd = sizeof($a);
+                          ?>
+                          <tr>
+                           <td colspan="5">
+                            @foreach($exp_vagas as $ev)
+                            <?php for($b = 0; $b < $qtd; $b++) { ?>
+                              @if($ev->id == $a[$b])
+                              . {{ $ev->descricao }} <br>
+                              @endif
+                            <?php } ?>
+                            @endforeach
+                           </td>
                           </tr>
                          </tbody>
                         </table>

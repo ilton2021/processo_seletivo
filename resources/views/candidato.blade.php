@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Processo Seletivo - HCP</title>
+		<title>Processo Seletivo - HCP Gestão</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ ('assets/css/main.css') }}" />
+		<style>.cookieConsentContainer{z-index:999;width:350px;min-height:20px;box-sizing:border-box;padding:30px 30px 30px 30px;background:#232323;overflow:hidden;position:fixed;bottom:30px;right:30px;display:none}.cookieConsentContainer .cookieTitle a{font-family:OpenSans,arial,sans-serif;color:#fff;font-size:22px;line-height:20px;display:block}.cookieConsentContainer .cookieDesc p{margin:0;padding:0;font-family:OpenSans,arial,sans-serif;color:#fff;font-size:13px;line-height:20px;display:block;margin-top:10px}.cookieConsentContainer .cookieDesc a{font-family:OpenSans,arial,sans-serif;color:#fff;text-decoration:underline}.cookieConsentContainer .cookieButton a{display:inline-block;font-family:OpenSans,arial,sans-serif;color:#fff;font-size:14px;font-weight:700;margin-top:14px;background:#000;box-sizing:border-box;padding:15px 24px;text-align:center;transition:background .3s}.cookieConsentContainer .cookieButton a:hover{cursor:pointer;background:#3e9b67}@media (max-width:980px){.cookieConsentContainer{bottom:0!important;left:0!important;width:100%!important}}</style>
 	</head> 
 	<body class="is-preload">
 			<div id="header">
@@ -16,20 +17,22 @@
 						</div>
 						<nav id="nav">
 							<ul>
-								<li><a href="#top" id="top-link" title="Página Inicial"><span class="icon solid fa-home">Página Inicial</span></a></li>
-								<li><a href="#portfolio1" id="portfolio-link"><span class="icon solid fa-calendar-plus">Processos Abertos</span></a></li>
-								<li><a href="#about" id="about-link"><span class="icon solid fa-book-open">Editais em Curso</span></a></li>
-								<li><a href="#contact" id="about-link"><span class="icon solid fa-calendar-check">Result. de Processos Anter.</span></a></li>
-								<li><a href="#avisos" id="avisos-link"><span class="icon solid fa-check-square">Quadro de Avisos</span></a></li>
+								<li><a href="#top" id="top" title="Página Inicial"><span class="icon solid fa-home">Página Inicial</span></a></li>
+								<li><a href="#part1" id="part1-link"><span class="icon solid fa-calendar-plus">Processos Abertos</span></a></li>
+								<li><a href="#part2" id="part2-link"><span class="icon solid fa-book-open">Editais em Curso</span></a></li>
+								<li><a href="#part3" id="part3-link"><span class="icon solid fa-calendar-check">Processos Anter.</span></a></li>
+								<li><a href="#part4" id="part4-link"><span class="icon solid fa-check-square">Quadro de Avisos</span></a></li>
 								@if($qtdP > 0)
-								<li><a href="#about2" id="about-link"><span class="icon solid fa-user">Área do Candidato</span></a></li>
+								<li><a href="#part5" id="part5-link"><span class="icon solid fa-user">Área do Candidato</span></a></li>
 								@endif
-								<li><a href="#about3" id="about-link"><span class="icon solid fa-user">Área de Dúvidas</span></a></li>
-								<li><a href="#portfolio2" id="portfolio-link"><span class="icon solid fa-th">Sobre</span></a></li>
+								<li><a href="#part6" id="part6-link"><span class="icon solid fa-user">Área de Dúvidas</span></a></li>
+								<li><a href="#part7" id="part7-link"><span class="icon solid fa-th">Sobre</span></a></li>
+								<li><a href="#part8" id="part8-link"><span class="icon solid fa-th">Nosso DNA</span></a></li>
 							</ul>
 						</nav>
 				</div>
 			</div>
+			
 
 			<div id="main">
 					<section id="top" class="one dark cover" style="width:100%; height: 300px">
@@ -42,7 +45,7 @@
 						</div>
 					</section>
 					
-					<section id="portfolio1" class="two" style="width: auto; overflow: scroll;">
+					<section id="part1" class="two" style="width: auto; overflow: scroll;">
 						<div class="container">
 							<header>
 								<h2><b>Processos Abertos</b></h2>
@@ -96,9 +99,10 @@
 								</tbody>
 							</table>
 						</div>
+						
 					</section>
 
-					<section id="about" class="three" style="width: 100%; overflow: scroll;">
+					<section id="part2" class="three" style="width: 100%; overflow: scroll;">
 						<div class="container">
 						  <header>
 							<h2>Editais em Curso</h2>
@@ -134,7 +138,7 @@
 						</div>
 					</section>
 
-					<section id="contact" class="four" style="width:100%; overflow: scroll;">
+					<section id="part3" class="four" style="width:100%; overflow: scroll;">
 						<div class="container">
 							<header>
 								<h2>Resultado de Processos Anteriores</h2>
@@ -149,9 +153,9 @@
 						   </tr>
 						  </table>
 						</div>
-				 </section>
+				    </section>
 
-				 <section id="avisos" class="five" style="width:100%; overflow: scroll;">
+				    <section id="part4" class="five" style="width:100%; overflow: scroll;">
 						<div class="container">
 							<header>
 								<h2>Quadro de Avisos:</h2>
@@ -170,9 +174,9 @@
 							 @endforeach
 						    </table>
 						</div>
-				 </section>
+				    </section>
 
-				 <section id="about2" class="six" style="width: 100%; overflow: scroll;">
+				    <section id="part5" class="six" style="width: 100%; overflow: scroll;">
 						<div class="container">
 							<header>
 								<h2>Área do Candidato</h2>
@@ -180,14 +184,14 @@
 							<table class="table table-responsive table-border" border="1"> 
 							<tr>
 							 <td>
-							   <center><a href="{{ url('areaCandidato') }}" id="avisos-link"> Área do Candidato <span width="40" class="icon solid fa-address-card"></span></a></center>
+							   <center><a href="{{ route('termoU') }}" id="avisos-link"> Área do Candidato <span width="40" class="icon solid fa-address-card"></span></a></center>
 						     </td>
 							</tr>
 						  </table>
 						</div>
 					</section>
 
-					<section id="about3" class="six" style="width: 100%; overflow: scroll;">
+					<section id="part6" class="six" style="width: 100%; overflow: scroll;">
 						<div class="container">
 							<header>
 								<h2>Área de Dúvidas do Candidato</h2>
@@ -237,29 +241,36 @@
 						</div>
 					</section>
 				 
-				 <section id="portfolio2" class="seven">
+				 <section id="part7" class="seven">
 						<div class="container">
 							<header>
 								<h2><b>Sobre</b></h2>
 							</header>
-							<p align="justify"> 
-							Fundada em 1945, a Sociedade Pernambucana de Combate ao Câncer (SPCC) é uma instituição filantrópica que teve suas atividades iniciadas em 1952, com a fundação do Hospital de Câncer de Pernambuco (HCP). Depois de 70 anos de serviços prestados à população pernambucana, especialmente a população mais carente, o Hospital de Câncer de Pernambuco iniciou uma nova fase em sua existência, marcada por um moderno modelo de gestão, sendo reconhecido, de forma inquestionável, como instituição de referência no tratamento do câncer e como modelo de gestão hospitalar a ser seguido e copiado.
-							</p>
-							<p align="justify">
-							Nesse cenário, em 2014 a SPCC, entidade mantenedora do Hospital de Câncer de Pernambuco, se viu preparada para ampliar sua atuação no setor de saúde e se qualificou como OSS (Organização Social de Saúde), iniciando a atuação na gestão de outras unidades de saúde.
-							</p>
-							<p align="justify">
-							Em 2016, com a ampliação dessa atuação, a SPCC se renovou e criou a Superintendência Geral das Unidades sob Gestão (SGUSG) para atuar no controle da gestão dessas novas unidades, que se somou à já existente Superintendência Geral do HCP (SGHCP), responsável por atuar diretamente na gestão do Hospital de Câncer de Pernambuco.
-							</p>
-							<p align="jusitify">
-							No âmbito de Gestão por OSS, a SPCC executa desde o ano de 2014 a gestão das UPAE Padre Assis Neves no município de Belo Jardim/PE e da UPAE Áureo Bradley no município de Arcoverde/PE; e desde o ano de 2018 a gestão da UPAE Caruaru e do Hospital São Sebastião, todas unidades do Governo do Estado de Pernambuco.
-							</p>
-							<p align="jusitfy">	
-							Ainda, desde o ano de 2016 executa a gestão do Hospital da Mulher do Recife e da UPAE Arruda, ambos da Prefeitura Municipal do Recife.
-						    </p>
-
+							<p align="justify"> <center>O que é HCP GESTÃO?</center> </p>
+							<p align="justify"> Fundada em 1945, a Sociedade Pernambucana de Combate ao Câncer (SPCC) é uma instituição filantrópica que teve suas atividades iniciadas em 1952, com a fundação do Hospital de Câncer de Pernambuco (HCP). Depois de 70 anos de serviços prestados à população pernambucana, especialmente a população mais carente, o Hospital de Câncer de Pernambuco iniciou uma nova fase em sua existência, marcada por um moderno modelo de gestão, sendo reconhecido, de forma inquestionável, como instituição de referência no tratamento do câncer e como modelo de gestão hospitalar a ser seguido e copiado. </p>
+							<p align="justify"> Nesse cenário, em 2014 a SPCC, entidade mantenedora do Hospital de Câncer de Pernambuco, se viu preparada para ampliar sua atuação no setor de saúde e se qualificou como OSS (Organização Social de Saúde), iniciando a atuação na gestão de outras unidades de saúde. atualmente responde pelo gerenciamento de oito unidades de saúde no Estado de PE: </p>
+							<p align="justify"> •	UPAE ARCOVERDE </p>
+							<p align="justify"> •	UPAE BELO JARDIM </p>
+							<p align="justify">	•	UPAE CARUARU </p>
+							<p align="justify"> •	UPAE PALMARES </p>
+							<p align="justify">	•	UPAE ARRUDA – RECIFE </p>
+							<p align="justify">	•	UPA IGARASSU </p>
+							<p align="justify">	•	HOSPITAL SÃO SEBASTIÃO – CARUARU </p>
+							<p align="justify">	•	HOSPITAL DA MULHER DO RECIFE </p>
+							<p align="justify"> Nosso site: <a href="https://hcpgestao.org.br/" target="_blank">https://hcpgestao.org.br/</a> </p>
+							<p align="justify"> ATENÇÃO!  Não é concurso público. O tipo de contrato de trabalho é no formato CLT. </p>
+							<p align="justify"> Confira os nossos processos seletivos disponíveis e cadastre seu currículo. Faça parte do nosso time! </p>
 						</div>
-					</section>
+				 </section>
+
+				 <section id="part8" class="eight">
+						<div class="container">
+							<header>
+								<h2><b>Nosso DNA</b></h2>
+							</header>
+							<img width="100%" id="img-unity" src="{{asset('img/NossoDNA.png')}}" class="rounded-sm" />
+						</div>
+				 </section>
 					
 			</div>
 
@@ -267,12 +278,12 @@
             <div class="container text-center">
                 <div class="row">
                     <div class="col-sm">
-                        <ul class="list-group" >
+                        <ul class="list-group">
                             <li style="background-color: rgba(185, 178, 178, 0);color:white;">HCPGESTAO@HCP.ORG.BR</li>
-                            <li class="list-group-item border-0" style="background-color: rgba(185, 178, 178, 0);">
+                            <li class="list-group-item border-0" style="background-color: rgba(185, 178, 178, 0); color:white;">
                                 <img src="{{asset('img/imagem-link-site-hcp-rodape-v2.png')}}" alt="" srcset="">
                             </li>
-                            <li class="list-group-item border-0" style="background-color: rgba(185, 178, 178, 0);">
+                            <li class="list-group-item border-0" style="background-color: rgba(185, 178, 178, 0); color:white;">
                                 <p style="font-size: 40px;letter-spacing: 10px;">
                                     <a class="text-decoration-none" target="_blank" href="https://www.facebook.com/sigahcp/">
                                         <i class="fab fa-facebook-square" style="color:white;"></i>
@@ -300,14 +311,25 @@
                         <li class="list-group-item border-0" style="background-color: rgba(185, 178, 178, 0);">
                             <img src="{{asset('img/logo-hcp-gestao-oss-v2.png')}}" alt="" srcset="">
                         </li>
+						
                         <li class="list-group-item border-0" style="background-color: rgba(185, 178, 178, 0); margin-top: 30px;">
                             <img src="{{asset('img/logo-ibross-rodape.png')}}" alt="" srcset="">
                         </li>
                         </ul>
                     </div>
                 </div>
+				<div class="row">  
+                    <div class="col-sm">
+					 <ul class="list-group">
+					  <li style="background-color: rgba(185, 178, 178, 0); color:white;">
+						<a href="{{ route('politicaP') }}"><span class="icon solid fa-book-open"> POLÍTICA DE PRIVACIDADE</span></a>
+					  </li>
+					 </ul>
+					</div>
+				</div>
             </div>
         </div>
+		
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
@@ -315,5 +337,6 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>var purecookieTitle="Cookies.",purecookieDesc="Usamos cookies para personalizar e melhorar a sua experiência no site. Ao continuar navegando, você concorda com a nossa Política de Privacidade. Mais informações.",purecookieLink='<a href="https://hcpgestao.org.br/processo_seletivo_hcpgestao/public/politica_privacidade" target="_blank">Clique aqui!</a>',purecookieButton="Aceito";function pureFadeIn(e,o){var i=document.getElementById(e);i.style.opacity=0,i.style.display=o||"block",function e(){var o=parseFloat(i.style.opacity);(o+=.02)>1||(i.style.opacity=o,requestAnimationFrame(e))}()}function pureFadeOut(e){var o=document.getElementById(e);o.style.opacity=1,function e(){(o.style.opacity-=.02)<0?o.style.display="none":requestAnimationFrame(e)}()}function setCookie(e,o,i){var t="";if(i){var n=new Date;n.setTime(n.getTime()+24*i*60*60*1e3),t="; expires="+n.toUTCString()}document.cookie=e+"="+(o||"")+t+"; path=/"}function getCookie(e){for(var o=e+"=",i=document.cookie.split(";"),t=0;t<i.length;t++){for(var n=i[t];" "==n.charAt(0);)n=n.substring(1,n.length);if(0==n.indexOf(o))return n.substring(o.length,n.length)}return null}function eraseCookie(e){document.cookie=e+"=; Max-Age=-99999999;"}function cookieConsent(){getCookie("purecookieDismiss")||(document.body.innerHTML+='<div class="cookieConsentContainer" id="cookieConsentContainer"><div class="cookieTitle"><a>'+purecookieTitle+'</a></div><div class="cookieDesc"><p>'+purecookieDesc+" "+purecookieLink+'</p></div><div class="cookieButton"><a onClick="purecookieDismiss();">'+purecookieButton+"</a></div></div>",pureFadeIn("cookieConsentContainer"))}function purecookieDismiss(){setCookie("purecookieDismiss","1",1),pureFadeOut("cookieConsentContainer")}window.onload=function(){cookieConsent()};</script>
     </body>
 </html>

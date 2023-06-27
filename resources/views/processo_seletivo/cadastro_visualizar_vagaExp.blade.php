@@ -49,6 +49,11 @@
 					@foreach($vagasExp as $vagaE)
 					<tr> 
 					  <td><input type="text" class="form-control" id="exp" name="exp" value="<?php echo $vagaE->descricao; ?>" readonly /> </td>
+					  @if($vagaE->tipo == 1)
+					   <td><center>Necessárias</center></td>
+					  @else
+					   <td><center>Desejadas</center></td>
+					  @endif
 					  <td><center><a class="btn btn-info btn-sm" style="color: #FFFFFF; margin-top: 10px" href="{{route('vagaExperienciasAlterar', array($processos[0]->id, $vaga[0]->id, $vagaE->id))}}" > Alterar <i class="fas fa-edit"></i></a></center></td> 
 					  <td><center><a class="btn btn-danger btn-sm" style="color: #FFFFFF; margin-top: 10px" href="{{route('vagaExperienciasExcluir', array($processos[0]->id, $vaga[0]->id, $vagaE->id))}}" > Excluir <i class="fas fa-times-circle"></i></a></center></td>
 					</tr> 

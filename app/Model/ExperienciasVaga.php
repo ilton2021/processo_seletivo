@@ -10,6 +10,7 @@ class ExperienciasVaga extends Model
 
     protected $fillable = [
         'descricao',
+        'tipo',
         'vaga_id',
         'processo_seletivo_id',
         'created_at',

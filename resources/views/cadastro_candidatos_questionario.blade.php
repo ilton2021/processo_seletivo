@@ -87,40 +87,40 @@
 					  @if($a == 1) 
 					  <div class="row">
 					   <div class="col">
-					  	<p align="justify"> A) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="A"> Passividade. </p>
-						<p align="justify"> B) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="B"> Capacidade de trabalhar em equipe. </p>
-						<p align="justify"> C) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="C"> Objetividade. </p>
-						<p align="justify"> D) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="D"> Ética profissional. </p>
-						<p align="justify"> E) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="E"> Organização. </p>
+					  	<p align="justify"> A) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta1 == "A") { echo 'checked'; }} ?>> Passividade. </p>
+						<p align="justify"> B) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta1 == "B") { echo 'checked'; }} ?>> Capacidade de trabalhar em equipe. </p>
+						<p align="justify"> C) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta1 == "C") { echo 'checked'; }} ?>> Objetividade. </p>
+						<p align="justify"> D) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta1 == "D") { echo 'checked'; }} ?>> Ética profissional. </p>
+						<p align="justify"> E) <input class="form-check-input" type="radio" id="resposta1" name="resposta1" value="E" <?php if($qtdQ > 0){ if($questionario[0]->resposta1 == "E") { echo 'checked'; }} ?>> Organização. </p>
 					   </div>
 					  </div>
 					  @elseif($a == 2)
 					  <div class="row">
 					   <div class="col">
-					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="A"> Ter lealdade profissional e honrar a própria profissão ou a instituição na qual exerce a atividade laboral. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="B"> Formar uma consciência profissional e agir em conformidade com os princípios que a função e/ou profissão define. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="C"> Manter sempre segredo profissional em relação a situações, informações e acontecimentos para os quais a atividade profissional exigir sigilo. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="D"> Seguir as normas administrativas definidas na instituição na qual trabalha para o exercício profissional. </p>
-						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="E"> Utilizar informações privilegiadas conseguidas na atividade laboral para obter vantagens pessoais. </p>
+					    <p align="justify">A) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta2 == "A") { echo 'checked'; }} ?>> Ter lealdade profissional e honrar a própria profissão ou a instituição na qual exerce a atividade laboral. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta2 == "B") { echo 'checked'; }} ?>> Formar uma consciência profissional e agir em conformidade com os princípios que a função e/ou profissão define. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta2 == "C") { echo 'checked'; }} ?>> Manter sempre segredo profissional em relação a situações, informações e acontecimentos para os quais a atividade profissional exigir sigilo. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta2 == "D") { echo 'checked'; }} ?>> Seguir as normas administrativas definidas na instituição na qual trabalha para o exercício profissional. </p>
+						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta2" name="resposta2" value="E" <?php if($qtdQ > 0){ if($questionario[0]->resposta2 == "E") { echo 'checked'; }} ?>> Utilizar informações privilegiadas conseguidas na atividade laboral para obter vantagens pessoais. </p>
 					   </div>
 					  </div>
 		  			  @elseif($a == 3)
 					  <div class="row">
 					   <div class="col">
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="A"> Respeito às Normas. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="B"> Trabalho em Equipe. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="C"> Organização. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="D"> Responsabilidade. </p>
-						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="E"> Individualismo. </p>
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta3 == "A") { echo 'checked'; }} ?>> Respeito às Normas. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta3 == "B") { echo 'checked'; }} ?>> Trabalho em Equipe. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta3 == "C") { echo 'checked'; }} ?>> Organização. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta3 == "D") { echo 'checked'; }} ?>> Responsabilidade. </p>
+						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta3" name="resposta3" value="E" <?php if($qtdQ > 0){ if($questionario[0]->resposta3 == "E") { echo 'checked'; }} ?>> Individualismo. </p>
 					   </div>
 					  </div>
 					  @elseif($a == 4)
 					  <div class="row">
 					   <div class="col">
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="A"> Se colocar no lugar das outras pessoas em qualquer situação. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="B"> Os elogios frequentes e a divisão do sucesso com todos. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="C"> Críticas a colegas na frente de outras pessoas ou responsabilizá-los na ausência. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="D"> Fazer comentários sobre a ação ou atitude de alguém em particular. </p> 
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta4 == "A") { echo 'checked'; }} ?>> Se colocar no lugar das outras pessoas em qualquer situação. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta4 == "B") { echo 'checked'; }} ?>> Os elogios frequentes e a divisão do sucesso com todos. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta4 == "C") { echo 'checked'; }} ?>> Críticas a colegas na frente de outras pessoas ou responsabilizá-los na ausência. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta4" name="resposta4" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta4 == "D") { echo 'checked'; }} ?>> Fazer comentários sobre a ação ou atitude de alguém em particular. </p> 
 					   <div>
 					  </div>
 					  @elseif($a == 5)
@@ -129,19 +129,19 @@
 						<label for="inputState" class="form-label">
 						 <b><p align="justify">Com base nos seus conhecimentos, assinale a alternativa que NÃO corresponde a uma característica de um bom profissional:</p></b>
 						</label>
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="A"> Independentemente da ocupação, todos os profissionais precisam cuidar da imagem. A imagem não está ligada apenas ao visual, mas também ao comportamento do agente. </p> 
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="B"> A simpatia é um dos melhores canais de sucesso no bom atendimento. As pessoas em geral gostam de quem as tratam bem, sendo cordial, afetuoso, entusiástico, indiferente e educado. </p> 
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="C"> É importante que o profissional tenha conteúdo, saber o que dizer, possuir conhecimento, mostrar a que veio e transmiti-lo de forma natural. </p> 
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="D"> Ter uma comunicação impecável é crucial para qualquer profissão e mais ainda quando se trata de garantir uma boa imagem diante do seu usuário. </p>  
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta5 == "A") { echo 'checked'; }} ?>> Independentemente da ocupação, todos os profissionais precisam cuidar da imagem. A imagem não está ligada apenas ao visual, mas também ao comportamento do agente. </p> 
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta5 == "B") { echo 'checked'; }} ?>> A simpatia é um dos melhores canais de sucesso no bom atendimento. As pessoas em geral gostam de quem as tratam bem, sendo cordial, afetuoso, entusiástico, indiferente e educado. </p> 
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta5 == "C") { echo 'checked'; }} ?>> É importante que o profissional tenha conteúdo, saber o que dizer, possuir conhecimento, mostrar a que veio e transmiti-lo de forma natural. </p> 
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta5" name="resposta5" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta5 == "D") { echo 'checked'; }} ?>> Ter uma comunicação impecável é crucial para qualquer profissão e mais ainda quando se trata de garantir uma boa imagem diante do seu usuário. </p>  
 					   <div>
 					  </div>
 					  @elseif($a == 6)
 					  <div class="row">
 					   <div class="col">
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="A"> O Sigilo Profissional trata de resguardar informações acerca do histórico de trabalho do funcionário, em suas passagens por outras empresas. </p> 
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="B"> O Sigilo Profissional trata de resguardar informações importantes ou valiosas sobre conteúdos da vida empresarial, inclusive quando essas informações representarem alguma transgressão a Lei. </p> 
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="C"> O Sigilo Profissional trata de uma conduta requerida dos funcionários comuns, não sendo, pois, requerido das funções de chefia e direção das empresas. </p> 
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="D"> O Sigilo Profissional trata de uma informação a ser protegida, impõe uma relação entre privacidade e publicidade, cujo dever profissional se estabelece desde a se ater ao estritamente necessário ao cumprimento de seu trabalho, a não informar a matéria sigilosa. </p> 
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta6 == "A") { echo 'checked'; }} ?>> O Sigilo Profissional trata de resguardar informações acerca do histórico de trabalho do funcionário, em suas passagens por outras empresas. </p> 
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta6 == "B") { echo 'checked'; }} ?>> O Sigilo Profissional trata de resguardar informações importantes ou valiosas sobre conteúdos da vida empresarial, inclusive quando essas informações representarem alguma transgressão a Lei. </p> 
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta6 == "C") { echo 'checked'; }} ?>> O Sigilo Profissional trata de uma conduta requerida dos funcionários comuns, não sendo, pois, requerido das funções de chefia e direção das empresas. </p> 
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta6" name="resposta6" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta6 == "D") { echo 'checked'; }} ?>> O Sigilo Profissional trata de uma informação a ser protegida, impõe uma relação entre privacidade e publicidade, cujo dever profissional se estabelece desde a se ater ao estritamente necessário ao cumprimento de seu trabalho, a não informar a matéria sigilosa. </p> 
 					   <div>
 					  </div>
 					  @elseif($a == 7)
@@ -156,29 +156,29 @@
 					  </div>
 					  <div class="row">
 					   <div class="col">
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="A"> Todas as afirmativas são verdadeiras. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="B"> Somente as afirmativas I e IV são verdadeiras. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="C"> Somente as afirmativas I, II e IV são verdadeiras. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="D"> Somente as afirmativas II e IV são verdadeiras.
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta7 == "A") { echo 'checked'; }} ?>> Todas as afirmativas são verdadeiras. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta7 == "B") { echo 'checked'; }} ?>> Somente as afirmativas I e IV são verdadeiras. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta7 == "C") { echo 'checked'; }} ?>> Somente as afirmativas I, II e IV são verdadeiras. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta7" name="resposta7" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta7 == "D") { echo 'checked'; }} ?>> Somente as afirmativas II e IV são verdadeiras.
 					   <div>
 					  </div>
 					  @elseif($a == 8)
 					  <div class="row">
 					   <div class="col">
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="A"> Agir com parcialidade. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="B"> Prestar serviços com agilidade e precisão. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="C"> Cercear exercício profissional de outrem. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="D"> Contravir normas internas, condutas éticas específicas e legislações da sua profissão. </p>
-						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="E"> Agir com integridade, ambiguidade e desrespeito com os demais colegas de profissão.
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta8 == "A") { echo 'checked'; }} ?>> Agir com parcialidade. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta8 == "B") { echo 'checked'; }} ?>> Prestar serviços com agilidade e precisão. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta8 == "C") { echo 'checked'; }} ?>> Cercear exercício profissional de outrem. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta8 == "D") { echo 'checked'; }} ?>> Contravir normas internas, condutas éticas específicas e legislações da sua profissão. </p>
+						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta8" name="resposta8" value="E" <?php if($qtdQ > 0){ if($questionario[0]->resposta8 == "E") { echo 'checked'; }} ?>> Agir com integridade, ambiguidade e desrespeito com os demais colegas de profissão.
 					   <div>
 					  </div>
 					  @elseif($a == 9)
 					  <div class="row">
 					   <div class="col">
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="A"> Rede social é algo pessoal o qual o indivíduo é livre para se expressar. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="B"> Faltou profissionalismo por parte da secretária municipal, demonstrou falta de liderança ao destacar seu favoritismo pessoal perdendo a credibilidade dos demais. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="C"> Ela deveria ter citado o nome de todos os seus subordinados demonstrando sua real afetividade pelos mesmos. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="D"> Uma pessoa pública não pode ter redes sociais deixando explicito sua vida pessoal. </p>
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta9 == "A") { echo 'checked'; }} ?>> Rede social é algo pessoal o qual o indivíduo é livre para se expressar. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta9 == "B") { echo 'checked'; }} ?>> Faltou profissionalismo por parte da secretária municipal, demonstrou falta de liderança ao destacar seu favoritismo pessoal perdendo a credibilidade dos demais. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta9 == "C") { echo 'checked'; }} ?>> Ela deveria ter citado o nome de todos os seus subordinados demonstrando sua real afetividade pelos mesmos. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta9" name="resposta9" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta9 == "D") { echo 'checked'; }} ?>> Uma pessoa pública não pode ter redes sociais deixando explicito sua vida pessoal. </p>
 					   <div>
 					  </div>
 					  @elseif($a == 10)
@@ -189,11 +189,11 @@
 						</label>
 						<div class="row">
 					     <div class="col">
-						  <p align="justify">A) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="A"> O líder deve ser arbitrário em suas decisões. </p>
-						  <p align="justify">B) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="B"> As críticas devem ser evitadas. </p>
-						  <p align="justify">C) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="C"> A equipe deve respeitar as divergências e diversidades. </p>
-						  <p align="justify">D) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="D"> As opiniões deverão ser ignoradas. </p>
-						  <p align="justify">E) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="E"> As responsabilidades devem ser delegadas.
+						  <p align="justify">A) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta10 == "A") { echo 'checked'; }} ?>> O líder deve ser arbitrário em suas decisões. </p>
+						  <p align="justify">B) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta10 == "B") { echo 'checked'; }} ?>> As críticas devem ser evitadas. </p>
+						  <p align="justify">C) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta10 == "C") { echo 'checked'; }} ?>> A equipe deve respeitar as divergências e diversidades. </p>
+						  <p align="justify">D) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta10 == "D") { echo 'checked'; }} ?>> As opiniões deverão ser ignoradas. </p>
+						  <p align="justify">E) <input class="form-check-input" type="radio" id="resposta10" name="resposta10" value="E" <?php if($qtdQ > 0){ if($questionario[0]->resposta10 == "E") { echo 'checked'; }} ?>> As responsabilidades devem ser delegadas.
 						 <div> 
 					    </div>
 					   <div>
@@ -212,20 +212,20 @@
 					  </div>
 					  <div class="row">
 					   <div class="col"> 
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="A"> Somente os itens I, II e IV. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="B"> Somente os itens I e III. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="C"> Somente os itens I, III e IV. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="D"> Somente os itens II, III e IV. </p> 
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta11 == "A") { echo 'checked'; }} ?>> Somente os itens I, II e IV. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta11 == "B") { echo 'checked'; }} ?>> Somente os itens I e III. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta11 == "C") { echo 'checked'; }} ?>> Somente os itens I, III e IV. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta11" name="resposta11" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta11 == "D") { echo 'checked'; }} ?>> Somente os itens II, III e IV. </p> 
 					   <div>
 					  </div>
 					  @elseif($a == 12)
 					  <div class="row">
 					   <div class="col"> 
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="A"> Em caso de exposição acidental ou incidental, não é necessário adotar medidas de proteção e prevenção de novos acidentes, visto que se aprende com os erros e eles dificilmente se repetem. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="B"> O uso de luvas substitui a higiene de mãos, que só deve ocorrer após o uso desse EPI. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="C"> Com ou sem afastamento do trabalhador é obrigatória a emissão de Comunicação de Acidente de Trabalho (CAT). </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="D"> Trabalhadores com feridas ou lesões nas mãos podem iniciar suas atividades assim que as lesões pararem de doer, não sendo necessária a avaliação de nenhum profissional da saúde liberando para o trabalho. </p>
-						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="E"> O trabalhador só deve comunicar o acidente de trabalho se ele for muito grave ou com exposição a um agente biológico que possa lhe causar algum dano a longo prazo. </p>
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta12 == "A") { echo 'checked'; }} ?>> Em caso de exposição acidental ou incidental, não é necessário adotar medidas de proteção e prevenção de novos acidentes, visto que se aprende com os erros e eles dificilmente se repetem. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta12 == "B") { echo 'checked'; }} ?>> O uso de luvas substitui a higiene de mãos, que só deve ocorrer após o uso desse EPI. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta12 == "C") { echo 'checked'; }} ?>> Com ou sem afastamento do trabalhador é obrigatória a emissão de Comunicação de Acidente de Trabalho (CAT). </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta12 == "D") { echo 'checked'; }} ?>> Trabalhadores com feridas ou lesões nas mãos podem iniciar suas atividades assim que as lesões pararem de doer, não sendo necessária a avaliação de nenhum profissional da saúde liberando para o trabalho. </p>
+						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta12" name="resposta12" value="E" <?php if($qtdQ > 0){ if($questionario[0]->resposta12 == "E") { echo 'checked'; }} ?>> O trabalhador só deve comunicar o acidente de trabalho se ele for muito grave ou com exposição a um agente biológico que possa lhe causar algum dano a longo prazo. </p>
 					   <div>
 					  </div>
 					  @elseif($a == 13)
@@ -242,31 +242,31 @@
 					  </div>
 					  <div class="row">
 					   <div class="col">
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="A"> I, apenas. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="B"> I, II, III e IV. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="C"> II e IV, apenas. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="D"> I e III, apenas. </p>
-						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="E"> I e IV, apenas. </p>
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta13 == "A") { echo 'checked'; }} ?>> I, apenas. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta13 == "B") { echo 'checked'; }} ?>> I, II, III e IV. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta13 == "C") { echo 'checked'; }} ?>> II e IV, apenas. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta13 == "D") { echo 'checked'; }} ?>> I e III, apenas. </p>
+						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta13" name="resposta13" value="E" <?php if($qtdQ > 0){ if($questionario[0]->resposta13 == "E") { echo 'checked'; }} ?>> I e IV, apenas. </p>
 					   <div>
 					  </div>
 					  @elseif($a == 14)
 					  <div class="row">
 					   <div class="col">
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="A"> O uso de luvas de procedimento substitui totalmente a higienização das mãos. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="B"> A higienização das mãos com água e sabão deve ser realizada apenas 2 vezes por dia. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="C"> O uso de solução alcoólica (líquida ou gel) substitui totalmente a higienização das mãos. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="D"> A higienização das mãos com água e sabão só deverá ser realizada quando houver sujidade aparente. </p>
-						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="E"> A higienização das mãos com água e sabão deverá ser realizada quando necessário e sempre houver sujidade aparente. </p>
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta14 == "A") { echo 'checked'; }} ?>> O uso de luvas de procedimento substitui totalmente a higienização das mãos. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta14 == "B") { echo 'checked'; }} ?>> A higienização das mãos com água e sabão deve ser realizada apenas 2 vezes por dia. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta14 == "C") { echo 'checked'; }} ?>> O uso de solução alcoólica (líquida ou gel) substitui totalmente a higienização das mãos. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta14 == "D") { echo 'checked'; }} ?>> A higienização das mãos com água e sabão só deverá ser realizada quando houver sujidade aparente. </p>
+						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta14" name="resposta14" value="E" <?php if($qtdQ > 0){ if($questionario[0]->resposta14 == "E") { echo 'checked'; }} ?>> A higienização das mãos com água e sabão deverá ser realizada quando necessário e sempre houver sujidade aparente. </p>
 					   <div>
 					  </div>
 					  @elseif($a == 15)
 					  <div class="row">
 					   <div class="col">
-						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="A"> De forma antiética. </p>
-						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="B"> Com morosidade. </p>
-						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="C"> Com abuso de poder. </p>
-						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="D"> De forma desidiosa. </p>
-						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="E"> De forma ética. </p>
+						<p align="justify">A) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="A" <?php if($qtdQ > 0){ if($questionario[0]->resposta15 == "A") { echo 'checked'; }} ?>> De forma antiética. </p>
+						<p align="justify">B) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="B" <?php if($qtdQ > 0){ if($questionario[0]->resposta15 == "B") { echo 'checked'; }} ?>> Com morosidade. </p>
+						<p align="justify">C) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="C" <?php if($qtdQ > 0){ if($questionario[0]->resposta15 == "C") { echo 'checked'; }} ?>> Com abuso de poder. </p>
+						<p align="justify">D) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="D" <?php if($qtdQ > 0){ if($questionario[0]->resposta15 == "D") { echo 'checked'; }} ?>> De forma desidiosa. </p>
+						<p align="justify">E) <input class="form-check-input" type="radio" id="resposta15" name="resposta15" value="E" <?php if($qtdQ > 0){ if($questionario[0]->resposta15 == "E") { echo 'checked'; }} ?>> De forma ética. </p>
 					   <div>
 					  </div>
 					 @endif

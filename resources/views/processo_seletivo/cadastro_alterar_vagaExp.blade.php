@@ -43,6 +43,17 @@
 					</tr>
 					<tr> 
 					  <td><input type="text" class="form-control" id="descricao" name="descricao" value="<?php echo $vagaExp[0]->descricao; ?>" required /> </td>
+					  <td>
+						<select class="form-control" id="tipo" name="tipo">
+							@if($vagaExp[0]->tipo == 1)
+							 <option value="1" selected>Necessárias</option>
+							 <option value="2">Desejadas</option>
+							@else
+							 <option value="1">Necessárias</otpion>
+							 <option value="2" selected>Desejadas</option>
+							@endif
+						</select>
+					  </td>
 					</tr>
 				</table>	
 				

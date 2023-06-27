@@ -54,33 +54,41 @@
 			    <td colspan="2"> 
 				 <p>
 					<ul style="text-align: left; list-style-type:none;">
-					 <li style="padding: 0px; margin-right: 30px;"><b><p align="justify">De acordo com a Lei Geral de Proteção de Dados Nº 13.709/18 e legislação vigente aplicável, o
-											titular dos dados pessoais declara estar ciente e de acordo com as disposições aqui descritas e
-											autoriza, de forma livre e expressa, o tratamento de dados pessoais e informações pelo HCP
-											Gestão, respeitando os princípios de transparência, necessidade, adequação e finalidade para os
-											dados aqui coletados conforme edital publicado. O HCP Gestão fará uso destes dados para
-											cadastro de profissionais e serão armazenados por 12 meses, utilizando as medidas técnicas e
-											organizacionais necessárias para preservar a privacidade dos dados coletados seguindo as
-											melhores práticas de mercado.</p></b></li>
-					 <li style="padding: 0px; margin-right: 30px;"><b><p align="justify">O HCP Gestão respeita e garante ao titular a possibilidade de exercer seus direitos. Para exercer
-											seus direitos entre em contato com o Encarregado de Dados no e-mail dpo@hcp.org.br.
-											Direitos do Titular dos Dados: Confirmação da existência de tratamento, o acesso aos dados, a
-											correção de dados incompletos, inexatos ou desatualizados, a anonimização, bloqueio ou
-											eliminação de dados desnecessários, excessivos ou tratados em desconformidade, a
-											portabilidade de seus dados a outro fornecedor de serviço ou produto, mediante requisição
-											expressa pelo titular, a eliminação dos dados tratados com consentimento do titular, a
-											informação sobre a possibilidade de não fornecer o seu consentimento, bem como de ser
-											informado sobre as consequências, em caso de negativa e a revogação do consentimento.</p></b></li>
+					 <li style="padding: 0px; margin-right: 30px;"><b><p align="justify">De acordo com a Lei Geral de Proteção de Dados nº 13.709/18 e 
+											legislação vigente aplicável, o titular dos dados pessoais declara estar ciente e de acordo com as disposições 
+											aqui descritas e autoriza, de forma livre e expressa, o tratamento de dados pessoais e informações pelo 
+											HCP Gestão, respeitando os princípios de transparência, necessidade, adequação e finalidade para os dados aqui 
+											coletados conforme edital publicado. </p></b></li>
+					 <li style="padding: 0px; margin-right: 30px;"><b><p align="justify">O HCP Gestão fará uso destes dados para cadastro de profissionais 
+											e serão armazenados por 12 meses, utilizando as medidas técnicas e organizacionais necessárias para preservar 
+											a privacidade dos dados coletados seguindo as melhores práticas de mercado. </p></b></li>
+					 <li style="padding: 0px; margin-right: 30px;"><b><p align="justify">O HCP Gestão respeita e garante ao titular a possibilidade de exercer 
+						 					seus direitos: (i) Confirmação da existência de tratamento; (ii) o acesso aos dados, (iii) a correção de dados 
+											incompletos, (iv) inexatos ou desatualizados, (v) a anonimização, (vi) bloqueio ou eliminação de dados desnecessários, 
+											excessivos ou tratados em desconformidade, (vii) a portabilidade de seus dados a outro fornecedor de serviço ou produto, 
+											mediante requisição expressa pelo titular, (viii) a eliminação dos dados tratados com consentimento do titular, (ix) a 
+											informação sobre a possibilidade de não fornecer o seu consentimento, bem como de ser informado sobre as consequências, 
+											em caso de negativa e a (x) revogação do consentimento.</p></b></li>
+
+					 <li style="padding: 0px; margin-right: 30px;"><b><p align="justify">Para exercer seus direitos relacionados à Lei Geral de Proteção de Dados 
+											entre em contato com o Encarregado de Dados no e-mail dpo@hcp.org.br. Em hipótese alguma deverá enviar currículos para 
+											este e-mail.</p></b></li>					
+					 <li style="padding: 0px; margin-right: 30px;"><b><p align="justify">Para informações detalhadas sobre como tratamos os seus dados pessoais 
+											consulte a política de privacidade em https:\\www.hcpgestao.org.br\privacidade</p></b></li>	
+
+					 
+					 <li style="padding: 0px; margin-right: 30px;"><b><p align="justify">Para esclarecimentos e dúvidas sobre o processo seletivo entrar em contato 
+											com o endereço de e-mail informado nas demais seções do edital.	</p></b></li>
 					</ul>
 				 </p>
 				</td>
 			 </tr>
 			 <tr>
 				<td>
-				  <a style="margin-left: 30px;" href="javascript:history.back();" id="Voltar" name="Voltar" type="button" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a>
+				  <a style="margin-left: 30px;" href="{{ route('informativo', array($unidades[0]->id, $processos[0]->id)) }}" id="Voltar" name="Voltar" type="button" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a>
 				</td>
 				<td align="right">
-			   	  <form method="get" action="{{ route('cadastroVagaCandidato', array($processos[0]->unidade_id, $processos[0]->id)) }}">	
+			   	  <form method="get" action="{{ route('termoUIns', array($processos[0]->unidade_id, $processos[0]->id)) }}">	
 					<button style="margin-right: 30px;" id="div" href="" class='btn btn-success btn-sm' target="_blank">INSCRIÇÃO</button> 	
 				  </form>
 				</td>

@@ -11,6 +11,10 @@ Route::get('/', 'CandidatoController@candidatoIndex')->name('candidatoIndex');
 Route::get('areaCandidato', 'CandidatoController@areaCandidato')->name('areaCandidato');
 Route::post('areaCandidato', 'CandidatoController@loginCandidato')->name('loginCandidato');
 
+Route::get('politica_privacidade', 'CandidatoController@politicaP')->name('politicaP');
+Route::get('termo_uso', 'CandidatoController@termoU')->name('termoU');
+Route::get('termo_uso/{id_u}/{id_p}', 'CandidatoController@termoUIns')->name('termoUIns');
+
 Route::get('areaCandidato/{id_u}/{id_p}/{id_c}', 'CandidatoController@areaCandidatoAlterar')->name('areaCandidatoAlterar');
 Route::post('areaCandidato/{id_u}/{id_p}/{id_c}', 'CandidatoController@updateAreaCandidatoAlterar')->name('updateAreaCandidatoAlterar');
 Route::get('areaCandidato/documentos/escolha/{id_u}/{id_p}/{id_c}', 'CandidatoController@areaCandidatoDocumentosEscolha')->name('areaCandidatoDocumentosEscolha');

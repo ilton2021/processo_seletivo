@@ -17,6 +17,7 @@ use App\Model\Estado;
 use App\Model\Perguntas;
 use App\Model\DocumentosCandidatos;
 use App\Model\DocumentosCandidatosDependentes;
+use App\Model\Cargos;
 use Throwable;
 use DB;
 use Redirect;
@@ -104,8 +105,7 @@ class CandidatoController extends Controller
 			$processos2 = DB::table('processo_seletivo')
 			 ->select('processo_seletivo.*')
 			 ->where('processo_seletivo.nome',$processoSeletivo)
-			 ->where('processo_seletivo.inscricao_fim','>=',$hoje)
-			 ->where('processo_seletivo.inscricao_inicio','<=',$hoje)->get();	
+			 ->where('processo_seletivo.data_resultado','>=',$hoje)->get();	
 			$valida = sizeof($processos2);
 			if ($qtd == 0) {
 				$validator = 'Candidato Inválido!';
@@ -951,23 +951,24 @@ class CandidatoController extends Controller
 				'$grau_parentesco','$grau_parentesco_nome','','','',
 				'','','','','',
 				'','','','') ");
-
     			$numero = DB::table('processo_seletivo_'.$nprocesso)->select('id')->where('cpf',$cpf)->get();
 				$id2 = $numero[0]->id;
 				$numeroInscricao = $nprocesso.'-'.$id2;
     			$unidades = Unidade::all();
     			$processos = DB::table('processo_seletivo')
-    			->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
-    			->select('processo_seletivo.*', 'unidade.nome as NOME')
-    			->get();
-    			$processos2 = DB::table('unidade')
-    			->join('processo_seletivo', 'unidade.id', '=', 'processo_seletivo.unidade_id')
-    			->select('processo_seletivo.*', 'unidade.*')
-    			->get();
+				->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
+				->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
+				->where('processo_seletivo.id',$id_processo)
+				->get();
 				$processo = ProcessoSeletivo::where('id',$id_processo)->get();
     			DB::statement("UPDATE processo_seletivo_".$nprocesso." SET numeroInscricao = '$numeroInscricao' WHERE id = '$id2' ");
-    			return view('candidato_', compact('unidade','processos','processo','numero','nprocesso','id2','numeroInscricao'))
-    						->withInput(session()->flashInput($request->input()));	
+    			//return view('painelCandidato', compact('unidade','processos','processo','numero','nprocesso','id2','numeroInscricao'))
+    			//			->withInput(session()->flashInput($request->input()));	
+				$qtdQ = 0;
+				$unidade   = Unidade::where('id',$id)->get();
+				$candidato = DB::table('processo_seletivo_'.$nprocesso)->where('numeroInscricao', $numeroInscricao)->get();
+				return view('cadastro_candidatos_painel', compact('unidades','unidade','processos','candidato','qtdQ'));
+				
 	    } catch(Throwable $e) {
 			$validator = "Algo está errado!! Verifique os campos novamente!";
 			DB::table('processo_seletivo_'.$nome_processo)->where('email',$email)->delete();
@@ -994,10 +995,9 @@ class CandidatoController extends Controller
 			$vagas      = Vaga::where('processo_seletivo_id', $idP)->where('nome',$user[0]->vaga)->where('ativo',0)->get();
 			$hoje 	    = date('Y-m-d', strtotime('now'));
 			$processos2 = DB::table('processo_seletivo')
-			 ->select('processo_seletivo.*')
-			 ->where('processo_seletivo.nome',$nprocesso)
-			 ->where('processo_seletivo.inscricao_fim','>=',$hoje)
-			 ->where('processo_seletivo.inscricao_inicio','<=',$hoje)->get();	
+						->select('processo_seletivo.*')
+						->where('processo_seletivo.nome',$nprocesso)
+						->where('processo_seletivo.data_resultado','>=',$hoje)->get();		
 			$valida = sizeof($processos2);
 			if($cpf == NULL) {
 				$validator = 'Informe o CPF!';
@@ -1152,12 +1152,10 @@ class CandidatoController extends Controller
 			 $validator = 'Você alterou seus dados de Inscrição!'; 
 			 $hoje = date('Y-m-d', strtotime('now'));
 			 $processos = DB::table('processo_seletivo')
-			 ->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
-			 ->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
-					'unidade.id as unidade_id')
-			 ->where('processo_seletivo.inscricao_fim','>=',$hoje)
-			 ->where('processo_seletivo.inscricao_inicio','<=',$hoje)
-			 ->get();	
+			        ->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
+					->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
+							 'unidade.id as unidade_id')
+					->where('processo_seletivo.data_resultado','>=',$hoje)->get();
     		 return view('cadastro_candidatos_painel_alterar', compact('unidades','user','processos','unidade','processo','valida'))
     				->withInput(session()->flashInput($request->input()))
 					->withErrors($validator);	
@@ -1194,8 +1192,7 @@ class CandidatoController extends Controller
 		$processos = DB::table('processo_seletivo')
 		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
-		->where('processo_seletivo.id',$id)
-		->get();
+		->where('processo_seletivo.id',$id)->get();
 		$nprocesso = $processos[0]->nome;
 		$candidato = DB::table('processo_seletivo_'.$nprocesso)->where('id', $id_c)->get();
 		$questionario = DB::table('questionario_'.$nprocesso)->where('candidato_id',$id_c)->get();
@@ -1218,10 +1215,9 @@ class CandidatoController extends Controller
 		$candidato = DB::table('processo_seletivo_'.$nprocesso)->where('id', $id_c)->get();
 		$hoje 	    = date('Y-m-d', strtotime('now'));
 		$processos2 = DB::table('processo_seletivo')
-					->select('processo_seletivo.*')
-					->where('processo_seletivo.nome',$processos[0]->nome)
-					->where('processo_seletivo.inscricao_fim','>=',$hoje)
-					->where('processo_seletivo.inscricao_inicio','<=',$hoje)->get();	
+						->select('processo_seletivo.*')
+						->where('processo_seletivo.nome',$nprocesso)
+						->where('processo_seletivo.data_resultado','>=',$hoje)->get();		
 		$valida = sizeof($processos2);
 		$processo = ProcessoSeletivo::where('id',$id)->get();
 		$deficiencia_status = $input['deficiencia_status'];
@@ -1267,7 +1263,6 @@ class CandidatoController extends Controller
 					$validator = 'PCD cadastrada com sucesso!';
 					$questionario = DB::table('questionario_'.$nprocesso)->where('candidato_id',$id_c)->get();
 					$qtdQ = sizeof($questionario);
-					 
 					if($tela == 1) {
 						return redirect()->route('painelCandidato', [ $id_u, $id, $id_c ])
 							->withErrors($validator);
@@ -1277,7 +1272,6 @@ class CandidatoController extends Controller
 							->withErrors($validator)
 							  ->withInput(session()->flashInput($request->input()));
 					}
-					
     			} else {
     				$validator = 'No anexo deficiência os arquivos permitidos são: .doc, .docx e .pdf! Você terá que anexar novamente os arquivos';
     				return view('cadastro_candidatos_pcd', compact('unidades','unidade','processos','candidato','tela'))
@@ -1320,7 +1314,7 @@ class CandidatoController extends Controller
 		$perguntas = Perguntas::all();
 		$questionario = DB::table('questionario_'.$nprocesso)->where('candidato_id',$id_c)->get();
 		$qtdQ = sizeof($questionario);
-		return view('cadastro_candidatos_questionario', compact('unidades','unidade','processos','candidato','perguntas','qtdQ','tela'));
+		return view('cadastro_candidatos_questionario', compact('unidades','unidade','processos','candidato','perguntas','qtdQ','tela','questionario'));
 	}
 
 	//Página do Painel do Candidato - Salvar Questionário
@@ -1339,12 +1333,13 @@ class CandidatoController extends Controller
 		$candidato = DB::table('processo_seletivo_'.$nprocesso)->where('id', $id_c)->get();
 		$hoje 	    = date('Y-m-d', strtotime('now'));
 		$processos2 = DB::table('processo_seletivo')
-					->select('processo_seletivo.*')
-					->where('processo_seletivo.nome',$processos[0]->nome)
-					->where('processo_seletivo.inscricao_fim','>=',$hoje)
-					->where('processo_seletivo.inscricao_inicio','<=',$hoje)->get();	
+						->select('processo_seletivo.*')
+						->where('processo_seletivo.nome',$nprocesso)
+						->where('processo_seletivo.data_resultado','>=',$hoje)->get();		
 		$valida = sizeof($processos2);
 		$processo = ProcessoSeletivo::where('id',$id)->get();
+		$questionario = DB::table('questionario_'.$nprocesso)->where('candidato_id',$id_c)->get();
+		$qtdQ = sizeof($questionario);
 		$validator = Validator::make($request->all(), [
 			'resposta1'  => 'required',
             'resposta2'  => 'required',
@@ -1363,12 +1358,11 @@ class CandidatoController extends Controller
             'resposta15' => 'required'
 		]);
 		if ($validator->fails()) {
-		   return view('cadastro_candidatos_questionario', compact('unidades','unidade','processos','candidato','perguntas','tela'))
+		   return view('cadastro_candidatos_questionario', compact('unidades','unidade','processos','candidato','perguntas','tela','qtdQ','questionario'))
 		    		->withErrors($validator)
 					->withInput(session()->flashInput($request->input()));
 		} else { 
-			$questionario = DB::table('questionario_'.$nprocesso)->where('candidato_id',$id_c)->get();
-			$qtdQ = sizeof($questionario);
+			
 			if($qtdQ > 0) {
 				DB::statement("DELETE FROM questionario_".$processos[0]->nome." WHERE candidato_id = ".$id_c); 	
 			} 
@@ -1423,8 +1417,8 @@ class CandidatoController extends Controller
 	//Página do Painel do Candidato - Experiências
 	public function painelCandidatoExperiencias($id_u, $id, $id_c, $tela)
 	{
-		$unidades = Unidade::all();
-		$unidade  = Unidade::where('id',$id_u)->get();
+		$unidades  = Unidade::all();
+		$unidade   = Unidade::where('id',$id_u)->get();
 		$processos = DB::table('processo_seletivo')
 		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
@@ -1432,13 +1426,27 @@ class CandidatoController extends Controller
 		->get();
 		$nprocesso = $processos[0]->nome;
 		$candidato = DB::table('processo_seletivo_'.$nprocesso)->where('id', $id_c)->get();
+		$qtdC      = sizeof($candidato);
 		$vagas 	   = Vaga::where('nome', $candidato[0]->vaga)->where('processo_seletivo_id',$id)
 					->where('ativo',0)->get();
 		$vagasExp  = ExperienciasVaga::where('processo_seletivo_id',$id)
 									->where('vaga_id',$vagas[0]->id)->get();
 		$questionario = DB::table('questionario_'.$nprocesso)->where('candidato_id',$id_c)->get();
-		$qtdQ = sizeof($questionario);
-		return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','qtdQ','tela'));
+		$qtdQ   = sizeof($questionario);
+		$cargos = Cargos::all();
+		for ($i = 0; $i < $qtdC; $i++) { $a = explode(",", $candidato[0]->exp_01_competencias); }
+		$exp1 = DB::table('experiencias_vaga')->whereIn('id',$a)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $a = explode(",", $candidato[0]->exp_01_competencias_desejadas); }
+		$exp1_1 = DB::table('experiencias_vaga')->whereIn('id',$a)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $b = explode(",", $candidato[0]->exp_02_competencias); }
+		$exp2 = DB::table('experiencias_vaga')->whereIn('id',$b)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $b = explode(",", $candidato[0]->exp_02_competencias_desejadas); }
+		$exp2_1 = DB::table('experiencias_vaga')->whereIn('id',$b)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $c = explode(",", $candidato[0]->exp_03_competencias); }
+		$exp3 = DB::table('experiencias_vaga')->whereIn('id',$c)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $c = explode(",", $candidato[0]->exp_03_competencias_desejadas); }
+		$exp3_1 = DB::table('experiencias_vaga')->whereIn('id',$c)->get();
+		return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','qtdQ','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'));
 	}
 
 	//Página do Painel do Candidato - Aviso Experiências
@@ -1468,6 +1476,7 @@ class CandidatoController extends Controller
 		$input     = $request->all();
 		$unidades  = Unidade::all();
 		$unidade   = Unidade::where('id',$id_u)->get();
+		$cargos    = Cargos::all();
 		$processos = DB::table('processo_seletivo')
 		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
@@ -1475,6 +1484,7 @@ class CandidatoController extends Controller
 		->get();
 		$nprocesso = $processos[0]->nome;
 		$candidato = DB::table('processo_seletivo_'.$nprocesso)->where('id', $id_c)->get();
+		$qtdC      = sizeof($candidato);
 		$vagas 	   = Vaga::where('nome', $candidato[0]->vaga)->where('processo_seletivo_id',$id)
 					->where('ativo',0)->get();
 		$vagasExp  = ExperienciasVaga::where('processo_seletivo_id',$id)
@@ -1482,25 +1492,46 @@ class CandidatoController extends Controller
 		$hoje 	    = date('Y-m-d', strtotime('now'));
 		$processos2 = DB::table('processo_seletivo')
 						->select('processo_seletivo.*')
-						->where('processo_seletivo.nome',$processos[0]->nome)
-						->where('processo_seletivo.inscricao_fim','>=',$hoje)
-						->where('processo_seletivo.inscricao_inicio','<=',$hoje)->get();	
-		$valida = sizeof($processos2);
-		$processo = ProcessoSeletivo::where('id',$id)->get();
-		if(!empty($input['val6'])) {
+						->where('processo_seletivo.nome',$nprocesso)
+						->where('processo_seletivo.data_resultado','>=',$hoje)->get();		
+		$valida   = sizeof($processos2); 
+		$processo = ProcessoSeletivo::where('id',$id)->get(); 
+		for ($i = 0; $i < $qtdC; $i++) { $a = explode(",", $candidato[0]->exp_01_competencias); }
+		$exp1 = DB::table('experiencias_vaga')->whereIn('id',$a)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $a = explode(",", $candidato[0]->exp_01_competencias_desejadas); }
+		$exp1_1 = DB::table('experiencias_vaga')->whereIn('id',$a)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $b = explode(",", $candidato[0]->exp_02_competencias); }
+		$exp2 = DB::table('experiencias_vaga')->whereIn('id',$b)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $b = explode(",", $candidato[0]->exp_02_competencias_desejadas); }
+		$exp2_1 = DB::table('experiencias_vaga')->whereIn('id',$b)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $c = explode(",", $candidato[0]->exp_03_competencias); }
+		$exp3 = DB::table('experiencias_vaga')->whereIn('id',$c)->get();
+		for ($i = 0; $i < $qtdC; $i++) { $c = explode(",", $candidato[0]->exp_03_competencias_desejadas); }
+		$exp3_1 = DB::table('experiencias_vaga')->whereIn('id',$c)->get();
+		if(empty($input['val6'])) {
 			$expVaga1 = isset($input['vaga_exp1']);
-			if ($expVaga1 == true) {
+			if ($expVaga1) {
 				$input['exp_01_competencias'] = implode(',', $input['vaga_exp1']);
-				$a = str_contains($input['exp_01_competencias'], '0');
+				$a = str_contains($input['exp_01_competencias'], '-');
 				if($a) {
 					$input['exp_01_competencias'] = "0";	
 				}
 			} else {
 				$input['exp_01_competencias'] = "";
+			} 
+			$expVaga1_1 = isset($input['vaga_exp1_1']);
+			if ($expVaga1_1) {
+				$input['exp_01_competencias_desejadas'] = implode(',',$input['vaga_exp1_1']);
+				$a = str_contains($input['exp_01_competencias_desejadas'], '-');
+				if ($a) {
+					$input['exp_01_competencias_desejadas'] = "0";
+				}
+			} else {
+				$input['exp_01_competencias_desejadas'] = "-";
 			}
-			if($input['exp_01_competencias'] == "") {
+			if($input['exp_01_competencias'] == "-" && $input['exp_01_competencias_desejadas'] == "-") {
 				$validator = 'Você tem que possuir pelo menos 1 competência na 1ª Experiência!';		
-				return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela'))
+				return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));
 			}
@@ -1511,13 +1542,13 @@ class CandidatoController extends Controller
 				$anoF = date('Y-m-d', strtotime($data_fim)); 
 				if(strtotime($anoI) == strtotime($anoF) || strtotime($anoF) < strtotime($anoI)) {
 					$validator = 'Na Experiência 1 a Data Final não pode ser maior ou igual a Data Início!';
-						return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela'))
+						return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
 								->withErrors($validator)
 								->withInput(session()->flashInput($request->input()));											
 				}
-				$compt1  = $input['exp_01_competencias'];
-				if($compt1 != "") {
-					$data1   = new \DateTime($anoI);
+				$compt1  = $input['exp_01_competencias']; 
+				if($compt1 != "-") {
+					$data1   = new \DateTime($anoI); 
 					$data2   = new \DateTime($anoF);
 					$intervalo = $data1->diff($data2);
 					$a1      = $intervalo->format('%a'); 
@@ -1528,23 +1559,33 @@ class CandidatoController extends Controller
 				}
 			}
 	    } else {
-			$input['exp_01_competencias'] = ""; $input['exp_01_soma'] = 0; $data_inicio = ""; $data_fim = "";	
+			$input['exp_01_competencias'] = ""; $input['exp_01_competencias_desejadas'] = ""; $input['exp_01_soma'] = 0; $data_inicio = ""; $data_fim = "";	
 		}
 		
-		if(!empty($input['val7'])) {
+		if(empty($input['val7'])) {
 			$expVaga2 = isset($input['vaga_exp2']);
-			if ($expVaga2 == true) {
+			if ($expVaga2) {
 				$input['exp_02_competencias'] = implode(',', $input['vaga_exp2']);
-				$a = str_contains($input['exp_02_competencias'], '0');
+				$a = str_contains($input['exp_02_competencias'], '-');
 				if($a) {
 					$input['exp_02_competencias'] = "0";	
 				}
 			} else {
-				$input['exp_02_competencias'] = "";
+				$input['exp_02_competencias'] = "-";
 			}
-			if($input['exp_02_competencias'] == "") {
+			$expVaga2_1 = isset($input['vaga_exp2_1']);
+			if ($expVaga2_1) {
+				$input['exp_02_competencias_desejadas'] = implode(',',$input['vaga_exp2_1']);
+				$a = str_contains($input['exp_02_competencias_desejadas'], '-');
+				if ($a) {
+					$input['exp_02_competencias_desejadas'] = "0";
+				}
+			} else {
+				$input['exp_02_competencias_desejadas'] = "-";
+			}
+			if($input['exp_02_competencias'] == "-" && $input['exp_02_competencias_desejadas'] == "-") {
 				$validator = 'Você tem que possuir pelo menos 1 competência na 2ª Experiência!';		
-				return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela'))
+				return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
 							->withErrors($validator)
 							->withInput(session()->flashInput($request->input()));
 			}
@@ -1555,12 +1596,12 @@ class CandidatoController extends Controller
 				$anoF = date('Y-m-d', strtotime($data_fim2));
 				if($anoI == $anoF || $anoF < $anoI) {
 					$validator = 'Na Experiência 2 a Data Final não pode ser maior ou igual a Data Início! Você terá que anexar novamente os arquivos';
-					return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela'))
+					return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));											
 				}
 				$compt2  = $input['exp_02_competencias'];
-				if($compt2 != "") {
+				if($compt2 != "-") {
 					$data1   = new \DateTime($anoI);
 					$data2   = new \DateTime($anoF);
 					$intervalo = $data1->diff($data2);
@@ -1572,23 +1613,32 @@ class CandidatoController extends Controller
 				} 
 			} 
 		} else { 
-			$input['exp_02_competencias'] = ""; $input['exp_02_soma'] = 0; $data_inicio2 = ""; $data_fim2 = ""; 
+			$input['exp_02_competencias'] = ""; $input['exp_02_competencias_desejadas'] = ""; $input['exp_02_soma'] = 0; $data_inicio2 = ""; $data_fim2 = ""; 
 		}
-
-		if(!empty($input['val8'])) {
-			$expVaga3 = isset($input['vaga_exp3']);
-			if ($expVaga3 == true) {
+		if(empty($input['val8'])) {
+			$expVaga3 = isset($input['vaga_exp3']); 
+			if ($expVaga3) {
 				$input['exp_03_competencias'] = implode(',', $input['vaga_exp3']);
-				$a = str_contains($input['exp_03_competencias'], '0');
+				$a = str_contains($input['exp_03_competencias'], '-');
 				if($a) {
 					$input['exp_03_competencias'] = "0";	
 				}
 			} else {
-				$input['exp_03_competencias'] = "";
+				$input['exp_03_competencias'] = "-";
 			}
-			if($input['exp_03_competencias'] == "") {
+			$expVaga3_1 = isset($input['vaga_exp3_1']);
+			if ($expVaga3_1) {
+				$input['exp_03_competencias_desejadas'] = implode(',',$input['vaga_exp3_1']);
+				$a = str_contains($input['exp_03_competencias_desejadas'], '-');
+				if ($a) {
+					$input['exp_03_competencias_desejadas'] = "0";
+				}
+			} else {
+				$input['exp_03_competencias_desejadas'] = "-";
+			}
+			if($input['exp_03_competencias'] == "-" && $input['exp_03_competencias_desejadas'] == "-") {
 				$validator = 'Você tem que possuir pelo menos 1 competência na 3ª Experiência!';		
-				return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela'))
+				return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
 					->withErrors($validator)
 					->withInput(session()->flashInput($request->input()));
 			}
@@ -1599,12 +1649,12 @@ class CandidatoController extends Controller
 				$anoF = date('Y-m-d', strtotime($data_fim3));
 				if($anoI == $anoF || $anoF < $anoI) {
 					$validator = 'Na Experiência 3 a Data Final não pode ser maior ou igual a Data Início! Você terá que anexar novamente os arquivos';
-					return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela'))
+					return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));											
 				}
-				$compt3  = $input['exp_03_competencias'];
-				if($compt3 != "") {
+				$compt3  = $input['exp_03_competencias']; 
+				if($compt3 != "-") {
 					$data1   = new \DateTime($anoI);
 					$data2   = new \DateTime($anoF);
 					$intervalo = $data1->diff($data2);
@@ -1616,7 +1666,7 @@ class CandidatoController extends Controller
 				} 
 			}
 		} else { 
-			$input['exp_03_competencias'] = 0; $input['exp_03_soma'] = 0; $data_inicio3 = ""; $data_fim3 = ""; 
+			$input['exp_03_competencias'] = 0; $input['exp_03_competencias_desejadas'] = ""; $input['exp_03_soma'] = 0; $data_inicio3 = ""; $data_fim3 = ""; 
 		}
 		
 		if(!empty($input['empresa'])){ $empresa = addslashes($input['empresa']); }else{ $empresa = ""; }
@@ -1630,10 +1680,13 @@ class CandidatoController extends Controller
 		if(!empty($input['atribuicao3'])){ $atribuicao3 = addslashes($input['atribuicao3']); }else{ $atribuicao3 = ""; }
 
 		$exp_01_comp = addslashes($input['exp_01_competencias']); 
+		$exp_01_cmpD = addslashes($input['exp_01_competencias_desejadas']);
 		$exp_01_soma = addslashes($input['exp_01_soma']);
 		$exp_02_comp = addslashes($input['exp_02_competencias']);
+		$exp_02_cmpD = addslashes($input['exp_02_competencias_desejadas']);
 		$exp_02_soma = addslashes($input['exp_02_soma']);
 		$exp_03_comp = addslashes($input['exp_03_competencias']);  
+		$exp_03_cmpD = addslashes($input['exp_03_competencias_desejadas']);
 		$exp_03_soma = addslashes($input['exp_03_soma']);
 		$exps_soma   = (($exp_01_soma + $exp_02_soma + $exp_03_soma) * 0.16666);
 
@@ -1641,12 +1694,15 @@ class CandidatoController extends Controller
 		 exp_01_empresa='$empresa',exp_01_cargo='$cargo',exp_01_atribuicoes='$atribuicao', 
 		 exp_01_data_ini='$data_inicio',exp_01_data_fim='$data_fim',
 		 exp_01_competencias='$exp_01_comp',exp_01_soma='$exp_01_soma',
+		 exp_01_competencias_desejadas='$exp_01_cmpD',
 		 exp_02_empresa='$empresa2',exp_02_cargo='$cargo2',exp_02_atribuicoes='$atribuicao2', 
 		 exp_02_data_ini='$data_inicio2',exp_02_data_fim='$data_fim2',
 		 exp_02_competencias='$exp_02_comp',exp_02_soma='$exp_02_soma',
+		 exp_02_competencias_desejadas='$exp_02_cmpD',
 		 exp_03_empresa='$empresa3',exp_03_cargo='$cargo3',exp_03_atribuicoes='$atribuicao3', 
 		 exp_03_data_ini='$data_inicio3',exp_03_data_fim='$data_fim3',
 		 exp_03_competencias='$exp_03_comp',exp_03_soma='$exp_03_soma',
+		 exp_03_competencias_desejadas='$exp_03_cmpD',
 		 exps_soma='$exps_soma' WHERE id = '$id_c' ");
 
 		$validator = 'Experiência(s) cadastrada(s) com sucesso!';
@@ -1661,82 +1717,6 @@ class CandidatoController extends Controller
 					->withErrors($validator)
 				  	->withInput(session()->flashInput($request->input()));
 		}
-	}
-
-	//Página do Painel do Candidato - Currículo
-	public function painelCandidatoCurriculo($id_u, $id, $id_c)
-	{
-		$unidades = Unidade::all();
-		$unidade  = Unidade::where('id',$id_u)->get();
-		$processos = DB::table('processo_seletivo')
-		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
-		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
-		->where('processo_seletivo.id',$id)
-		->get();
-		$nprocesso = $processos[0]->nome;
-		$candidato = DB::table('processo_seletivo_'.$nprocesso)->where('id', $id_c)->get();
-		$questionario = DB::table('questionario_'.$nprocesso)->where('candidato_id',$id_c)->get();
-		$qtdQ = sizeof($questionario);
-		return view('cadastro_candidatos_curriculo', compact('unidades','unidade','processos','candidato','qtdQ'));
-	}
-
-	//Página do Painel do Candidato - Salvar Currículo
-	public function validarCandidatoCurriculo($id_u, $id, $id_c, Request $request)
-	{
-		$input = $request->all();
-		$unidades = Unidade::all();
-		$unidade  = Unidade::where('id',$id_u)->get();
-		$processos = DB::table('processo_seletivo')
-		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
-		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
-		->where('processo_seletivo.id',$id)
-		->get();
-		$nprocesso = $processos[0]->nome;
-		$candidato = DB::table('processo_seletivo_'.$nprocesso)->where('id', $id_c)->get();
-		if($request->file('arquivo') !== NULL) {	
-			$nomeB = $_FILES['arquivo']['name'];
-			$extensao = pathinfo($nomeB, PATHINFO_EXTENSION);
-			if($extensao === 'pdf' || $extensao === 'doc' || $extensao === 'docx' || $extensao === 'PDF' || $extensao === 'DOC' || $extensao === 'DOCX') {
-				$tamanho = $request->file('arquivo')->getSize();
-				if($tamanho > 10000000) {
-					$validator = 'O tamanho máximo do Currículo é 10MB!';
-					return view('cadastro_candidatos_curriculo', compact('unidades','unidade','processos','candidato'))
-						->withErrors($validator)
-						->withInput(session()->flashInput($request->input()));			
-				} 
-				$nome    = $candidato[0]->nome;
-				$arquivo = $input['arquivo'];
-				if($extensao === 'pdf' || $extensao === 'PDF'){ $arquivo = $nome.'.pdf'; } 
-				else if($extensao === 'doc'  || $extensao == "DOC"){ $arquivo = $nome.'.doc'; } 
-				else if($extensao === 'docx' || $extensao == "DOCX"){ $arquivo = $nome.'.docx'; } 
-				$upload = $request->file('arquivo')->move('../public/storage/candidato/curriculo/'.$nprocesso.'/',$arquivo);
-				if(!$upload) {
-					$validator = 'Ocorreu algum erro no upload, tente novamente!';
-    				return view('cadastro_candidatos_curriculo', compact('unidades','unidade','processos','candidato'))
-    						->withErrors($validator)
-    						->withInput(session()->flashInput($request->input()));	 
-				}
-			} else {
-				$validator = 'Os arquivos permitidos são: .doc, .docx, .pdf!';
-				return view('cadastro_candidatos_curriculo', compact('unidades','unidade','processos','candidato'))
-					->withErrors($validator)
-					->withInput(session()->flashInput($request->input()));			
-			}
-		} else {
-			$validator = 'Você precisa anexar o Currículo!';
-			return view('cadastro_candidatos_curriculo', compact('unidades','unidade','processos','candidato'))
-					->withErrors($validator)
-					->withInput(session()->flashInput($request->input()));			
-		}
-
-		DB::statement("UPDATE processo_seletivo_".$nprocesso." SET 
-    				  nomearquivo2 = '$arquivo' WHERE id = '$id_c' ");
-
-		$validator = 'Currículo cadastrado com sucesso!';
-		$questionario = DB::table('questionario_'.$nprocesso)->where('candidato_id',$id_c)->get();
-		$qtdQ      = sizeof($questionario);
-		return redirect()->route('painelCandidato', [ $id_u, $id, $id_c ])
-						 ->withErrors($validator);
 	}
 
 	//Página do Painel do Candidato - Confirmar Inscrição
@@ -1769,5 +1749,28 @@ class CandidatoController extends Controller
 			return view('candidato_conf2', compact('unidade','processos','processo','nprocesso','id2','numero'))
 				->withInput(session()->flashInput($request->input()));	
 		}
+	}
+
+	public function politicaP()
+	{
+		$unidades = Unidade::all();
+		return view('politica_privacidade', compact('unidades'));	
+	}
+
+	public function termoU()
+	{
+		$unidades = Unidade::all();
+		return view('termo_uso', compact('unidades'));	
+	}
+
+	public function termoUIns($id_u, $id_p)
+	{
+		$unidades = Unidade::where('id', $id_u)->get();
+		$processos = DB::table('processo_seletivo')
+		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
+		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO','unidade.id as unidade_id')
+		->where('processo_seletivo.id', $id_p)
+		->get()->toArray();
+		return view('termo_uso_inscricao', compact('unidades','processos'));	
 	}
 }

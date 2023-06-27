@@ -43,6 +43,7 @@
 					</tr>
 					<tr> 
 					  <td><input type="text" class="form-control" id="descricao" name="descricao" value="<?php echo $vagaExp[0]->descricao; ?>" readonly /> </td>
+					  <td><input type="text" class="form-control" id="tipo" name="tipo" value="<?php if($vagaExp[0]->tipo == 1) { echo 'Necessárias'; } else { echo 'Desejadas'; }  ?>" readonly /> </td>
 					</tr>
 				</table>
 				

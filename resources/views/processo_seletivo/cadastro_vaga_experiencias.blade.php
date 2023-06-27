@@ -37,30 +37,66 @@
 					</tr>
 					<tr>
 					  <td colspan="2">Competências:</td>
+					  <td>Tipo:</td>
 					</tr>
 					<tr>
                       <td colspan="2">
 						<input type="text" class="form-control" id="exp1" name="exp1" value="{{ old('exp1') }}" required  />
+					  </td>
+					  <td>
+					  	<select id="tipo1" name="tipo1" class="form-control" required> 
+							<option value="">Selecione...</option>
+							<option value="1">Necessárias</option>
+							<option value="2">Desejadas</option>
+						</select>
 					  </td>
 			        </tr>
 					<tr>
                       <td colspan="2">
 						<input type="text" class="form-control" id="exp2" name="exp2" value="{{ old('exp2') }}" />
 					  </td>
+					  <td>
+					  	<select id="tipo2" name="tipo2" class="form-control"> 
+							<option value="-">Selecione...</option>
+							<option value="1">Necessárias</option>
+							<option value="2">Desejadas</option>
+						</select>
+					  </td>
 			        </tr>
 					<tr>
                       <td colspan="2">
 						<input type="text" class="form-control" id="exp3" name="exp3" value="{{ old('exp3') }}" />
+					  </td>
+					  <td>
+					  	<select id="tipo3" name="tipo3" class="form-control"> 
+							<option value="-">Selecione...</option>
+							<option value="1">Necessárias</option>
+							<option value="2">Desejadas</option>
+						</select>
 					  </td>
 			        </tr>
 					<tr>
                       <td colspan="2">
 						<input type="text" class="form-control" id="exp4" name="exp4" value="{{ old('exp4') }}" />
 					  </td>
+					  <td>
+					  	<select id="tipo4" name="tipo4" class="form-control"> 
+							<option value="-">Selecione...</option>
+							<option value="1">Necessárias</option>
+							<option value="2">Desejadas</option>
+						</select>
+					  </td>
 			        </tr>
 					<tr>
                       <td colspan="2">
 						<input type="text" class="form-control" id="exp5" name="exp5" value="{{ old('exp5') }}" />
+					  </td>
+					  <td>
+					  	<select id="tipo5" name="tipo5" class="form-control"> 
+							<option value="-">Selecione...</option>
+							<option value="1">Necessárias</option>
+							<option value="2">Desejadas</option>
+						</select>
 					  </td>
 			        </tr>
 				</table> 

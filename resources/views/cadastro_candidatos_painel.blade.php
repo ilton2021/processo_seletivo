@@ -59,9 +59,12 @@
 			  <table class="table table-borderless" border="0" width="500" id="inicio">
 				<tr>
 				@if($soma != 3)
-				<td align="center"><strong><font color="red">Seu cadastro ainda não foi finalizado, informe as opções a seguir.</font></strong></td>
+				<td align="center">
+					<strong><font color="red">Seu cadastro ainda NÃO FOI FINALIZADO, informe as opções a seguir.</font></strong> <br><br>
+				    <strong>Seu número de Inscrição é: {{ $candidato[0]->numeroInscricao }}</strong>
+				</td>
 				@else
-				<td align="center"><strong><font color="green">Seu cadastro foi finalizado, clique no Botão Concluir.</font></strong> </td>
+				<td align="center"><strong><font color="green">Seu cadastro foi FINALIZADO, clique no Botão Concluir.</font></strong> </td>
 				<td> <input type="submit" class="btn btn-success btn-sm" value="Concluir" id="Salvar" name="Salvar" /> </td>
 				@endif
 				</tr>

@@ -7,16 +7,10 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Processo Seletivo - Cadastro Candidato</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>	
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div id="reflexo"> 	
@@ -47,10 +41,14 @@
 		   </div>
 	       <br>
 
-		    <table class="table table-borderless" border="0" width="500" id="inicio">
+		    <table class="table table-borderless table-striped" border="0" width="500" id="inicio">
 			 <tr>
-			   <td align="center"><strong> Olá! Seja bem vindo ao Processo Seletivo Simplificado: {{ $processos[0]->nome }}. </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			   <a href="javascript:history.back();" id="Voltar" name="Voltar" type="button" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a></td>
+			   <td>
+				<center>
+					<strong> Olá! Seja bem vindo ao Processo Seletivo Simplificado: {{ $processos[0]->nome }}. </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   		<a href="javascript:history.back();" id="Voltar" name="Voltar" type="button" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a>
+				</center>
+			   </td> 
 			 </tr>
 			 <tr> 
 			   <td>
@@ -59,7 +57,7 @@
 				 <div class="container">
 				  <div class="row gy-4">
 				   <section class="cards">
-				    <div class="card" style="width: 1000px;">
+				    <div class="card">
 					   <br><br>
 					   <center><b>Você precisa ler o EDITAL para poder prosseguir;</b></center><br>
 					   <center><b>Na última página do Edital, irá aparecer o botão Inscrição;</b></center><br>
@@ -243,6 +241,74 @@
       border-radius: 10px;
       width: 100%;
     }
+	footer table#hcp{
+		background-color: white;
+	}
+	button#Voltar{
+		margin-left: 5px; 
+		color: #FFFFFF;
+	}
+	h5{
+		margin-top: 15px;
+	}
+	footer table#redes{
+		background-color: #57D211;
+		width: 900px;
+		border-radius: 5px;
+		opacity:85%;
+	}
+	footer img{
+		padding:2px;
+		align:center;
+	}
+	img#hcp{
+		width:90px;
+		height:50px;
+		margin-top:-200px;	
+	}
+	body{
+		font-size: 13px;
+		background-color: white;
+		Font-family: Cambria, Georgia, serif.;
+		background-repeat: no-repeat;
+	}
+	div#reflexo{
+		background-color: white;
+		height: 100%;
+		width: 100%;
+		border: 0px solid;
+		border-radius:25px;
+		align: center;
+		display:block;
+		position:absolute;
+		box-shadow: 0px 0px 20px 8px #DDDDDC;
+		background-repeat: repeat;
+	}
+	@media screen and (max-width: 768px) {
+		.div#reflexo{
+			background-color: white;
+			height: 100px;
+			width: 100%;
+			border: 0px solid;
+			border-radius:25px;
+			align: center;
+			box-shadow: 0px 0px 20px 8px #DDDDDC;	
+		}
+		.body{
+			font-size: 13px;
+			background-color: white;
+			Font-family: Cambria, Georgia, serif.;
+			background-repeat: no-repeat;
+		}
+		.img#hcp{
+			width:5%;
+			height:50%;
+			margin-top:5%;	
+		}
+		.h5{
+			align: center;
+		}
+	}
   </style>
 
 </body>
