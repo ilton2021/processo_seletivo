@@ -65,9 +65,7 @@
 		      </div>
 			  <?php $c = str_replace(' ','',$processos[0]->nome); ?>
 			  <br>
-			  <form method="POST"  action="{{ route('cadastrarDocumentoNovo', array($unidade[0]->id, $processos[0]->id, $user[0]->id, $tela)) }}" enctype="multipart/form-data">
-			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
-			 	<div class="tab-pane" id="tabs4">
+			  	<div class="tab-pane" id="tabs4">
 				 <div class="modal-content">
 				  <div class="modal-content">
 				    <div class="modal-header">
@@ -77,20 +75,15 @@
 					  <div class="row">   
 					   <div class="col">  
 					     <br>
-						 <font size="2"><br>ANEXE O ARQUIVO</font>
-						 <input class="form-control form-control-sm" type="file" id="arquivo" name="arquivo" maxlength="600" value="{{ old('arquivo') }}" required> 
-						 <br><p><b><font size="2" color="red">* Esse documento tem que ser no formato: PDF.</font></b></p>
+						 <input class="form-control form-control-sm" type="text" id="arquivo" name="arquivo" value="<?php echo $docs[0]->nome_arquivo; ?>" disabled> 
+					   </div>
+					   <div class="col">
+					    <form method="POST" action="{{ route('excluirDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, $tela, $docs[0]->id)) }}">
+			  			 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+						 <input type="submit" class="btn btn-danger btn-sm" style="margin-top: 23px;" value="EXCLUIR" id="Salvar" name="Salvar" /> 
+					 	</form>
 					   </div>
 					  </div>
-				    </div>
-				    <div class="modal-body" style="background-color: white;">
-				     <div class="row">
-					  <div class="col">
-					    <p align="center">
-							<input type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" onclick="validar()" value="SALVAR" id="Salvar" name="Salvar" /> 
-						</p>
-					  </div>
-					 </div>
 				    </div>
 				  </div>
 				 </div>

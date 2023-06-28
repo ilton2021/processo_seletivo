@@ -34,7 +34,7 @@
 								<td>
 								 <div style="text-align:center; opacity:75%;border-radius: 25px; color: white;margin-top:-45px;height: 160px;background-color: #57D211;  margin-bottom: -25px; Font-family: Cambria, Georgia, serif."class="jumbotron jumbotron-fluid">
 									<div class="container">
-										<h5 class="display-8"><p style="align: center"><br><b>ÁREA DO CANDIDATO </p> <p style="align: center">  PROCESSO SELETIVO: {{ $processos[0]->nome }}</b> <br><img id="hcp" width="120px;" style="margin-top: 5px;" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></p></td></h5>
+										<h5 class="display-8"><p style="align: center"><br><b>ÁREA DO CANDIDATO </p> <p style="align: center">  PROCESSO SELETIVO: {{ $processo[0]->nome }}</b> <br><img id="hcp" width="120px;" style="margin-top: 5px;" src="{{ asset('img/logo-hcp-branca-350px.png') }}"></p></td></h5>
 									</div>
 								 </div>	
 								</td>
@@ -64,7 +64,7 @@
 			  </div>
 		 	  @endif 
 		      </div>
-			  <?php $c = str_replace(' ','',$processos[0]->nome); ?>
+			  <?php $c = str_replace(' ','',$processo[0]->nome); ?>
 			  <br><br>
 			  <div class="container text-center">
 				<div class="row">
@@ -111,7 +111,7 @@
 				  </div>
 				  @elseif($valida == 0 && $user[0]->status_resultado == "Aprovado (a)")
 				  <div class="col">
-				    <a href="{{ route('areaCandidatoDocumentosEscolha', array($unidade[0]->id, $processos[0]->id, $user[0]->id)) }}">
+				    <a href="{{ route('areaCandidatoDocumentosEscolha', array($unidade[0]->id, $processo[0]->id, $user[0]->id)) }}">
 					 <img src="{{ asset('img/painel/curriculo.jfif') }}" width="100px" height="100px"> 
 					</a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>ANEXAR DOCUMENTOS</b></h6></center>

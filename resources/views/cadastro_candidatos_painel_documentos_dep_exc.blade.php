@@ -50,7 +50,7 @@
 			  <table class="table table-borderless" border="0" width="500" id="inicio">
 				<tr>
 				<td align="center"><strong> Olá! Seja bem vindo ao processo seletivo simplificado {{ $processos[0]->nome }}. </strong> </td>
-				<td> <a href="javascript:history.back();" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a></td>
+				<td> <a href="{{ route('areaCandidatoDocumentosDependentes', array($unidade[0]->id, $processos[0]->id, $user[0]->id)) }}" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a></td>
 				</tr>
 			  </table>
 			  @if($errors->any())
@@ -65,8 +65,7 @@
 		      </div>
 			  <?php $c = str_replace(' ','',$processos[0]->nome); ?>
 			  <br>
-			  <form method="POST"  action="{{ route('cadastrarDocumentoNovo', array($unidade[0]->id, $processos[0]->id, $user[0]->id, $tela)) }}" enctype="multipart/form-data">
-			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+			  <br><br>
 			 	<div class="tab-pane" id="tabs4">
 				 <div class="modal-content">
 				  <div class="modal-content">
@@ -74,24 +73,73 @@
 					  <center><h6 class="modal-title" id="exampleModalLongTitle"><b><?php echo $nomeTela; ?>:</b></h6></center>
 				    </div>
 					<div class="modal-body" style="background-color: white;">
+					  @if($qtd >= 1) 
+					  <div class="row">   
+					   <div class="col">  
+					     <input class="form-control form-control-sm" type="text" id="arquivo" name="arquivo" value="<?php echo $docs[0]->nome_arquivo; ?>" disabled> 
+					   </div>
+					   <div class="col">
+					    <form method="POST"  action="{{ route('excluirDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, $tela, $docs[0]->id)) }}">
+			  			 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+					     <input type="submit" class="btn btn-danger btn-sm" style="margin-top: 10px;" value="EXCLUIR" id="Salvar" name="Salvar" /> 
+					 	</form>
+					   </div>
+					  </div> <br>
+					  @endif
+					  @if($qtd >= 2)
+					  <div class="row">   
+					   <div class="col">  
+					     <input class="form-control form-control-sm" type="text" id="arquivo" name="arquivo" value="<?php echo $docs[1]->nome_arquivo; ?>" disabled> 
+					   </div>
+					   <div class="col">
+					    <form method="POST"  action="{{ route('excluirDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, $tela, $docs[1]->id)) }}">
+			  			 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+						 <input type="submit" class="btn btn-danger btn-sm" style="margin-top: 10px;" value="EXCLUIR" id="Salvar" name="Salvar" /> 
+					 	</form>
+					   </div>
+					  </div> <br>
+					  @endif
+					 @if($qtd >= 3)
+					  <div class="row">   
+					   <div class="col">  
+					     <input class="form-control form-control-sm" type="text" id="arquivo" name="arquivo" value="<?php echo $docs[2]->nome_arquivo; ?>" disabled> 
+					   </div>
+					   <div class="col">
+					    <form method="POST"  action="{{ route('excluirDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, $tela, $docs[2]->id)) }}">
+			  			 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+						 <input type="submit" class="btn btn-danger btn-sm" style="margin-top: 10px;" value="EXCLUIR" id="Salvar" name="Salvar" /> 
+					 	</form>
+					   </div>
+					  </div> <br>
+					  @endif
+					 @if($qtd >= 4)
+					  <div class="row">   
+					   <div class="col">  
+					     <input class="form-control form-control-sm" type="text" id="arquivo" name="arquivo" value="<?php echo $docs[3]->nome_arquivo; ?>" disabled> 
+					   </div>
+					   <div class="col">
+					    <form method="POST"  action="{{ route('excluirDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, $tela, $docs[3]->id)) }}">
+			  			 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+						 <input type="submit" class="btn btn-danger btn-sm" style="margin-top: 10px;" value="EXCLUIR" id="Salvar" name="Salvar" /> 
+					 	</form>
+					   </div>
+					  </div> <br>
+					  @endif
+					 @if($qtd >= 5) 
 					  <div class="row">   
 					   <div class="col">  
 					     <br>
-						 <font size="2"><br>ANEXE O ARQUIVO</font>
-						 <input class="form-control form-control-sm" type="file" id="arquivo" name="arquivo" maxlength="600" value="{{ old('arquivo') }}" required> 
-						 <br><p><b><font size="2" color="red">* Esse documento tem que ser no formato: PDF.</font></b></p>
+						 <input class="form-control form-control-sm" type="text" id="arquivo" name="arquivo" value="<?php echo $docs[4]->nome_arquivo; ?>" disabled> 
+					   </div>
+					   <div class="col">
+					    <form method="POST"  action="{{ route('excluirDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, $tela, $docs[4]->id)) }}">
+			  			 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+						 <input type="submit" class="btn btn-danger btn-sm" style="margin-top: 10px;" value="EXCLUIR" id="Salvar" name="Salvar" /> 
+					 	</form>
 					   </div>
 					  </div>
 				    </div>
-				    <div class="modal-body" style="background-color: white;">
-				     <div class="row">
-					  <div class="col">
-					    <p align="center">
-							<input type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;" onclick="validar()" value="SALVAR" id="Salvar" name="Salvar" /> 
-						</p>
-					  </div>
-					 </div>
-				    </div>
+					@endif
 				  </div>
 				 </div>
 				</div>

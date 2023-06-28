@@ -118,7 +118,6 @@
 				<option value="5">5</option>
 			  </select>
 			  <br><br>
-			  <b><font color="red">*Você só poderá cadastrar o documento 1 vez!*</font></b></center>
 			  <form method="POST"  action="{{ route('cadastrarDocumentoDepNovo', array($unidade[0]->id, $processos[0]->id, $user[0]->id, $tela)) }}" enctype="multipart/form-data">
 			  <input type="hidden" name="_token" value="{{ csrf_token() }}">
 			 	<div class="tab-pane" id="tabs4">

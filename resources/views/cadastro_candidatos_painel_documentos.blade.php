@@ -76,13 +76,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "1") <?php $ctps = 1; ?> @break @else <?php $ctps = 0; ?> @endif
 					   @endforeach
-					   @if($ctps == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($ctps == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 1)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 1)) }}">
 					   @endif
-					</div>
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 1)) }}">
-					 <img src="{{ asset('img/painel/documentos/ctps.jpg') }}" width="80px" height="80px">
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/ctps.jpg') }}" width="80px" height="80px">
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CTPS*</b></h6></center>
 				  </div>
 				  <div class="col"><br><br><br><br>
@@ -90,13 +92,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "2") <?php $sus = 1; ?> @break @else <?php $sus = 0; ?> @endif
 					   @endforeach
-					   @if($sus == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($sus == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 2)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 2)) }}">
 					   @endif
-					</div>
-				    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 2)) }}">
-					 <img src="{{ asset('img/painel/documentos/sus.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/sus.jpg') }}" width="80px" height="80px"> 
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CARTÃO SUS*</b></h6></center>
 				  </div>
 				  <div class="col"><br><br><br><br>
@@ -104,13 +108,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "3") <?php $rg = 1; ?> @break @else <?php $rg = 0; ?> @endif
 					   @endforeach
-					   @if($rg == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($rg == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 3)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 3)) }}">
 					   @endif
-					</div>
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 3)) }}">
-					 <img src="{{ asset('img/painel/documentos/rg.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/rg.jpg') }}" width="80px" height="80px"> 
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>RG*</b></h6></center>
 				  </div>
 				  <div class="col"><br><br><br><br>
@@ -118,13 +124,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "4") <?php $cpf = 1; ?> @break @else <?php $cpf = 0; ?> @endif
 					   @endforeach
-					   @if($cpf == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($cpf == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+				    	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 4)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+				    	<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 4)) }}">
 					   @endif
-					</div>
-				    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 4)) }}">
-					 <img src="{{ asset('img/painel/documentos/cpf.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/cpf.jpg') }}" width="80px" height="80px"> 
+				  	    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CPF*</b></h6></center>
 				  </div>
 				  <div class="col"><br><br><br><br>
@@ -132,13 +140,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "5") <?php $pis = 1; ?> @break @else <?php $pis = 0; ?> @endif
 					   @endforeach
-					   @if($pis == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($pis == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 5)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 5)) }}">
 					   @endif
-					</div>
-				    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 5)) }}">
-					 <img src="{{ asset('img/painel/documentos/pis.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/pis.jpg') }}" width="80px" height="80px"> 
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>PIS*</b></h6></center>
 				  </div>
 				</div>
@@ -149,13 +159,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "6") <?php $nasc = 1; ?> @break @else <?php $nasc = 0; ?> @endif
 					   @endforeach
-					   @if($nasc == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($nasc == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 6)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 6)) }}">
 					   @endif
-					</div>
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 6)) }}">
-					 <img src="{{ asset('img/painel/documentos/certidaoNascCas.jpg') }}" width="80px" height="80px">
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/certidaoNascCas.jpg') }}" width="80px" height="80px">
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CERTIDÃO NASCIMENTO <BR> CASAMENTO*</b></h6></center>
 				  </div>
 				  <div class="col">
@@ -163,13 +175,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "7") <?php $resi = 1; ?> @break @else <?php $resi = 0; ?> @endif
 					   @endforeach
-					   @if($resi == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($resi == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 7)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 7)) }}">
 					   @endif
-					</div>
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 7)) }}">
-					 <img src="{{ asset('img/painel/documentos/comprovanteResidencia.jpg') }}" width="80px" height="80px">
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/comprovanteResidencia.jpg') }}" width="80px" height="80px">
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>COMPROVANTE DE RESIDÊNCIA <BR> ATUALIZADO*</b></h6></center>
 				  </div> 
 				  <div class="col">
@@ -177,13 +191,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "8") <?php $eleitor = 1; ?> @break @else <?php $eleitor = 0; ?> @endif
 					   @endforeach
-					   @if($eleitor == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($eleitor == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 8)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 8)) }}">
 					   @endif
-					</div>
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 8)) }}">
-					 <img src="{{ asset('img/painel/documentos/tituloEleitor.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/tituloEleitor.jpg') }}" width="80px" height="80px"> 
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>TÍTULO DE ELEITOR*</b></h6></center>
 				  </div>
 				  <div class="col">
@@ -191,13 +207,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "9") <?php $vac = 1; ?> @break @else <?php $vac = 0; ?> @endif
 					   @endforeach
-					   @if($vac == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($vac == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 9)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 9)) }}">
 					   @endif
-					</div>
-				    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 9)) }}">
-					 <img src="{{ asset('img/painel/documentos/vacina.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/vacina.jpg') }}" width="80px" height="80px"> 
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CARTEIRA DE VACINAÇÃO <BR> ATUALIZADA*</b></h6></center>
 				  </div>
 				  <div class="col">
@@ -205,55 +223,117 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "10") <?php $dipl = 1; ?> @break @else <?php $dipl = 0; ?> @endif
 					   @endforeach
-					   @if($dipl == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($dipl == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 10)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 10)) }}">
 					   @endif
-					</div>
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 10)) }}">
-					 <img src="{{ asset('img/painel/documentos/historicoEscolar.jpg') }}" width="80px" height="80px">
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/historicoEscolar.jpg') }}" width="80px" height="80px">
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CERTIFICADO DE ESCOLARIDADE <BR> OU DIPLOMA*</b></h6></center>
 				  </div>	
 				</div>
-				<br><br>
+				<br><br> <?php $res = 0; $fot = 0; $esp = 0; $vem = 0; $reP = 0; $nada = 0; ?>
 				<div class="row">
 				 <div class="col">
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 11)) }}">
+				   <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+				     @foreach($docs as $doc)
+					   @if($doc->id_documento == "11") <?php $res = 1; ?> @break @else <?php $res = 0; ?> @endif
+					 @endforeach
+					 @if($dipl == 0) 
+					  <div class="progress-bar bg-danger w-100">0%</div> </div>
+					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 11)) }}">
+					 @else
+					  <div class="progress-bar bg-success w-100">100%</div> </div>
+					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 11)) }}">
+					 @endif
 					 <img src="{{ asset('img/painel/documentos/reservista.jpg') }}" width="80px" height="80px">
-					</a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CARTEIRA <BR> RESERVISTA</b></h6></center>
 				  </div>
 				  <div class="col">
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 12)) }}">
+				   <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+				     @foreach($docs as $doc)
+					   @if($doc->id_documento == "12") <?php $fot = 1; ?> @break @else <?php $fot = 0; ?> @endif
+					 @endforeach
+					 @if($fot == 0) 
+					  <div class="progress-bar bg-danger w-100">0%</div> </div>
+					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 12)) }}">
+					 @else
+					  <div class="progress-bar bg-success w-100">100%</div> </div>	
+					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 12)) }}">
+					 @endif
 					 <img src="{{ asset('img/painel/documentos/foto.jpg') }}" width="80px" height="80px">
-					</a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>FOTO 3x4</b></h6></center>
 				  </div>
 				  <div class="col">
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 13)) }}">
+				   <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+				     @foreach($docs as $doc)
+					   @if($doc->id_documento == "13") <?php $esp = 1; ?> @break @else <?php $esp = 0; ?> @endif
+					 @endforeach
+					 @if($esp == 0) 
+					  <div class="progress-bar bg-danger w-100">0%</div> </div>
+					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 13)) }}">
+					 @else
+					  <div class="progress-bar bg-success w-100">100%</div> </div>	
+					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 13)) }}">
+					 @endif
 					 <img src="{{ asset('img/painel/documentos/especializacao.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CERTIFICADO DE ESPECIALIZAÇÃO</b></h6></center>
 				  </div>
 				  <div class="col">
-				    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 14)) }}">
+				   <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+				     @foreach($docs as $doc)
+					   @if($doc->id_documento == "14") <?php $vem = 1; ?> @break @else <?php $vem = 0; ?> @endif
+					 @endforeach
+					 @if($vem == 0) 
+					  <div class="progress-bar bg-danger w-100">0%</div> </div>
+					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 14)) }}">
+					 @else
+					  <div class="progress-bar bg-success w-100">100%</div> </div>
+					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 14)) }}">
+					 @endif
 					 <img src="{{ asset('img/painel/documentos/vem.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CARTÃO VEM</b></h6></center>
 				  </div>
 				  <div class="col">
-				    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 15)) }}">
+				   <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+				     @foreach($docs as $doc)
+					   @if($doc->id_documento == "15") <?php $reP = 1; ?> @break @else <?php $reP = 0; ?> @endif
+					 @endforeach
+					 @if($reP == 0) 
+					  <div class="progress-bar bg-danger w-100">0%</div> </div>
+					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 15)) }}">
+					 @else 
+					  <div class="progress-bar bg-success w-100">100%</div> </div>
+					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 15)) }}">
+					 @endif
 					 <img src="{{ asset('img/painel/documentos/registroProfissional.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>REGISTRO PROFISSIONAL <BR> CONSELHO DE CLASSE</b></h6></center>
 				  </div>
 				</div>
 			  <br><br>
 			    <div class="row">
 				  <div class="col">
-				  	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 16)) }}">
+				  <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+				     @foreach($docs as $doc)
+					   @if($doc->id_documento == "16") <?php $nada = 1; ?> @break @else <?php $nada = 0; ?> @endif
+					 @endforeach
+					 @if($reP == 0) 
+					  <div class="progress-bar bg-danger w-100">0%</div> </div>
+					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 16)) }}">
+					 @else 
+					  <div class="progress-bar bg-success w-100">100%</div> </div>
+					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 16)) }}">
+					 @endif
 					 <img src="{{ asset('img/painel/documentos/nadaConsta.jpg') }}" width="80px" height="80px">
-					</a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>DECLARAÇÃO <BR> NADA CONSTA <BR> CONSELHO CLASSE</b></h6></center>
 				  </div>
 				  <div class="col"></div>

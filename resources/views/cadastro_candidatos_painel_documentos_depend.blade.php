@@ -81,13 +81,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "17") <?php $vac = 1; ?> @break @else <?php $vac = 0; ?> @endif
 					   @endforeach
-					   @if($vac == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($vac == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 17)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 17)) }}">
 					   @endif
-					</div>
-					<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 17)) }}">
-					 <img src="{{ asset('img/painel/documentos/vacina.jpg') }}" width="80px" height="80px">
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/vacina.jpg') }}" width="80px" height="80px">
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CARTÃO DE VACINAÇÃO*</b></h6></center>
 				  </div>
 				  <div class="col">
@@ -95,13 +97,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "18") <?php $nasc = 1; ?> @break @else <?php $nasc = 0; ?> @endif
 					   @endforeach
-					   @if($nasc == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($nasc == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 18)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 18)) }}">
 					   @endif
-					</div>
-					<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 18)) }}">
-					 <img src="{{ asset('img/painel/documentos/certidaoNascCas.jpg') }}" width="80px" height="80px">
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/certidaoNascCas.jpg') }}" width="80px" height="80px">
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CERTIDÃO DE NASCIMENTO*</b></h6></center>
 				  </div>
 				  <div class="col">
@@ -109,13 +113,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "19") <?php $rg = 1; ?> @break @else <?php $rg = 0; ?> @endif
 					   @endforeach
-					   @if($rg == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($rg == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 19)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 19)) }}">
 					   @endif
-					</div>
-					<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 19)) }}">
-					 <img src="{{ asset('img/painel/documentos/rg.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/rg.jpg') }}" width="80px" height="80px"> 
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>RG*</b></h6></center>
 				  </div>
 				  <div class="col">
@@ -123,13 +129,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "20") <?php $cpf = 1; ?> @break @else <?php $cpf = 0; ?> @endif
 					   @endforeach
-					   @if($cpf == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($cpf == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 20)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 20)) }}">
 					   @endif
-					</div>
-					<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 20)) }}">
-					 <img src="{{ asset('img/painel/documentos/cpf.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/cpf.jpg') }}" width="80px" height="80px"> 
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CPF*</b></h6></center>
 				  </div>
 				  <div class="col"> 
@@ -137,13 +145,15 @@
 					   @foreach($docs as $doc)
 					    @if($doc->id_documento == "21") <?php $escol = 1; ?> @break @else <?php $escol = 0; ?> @endif
 					   @endforeach
-					   @if($escol == 0) <div class="progress-bar bg-danger w-100">0%</div>
-					    @else <div class="progress-bar bg-success w-100">100%</div>
+					   @if($escol == 0) 
+					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 21)) }}">
+					    @else 
+						<div class="progress-bar bg-success w-100">100%</div> </div>
+						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 21)) }}">
 					   @endif
-					</div>
-					<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 21)) }}">
-					 <img src="{{ asset('img/painel/documentos/historicoEscolar.jpg') }}" width="80px" height="80px"> 
-					</a> <br><br>
+					   <img src="{{ asset('img/painel/documentos/historicoEscolar.jpg') }}" width="80px" height="80px"> 
+					    </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>ESTABELECIMENTO ESCOLAR*</b></h6></center>
 				  </div>
 				</div>

@@ -23,6 +23,7 @@ use DB;
 use Redirect;
 use Validator;
 use Exception;
+use Storage;
 
 class CandidatoController extends Controller
 {
@@ -141,12 +142,13 @@ class CandidatoController extends Controller
 		$unidade  = Unidade::where('id',$idU)->get();
 		$processo = ProcessoSeletivo::where('id',$idP)->get();
 		$user 	  = DB::table('processo_seletivo_'.$processo[0]->nome)->where('id', $idC)->get();
-		$dia       = date('Y-m-d', strtotime('2023-04-01'));
+		$dia       = date('Y-m-d', strtotime('2023-04-20'));
 		$processos = DB::table('processo_seletivo')
 		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
 				 'unidade.id as unidade_id')
-		->where('processo_seletivo.inscricao_inicio','>=',$dia)->get();		
+		->where('processo_seletivo.id',$idP)
+		->where('processo_seletivo.data_resultado','>=',$dia)->get();
 		$qtd = CandidatoController::validaCandidato($processo[0]->nome, $idC);
 		if($qtd > 0) {
 			return view('cadastro_candidatos_painel_documentos_escolha', compact('user','unidade','processos'));
@@ -181,7 +183,8 @@ class CandidatoController extends Controller
 		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
 		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
 				 'unidade.id as unidade_id')
-		->where('processo_seletivo.inscricao_inicio','>=',$dia)->get();		
+		->where('processo_seletivo.id',$idP)
+		->where('processo_seletivo.data_resultado','>=',$dia)->get();	
 		$docs = DocumentosCandidatos::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->get();
 		$qtd  = CandidatoController::validaCandidato($processo[0]->nome, $idC);
 		if($qtd > 0) {
@@ -199,14 +202,8 @@ class CandidatoController extends Controller
 		$docs = DocumentosCandidatos::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
 		$qtd  	   = sizeof($docs); 
 		$unidade   = Unidade::where('id',$idU)->get();
-		$processo  = ProcessoSeletivo::where('id',$idP)->get();
-		$user 	   = DB::table('processo_seletivo_'.$processo[0]->nome)->where('id', $idC)->get();
-		$dia       = date('Y-m-d', strtotime('2023-04-01'));
-		$processos = DB::table('processo_seletivo')
-		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
-		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
-				 'unidade.id as unidade_id')
-		->where('processo_seletivo.inscricao_inicio','>=',$dia)->get();	
+		$processos = ProcessoSeletivo::where('id',$idP)->get();
+		$user 	   = DB::table('processo_seletivo_'.$processos[0]->nome)->where('id', $idC)->get();
 		if($qtd > 0) {
 			$docs = DocumentosCandidatos::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->get();
 			$validator = "Este documento já foi cadastrado!";
@@ -230,7 +227,7 @@ class CandidatoController extends Controller
 			} else if ($tela == 14) { $nomeTela = "CARTÃO VEM (Trajeto casa-trabalho-casa, dentro da região metropolitana da prestação de serviço, para aqueles que forem optantes)";
 			} else if ($tela == 15) { $nomeTela = "REGISTRO PROFISSIONAL CONSELHO DE CLASSE (dentro da validade)";
 			} else if ($tela == 16) { $nomeTela = "DECLARAÇÃO NADA CONSTA CONSELHO CLASSE"; }
-			$qtd  = CandidatoController::validaCandidato($processo[0]->nome, $idC);
+			$qtd  = CandidatoController::validaCandidato($processos[0]->nome, $idC);
 			if($qtd > 0) {
 				return view('cadastro_candidatos_painel_documentos_novo', compact('user','unidade','processos','tela','nomeTela','docs'));
 			} else {
@@ -246,15 +243,9 @@ class CandidatoController extends Controller
 	{
 		$input 	   = $request->all();
 		$unidade   = Unidade::where('id',$idU)->get();
-		$processo  = ProcessoSeletivo::where('id',$idP)->get();
-		$nprocesso = $processo[0]->nome;
+		$processos = ProcessoSeletivo::where('id',$idP)->get();
+		$nprocesso = $processos[0]->nome;
 		$user 	   = DB::table('processo_seletivo_'.$nprocesso)->where('id', $idC)->get();
-		$dia       = date('Y-m-d', strtotime('2023-04-01'));
-		$processos = DB::table('processo_seletivo')
-		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
-		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
-				 'unidade.id as unidade_id')
-		->where('processo_seletivo.inscricao_inicio','>=',$dia)->get();
 		$tipo = '';
 		if($tela == 1) { $tipo = 'CTPS'; $nomeTela = 'CTPS';
 		} else if($tela == 2) { $tipo = 'CARTAO_SUS'; $nomeTela = 'CARTAO_SUS';
@@ -310,112 +301,176 @@ class CandidatoController extends Controller
 		}
 	}
 
+	public function cadastrarDocumentoExcluir($idU, $idP, $idC, $tela)
+	{ 
+		$docs = DocumentosCandidatos::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
+		$qtd  	   = sizeof($docs); 
+		$unidade   = Unidade::where('id',$idU)->get();
+		$processos = ProcessoSeletivo::where('id',$idP)->get();
+		$user 	   = DB::table('processo_seletivo_'.$processos[0]->nome)->where('id', $idC)->get();
+		$nomeTela = "";
+		if ($tela == 1) { $nomeTela = "CTPS";
+		} else if ($tela == 2) { $nomeTela = "CARTÃO SUS";
+		} else if ($tela == 3) { $nomeTela = "RG";
+		} else if ($tela == 4) { $nomeTela = "CPF";
+		} else if ($tela == 5) { $nomeTela = "PIS";
+		} else if ($tela == 6) { $nomeTela = "CERTIDÃO NASCIMENTO/CASAMENTO";
+		} else if ($tela == 7) { $nomeTela = "COMPROVANTE DE RESIDÊNCIA ATUALIZADO";
+		} else if ($tela == 8) { $nomeTela = "TÍTULO DE ELEITOR";
+		} else if ($tela == 9) { $nomeTela = "CARTEIRA DE VACINAÇÃO ATUALIZADA (DT, Hepatite B e Tríplice Viral, COVID-19)";
+		} else if ($tela == 10) { $nomeTela = "CERTIFICADO DE ESCOLARIDADE OU DIPLOMA";
+		} else if ($tela == 11) { $nomeTela = "CARTEIRA RESERVISTA (obrigatório para homens)";
+		} else if ($tela == 12) { $nomeTela = "FOTO 3 x 4";
+		} else if ($tela == 13) { $nomeTela = "CERTIFICADO DE ESPECIALIZAÇÃO (se necessário)";
+		} else if ($tela == 14) { $nomeTela = "CARTÃO VEM (Trajeto casa-trabalho-casa, dentro da região metropolitana da prestação de serviço, para aqueles que forem optantes)";
+		} else if ($tela == 15) { $nomeTela = "REGISTRO PROFISSIONAL CONSELHO DE CLASSE (dentro da validade)";
+		} else if ($tela == 16) { $nomeTela = "DECLARAÇÃO NADA CONSTA CONSELHO CLASSE"; }
+		$qtd  = CandidatoController::validaCandidato($processos[0]->nome, $idC);
+		return view('cadastro_candidatos_painel_documentos_exc', compact('user','unidade','processos','tela','nomeTela','docs'));
+	}
+
+	public function excluirDocumento($idU, $idP, $idC, $tela, $id, Request $request)
+	{ 
+		$input     = $request->all();
+		$unidade   = Unidade::where('id',$idU)->get();
+		$processos = ProcessoSeletivo::where('id',$idP)->get();
+		$user 	   = DB::table('processo_seletivo_'.$processos[0]->nome)->where('id', $idC)->get();
+		$nomeTela  = "";
+		if ($tela == 1) { $nomeTela = "CTPS";
+		} else if ($tela == 2) { $nomeTela = "CARTÃO SUS";
+		} else if ($tela == 3) { $nomeTela = "RG";
+		} else if ($tela == 4) { $nomeTela = "CPF";
+		} else if ($tela == 5) { $nomeTela = "PIS";
+		} else if ($tela == 6) { $nomeTela = "CERTIDÃO NASCIMENTO/CASAMENTO";
+		} else if ($tela == 7) { $nomeTela = "COMPROVANTE DE RESIDÊNCIA ATUALIZADO";
+		} else if ($tela == 8) { $nomeTela = "TÍTULO DE ELEITOR";
+		} else if ($tela == 9) { $nomeTela = "CARTEIRA DE VACINAÇÃO ATUALIZADA (DT, Hepatite B e Tríplice Viral, COVID-19)";
+		} else if ($tela == 10) { $nomeTela = "CERTIFICADO DE ESCOLARIDADE OU DIPLOMA";
+		} else if ($tela == 11) { $nomeTela = "CARTEIRA RESERVISTA (obrigatório para homens)";
+		} else if ($tela == 12) { $nomeTela = "FOTO 3 x 4";
+		} else if ($tela == 13) { $nomeTela = "CERTIFICADO DE ESPECIALIZAÇÃO (se necessário)";
+		} else if ($tela == 14) { $nomeTela = "CARTÃO VEM (Trajeto casa-trabalho-casa, dentro da região metropolitana da prestação de serviço, para aqueles que forem optantes)";
+		} else if ($tela == 15) { $nomeTela = "REGISTRO PROFISSIONAL CONSELHO DE CLASSE (dentro da validade)";
+		} else if ($tela == 16) { $nomeTela = "DECLARAÇÃO NADA CONSTA CONSELHO CLASSE"; }
+		$docs = DocumentosCandidatos::where('id',$id)->get();
+		$nome = $docs[0]->nome_arquivo;
+		$data = DocumentosCandidatos::find($id);
+		$image_path = public_path().'/storage/'.$data->caminho;
+        unlink($image_path);
+        $data->delete();
+        $docs = DocumentosCandidatos::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
+		$qtd  = sizeof($docs);
+		$validator = "Documento excluído com sucesso!";
+		return view('cadastro_candidatos_painel_documentos', compact('user','unidade','processos','tela','nomeTela','docs','qtd'))->withErrors($validator);
+	}
+
 	//Página de Cadastro de Documentos de Dependentes do Candidato
 	public function areaCandidatoDocumentosDependentes($idU, $idP, $idC)
 	{
-		$unidade  = Unidade::where('id',$idU)->get();
-		$processo = ProcessoSeletivo::where('id',$idP)->get();
-		$user 	  = DB::table('processo_seletivo_'.$processo[0]->nome)->where('id', $idC)->get();
-		$dia       = date('Y-m-d', strtotime('2023-04-01'));
-		$processos = DB::table('processo_seletivo')
-		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
-		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
-				 'unidade.id as unidade_id')
-		->where('processo_seletivo.inscricao_inicio','>=',$dia)->get();		
+		$unidade   = Unidade::where('id',$idU)->get();
+		$processos = ProcessoSeletivo::where('id',$idP)->get();
+		$user 	   = DB::table('processo_seletivo_'.$processos[0]->nome)->where('id', $idC)->get();
 		$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->get();
-		$qtd  = CandidatoController::validaCandidato($processo[0]->nome, $idC);
-		if($qtd > 0) {
-			return view('cadastro_candidatos_painel_documentos_depend', compact('user','unidade','processos','docs'));
-		} else {
-			$validator = "Você não tem permissão!";
-			return view('areaCandidato', compact('user','unidade','processos'))
-					->withErrors($validator);
-		}
+		return view('cadastro_candidatos_painel_documentos_depend', compact('user','unidade','processos','docs'));
 	}
 
 	//Página de Cadastro de Novo Documento dos Dependentes do Candidato
 	public function cadastrarDocumentoDep($idU, $idP, $idC, $tela)
 	{
-		$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
-		$qtd  = sizeof($docs);
 		$unidade   = Unidade::where('id',$idU)->get();
-		$processo  = ProcessoSeletivo::where('id',$idP)->get();
-		$user 	   = DB::table('processo_seletivo_'.$processo[0]->nome)->where('id', $idC)->get();
-		$dia       = date('Y-m-d', strtotime('2023-04-01'));
-		$processos = DB::table('processo_seletivo')
-			->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
-			->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
-					 'unidade.id as unidade_id')
-			->where('processo_seletivo.inscricao_inicio','>=',$dia)->get();	
-		if($qtd > 0) {
-			$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->get();
-			$validator = 'Este documento já foi cadastrado!';
-			return view('cadastro_candidatos_painel_documentos_depend', compact('user','unidade','processos','docs'))
-					->withErrors($validator);	
-		} else {
-			$nomeTela = "";
-			if ($tela == 17) { $nomeTela = "CARTÃO DE VACINAÇÃO (Filhos até 5 anos)";
-			} else if ($tela == 18) { $nomeTela = "CERTIDÃO DE NASCIMENTO (Dependentes menores de 14 anos)";
-			} else if ($tela == 19) { $nomeTela = "RG (Filhos e Cônjuges)";
-			} else if ($tela == 20) { $nomeTela = "CPF (Filhos e Cônjuges)";
-			} else if ($tela == 21) { $nomeTela = "ESTABELECIMENTO ESCOLAR (Filhos maiores de 05 anos)"; }
-			$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->get();
-			$qtd  = CandidatoController::validaCandidato($processo[0]->nome, $idC);
-			if($qtd > 0) {
-				return view('cadastro_candidatos_painel_documentos_dep_novo', compact('user','unidade','processos','tela','nomeTela','docs'));
-			} else {
-				$validator = "Você não tem permissão!";
-				return view('areaCandidato', compact('user','unidade','processos'))
-						->withErrors($validator);
-			}
-		}		
+		$processos = ProcessoSeletivo::where('id',$idP)->get();
+		$user 	   = DB::table('processo_seletivo_'.$processos[0]->nome)->where('id', $idC)->get();
+		$nomeTela  = "";
+		if ($tela == 17) { $nomeTela = "CARTÃO DE VACINAÇÃO (Filhos até 5 anos)";
+		} else if ($tela == 18) { $nomeTela = "CERTIDÃO DE NASCIMENTO (Dependentes menores de 14 anos)";
+		} else if ($tela == 19) { $nomeTela = "RG (Filhos e Cônjuges)";
+		} else if ($tela == 20) { $nomeTela = "CPF (Filhos e Cônjuges)";
+		} else if ($tela == 21) { $nomeTela = "ESTABELECIMENTO ESCOLAR (Filhos maiores de 05 anos)"; }
+		$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->get();
+		return view('cadastro_candidatos_painel_documentos_dep_novo', compact('user','unidade','processos','tela','nomeTela','docs'));
+	}
+
+	public function documentoDepExcluir($idU, $idP, $idC, $tela)
+	{
+		$unidade   = Unidade::where('id',$idU)->get();
+		$processos = ProcessoSeletivo::where('id',$idP)->get();
+		$user 	   = DB::table('processo_seletivo_'.$processos[0]->nome)->where('id', $idC)->get();
+		$nomeTela  = "";
+		if ($tela == 17) { $nomeTela = "CARTÃO DE VACINAÇÃO (Filhos até 5 anos)";
+		} else if ($tela == 18) { $nomeTela = "CERTIDÃO DE NASCIMENTO (Dependentes menores de 14 anos)";
+		} else if ($tela == 19) { $nomeTela = "RG (Filhos e Cônjuges)";
+		} else if ($tela == 20) { $nomeTela = "CPF (Filhos e Cônjuges)";
+		} else if ($tela == 21) { $nomeTela = "ESTABELECIMENTO ESCOLAR (Filhos maiores de 05 anos)"; }
+		$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
+		$qtd = sizeof($docs);
+		return view('cadastro_candidatos_painel_documentos_dep_exc', compact('user','unidade','processos','tela','nomeTela','docs','qtd'));
+	}
+
+	public function excluirDocumentoDep($idU, $idP, $idC, $tela, $id, Request $request)
+	{
+		$input = $request->all();
+		$unidade   = Unidade::where('id',$idU)->get();
+		$processos = ProcessoSeletivo::where('id',$idP)->get();
+		$user 	   = DB::table('processo_seletivo_'.$processos[0]->nome)->where('id', $idC)->get();
+		$nomeTela  = "";
+		if ($tela == 17) { $nomeTela = "vacina";
+		} else if ($tela == 18) { $nomeTela = "nascimento";
+		} else if ($tela == 19) { $nomeTela = "rg";
+		} else if ($tela == 20) { $nomeTela = "cpf";
+		} else if ($tela == 21) { $nomeTela = "escolar"; }
+		$docs = DocumentosCandidatosDependentes::where('id',$id)->get();
+		$nome = $docs[0]->nome_arquivo;
+		$data  = DocumentosCandidatosDependentes::find($id);
+		$image_path = public_path().'/storage/'.$data->caminho;
+        unlink($image_path);
+        $data->delete();
+        $docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->where('id_documento',$tela)->get();
+		$qtd  = sizeof($docs);
+		if ($tela == 17) { $nomeTela = "CARTÃO DE VACINAÇÃO (Filhos até 5 anos)";
+		} else if ($tela == 18) { $nomeTela = "CERTIDÃO DE NASCIMENTO (Dependentes menores de 14 anos)";
+		} else if ($tela == 19) { $nomeTela = "RG (Filhos e Cônjuges)";
+		} else if ($tela == 20) { $nomeTela = "CPF (Filhos e Cônjuges)";
+		} else if ($tela == 21) { $nomeTela = "ESTABELECIMENTO ESCOLAR (Filhos maiores de 05 anos)"; }
+		return view('cadastro_candidatos_painel_documentos_dep_exc', compact('user','unidade','processos','tela','nomeTela','docs','qtd'));
 	}
 
 	//Função de cadastrar um Novo Documento dos Dependentes do Candidato 
 	public function cadastrarDocumentoDepNovo($idU, $idP, $idC, $tela, Request $request)
 	{
-		  
 		$input     = $request->all();
 		$unidade   = Unidade::where('id',$idU)->get();
-		$processo  = ProcessoSeletivo::where('id',$idP)->get();
-		$nprocesso = $processo[0]->nome;
-		$user 	   = DB::table('processo_seletivo_'.$nprocesso)->where('id', $idC)->get();
-		$dia       = date('Y-m-d', strtotime('2023-04-01'));
-		$processos = DB::table('processo_seletivo')
-		->join('unidade', 'processo_seletivo.unidade_id', '=', 'unidade.id')
-		->select('processo_seletivo.*', 'unidade.nome as NOME','unidade.caminho as CAMINHO',
-				 'unidade.id as unidade_id')
-		->where('processo_seletivo.inscricao_inicio','>=',$dia)->get();		
+		$processos = ProcessoSeletivo::where('id',$idP)->get();
+		$user 	   = DB::table('processo_seletivo_'.$processos[0]->nome)->where('id', $idC)->get();
 		$qtd = 1;
 		if($request->file('arquivo2') !== NULL) { $qtd = 2; }
 		if($request->file('arquivo3') !== NULL) { $qtd = 3; }
 		if($request->file('arquivo4') !== NULL) { $qtd = 4; }
 		if($request->file('arquivo5') !== NULL) { $qtd = 5; }
-		$tipo = '';
-		if ($tela == 17) { $tipo = "vacina";
-		} else if ($tela == 18) { $tipo = "nascimento";
-		} else if ($tela == 19) { $tipo = "rg";
-		} else if ($tela == 20) { $tipo = "cpf";
-		} else if ($tela == 21) { $tipo = "escolar"; }
-		for($a = 1; $a <= $qtd; $a++) {
-			if($request->file('arquivo'.$a) === NULL) {
+		$nomeTela = '';
+		if ($tela == 17) { $nomeTela = "vacina";
+		} else if ($tela == 18) { $nomeTela = "nascimento";
+		} else if ($tela == 19) { $nomeTela = "rg";
+		} else if ($tela == 20) { $nomeTela = "cpf";
+		} else if ($tela == 21) { $nomeTela = "escolar"; }
+		for($a = 1; $a <= $qtd; $a++) { 
+			if($request->file('arquivo'.$a) === NULL) { 
 				$validator = 'Informe o arquivo!';
-				return view('cadastro_candidatos_painel_documentos_dep_novo', compact('unidade','processos','candidato','tela'))
+				return view('cadastro_candidatos_painel_documentos_dep_novo', compact('unidade','processos','tela','user','nomeTela'))
 							->withErrors($validator)
 							->withInput(session()->flashInput($request->input()));		
-			} else {
+			} else { 
 				$nomeA    = $_FILES['arquivo'.$a]['name'];
 				$extensao = pathinfo($nomeA, PATHINFO_EXTENSION);
 				if($extensao == 'pdf' || $extensao == 'PDF') {
 					$tamanho = $request->file('arquivo'.$a)->getSize();
 					if($tamanho > 5000000) {	
 						$validator = 'O tamanho máximo do Arquivo PCD é 5MB! Você terá que anexar novamente os arquivos';
-						return view('cadastro_candidatos_painel_documentos_dep_novo', compact('unidades','unidade','processos','candidato','tela'))
+						return view('cadastro_candidatos_painel_documentos_dep_novo', compact('unidade','processos','tela','user','nomeTela'))
 							->withErrors($validator)
 							->withInput(session()->flashInput($request->input()));			
 					} 	
-					$request->file('arquivo'.$a)->move('../public/storage/candidato/documentos/'.$nprocesso.'/'.$user[0]->nome.'/dependentes/'.$tipo.'/',$nomeA);
-					$arquivo = 'candidato/documentos/'.$nprocesso.'/'.$user[0]->nome.'/dependentes/'.$tipo.'/'.$nomeA; 
+					$request->file('arquivo'.$a)->move('../public/storage/candidato/documentos/'.$processos[0]->nome.'/'.$user[0]->nome.'/dependentes/'.$nomeTela.'/',$nomeA);
+					$arquivo = 'candidato/documentos/'.$processos[0]->nome.'/'.$user[0]->nome.'/dependentes/'.$nomeTela.'/'.$nomeA; 
 					$input['id_processo_seletivo'] = $idP;
 					$input['id_candidato'] = $idC;
 					$input['id_documento'] = $tela;
@@ -425,14 +480,14 @@ class CandidatoController extends Controller
 					$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->get();
 				} else {
 					$validator = 'O arquivo permitido é: .pdf! Você terá que anexar novamente o arquivo';
-					return view('cadastro_candidatos_painel_documentos_dep_novo', compact('unidades','unidade','processos','candidato','tela'))
+					return view('cadastro_candidatos_painel_documentos_dep_novo', compact('unidade','processos','tela','user','nomeTela'))
 							->withErrors($validator)
 							->withInput(session()->flashInput($request->input()));		
 				}
 			}
-		}
+		} 
 		$validator = 'Documento cadastrado com sucesso!';
-		return view('cadastro_candidatos_painel_documentos_depend', compact('unidades','user','processos','unidade','docs'))
+		return view('cadastro_candidatos_painel_documentos_depend', compact('user','processos','unidade','docs'))
 					->withErrors($validator)
 					->withInput(session()->flashInput($request->input()));
 	}
@@ -1547,7 +1602,7 @@ class CandidatoController extends Controller
 								->withInput(session()->flashInput($request->input()));											
 				}
 				$compt1  = $input['exp_01_competencias']; 
-				if($compt1 != "-") {
+				if($compt1 != "-" && $compt1 != "0") {
 					$data1   = new \DateTime($anoI); 
 					$data2   = new \DateTime($anoF);
 					$intervalo = $data1->diff($data2);
@@ -1601,7 +1656,7 @@ class CandidatoController extends Controller
 						->withInput(session()->flashInput($request->input()));											
 				}
 				$compt2  = $input['exp_02_competencias'];
-				if($compt2 != "-") {
+				if($compt2 != "-" || $compt2 != "0") {
 					$data1   = new \DateTime($anoI);
 					$data2   = new \DateTime($anoF);
 					$intervalo = $data1->diff($data2);
@@ -1654,7 +1709,7 @@ class CandidatoController extends Controller
 						->withInput(session()->flashInput($request->input()));											
 				}
 				$compt3  = $input['exp_03_competencias']; 
-				if($compt3 != "-") {
+				if($compt3 != "-" && $compt3 != "0") {
 					$data1   = new \DateTime($anoI);
 					$data2   = new \DateTime($anoF);
 					$intervalo = $data1->diff($data2);

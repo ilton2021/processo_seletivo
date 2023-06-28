@@ -20,10 +20,14 @@ Route::post('areaCandidato/{id_u}/{id_p}/{id_c}', 'CandidatoController@updateAre
 Route::get('areaCandidato/documentos/escolha/{id_u}/{id_p}/{id_c}', 'CandidatoController@areaCandidatoDocumentosEscolha')->name('areaCandidatoDocumentosEscolha');
 Route::get('areaCandidato/documentos/escolha/candidato/{id_u}/{id_p}/{id_c}', 'CandidatoController@areaCandidatoDocumentos')->name('areaCandidatoDocumentos');
 Route::get('areaCandidato/documentos/escolha/cadastro/{id_u}/{id_p}/{id_c}/{tela}', 'CandidatoController@cadastrarDocumento')->name('cadastrarDocumento');
+Route::get('areaCandidato/documentos/escolha/cadastro/excluir/{id_u}/{id_p}/{id_c}/{tela}', 'CandidatoController@cadastrarDocumentoExcluir')->name('cadastrarDocumentoExcluir');
+Route::post('areaCandidato/documentos/escolha/cadastro/excluir/{id_u}/{id_p}/{id_c}/{tela}/{id}', 'CandidatoController@excluirDocumento')->name('excluirDocumento');
 Route::post('areaCandidato/documentos/escolha/cadastro/{id_u}/{id_p}/{id_c}/{tela}', 'CandidatoController@cadastrarDocumentoNovo')->name('cadastrarDocumentoNovo');
 Route::get('areaCandidato/documentos/escolha/dependentes/{id_u}/{id_p}/{id_c}', 'CandidatoController@areaCandidatoDocumentosDependentes')->name('areaCandidatoDocumentosDependentes');
 Route::get('areaCandidato/documentos/escolha/dependentes/{id_u}/{id_p}/{id_c}/{tela}', 'CandidatoController@cadastrarDocumentoDep')->name('cadastrarDocumentoDep');
 Route::post('areaCandidato/documentos/escolha/dependentes/{id_u}/{id_p}/{id_c}/{tela}', 'CandidatoController@cadastrarDocumentoDepNovo')->name('cadastrarDocumentoDepNovo');
+Route::get('areaCandidato/documentos/escolha/dependentes/excluir/{id_u}/{id_p}/{id_c}/{tela}', 'CandidatoController@documentoDepExcluir')->name('documentoDepExcluir');
+Route::post('areaCandidato/documentos/escolha/dependentes/excluir/{id_u}/{id_p}/{id_c}/{tela}/{id}', 'CandidatoController@excluirDocumentoDep')->name('excluirDocumentoDep');
 Route::get('painelCandidato/{id}/{id_p}/{id_c}', 'CandidatoController@painelCandidato')->name('painelCandidato'); 
 Route::post('painelCandidato/{id}/{id_p}/{id_c}', 'CandidatoController@validarCandidatoConfirmar')->name('validarCandidatoConfirmar'); 
 Route::get('painelCandidato/curriculo/{id}/{id_p}/{id_c}', 'CandidatoController@painelCandidatoCurriculo')->name('painelCandidatoCurriculo'); 
