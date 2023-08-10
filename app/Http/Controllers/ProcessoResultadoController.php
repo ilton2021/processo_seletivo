@@ -152,6 +152,23 @@ class ProcessoResultadoController extends Controller
 		$unidades = Unidade::all();
 		return view('cadastro_resultado_processos', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2'));
 	}
+
+	// Página Cadastro de Resultados Gestor//
+	public function cadastrarResultadosGestor($id)
+	{
+		$pseletivo  = ProcessoSeletivo::where('id',$id)->get();
+		$candidatos = Candidato::all();
+		$p_vagas = ProcessoCandidato::where('processo_seletivo_id',$id)->get();
+		$vagas   = Vaga::all();
+		$nome    = $pseletivo[0]->nome;
+		$processos2 = DB::table('processo_seletivo_'.$nome)->orderby('nome', 'ASC')->paginate(10);
+		$processos  = DB::table('processo_seletivo_'.$nome)
+		->join('vaga', 'vaga.nome', '=', 'processo_seletivo_'.$nome.'.vaga')
+		->select('processo_seletivo_'.$nome.'.*','vaga.id as IDVaga','vaga.nome as NomeVaga','processo_seletivo_'.$nome.'.nome as NomeCandidato','processo_seletivo_'.$nome.'.cpf as CPF','processo_seletivo_'.$nome.'.deficiencia as deficiencia','processo_seletivo_'.$nome.'.nome as nome','processo_seletivo_'.$nome.'.id as ID_CANDIDATO')
+		->paginate(40);
+		$unidades = Unidade::all();
+		return view('cadastro_resultado_processos_gestor', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2'));
+	}
 	
 	// Página de Pesquisa do Candidato
 	public function pesquisarCandidato($id, Request $request)
@@ -187,6 +204,42 @@ class ProcessoResultadoController extends Controller
 		}
 		$unidades = Unidade::all();
 		return view('cadastro_resultado_processos', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2','pesq','tipo'));
+	}
+
+	// Página de Pesquisa do Candidato
+	public function pesquisarCandidatoGestor($id, Request $request)
+	{
+		$input      = $request->all();
+		$pseletivo  = ProcessoSeletivo::where('id',$id)->get();
+		$candidatos = Candidato::all();
+		$p_vagas    = ProcessoCandidato::where('processo_seletivo_id',$id)->get();
+		$vagas 		= Vaga::all();
+		$nome 	 	= $pseletivo[0]->nome;
+		$processos  = DB::table('processo_candidato')
+			->join('vaga', 'vaga.id', '=', 'processo_candidato.vaga_id')
+			->join('processo_seletivo', 'processo_seletivo.id', '=', 'processo_candidato.processo_seletivo_id')
+			->join('candidato', 'candidato.id', '=', 'processo_candidato.candidato_id')
+			->select('processo_candidato.*','vaga.id as IDVaga','vaga.nome as NomeVaga','candidato.nome as NomeCandidato','candidato.cpf as CPF','candidato.deficiencia as deficiencia','processo_seletivo.nome as nome','candidato.id as ID_CANDIDATO')
+			->where('processo_candidato.processo_seletivo_id', $id)
+			->get()->toArray();
+		if($input['pesq'] == NULL) {
+			$processos2 = DB::table('processo_seletivo_'.$nome)->orderby('nome', 'ASC')->paginate(10);
+			$tipo = ""; $pesq = "";
+		} else {
+			if(empty($input['tipo'])) { $input['tipo'] = ""; }
+			if(empty($input['pesq'])) { $input['pesq'] = ""; }
+			$tipo = $input['tipo']; 
+			$pesq = $input['pesq'];
+			if($tipo == 'nome'){
+				$processos2 = DB::table('processo_seletivo_'.$nome)->orderby('nome', 'ASC')
+				->where('nome', 'LIKE', '%' .$pesq. '%')->paginate(10);	
+			} else {
+				$processos2 = DB::table('processo_seletivo_'.$nome)->orderby('nome', 'ASC')
+				->where('vaga', 'LIKE', '%' .$pesq. '%')->paginate(20);	
+			}			
+		}
+		$unidades = Unidade::all();
+		return view('cadastro_resultado_processos_gestor', compact('pseletivo','processos', 'candidatos','p_vagas','vagas','unidades','processos2','pesq','tipo'));
 	}
 
 	// Salvar Resultados //

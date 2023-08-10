@@ -188,6 +188,8 @@ class ProcessoSeletivoController extends Controller
 						status_entrevista varchar(50) COLLATE utf8mb4_unicode_ci NULL,
 						data_entrevista varchar(50) COLLATE utf8mb4_unicode_ci NULL,
 						msg_entrevista varchar(500) COLLATE utf8mb4_unicode_ci NULL,
+						entrevista_rh varchar(100) COLLATE utf8mb4_unicode_ci NULL,
+						entrevista_gestor varchar(100) COLLATE utf8mb4_unicode_ci NULL,
 						status_resultado varchar(50) COLLATE utf8mb4_unicode_ci NULL,
 						msg_resultado varchar(500) COLLATE utf8mb4_unicode_ci NULL,
 						nomearquivo2 varchar(1000) COLLATE utf8mb4_unicode_ci NULL,
@@ -447,6 +449,15 @@ class ProcessoSeletivoController extends Controller
 		$processos = ProcessoSeletivo::paginate(10);
 		$unidades = Unidade::all();
 		return view('pesquisaAvaliacao',compact('unidades','processos'));
+	}
+
+	//Pagina de pesquisa de Avaliação Gestor
+	public function pesquisaAvaliacaoGestor(){
+		$user = Auth::user()->und_gestor;
+		$unidades = explode(',', $user);
+		$processos = ProcessoSeletivo::whereIn('unidade_id',$unidades)->orderby('unidade_id')->paginate(10);
+		$unidades  = Unidade::all();
+		return view('pesquisaAvaliacaoGestor',compact('unidades','processos'));
 	}
 
 	//Pesquisa de processo seletivo

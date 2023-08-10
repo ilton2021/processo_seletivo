@@ -94,6 +94,7 @@ Route::middleware(['auth'])->group( function() {
 		Route::post('/processo_seletivo/encontraAvaliacao/','ProcessoSeletivoController@encontraAvaliacao')->name('encontraAvaliacao');
 		Route::get('/processo_seletivo/encontraAvaliacao/','ProcessoSeletivoController@encontraAvaliacao')->name('encontraAvaliacao');
 		Route::get('/resultado_processos/pesquisaAvaliacao', 'ProcessoSeletivoController@pesquisaAvaliacao')->name('pesquisaAvaliacao');
+		Route::get('/resultado_processos/pesquisaAvaliacaoGestor', 'ProcessoSeletivoController@pesquisaAvaliacaoGestor')->name('pesquisaAvaliacaoGestor');
 		////
 
 		//Unidade
@@ -130,13 +131,15 @@ Route::middleware(['auth'])->group( function() {
 		
 		//ResultadosProcessos
 		Route::get('/resultado_processos/{id}/cadastro','ProcessoResultadoController@cadastrarResultados')->name('cadastrarResultados');
+		Route::get('/resultado_processos/{id}/cadastroGestor','ProcessoResultadoController@cadastrarResultadosGestor')->name('cadastrarResultadosGestor');
 		Route::get('/resultado_processos/{id}/informacoes/{id_cand}','ProcessoResultadoController@informacoes')->name('informacoes');
 		Route::get('/resultado_processos/{id}/informacoes/{id_cand}/questionarioVisualizar','PerguntasController@questionarioVisualizar')->name('questionarioVisualizar');
-		
 		Route::get('/resultado_processos/{id}/cadastro/resultadoA/{id_candidato}/', 'ProcessoResultadoController@resultadoProcessosA')->name('resultadoProcessosA');
 		Route::post('/resultado_processos/{id}/cadastro/resultadoA/{id_candidato}/storeAvaliacaoA', 'ProcessoResultadoController@storeAvaliacaoA')->name('storeAvaliacaoA');
-		Route::post('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
 		Route::get('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
+		Route::post('/resultado_processos/{id}/cadastro/pesquisar', 'ProcessoResultadoController@pesquisarCandidato')->name('pesquisarCandidato');
+		Route::get('/resultado_processos/{id}/cadastroGestor/pesquisar', 'ProcessoResultadoController@pesquisarCandidatoGestor')->name('pesquisarCandidatoGestor');
+		Route::post('/resultado_processos/{id}/cadastroGestor/pesquisar', 'ProcessoResultadoController@pesquisarCandidatoGestor')->name('pesquisarCandidatoGestor');
 
 		Route::get('/resultado_processos/{id}/cadastro/ranking', 'ProcessoResultadoController@rankingVagas')->name('rankingVagas');
 		Route::post('/resultado_processos/{id}/cadastro/ranking', 'ProcessoResultadoController@ranking')->name('ranking');
@@ -155,6 +158,12 @@ Route::middleware(['auth'])->group( function() {
 		Route::get('/resultado_processos/{id}/cadastro/avaliacaoOperacional/{id_c}','ProcessoCandidatoController@avaliacaoOperacional')->name('avaliacaoOperacional');
 		Route::get('/resultado_processos/{id}/cadastro/avaliacaoOperacionalVisualizar/{id_c}','ProcessoCandidatoController@avaliacaoOperacionalVisualizar')->name('avaliacaoOperacionalVisualizar');
 		Route::post('/resultado_processos/{id}/cadastro/avaliacaoOperacional/{id_c}','ProcessoCandidatoController@storeAvaliacaoOperacional')->name('storeAvaliacaoOperacional');
+
+		Route::get('/resultado_processos/{id}/cadastro/avaliacaoEntrevista/{id_c}','ProcessoCandidatoController@avaliacaoEntrevista')->name('avaliacaoEntrevista');
+		Route::get('/resultado_processos/{id}/cadastro/avaliacaoEntrevistaRH/{id_c}','ProcessoCandidatoController@avaliacaoEntrevistaRH')->name('avaliacaoEntrevistaRH');
+		Route::post('/resultado_processos/{id}/cadastro/avaliacaoEntrevistaRH/{id_c}','ProcessoCandidatoController@storeAvaliacaoEntrevistaRH')->name('storeAvaliacaoEntrevistaRH');
+		Route::get('/resultado_processos/{id}/cadastro/avaliacaoEntrevistaGestor/{id_c}','ProcessoCandidatoController@avaliacaoEntrevistaGestor')->name('avaliacaoEntrevistaGestor');
+		Route::post('/resultado_processos/{id}/cadastro/avaliacaoEntrevistaGestor/{id_c}','ProcessoCandidatoController@storeAvaliacaoEntrevistaGestor')->name('storeAvaliacaoEntrevistaGestor');
 		////
 
 		//Quadro de Avisos

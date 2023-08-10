@@ -25,25 +25,25 @@
 					</tr>
 					<tr>
                       <td><center>NOME:</center></td>
-					  <td> <input type="text" id="nome" name="nome" class="form-control" required="true" /> </td>
+					  <td> <input type="text" id="nome" name="nome" class="form-control" required /> </td>
 			          <td><center>MATRÍCULA:</center></td>
-					  <td> <input type="text" id="matricula" name="matricula" class="form-control" required="true" /> </td>
+					  <td> <input type="text" id="matricula" name="matricula" class="form-control" required /> </td>
 				    </tr>
 					<tr>
 					  <td><center>CARGO:</center></td>
-					  <td> <input type="text" id="cargo" name="cargo" class="form-control" required="true" /> </td>
+					  <td> <input type="text" id="cargo" name="cargo" class="form-control" required /> </td>
 					  <td><center>EMAIL:</center></td>
-					  <td> <input type="text" id="email" name="email" class="form-control" required="true" /> </td>
+					  <td> <input type="text" id="email" name="email" class="form-control" required /> </td>
                     </tr>
 					<tr>
                       <td><center>FUNÇÃO:</center></td>
-					  <td colspan="3"> <input type="text" id="funcao" name="funcao" class="form-control" required="true" /> </td>
+					  <td colspan="3"> <input type="text" id="funcao" name="funcao" class="form-control" required /> </td>
                     </tr>
 					<tr>
                       <td><center>SETOR:</center></td>
-					  <td> <input type="text" id="setor" name="setor" class="form-control" required="true" /> </td>
+					  <td> <input type="text" id="setor" name="setor" class="form-control" required /> </td>
                   	  <td><center>DATA:</center></td> 
-					  <td> <input type="date" id="data" name="data" class="form-control" required="true" /> </td>
+					  <td> <input type="date" id="data" name="data" class="form-control" required /> </td>
 					</tr>
 				</table>
 
@@ -253,7 +253,7 @@
 					 <td>PARECER DO RH: </td>
 					</tr>
 					<tr>
-                      <td> <textarea id="justificativa_rh" name="justificativa_rh" rows="20" cols="140" required="true"> </textarea> </td>
+                      <td> <textarea id="justificativa_rh" name="justificativa_rh" rows="20" cols="134" required> </textarea> </td>
 				    </tr>
 
 					<tr>

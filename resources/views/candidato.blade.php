@@ -93,7 +93,10 @@
 									  <center><button id="div" href="" target="_blank">Inscrição</button></center>
 									 </form>
 									</td>
-								   </tr>							 
+								   </tr>	
+								   <tr>
+									<td colspan="4"><center><font color="#F40000" size="5">*Ao preencher o formulário de inscrição, informe suas experiências e responda o questionário!</font></center></td>
+								   </tr>						 
 								  @endif
 								 @endforeach
 								</tbody>

@@ -27,6 +27,7 @@
         <li class="nav-item active">
           <a class="nav-link" href="{{ url('/home') }}">Processo Seletivo <span class="sr-only">(página atual)</span></a>
         </li>
+        @if(Auth::user()->perfil == "administrador" || Auth::user()->perfil == "dp" || Auth::user()->perfil == "rh")
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Cadastro
@@ -38,15 +39,23 @@
             <a class="dropdown-item" href="{{ route('cadastroPerguntas') }}">Perguntas</a>
           </div>
         </li>
+        @endif
+        @if(Auth::user()->perfil == "gestor")
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="{{ route('pesquisaAvaliacaoGestor') }}">Parecer</a>
+        </li>
+        @endif
+        @if(Auth::user()->perfil == "administrador" || Auth::user()->perfil == "dp" || Auth::user()->perfil == "rh")
         <li class="nav-item dropdown">
           <a class="nav-link" href="{{ route('pesquisaAvaliacao') }}">Avaliação</a>
         </li>
+        @endif
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sistema
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            @if(Auth::user()->name == "Ilton Albuquerque" || Auth::user()->name == "Alex Neto")
+            @if(Auth::user()->perfil == "administrador")
             <a class="dropdown-item" href="{{ route('telaRegistro') }}">Adicionar Usuário</a>
             @endif
             <form id="logout-form2" action="{{ route('logout') }}" method="POST">

@@ -625,7 +625,7 @@ class CandidatoController extends Controller
 			periodo_noturno, meio_periodo, outra_cidade, exp_01_empresa, exp_01_cargo, exp_01_atribuicoes, 
 			arquivo_ctps1, exp_01_data_ini, exp_01_data_fim, exp_02_empresa, exp_02_cargo, exp_02_atribuicoes, 
 			arquivo_ctps2, exp_02_data_ini, exp_02_data_fim, exp_03_empresa, exp_03_cargo, exp_03_atribuicoes, 
-			arquivo_ctps3, exp_03_data_ini, exp_03_data_fim, nomearquivo, 
+			arquivo_ctps3, exp_03_data_ini, exp_03_data_fim, nomearquivo,entrevista_rh,entrevista_gestor, 
 			status, status_avaliacao, data_avaliacao, msg_avaliacao, status_entrevista, data_entrevista, 
 			msg_entrevista, status_resultado, msg_resultado, nomearquivo2, numeroInscricao) VALUES ('$vaga',
 			'$data','$nome','$cpf','$email','','$telefone','','','','','','','','','','','','','','','','','','',
@@ -646,7 +646,7 @@ class CandidatoController extends Controller
 			data_entrevista, msg_entrevista, status_resultado, msg_resultado, nomearquivo2) 
 			VALUES ('$vaga','$data','$nome','$cpf','$email','','$telefone','','','','','','','','','','','','',
 			'','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',
-			'','','','','','','','','','','','','','','','','','','','$arquivo')");
+			'','','','','','','','','','','','','','','','','','','','','','$arquivo')");
 			}
 
 			$processos = DB::table('processo_seletivo')->paginate(10);
@@ -992,7 +992,7 @@ class CandidatoController extends Controller
 				parentesco_nome, trabalha_oss, trabalha_oss2, nome_social,pronome,genero,cor,aceito,
 				grau_parentesco, grau_parentesco_nome, nomearquivo, status, status_avaliacao, 
     			data_avaliacao, msg_avaliacao, status_entrevista, data_entrevista, msg_entrevista, 
-    			status_resultado, msg_resultado, nomearquivo2, numeroInscricao) 
+    			entrevista_rh,entrevista_gestor,status_resultado, msg_resultado, nomearquivo2, numeroInscricao) 
     			VALUES 
     			('$nome_vaga','$hoje','$nome','$cpf','$email','$fone_fixo','$celular',
 				'$naturalidade','$estado_nasc','$cidade_nasc','$data_nasc','$rua','$numero',
@@ -1005,7 +1005,7 @@ class CandidatoController extends Controller
 				'$parentesco_nome','$trabalho','$trabalho2','$nome_social','$pronome','$genero','$cor','$aceito',
 				'$grau_parentesco','$grau_parentesco_nome','','','',
 				'','','','','',
-				'','','','') ");
+				'','','','','','') ");
     			$numero = DB::table('processo_seletivo_'.$nprocesso)->select('id')->where('cpf',$cpf)->get();
 				$id2 = $numero[0]->id;
 				$numeroInscricao = $nprocesso.'-'.$id2;

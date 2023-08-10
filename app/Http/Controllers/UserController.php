@@ -47,7 +47,8 @@ class UserController extends Controller
 	// Tela de Registro Usuário //
 	public function telaRegistro()
 	{
-		return view('auth.register');
+		$unidades = Unidade::all();
+		return view('auth.register', compact('unidades'));
 	}
 	
 	// Tela Email //
@@ -158,7 +159,7 @@ class UserController extends Controller
 		$validator = Validator::make($request->all(), [
 			'email'    => 'required|email',
             'password' => 'required|same:password_confirmation',
-			'token_'	   => 'required',
+			'token_'   => 'required',
 			'password_confirmation' => 'required'
     	]);		
 		if ($validator->fails()) {
@@ -208,16 +209,26 @@ class UserController extends Controller
     {
 		$input = $request->all();
 		$validator = Validator::make($request->all(), [
-			'name'     		   => 'required',
-            'email'    		   => 'required|email|unique:users,email',
-            'password' 		   => 'required|same:password_confirmation',
-			'password_confirmation' => 'required'
+			'name'       => 'required',
+            'email'      => 'required|email|unique:users,email',
+            'password'   => 'required|same:password_confirmation',
+			'password_confirmation' => 'required',
+			'perfil'     => 'required',
+			'und_gestor' => 'required'
     	]);			 
 		if ($validator->fails()) {
-			return view('auth.register')
+			$unidades = Unidade::all();
+			return view('auth.register', compact('unidades'))
 				->withErrors($validator)
 				->withInput(session()->flashInput($request->input()));
 		} else {
+			$unidades = isset($input['und_gestor']);
+			if ($unidades == true) {
+				$unidade_id = implode(',', $input['und_gestor']);
+			} else {
+				$unidade_id = "";
+			}
+			$input['und_gestor'] = $unidade_id;
 			$senha = $input['password'];
 			$input['password'] = Hash::make($input['password']);
 			$user  = User::create($input);
@@ -225,7 +236,7 @@ class UserController extends Controller
 			$unidades  = $this->unidade->all();
 			$processos = ProcessoSeletivo::all();
 			$email 	   = $input['email']; 
-			Mail::send('email.emailUsuarioLS', ['login' => $email, 'senha' => $senha], function($m) use ($email) {
+			/* Mail::send('email.emailUsuarioLS', ['login' => $email, 'senha' => $senha], function($m) use ($email) {
 				$m->from('portal@hcpgestao.org.br', 'PORTAL Processo Seletivo');
 				$m->subject('Cadastro Processo Seletivo');
 				$m->to($email);
@@ -234,10 +245,10 @@ class UserController extends Controller
 				$m->from('portal@hcpgestao.org.br', 'PORTAL Processo Seletivo');
 				$m->subject('Cadastro de Novo Usuário - PORTAL Processo Seletivo');
 				$m->to($email);
-			});
-			return view('home', compact('processos'))
-				->withErrors($validator)
-				->withInput(session()->flashInput($request->input())); 						
+			}); */	
+			return redirect()->route('telaLogin')
+                ->withErrors($validator)
+                ->with('ouvidorias');		
 		}
     }
 
@@ -261,10 +272,12 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
+            'name' 		 => 'required',
+            'email' 	 => 'required|email|unique:users,email,'.$id,
+            'password'   => 'same:confirm-password',
+			'perfil'     => 'required',
+			'unidade_id' => 'required',
+            'roles' 	 => 'required'
         ]);
         $input = $request->all();
         if(!empty($input['password'])){ 

@@ -37,6 +37,57 @@ class ProcessoCandidatoController extends Controller
 		return view('avaliacao/avaliacao', compact('processos','candidato'));
 	}
 
+	//Página de Avaliação Entrevista
+	public function avaliacaoEntrevista($id,$id_c)
+	{
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$nomeP     = $processos[0]->nome;
+		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get(); 
+		return view('avaliacao/avaliacaoEntrevista', compact('processos','candidato'));
+	}
+
+	//Página de Avaliação RH
+	public function avaliacaoEntrevistaRH($id, $id_c)
+	{
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$nomeP     = $processos[0]->nome;
+		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get(); 
+		return view('avaliacao/avaliacaoEntrevistaRH', compact('processos','candidato'));
+	}
+
+	public function storeAvaliacaoEntrevistaRH($id, $id_c, Request $request)
+	{ 
+		$input     = $request->all();
+		$resposta  = $input['entrevista_rh'];
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$nomeP     = $processos[0]->nome;
+		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get(); 
+		DB::statement("UPDATE processo_seletivo_".$nomeP." SET entrevista_rh = '$resposta' WHERE id = '$id_c';");
+		$validator = "Avaliação da Entrevista do RH cadastrada!";
+		return redirect()->route('avaliacaoEntrevista', [$id, $id_c])->withErrors($validator);
+	}
+	
+	//Página de Avaliação Gestor
+	public function avaliacaoEntrevistaGestor($id, $id_c)
+	{
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$nomeP     = $processos[0]->nome;
+		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get(); 
+		return view('avaliacao/avaliacaoEntrevistaGestor', compact('processos','candidato'));
+	}
+
+	public function storeAvaliacaoEntrevistaGestor($id, $id_c, Request $request)
+	{
+		$input     = $request->all();
+		$resposta  = $input['entrevista_gestor'];
+		$processos = ProcessoSeletivo::where('id',$id)->get();
+		$nomeP     = $processos[0]->nome;
+		$candidato = DB::table('processo_seletivo_'.$nomeP)->where('id',$id_c)->get(); 
+		DB::statement("UPDATE processo_seletivo_".$nomeP." SET entrevista_gestor = '$resposta' WHERE id = '$id_c';");
+		$validator = "Avaliação da Entrevista do Gestor cadastrado!";
+		return redirect()->route('avaliacaoEntrevista', [$id, $id_c])->withErrors($validator);
+	}
+
 	//Página de Avaliação Gestor de Liderança
 	public function avaliacaoGestorLideranca($id, $id_c)
 	{

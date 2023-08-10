@@ -28,26 +28,13 @@
           <a class="nav-link" href="{{ url('/home') }}">Processo Seletivo <span class="sr-only">(página atual)</span></a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Cadastro
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ route('cadastroUnidade') }}">Unidade</a>
-            <a class="dropdown-item" href="{{ route('cadastroProcesso') }}">Processo Seletivo</a>
-            <a class="dropdown-item" href="{{ route('cadastroQuadroAvisos') }}">Quadro de Avisos</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link" href="{{ route('pesquisaAvaliacao') }}">Avaliação</a>
+          <a class="nav-link" href="{{ route('pesquisaAvaliacaoGestor') }}">Parecer</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sistema
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            @if(Auth::user()->name == "Ilton Albuquerque" || Auth::user()->name == "Alex Neto")
-            <a class="dropdown-item" href="{{ route('telaRegistro') }}">Adicionar Usuário</a>
-            @endif
             <form id="logout-form2" action="{{ route('logout') }}" method="POST">
               @csrf
               <button class="dropdown-item" type="submit">Sair</button>
@@ -78,34 +65,24 @@
 			<div class="card-body">
 				<div class="table-responsive">
 					<table class="table table-bordered" id="dataTable" width="10px" cellspacing="0">
-						<form method="POST" action="{{ route('pesquisarCandidato', $pseletivo[0]->id) }}">
+						<form method="POST" action="{{ route('pesquisarCandidatoGestor', $pseletivo[0]->id) }}">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<thead>
 								<tr>
 									<td style="width: 500px">
 										<input style="width: 500px;margin-top:10px;margin-left:10px;font-family:arial black;" type="text" id="pesq" name="pesq" class="form-control" placeholder="Digite aqui..." />
 									</td>
-									<td align="right">
+									<td>
 										<select style="margin-top:10px;font-family:arial black;" class="form-control" id="tipo" name="tipo">
 											<option id="tipo" name="tipo" value="nome">NOME</option>
 											<option id="tipo" name="tipo" value="vaga">VAGA</option>
 										</select>
 									</td>
-									<td align="right">
-										<input type="submit" style="margin-top: 15px;background-color:#1d68a7;" class="btn btn-info btn-sm" value="Pesquisar" id="Pesquisar" name="Pesquisar" />
-									</td>
 									<td>
-										 <a class="text-success" style="margin-left:5px;" href="{{route('exportCandidatos', array($pseletivo[0]->id, $pseletivo[0]->nome))}}" title="Download"><img src="{{asset('img/csv.png')}}" alt="" width="50"></a>
-									</td>
-									<td>
-										@if($pseletivo[0]->created_at > '2023-04-11')
-										 <a class="btn btn-info btn-sm" title="Ranking" style="color: #FFFFFF;margin-top:10px;font-size: 25px;" href="{{ route('ranking', $pseletivo[0]->id) }}"> <i class="fas fa-list-ol"></i></a>
-										@else
-										 <a class="btn btn-info btn-sm" title="Ranking" style="color: #FFFFFF;margin-top:10px;font-size: 25px;" href="{{ route('rankingVagas', $pseletivo[0]->id) }}"> <i class="fas fa-list-ol"></i></a>
-										@endif
+										<center><input type="submit" style="margin-top: 15px;background-color:#1d68a7;" class="btn btn-info btn-sm" value="Pesquisar" id="Pesquisar" name="Pesquisar" /></center>
 									</td>
 									<td align="right" colspan="0" border="0">
-										<a href="{{route('pesquisaAvaliacao')}}" id="Voltar" name="Voltar" type="button" style="margin-top: 15px; color: #FFFFFF; background-color:#e06500;" class="btn btn-warning btn-sm"> Voltar <i class="fas fa-undo-alt"></i> </a>
+										<a href="{{route('pesquisaAvaliacaoGestor')}}" id="Voltar" name="Voltar" type="button" style="margin-top: 15px; color: #FFFFFF; background-color:#e06500;" class="btn btn-warning btn-sm"> Voltar <i class="fas fa-undo-alt"></i> </a>
 									</td>
 								</tr>
 							</thead>
@@ -120,12 +97,6 @@
 								</th>
 								<th style="width: 300px;">
 									<center>Vaga</center>
-								</th>
-								<th>
-									<center>Entrevista</center>
-								</th>
-								<th>
-									<center>Resultado</center>
 								</th>
 								<th>
 									<center>Parecer</center>
@@ -143,13 +114,7 @@
 									<center>{{ strtoupper(substr($proc->vaga, 0, 30)) }}</center>
 								</th>
 								<th>
-									<center><a class="btn btn-info btn-sm" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{ route('avaliacaoEntrevista', array($pseletivo[0]->id, $proc->id)) }}"> <i class="fas fa-user"></i></a></center>
-								</th>
-								<th>
-									<center><a class="btn btn-info btn-sm" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{ route('resultadoProcessosA', array($pseletivo[0]->id, $proc->id)) }}"> <i class="fas fa-file-alt"></i></a></center>
-								</th>
-								<th>
-									<center><a class="btn btn-info btn-sm" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{ route('avaliacao', array($pseletivo[0]->id, $proc->id)) }}"> <i class="fas fa-tasks"></i></a></center>
+									<center><a class="btn btn-info btn-sm" style="color: #FFFFFF;font-size: 20px;" href="{{ route('avaliacao', array($pseletivo[0]->id, $proc->id)) }}"> <i class="fas fa-tasks"></i></a></center>
 								</th>
 							</tr>
 						</tfoot>
