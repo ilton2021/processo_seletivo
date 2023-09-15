@@ -57,8 +57,11 @@
                                 <th style="width: 50px;">
                                     <center>Resultados</center>
                                 </th>
-                                <th style="width: 50px;">
+                                <th style="width: 120px;">
                                     <center>N° de Inscritos</center>
+                                </th>
+                                <th style="width: 50px;">
+                                    <center>Documentos</center>
                                 </th>
                             </tr>
                         </thead>
@@ -76,6 +79,9 @@
                                 </th>
                                 <th>
                                     <center><a class="btn btn-dark btn-sm" style="color: #FFFFFF;font-size:20px;background-color:#1d68a7" href="{{ route('numeroInscritos', $processo->id) }}"> <i class="fas fa-user-check"></i></a></center>
+                                </th>
+                                <th>
+                                    <center><a class="btn btn-dark btn-sm" style="color: #FFFFFF;font-size:20px;background-color:#1d68a7" href="{{ route('documentos', $processo->id) }}"> <i class="fas fa-file" ></i></a></center>
                                 </th>
                             </tr>
                         </tfoot>

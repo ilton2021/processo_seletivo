@@ -6,9 +6,10 @@
 	<script type="{{ asset('text/javascript') }}"> </script>        
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 	<script>
-		function desabilitar6(valor) {
-			var x = document.getElementById('val6').checked;
-			if(x == true) { 
+		function desabilitar(valor) {
+			var x = document.getElementById('val7').checked;
+			var y = document.getElementById('val6').checked;
+			if(x == true && y == true) { 
 				document.getElementById('tr1').hidden = true;
 				document.getElementById('tr2').hidden = false;
 			} else {
@@ -57,7 +58,7 @@
 					<h5>1. ADESÃO:</h5>
 					 <p align="justify">No momento do cadastro, você deverá ler, compreender e aceitar estes Termos de Uso, conforme opção específica disponibilizada no portal.</p>
 					 <p align="justify">Caso não concorde com estes termos, você deverá deixar de utilizar o site e de realizar cadastro na plataforma. E para dar continuidade ao seu processo seletivo deverá entrar em contato com a instituição conforme dados disponibilizados no edital da seleção.</p>
-					 <p align="justify">Este documento, bem como a Política de Privacidade, tem natureza de contrato de adesão e passam por revisões periódicas, sem que seja necessária a sua notificação prévia. Por isso, é importante que você consulte os Termos de Uso e a Política de Privacidade para saber se continua concordando com seus termos antes de seguir com a utilização deste serviço.</p>
+					 <p align="justify">Este documento, bem como a <a href="{{ route('politicaP') }}" target="_blank">Política de Privacidade</a>, tem natureza de contrato de adesão e passam por revisões periódicas, sem que seja necessária a sua notificação prévia. Por isso, é importante que você consulte os Termos de Uso e a Política de Privacidade para saber se continua concordando com seus termos antes de seguir com a utilização deste serviço.</p>
 					<br><h5>2. USO DO PORTAL:</h5>
 					 <p align="justify">O portal (https://hcpgestao.org.br/processo_seletivo_hcpgestao/public/login), permite aos candidatos a inscrição em vagas disponibilizadas pelo HCP Gestão para as suas unidades sob gestão.</p>
 					 <p align="justify">Para cadastro, o Titular deverá informar, de livre consentimento e escolha, dados pessoais, incluindo, mas não se limitando a dados de identificação fornecidos por entidades governamentais, endereço, experiências profissionais, se portador de deficiência e os necessários para atender as legislações e as normativas internas para o processo seletivo.</p>
@@ -82,7 +83,8 @@
 					<br><h5>4. DISPOSIÇÕES GERAIS:</h5>
 					 <p align="justify">O candidato declara, por este instrumento, que, nos termos do artigo 46 do Código de Defesa do Consumidor (Lei nº 8.078/1990), tomou conhecimento prévio deste termo no portal do candidato e que avaliou, leu e concordou com todas as disposições e aqui descritas.</p>
 					 <p align="justify">Estes Termos de Uso estão em conformidade e deverão ser interpretados com base nas leis vigentes na República Federativa do Brasil. Para dirimir eventuais dúvidas ou questões relativas a eles, as partes elegem o Foro do Recife/PE, com exclusão de qualquer outro.</p><br><br>
-					 <center><input type="checkbox" onclick="desabilitar6('sim')" id="val6" name="val6" /> <b>Li e Concordo com o Termo de Uso.</b> </center>
+					 <center><input type="checkbox" onclick="desabilitar('sim')" id="val7" name="val7" /> <b>Li e Concordo com a <a href="{{ route('politicaP') }}" target="_blank">Política de Privacidade</a>.</b> </center>
+					 <center><input type="checkbox" onclick="desabilitar('sim')" id="val6" name="val6" /> <b>Li e Concordo com o Termo de Uso.</b> </center>
 				   </td>
 			    </tbody>
 				<tr id="tr1">

@@ -95,6 +95,12 @@ Route::middleware(['auth'])->group( function() {
 		Route::get('/processo_seletivo/encontraAvaliacao/','ProcessoSeletivoController@encontraAvaliacao')->name('encontraAvaliacao');
 		Route::get('/resultado_processos/pesquisaAvaliacao', 'ProcessoSeletivoController@pesquisaAvaliacao')->name('pesquisaAvaliacao');
 		Route::get('/resultado_processos/pesquisaAvaliacaoGestor', 'ProcessoSeletivoController@pesquisaAvaliacaoGestor')->name('pesquisaAvaliacaoGestor');
+		
+		Route::get('/processo_seletivo/documentos/{id}','ProcessoSeletivoController@documentos')->name('documentos');
+		Route::get('/processo_seletivo/documentos/{id}/pesquisar','ProcessoSeletivoController@pesquisarDocumentos')->name('pesquisarDocumentos');
+		Route::post('/processo_seletivo/documentos/{id}/pesquisar','ProcessoSeletivoController@pesquisarDocumentos')->name('pesquisarDocumentos');
+		Route::get('/processo_seletivo/documentos/candidato/{id}/{id_c}','ProcessoSeletivoController@documentosCandidato')->name('documentosCandidato');
+		Route::get('/processo_seletivo/documentos/dependentes/{id}/{id_c}','ProcessoSeletivoController@documentosDependentes')->name('documentosDependentes');
 		////
 
 		//Unidade

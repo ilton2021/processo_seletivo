@@ -7,6 +7,8 @@ use App\Model\ProcessoSeletivo;
 use App\Model\Unidade;
 use App\Model\Vaga;
 use App\Model\ExperienciasVaga;
+use App\Model\DocumentosCandidatos;
+use App\Model\DocumentosCandidatosDependentes;
 use DB;
 use App\Model\Loggers;
 use Illuminate\Support\Facades\Redirect;
@@ -449,6 +451,56 @@ class ProcessoSeletivoController extends Controller
 		$processos = ProcessoSeletivo::paginate(10);
 		$unidades = Unidade::all();
 		return view('pesquisaAvaliacao',compact('unidades','processos'));
+	}
+
+	public function documentos($id)
+	{
+		$processos  = ProcessoSeletivo::where('id',$id)->get();
+		$candidatos = DB::table('processo_seletivo_'.$processos[0]->nome)
+							->where('status_resultado','Aprovado (a)')->get(); 
+		$unidades   = Unidade::all();
+ 		return view('documentos',compact('unidades','processos','candidatos'));
+	}
+
+	public function pesquisarDocumentos($id, Request $request)
+	{
+		$unidades = Unidade::all();
+		$input = $request->all();
+		$pesq  = $input['pesq'];
+		$tipo  = $input['tipo'];
+		$processos  = ProcessoSeletivo::where('id',$id)->get();
+		if($input['tipo'] == 1) {
+			$candidatos = DB::table('processo_seletivo_'.$processos[0]->nome)
+				->where('nome','like','%'.$pesq.'%')
+				->where('status_resultado','Aprovado (a)')->get(); 
+		} else if($input['tipo'] == 2) {
+			$candidatos = DB::table('processo_seletivo_'.$processos[0]->nome)
+				->where('vaga','like','%'.$pesq.'%')
+				->where('status_resultado','Aprovado (a)')->get(); 
+		}
+		return view('documentos',compact('unidades','processos','candidatos'));
+	}
+
+	public function documentosCandidato($id, $idC)
+	{
+		$processos  = ProcessoSeletivo::where('id',$id)->get();
+		$candidatos = DB::table('processo_seletivo_'.$processos[0]->nome)
+							->where('status_resultado','Aprovado (a)')->get(); 
+		$unidades   = Unidade::all();
+		$documentosC = DocumentosCandidatos::where('id_processo_seletivo',$id)
+											->where('id_candidato',$idC)->get();
+		return view('documentos_candidato',compact('unidades','processos','candidatos','documentosC'));
+	}
+
+	public function documentosDependentes($id, $idC)
+	{
+		$processos  = ProcessoSeletivo::where('id',$id)->get();
+		$candidatos = DB::table('processo_seletivo_'.$processos[0]->nome)
+							->where('status_resultado','Aprovado (a)')->get(); 
+		$unidades   = Unidade::all();
+		$documentosD = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+													   ->where('id_candidato',$idC)->get();
+		return view('documentos_dependentes',compact('unidades','processos','candidatos','documentosD'));		
 	}
 
 	//Pagina de pesquisa de Avaliação Gestor
