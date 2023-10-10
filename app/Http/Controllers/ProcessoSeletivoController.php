@@ -663,4 +663,48 @@ class ProcessoSeletivoController extends Controller
 		$validator = 'Experiência(s) da Vaga excluída com sucesso!';
 		return redirect()->route('cadastroVagaExperiencias', [$id, $id_vaga])->with($validator);
 	}
+
+	public function processosAnteriores()
+	{
+		$processos = ProcessoSeletivo::where('id',0)->paginate(10);
+		$unidades  = Unidade::all();
+		$nomeCand[]  = "";
+		return view('processos_anteriores', compact('unidades','processos','nomeCand'));
+	}
+
+	public function processosAnterioresPesq(Request $request)
+	{
+		$input = $request->all();
+		if(empty($input['pesq'])) { $input['pesq'] = ""; }
+		$pesq  = $input['pesq']; 
+		$processos = ProcessoSeletivo::all();
+		$qtd 	   = sizeof($processos); 
+		$array = [];
+		if($pesq != "") {
+			for($x = 0; $x < $qtd; $x++) {
+				$nome = $processos[$x]->nome;
+				$processosA = DB::table('processo_seletivo_'.$nome)->where('cpf',$pesq)->get();
+				$qtdP = sizeof($processosA);
+				if($qtdP > 0) {
+					$array[] = [
+						"processo"  => $processos[$x]->nome,
+						"candidato" => $processosA[0]->nome,
+						"vaga" 		=> $processosA[0]->vaga
+					];
+				}
+			}
+		} else {
+			$array = [];
+		} 
+		$unidades = Unidade::all();
+		if($array == []) {
+			$validator = 'Este CPF não foi cadastrado em nenhum Processo Seletivo!';
+			$nome = "";
+			return view('processos_anteriores', compact('unidades','array','processos'))->withErrors($validator);
+		} else {
+			$validator = '';
+			return view('processos_anteriores', compact('unidades','array','processos'))->with($validator);
+		}
+		
+	}
 }

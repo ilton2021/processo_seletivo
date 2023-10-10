@@ -95,6 +95,8 @@ Route::middleware(['auth'])->group( function() {
 		Route::get('/processo_seletivo/encontraAvaliacao/','ProcessoSeletivoController@encontraAvaliacao')->name('encontraAvaliacao');
 		Route::get('/resultado_processos/pesquisaAvaliacao', 'ProcessoSeletivoController@pesquisaAvaliacao')->name('pesquisaAvaliacao');
 		Route::get('/resultado_processos/pesquisaAvaliacaoGestor', 'ProcessoSeletivoController@pesquisaAvaliacaoGestor')->name('pesquisaAvaliacaoGestor');
+		Route::get('/resultado_processos/pesquisaAvaliacao/processosAnteriores', 'ProcessoSeletivoController@processosAnteriores')->name('processosAnteriores');
+		Route::post('/resultado_processos/pesquisaAvaliacao/processosAnteriores', 'ProcessoSeletivoController@processosAnterioresPesq')->name('processosAnterioresPesq');
 		
 		Route::get('/processo_seletivo/documentos/{id}','ProcessoSeletivoController@documentos')->name('documentos');
 		Route::get('/processo_seletivo/documentos/{id}/pesquisar','ProcessoSeletivoController@pesquisarDocumentos')->name('pesquisarDocumentos');

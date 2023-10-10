@@ -37,7 +37,9 @@
                                     <td>
                                         <input type="submit" style="margin-top: 10px;margin-left: 15px;background-color:#1d68a7;" class="btn btn-info btn-sm" value="Pesquisar">
                                     </td>
-
+                                    <td align="left" colspan="0" border="0">
+                                        <a href="{{route('processosAnteriores')}}" id="BtnPA" name="BtnPA" type="button" style="margin-top: 10px;margin-left: 15px; color: #FFFFFF;" class="btn btn-success btn-sm"> Processos Anteriores </a>
+                                    </td>
                                     <td align="left" colspan="0" border="0">
                                         <a href="{{route('home')}}" id="Voltar" name="Voltar" type="button" style="margin-top: 10px;margin-left: 15px; color: #FFFFFF; background-color:#e06500;" class="btn btn-warning btn-sm"> Voltar <i class="fas fa-undo-alt"></i> </a>
                                     </td>
