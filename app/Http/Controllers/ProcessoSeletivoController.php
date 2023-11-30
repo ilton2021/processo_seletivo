@@ -12,6 +12,7 @@ use App\Model\DocumentosCandidatosDependentes;
 use DB;
 use App\Model\Loggers;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
 use Auth;
 use Validator;
 
@@ -483,24 +484,293 @@ class ProcessoSeletivoController extends Controller
 
 	public function documentosCandidato($id, $idC)
 	{
-		$processos  = ProcessoSeletivo::where('id',$id)->get();
-		$candidatos = DB::table('processo_seletivo_'.$processos[0]->nome)
+		$processos   = ProcessoSeletivo::where('id',$id)->get();
+		$candidatos  = DB::table('processo_seletivo_'.$processos[0]->nome)
+							->where('id',$idC)
 							->where('status_resultado','Aprovado (a)')->get(); 
-		$unidades   = Unidade::all();
+		$unidades    = Unidade::all();
 		$documentosC = DocumentosCandidatos::where('id_processo_seletivo',$id)
 											->where('id_candidato',$idC)->get();
 		return view('documentos_candidato',compact('unidades','processos','candidatos','documentosC'));
+	}
+
+	public function validarDocs($id, $idC, Request $request)
+	{
+		$input = $request->all();
+
+		$processos   = ProcessoSeletivo::where('id',$id)->get();
+		$candidatos  = DB::table('processo_seletivo_'.$processos[0]->nome)
+							->where('status_resultado','Aprovado (a)')->get(); 
+		$unidades    = Unidade::all();
+		$documentosC = DocumentosCandidatos::where('id_processo_seletivo',$id)
+											->where('id_candidato',$idC)->get();
+		$candidato   = DB::table('processo_seletivo_'.$processos[0]->nome)
+							  ->where('id',$idC)->get(); 
+		$nome = $processos[0]->nome; 
+		if($input['resultado'] == 1) {
+			$mensagem = $input['descricao_re'];
+			if ($mensagem == "") {
+				$validator = 'A descrição da Reprovação de Documentos deve ser informada!!';
+				return view('documentos_candidato',compact('unidades','processos','candidatos','documentosC'))
+				    ->withErrors($validator)
+                    ->withInput(session()->flashInput($request->input()));
+			} else {
+				for($a = 1; $a <= 16; $a++) {
+				  if(!empty($input['doc'.$a])) { 
+					if($input['doc'.$a] == "on") { 
+						$idD = DocumentosCandidatos::where('id_documento',$a)->where('id_candidato',$idC)->get('id');
+						DB::statement('UPDATE documentos_candidatos SET status = 1 WHERE id = '.$idD[0]->id.';');
+					}
+				  }
+				}
+				$email  = $candidato[0]->email;
+				$email2 = 'recrutamento.selecao@hcpgestao.org.br';
+				Mail::send([], [], function($m) use ($email,$email2,$mensagem,$nome) {
+					$m->from('recrutamento.selecao@hcpgestao.org.br', 'Recrutamento e Seleção');
+					$m->subject('Entrega de Documentos Reprovada no Processo Seletivo: '.$nome);
+					$m->setBody($mensagem);
+					$m->to($email);
+					$m->cc($email2);
+				});
+			}
+		} else if($input['resultado'] == 2) {
+			$mensagem = $input['descricao_pe'];
+			if($mensagem == "") {
+				$validator = 'A descrição da(s) Pendência(s) de Documentos deve ser informada!!';
+				return view('documentos_candidato',compact('unidades','processos','candidatos','documentosC'))
+				    ->withErrors($validator)
+                    ->withInput(session()->flashInput($request->input()));
+			} else {
+				for($a = 1; $a <= 16; $a++) {
+				  if(!empty($input['doc'.$a])) { 
+					if($input['doc'.$a] == "on") { 
+						$idD = DocumentosCandidatos::where('id_documento',$a)->where('id_candidato',$idC)->get('id');
+						DB::statement('UPDATE documentos_candidatos SET status = 0 WHERE id = '.$idD[0]->id.';');
+					}
+				  }
+				}
+				$email  = $candidato[0]->email;
+				$email2 = 'recrutamento.selecao@hcpgestao.org.br';
+				Mail::send([], [], function($m) use ($email,$email2,$mensagem,$nome) {
+					$m->from('recrutamento.selecao@hcpgestao.org.br', 'Recrutamento e Seleção');
+					$m->subject('Entrega de Documentos com Pendências no Processo Seletivo: '.$nome);
+					$m->setBody($mensagem);
+					$m->to($email);
+					$m->cc($email2);
+				});
+			}
+		} else {
+			$mensagem = $input['descricao_ap'];
+			if($mensagem == "") {
+				$validator = 'A descrição da Aprovação de Documentos deve ser informada!!';
+				return view('documentos_candidato',compact('unidades','processos','candidatos','documentosC'))
+				    ->withErrors($validator)
+                    ->withInput(session()->flashInput($request->input()));
+			} else {
+				for($a = 1; $a <= 16; $a++) {
+				  if(!empty($input['doc'.$a])) { 
+					if($input['doc'.$a] == "on") { 
+						$idD = DocumentosCandidatos::where('id_documento',$a)->where('id_candidato',$idC)->get('id');
+						DB::statement('UPDATE documentos_candidatos SET status = 2 WHERE id = '.$idD[0]->id.';');
+					}
+				  }
+				}
+				$email  = $candidato[0]->email;
+				$email2 = 'recrutamento.selecao@hcpgestao.org.br';
+				Mail::send([], [], function($m) use ($email,$email2,$mensagem,$nome) {
+					$m->from('recrutamento.selecao@hcpgestao.org.br', 'Recrutamento e Seleção');
+					$m->subject('Entrega de Documentos Aprovado no Processo Seletivo: '.$nome);
+					$m->setBody($mensagem);
+					$m->to($email);
+					$m->cc($email2);
+				});
+			}
+		}
+		$input['descricao_ap'] = "";
+		$input['descricao_pe'] = "";
+		$validator = 'E-mail enviado com sucesso ao Candidato!!';
+		return view('documentos',compact('unidades','processos','candidatos'))		
+				    ->withErrors($validator)
+                    ->withInput(session()->flashInput($request->input()));
 	}
 
 	public function documentosDependentes($id, $idC)
 	{
 		$processos  = ProcessoSeletivo::where('id',$id)->get();
 		$candidatos = DB::table('processo_seletivo_'.$processos[0]->nome)
+							->where('id',$idC)
 							->where('status_resultado','Aprovado (a)')->get(); 
 		$unidades   = Unidade::all();
-		$documentosD = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
-													   ->where('id_candidato',$idC)->get();
-		return view('documentos_dependentes',compact('unidades','processos','candidatos','documentosD'));		
+		$documentosCV  = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',17)->where('id_candidato',$idC)->get();
+		$documentosCN  = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',18)->where('id_candidato',$idC)->get();
+		$documentosRG  = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',19)->where('id_candidato',$idC)->get();
+		$documentosCPF = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',20)->where('id_candidato',$idC)->get();
+		$documentosEE  = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',21)->where('id_candidato',$idC)->get();
+		return view('documentos_dependentes',compact('unidades','processos','candidatos','documentosCN','documentosCV','documentosEE','documentosRG','documentosCPF'));		
+	}
+
+	public function validarDocsDep($id, $idC, Request $request)
+	{
+		$input = $request->all(); 
+		$processos  = ProcessoSeletivo::where('id',$id)->get();
+		$candidatos = DB::table('processo_seletivo_'.$processos[0]->nome)
+							->where('status_resultado','Aprovado (a)')->get(); 
+		$unidades   = Unidade::all();
+		$documentosCV  = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',17)->where('id_candidato',$idC)->get();
+		$documentosCN  = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',18)->where('id_candidato',$idC)->get();
+		$documentosRG  = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',19)->where('id_candidato',$idC)->get();
+		$documentosCPF = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',20)->where('id_candidato',$idC)->get();
+		$documentosEE  = DocumentosCandidatosDependentes::where('id_processo_seletivo',$id)
+							 ->where('id_documento',21)->where('id_candidato',$idC)->get();
+		$candidato  = DB::table('processo_seletivo_'.$processos[0]->nome)
+							  ->where('id',$idC)->get(); 
+		$nome = $processos[0]->nome; 
+		if($input['resultado'] == 1) {
+			$mensagem = $input['descricao_re'];
+			if($mensagem == "") {
+				$validator = 'A descrição da Reprovação de Documentos do(s) Depentende(s) deve ser informada!!';
+				return view('documentos_dependentes',compact('unidades','processos','candidatos','documentosCV','documentosCN','documentosRG','documentosCPF','documentosEE'))
+				    ->withErrors($validator)
+                    ->withInput(session()->flashInput($request->input()));
+			} else {
+				$qtdCV = sizeof($documentosCV);
+				for($a = 0; $a < $qtdCV; $a++) {
+					$id = $documentosCV[$a]->id;
+					if(!empty($input['doc1_'.$a])) { if($input['doc1_'.$a] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 1 WHERE id = '.$id.';'); } }	
+				}
+				$qtdCN = sizeof($documentosCN);
+				for($b = 0; $b < $qtdCN; $b++) {
+					$id = $documentosCN[$b]->id;
+					if(!empty($input['doc2_'.$b])) { if($input['doc2_'.$b] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 1 WHERE id = '.$id.';'); } }	
+				}
+				$qtdRG = sizeof($documentosRG);
+				for($c = 0; $c < $qtdRG; $c++) {
+					$id = $documentosRG[$c]->id;
+					if(!empty($input['doc3_'.$c])) { if($input['doc3_'.$c] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 1 WHERE id = '.$id.';'); } }	
+				}
+				$qtdCPF = sizeof($documentosCPF);
+				for($d = 0; $d < $qtdCPF; $d++) {
+					$id = $documentosCPF[$d]->id;
+					if(!empty($input['doc4_'.$d])) { if($input['doc4_'.$d] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 1 WHERE id = '.$id.';'); } }	
+				}
+				$qtdEE = sizeof($documentosEE);
+				for($e = 0; $e < $qtdEE; $e++) {
+					$id = $documentosEE[$e]->id;
+					if(!empty($input['doc5_'.$e])) { if($input['doc5_'.$e] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 1 WHERE id = '.$id.';'); } }	
+				}
+				$email  = $candidato[0]->email;
+				$email2 = 'recrutamento.selecao@hcpgestao.org.br';
+				Mail::send([], [], function($m) use ($email,$email2,$mensagem,$nome) {
+					$m->from('recrutamento.selecao@hcpgestao.org.br', 'Recrutamento e Seleção');
+					$m->subject('Entrega de Documentos do(s) Dependente(s) Reprovada no Processo Seletivo: '.$nome);
+					$m->setBody($mensagem);
+					$m->to($email);
+					$m->cc($email2);
+				});
+			}
+		} else if($input['resultado'] == 2) {
+			$mensagem = $input['descricao_pe'];
+			if($mensagem == "") {
+				$validator = 'A descrição da(s) Pendência(s) de Documentos do(s) Dependente(s) deve ser informada!!';
+				return view('documentos_dependentes',compact('unidades','processos','candidatos','documentosCV','documentosCN','documentosRG','documentosCPF','documentosEE'))
+				    ->withErrors($validator)
+                    ->withInput(session()->flashInput($request->input()));
+			} else {
+				$qtdCV = sizeof($documentosCV);
+				for($a = 0; $a < $qtdCV; $a++) {
+					$id = $documentosCV[$a]->id;
+					if(!empty($input['doc1_'.$a])) { if($input['doc1_'.$a] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 0 WHERE id = '.$id.';'); } }	
+				}
+				$qtdCN = sizeof($documentosCN);
+				for($b = 0; $b < $qtdCN; $b++) {
+					$id = $documentosCN[$b]->id;
+					if(!empty($input['doc2_'.$b])) { if($input['doc2_'.$b] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 0 WHERE id = '.$id.';'); } }	
+				}
+				$qtdRG = sizeof($documentosRG);
+				for($c = 0; $c < $qtdRG; $c++) {
+					$id = $documentosRG[$c]->id;
+					if(!empty($input['doc3_'.$c])) { if($input['doc3_'.$c] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 0 WHERE id = '.$id.';'); } }	
+				}
+				$qtdCPF = sizeof($documentosCPF);
+				for($d = 0; $d < $qtdCPF; $d++) {
+					$id = $documentosCPF[$d]->id;
+					if(!empty($input['doc4_'.$d])) { if($input['doc4_'.$d] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 0 WHERE id = '.$id.';'); } }	
+				}
+				$qtdEE = sizeof($documentosEE);
+				for($e = 0; $e < $qtdEE; $e++) {
+					$id = $documentosEE[$e]->id;
+					if(!empty($input['doc5_'.$e])) { if($input['doc5_'.$e] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 0 WHERE id = '.$id.';'); } }	
+				}
+				$email  = $candidato[0]->email;
+				$email2 = 'recrutamento.selecao@hcpgestao.org.br';
+				Mail::send([], [], function($m) use ($email,$email2,$mensagem,$nome) {
+					$m->from('recrutamento.selecao@hcpgestao.org.br', 'Recrutamento e Seleção');
+					$m->subject('Entrega de Documentos do(s) Dependente(s) com Pendências no Processo Seletivo: '.$nome);
+					$m->setBody($mensagem);
+					$m->to($email);
+					$m->cc($email2);
+				});
+			}
+		} else {
+			$mensagem = $input['descricao_ap'];
+			if($mensagem == "") {
+				$validator = 'A descrição da Aprovação de Documentos do(s) Dependente(s) deve ser informada!!';
+				return view('documentos_dependentes',compact('unidades','processos','candidatos','documentosCV','documentosCN','documentosRG','documentosCPF','documentosEE'))
+				    ->withErrors($validator)
+                    ->withInput(session()->flashInput($request->input()));
+			} else {
+				$qtdCV = sizeof($documentosCV);
+				for($a = 0; $a < $qtdCV; $a++) {
+					$id = $documentosCV[$a]->id;
+					if(!empty($input['doc1_'.$a])) { if($input['doc1_'.$a] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 2 WHERE id = '.$id.';'); } }	
+				}
+				$qtdCN = sizeof($documentosCN);
+				for($b = 0; $b < $qtdCN; $b++) {
+					$id = $documentosCN[$b]->id;
+					if(!empty($input['doc2_'.$b])) { if($input['doc2_'.$b] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 2 WHERE id = '.$id.';'); } }	
+				}
+				$qtdRG = sizeof($documentosRG);
+				for($c = 0; $c < $qtdRG; $c++) {
+					$id = $documentosRG[$c]->id;
+					if(!empty($input['doc3_'.$c])) { if($input['doc3_'.$c] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 2 WHERE id = '.$id.';'); } }	
+				}
+				$qtdCPF = sizeof($documentosCPF);
+				for($d = 0; $d < $qtdCPF; $d++) {
+					$id = $documentosCPF[$d]->id;
+					if(!empty($input['doc4_'.$d])) { if($input['doc4_'.$d] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 2 WHERE id = '.$id.';'); } }	
+				}
+				$qtdEE = sizeof($documentosEE);
+				for($e = 0; $e < $qtdEE; $e++) {
+					$id = $documentosEE[$e]->id;
+					if(!empty($input['doc5_'.$e])) { if($input['doc5_'.$e] == "on") { DB::statement('UPDATE documentos_candidatos_dependentes SET status = 2 WHERE id = '.$id.';'); } }	
+				}
+				$email  = $candidato[0]->email; 
+				$email2 = 'recrutamento.selecao@hcpgestao.org.br';
+				Mail::send([], [], function($m) use ($email,$email2,$mensagem,$nome) {
+					$m->from('recrutamento.selecao@hcpgestao.org.br', 'Recrutamento e Seleção');
+					$m->subject('Entrega de Documentos do(s) Dependente(s) Aprovado no Processo Seletivo: '.$nome);
+					$m->setBody($mensagem);
+					$m->to($email);
+					$m->cc($email2);
+				});
+			}
+		}
+		$input['descricao_ap'] = "";
+		$input['descricao_pe'] = "";
+		$validator = 'E-mail enviado com sucesso ao Candidato!!';
+		return view('documentos',compact('unidades','processos','candidatos'))		
+				    ->withErrors($validator)
+                    ->withInput(session()->flashInput($request->input()));
+					
 	}
 
 	//Pagina de pesquisa de Avaliação Gestor

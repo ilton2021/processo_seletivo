@@ -15,6 +15,7 @@ use App\Model\Vaga;
 use Illuminate\Support\Facades\DB;
 use App\Model\Loggers;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Mail;
 use Auth;
 use Validator;
 
@@ -336,10 +337,20 @@ class ProcessoResultadoController extends Controller
 				$processo = ProcessoSeletivo::where('id', $input['processo_seletivo_id'])->get();
 				$nome = $processo[0]->nome;
 				DB::statement("UPDATE processo_seletivo_".$nome." SET status_resultado = '$modo', 
-				msg_resultado = '$mensagem' WHERE id = '$id_candidato' ");
+							          msg_resultado = '$mensagem' WHERE id = '$id_candidato' ");
 				$input['user_id'] = Auth::user()->id;
 				$loggers = Loggers::create($input);
 				$validacao = 1;
+
+				if($modo == "Aprovado (a)") {
+					$email  = $processos2[0]->email;
+					Mail::send([], [], function($m) use ($email,$mensagem,$nome) {
+						$m->from('recrutamento.selecao@hcpgestao.org.br', 'Recrutamento e Seleção');
+						$m->subject('Entrega de Documentos do Processo Seletivo: '.$nome);
+						$m->setBody($mensagem);
+						$m->to($email);
+					}); 
+				}
 			}
 		}
 		if($validacao == 1)

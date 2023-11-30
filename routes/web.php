@@ -102,7 +102,9 @@ Route::middleware(['auth'])->group( function() {
 		Route::get('/processo_seletivo/documentos/{id}/pesquisar','ProcessoSeletivoController@pesquisarDocumentos')->name('pesquisarDocumentos');
 		Route::post('/processo_seletivo/documentos/{id}/pesquisar','ProcessoSeletivoController@pesquisarDocumentos')->name('pesquisarDocumentos');
 		Route::get('/processo_seletivo/documentos/candidato/{id}/{id_c}','ProcessoSeletivoController@documentosCandidato')->name('documentosCandidato');
+		Route::post('/processo_seletivo/documentos/candidato/{id}/{id_c}','ProcessoSeletivoController@validarDocs')->name('validarDocs');
 		Route::get('/processo_seletivo/documentos/dependentes/{id}/{id_c}','ProcessoSeletivoController@documentosDependentes')->name('documentosDependentes');
+		Route::post('/processo_seletivo/documentos/dependentes/{id}/{id_c}','ProcessoSeletivoController@validarDocsDep')->name('validarDocsDep');
 		////
 
 		//Unidade

@@ -67,88 +67,119 @@
 					<div class="col">
 						<b>ÁREA DO CANDIDATO - DOCUMENTOS:</b> <br><br>
 						<b>Anexe sua documentação para seguirmos para o próximo passo do processo admissional, <font color="red">anexar arquivos em PDF</font>:</b> <br><br>
+						<b>Seus documentos serão validados pelo nosso RH, e você receberá um e-mail com a confirmação.</b> <br><br>
 						<a href="javascript:history.back();" id="Voltar" name="Voltar" type="button" style="margin-top: 5px; color: #FFFFFF;" class="btn btn-warning btn-sm"> VOLTAR <i class="fas fa-undo-alt"></i></a>
 					</div> 
 				</div>
 				<div class="row">
 				 <div class="col"><br><br><br><br> <?php $ctps = 0; $sus = 0; $rg = 0; $cpf = 0; $pis = 0; ?>
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
+					 @foreach($docs as $doc)
 					    @if($doc->id_documento == "1") <?php $ctps = 1; ?> @break @else <?php $ctps = 0; ?> @endif
-					   @endforeach
-					   @if($ctps == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @endforeach
+					  @if($ctps == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 1)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
 						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 1)) }}">
-					   @endif
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/ctps.jpg') }}" width="80px" height="80px">
-					    </a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CTPS*</b></h6></center>
 				  </div>
 				  <div class="col"><br><br><br><br>
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
+					 @foreach($docs as $doc)
 					    @if($doc->id_documento == "2") <?php $sus = 1; ?> @break @else <?php $sus = 0; ?> @endif
-					   @endforeach
-					   @if($sus == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @endforeach
+					  @if($sus == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 2)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
 						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 2)) }}">
-					   @endif
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/sus.jpg') }}" width="80px" height="80px"> 
-					    </a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CARTÃO SUS*</b></h6></center>
 				  </div>
 				  <div class="col"><br><br><br><br>
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
+					 @foreach($docs as $doc)
 					    @if($doc->id_documento == "3") <?php $rg = 1; ?> @break @else <?php $rg = 0; ?> @endif
-					   @endforeach
-					   @if($rg == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @endforeach
+					  @if($rg == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 3)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
 						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 3)) }}">
-					   @endif
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/rg.jpg') }}" width="80px" height="80px"> 
-					    </a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>RG*</b></h6></center>
 				  </div>
 				  <div class="col"><br><br><br><br>
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
+					 @foreach($docs as $doc)
 					    @if($doc->id_documento == "4") <?php $cpf = 1; ?> @break @else <?php $cpf = 0; ?> @endif
-					   @endforeach
-					   @if($cpf == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @endforeach
+					  @if($cpf == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 				    	<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 4)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
 				    	<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 4)) }}">
-					   @endif
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/cpf.jpg') }}" width="80px" height="80px"> 
-				  	    </a> <br><br>
+				  	  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CPF*</b></h6></center>
 				  </div>
 				  <div class="col"><br><br><br><br>
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
+					 @foreach($docs as $doc)
 					    @if($doc->id_documento == "5") <?php $pis = 1; ?> @break @else <?php $pis = 0; ?> @endif
-					   @endforeach
-					   @if($pis == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @endforeach
+					  @if($pis == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 5)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
 						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 5)) }}">
-					   @endif
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/pis.jpg') }}" width="80px" height="80px"> 
-					    </a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>PIS*</b></h6></center>
 				  </div>
 				</div>
@@ -156,82 +187,112 @@
 				<div class="row">
 				 <div class="col"> <?php $nasc = 0; $resi = 0; $eleitor = 0; $vac = 0; $dipl = 0; ?>
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
+					 @foreach($docs as $doc)
 					    @if($doc->id_documento == "6") <?php $nasc = 1; ?> @break @else <?php $nasc = 0; ?> @endif
-					   @endforeach
-					   @if($nasc == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @endforeach
+					  @if($nasc == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 6)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
 						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 6)) }}">
-					   @endif
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/certidaoNascCas.jpg') }}" width="80px" height="80px">
-					    </a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CERTIDÃO NASCIMENTO <BR> CASAMENTO*</b></h6></center>
 				  </div>
 				  <div class="col">
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
-					    @if($doc->id_documento == "7") <?php $resi = 1; ?> @break @else <?php $resi = 0; ?> @endif
-					   @endforeach
-					   @if($resi == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @foreach($docs as $doc)
+					   @if($doc->id_documento == "7") <?php $resi = 1; ?> @break @else <?php $resi = 0; ?> @endif
+					 @endforeach
+					  @if($resi == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 7)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
-						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 7)) }}">
-					   @endif
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
+					    <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 7)) }}">
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/comprovanteResidencia.jpg') }}" width="80px" height="80px">
-					    </a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>COMPROVANTE DE RESIDÊNCIA <BR> ATUALIZADO*</b></h6></center>
 				  </div> 
 				  <div class="col">
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
-					    @if($doc->id_documento == "8") <?php $eleitor = 1; ?> @break @else <?php $eleitor = 0; ?> @endif
-					   @endforeach
-					   @if($eleitor == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @foreach($docs as $doc)
+					   @if($doc->id_documento == "8") <?php $eleitor = 1; ?> @break @else <?php $eleitor = 0; ?> @endif
+					 @endforeach
+					  @if($eleitor == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 8)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+					    @elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
 						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 8)) }}">
-					   @endif
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/tituloEleitor.jpg') }}" width="80px" height="80px"> 
-					    </a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>TÍTULO DE ELEITOR*</b></h6></center>
 				  </div>
 				  <div class="col">
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
+					 @foreach($docs as $doc)
 					    @if($doc->id_documento == "9") <?php $vac = 1; ?> @break @else <?php $vac = 0; ?> @endif
-					   @endforeach
-					   @if($vac == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @endforeach
+					  @if($vac == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 9)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
 						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 9)) }}">
-					   @endif
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/vacina.jpg') }}" width="80px" height="80px"> 
-					    </a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CARTEIRA DE VACINAÇÃO <BR> ATUALIZADA*</b></h6></center>
 				  </div>
 				  <div class="col">
 				    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-					   @foreach($docs as $doc)
+					 @foreach($docs as $doc)
 					    @if($doc->id_documento == "10") <?php $dipl = 1; ?> @break @else <?php $dipl = 0; ?> @endif
-					   @endforeach
-					   @if($dipl == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					 @endforeach
+					  @if($dipl == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 10)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					  @else 
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
 						<a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 10)) }}">
-					   @endif
+					  @endif
 					   <img src="{{ asset('img/painel/documentos/historicoEscolar.jpg') }}" width="80px" height="80px">
-					    </a> <br><br>
+					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CERTIFICADO DE ESCOLARIDADE <BR> OU DIPLOMA*</b></h6></center>
 				  </div>	
 				</div>
@@ -242,14 +303,20 @@
 				     @foreach($docs as $doc)
 					   @if($doc->id_documento == "11") <?php $res = 1; ?> @break @else <?php $res = 0; ?> @endif
 					 @endforeach
-					 @if($dipl == 0) 
-					  <div class="progress-bar bg-danger w-100">0%</div> </div>
-					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 11)) }}">
-					 @else
-					  <div class="progress-bar bg-success w-100">100%</div> </div>
-					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 11)) }}">
-					 @endif
-					 <img src="{{ asset('img/painel/documentos/reservista.jpg') }}" width="80px" height="80px">
+					  @if($res == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
+					    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 11)) }}">
+					  @else
+					 	@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
+					    <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 11)) }}">
+					  @endif
+					   <img src="{{ asset('img/painel/documentos/reservista.jpg') }}" width="80px" height="80px">
 					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CARTEIRA <BR> RESERVISTA</b></h6></center>
 				  </div>
@@ -258,14 +325,20 @@
 				     @foreach($docs as $doc)
 					   @if($doc->id_documento == "12") <?php $fot = 1; ?> @break @else <?php $fot = 0; ?> @endif
 					 @endforeach
-					 @if($fot == 0) 
-					  <div class="progress-bar bg-danger w-100">0%</div> </div>
-					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 12)) }}">
-					 @else
-					  <div class="progress-bar bg-success w-100">100%</div> </div>	
-					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 12)) }}">
-					 @endif
-					 <img src="{{ asset('img/painel/documentos/foto.jpg') }}" width="80px" height="80px">
+					  @if($fot == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
+					    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 12)) }}">
+					  @else
+						@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
+					    <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 12)) }}">
+					  @endif
+					   <img src="{{ asset('img/painel/documentos/foto.jpg') }}" width="80px" height="80px">
 					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>FOTO 3x4</b></h6></center>
 				  </div>
@@ -274,14 +347,20 @@
 				     @foreach($docs as $doc)
 					   @if($doc->id_documento == "13") <?php $esp = 1; ?> @break @else <?php $esp = 0; ?> @endif
 					 @endforeach
-					 @if($esp == 0) 
-					  <div class="progress-bar bg-danger w-100">0%</div> </div>
-					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 13)) }}">
-					 @else
-					  <div class="progress-bar bg-success w-100">100%</div> </div>	
-					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 13)) }}">
-					 @endif
-					 <img src="{{ asset('img/painel/documentos/especializacao.jpg') }}" width="80px" height="80px"> 
+					  @if($esp == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
+					    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 13)) }}">
+					  @else
+					 	@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
+					    <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 13)) }}">
+					  @endif
+					   <img src="{{ asset('img/painel/documentos/especializacao.jpg') }}" width="80px" height="80px"> 
 					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CERTIFICADO DE ESPECIALIZAÇÃO</b></h6></center>
 				  </div>
@@ -290,14 +369,20 @@
 				     @foreach($docs as $doc)
 					   @if($doc->id_documento == "14") <?php $vem = 1; ?> @break @else <?php $vem = 0; ?> @endif
 					 @endforeach
-					 @if($vem == 0) 
-					  <div class="progress-bar bg-danger w-100">0%</div> </div>
-					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 14)) }}">
-					 @else
-					  <div class="progress-bar bg-success w-100">100%</div> </div>
-					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 14)) }}">
-					 @endif
-					 <img src="{{ asset('img/painel/documentos/vem.jpg') }}" width="80px" height="80px"> 
+					  @if($vem == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
+					    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 14)) }}">
+					  @else
+					    @if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
+					    <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 14)) }}">
+					  @endif
+					   <img src="{{ asset('img/painel/documentos/vem.jpg') }}" width="80px" height="80px"> 
 					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>CARTÃO VEM</b></h6></center>
 				  </div>
@@ -306,14 +391,20 @@
 				     @foreach($docs as $doc)
 					   @if($doc->id_documento == "15") <?php $reP = 1; ?> @break @else <?php $reP = 0; ?> @endif
 					 @endforeach
-					 @if($reP == 0) 
-					  <div class="progress-bar bg-danger w-100">0%</div> </div>
-					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 15)) }}">
-					 @else 
-					  <div class="progress-bar bg-success w-100">100%</div> </div>
-					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 15)) }}">
-					 @endif
-					 <img src="{{ asset('img/painel/documentos/registroProfissional.jpg') }}" width="80px" height="80px"> 
+					  @if($reP == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
+					    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 15)) }}">
+					  @else 
+					 	@if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						@elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						@else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						@endif
+					    <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 15)) }}">
+					  @endif
+					   <img src="{{ asset('img/painel/documentos/registroProfissional.jpg') }}" width="80px" height="80px"> 
 					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>REGISTRO PROFISSIONAL <BR> CONSELHO DE CLASSE</b></h6></center>
 				  </div>
@@ -325,14 +416,20 @@
 				     @foreach($docs as $doc)
 					   @if($doc->id_documento == "16") <?php $nada = 1; ?> @break @else <?php $nada = 0; ?> @endif
 					 @endforeach
-					 @if($reP == 0) 
-					  <div class="progress-bar bg-danger w-100">0%</div> </div>
-					  <a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 16)) }}">
-					 @else 
-					  <div class="progress-bar bg-success w-100">100%</div> </div>
-					  <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 16)) }}">
-					 @endif
-					 <img src="{{ asset('img/painel/documentos/nadaConsta.jpg') }}" width="80px" height="80px">
+					  @if($nada == 0) 
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
+					    <a href="{{ route('cadastrarDocumento', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 16)) }}">
+					  @else 
+					    @if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+					    @elseif($doc->status == 1)
+					     <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+					    @else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+					    @endif
+					    <a href="{{ route('cadastrarDocumentoExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 16)) }}">
+					  @endif
+					   <img src="{{ asset('img/painel/documentos/nadaConsta.jpg') }}" width="80px" height="80px">
 					  </a> <br><br>
 					<center><h6 class="modal-title"id="exampleModalLongTitle"><b>DECLARAÇÃO <BR> NADA CONSTA <BR> CONSELHO CLASSE</b></h6></center>
 				  </div>

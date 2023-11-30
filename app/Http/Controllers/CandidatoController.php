@@ -286,6 +286,7 @@ class CandidatoController extends Controller
 				$input['id_documento'] = $tela;
 				$input['caminho'] 	   = $arquivo;
 				$input['nome_arquivo'] = $nomeA;
+				$input['status']       = 0;
 				$docs = DocumentosCandidatos::create($input);
 				$docs = DocumentosCandidatos::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->get();
 				$validator = 'Documento cadastrado com sucesso!';
@@ -476,6 +477,7 @@ class CandidatoController extends Controller
 					$input['id_documento'] = $tela;
 					$input['caminho'] 	   = $arquivo;
 					$input['nome_arquivo'] = $nomeA;
+					$input['status']       = 0;
 					$docs = DocumentosCandidatosDependentes::create($input);
 					$docs = DocumentosCandidatosDependentes::where('id_processo_seletivo',$idP)->where('id_candidato',$idC)->get();
 				} else {
@@ -1563,6 +1565,7 @@ class CandidatoController extends Controller
 		$exp3 = DB::table('experiencias_vaga')->whereIn('id',$c)->get();
 		for ($i = 0; $i < $qtdC; $i++) { $c = explode(",", $candidato[0]->exp_03_competencias_desejadas); }
 		$exp3_1 = DB::table('experiencias_vaga')->whereIn('id',$c)->get();
+		$hoje = date('Y-m-d', strtotime('now'));
 		if(empty($input['val6'])) {
 			$expVaga1 = isset($input['vaga_exp1']);
 			if ($expVaga1) {
@@ -1592,14 +1595,21 @@ class CandidatoController extends Controller
 			}
 			if(!empty($input['data_inicio'])){ $data_inicio = $input['data_inicio']; } else { $data_inicio = ""; } 
 			if(!empty($input['data_fim'])){ $data_fim = $input['data_fim']; } else { $data_fim = ""; }
+			
 			if($data_inicio !== "" && $data_fim !== "") {
 				$anoI = date('Y-m-d', strtotime($data_inicio));
 				$anoF = date('Y-m-d', strtotime($data_fim)); 
 				if(strtotime($anoI) == strtotime($anoF) || strtotime($anoF) < strtotime($anoI)) {
 					$validator = 'Na Experiência 1 a Data Final não pode ser maior ou igual a Data Início!';
-						return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
-								->withErrors($validator)
-								->withInput(session()->flashInput($request->input()));											
+					return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
+							->withErrors($validator)
+							->withInput(session()->flashInput($request->input()));											
+				}
+				if(strtotime($anoF) > strtotime($hoje)) {
+					$validator = 'A data fim não pode ser maior que a Data de Hoje';
+					return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
+							->withErrors($validator)
+							->withInput(session()->flashInput($request->input()));											
 				}
 				$compt1  = $input['exp_01_competencias']; 
 				if($compt1 != "-" && $compt1 != "0") {
@@ -1655,6 +1665,12 @@ class CandidatoController extends Controller
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));											
 				}
+				if(strtotime($anoF) > strtotime($hoje)) {
+					$validator = 'A data fim não pode ser maior que a Data de Hoje';
+					return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
+							->withErrors($validator)
+							->withInput(session()->flashInput($request->input()));											
+				}
 				$compt2  = $input['exp_02_competencias'];
 				if($compt2 != "-" || $compt2 != "0") {
 					$data1   = new \DateTime($anoI);
@@ -1707,6 +1723,12 @@ class CandidatoController extends Controller
 					return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
 						->withErrors($validator)
 						->withInput(session()->flashInput($request->input()));											
+				}
+				if(strtotime($anoF) > strtotime($hoje)) {
+					$validator = 'A data fim não pode ser maior que a Data de Hoje';
+					return view('cadastro_candidatos_experiencias', compact('unidades','unidade','processos','vagasExp','candidato','tela','cargos','qtdC','exp1','exp1_1','exp2','exp2_1','exp3','exp3_1'))
+							->withErrors($validator)
+							->withInput(session()->flashInput($request->input()));											
 				}
 				$compt3  = $input['exp_03_competencias']; 
 				if($compt3 != "-" && $compt3 != "0") {

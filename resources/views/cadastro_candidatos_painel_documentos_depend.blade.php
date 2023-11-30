@@ -82,10 +82,16 @@
 					    @if($doc->id_documento == "17") <?php $vac = 1; ?> @break @else <?php $vac = 0; ?> @endif
 					   @endforeach
 					   @if($vac == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 17)) }}">
 					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+						 @if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						 @elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						 @else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						 @endif
 						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 17)) }}">
 					   @endif
 					   <img src="{{ asset('img/painel/documentos/vacina.jpg') }}" width="80px" height="80px">
@@ -98,10 +104,16 @@
 					    @if($doc->id_documento == "18") <?php $nasc = 1; ?> @break @else <?php $nasc = 0; ?> @endif
 					   @endforeach
 					   @if($nasc == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 18)) }}">
 					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+						 @if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						 @elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						 @else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						 @endif
 						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id,$processos[0]->id,$user[0]->id, 18)) }}">
 					   @endif
 					   <img src="{{ asset('img/painel/documentos/certidaoNascCas.jpg') }}" width="80px" height="80px">
@@ -114,10 +126,16 @@
 					    @if($doc->id_documento == "19") <?php $rg = 1; ?> @break @else <?php $rg = 0; ?> @endif
 					   @endforeach
 					   @if($rg == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 19)) }}">
 					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+						 @if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						 @elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						 @else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						 @endif
 						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 19)) }}">
 					   @endif
 					   <img src="{{ asset('img/painel/documentos/rg.jpg') }}" width="80px" height="80px"> 
@@ -130,10 +148,16 @@
 					    @if($doc->id_documento == "20") <?php $cpf = 1; ?> @break @else <?php $cpf = 0; ?> @endif
 					   @endforeach
 					   @if($cpf == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 20)) }}">
-					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+					   @else 
+					     @if($doc->status == 0)	 
+						  <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						 @elseif($doc->status == 1)
+						  <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						 @else
+						  <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						 @endif
 						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 20)) }}">
 					   @endif
 					   <img src="{{ asset('img/painel/documentos/cpf.jpg') }}" width="80px" height="80px"> 
@@ -146,10 +170,16 @@
 					    @if($doc->id_documento == "21") <?php $escol = 1; ?> @break @else <?php $escol = 0; ?> @endif
 					   @endforeach
 					   @if($escol == 0) 
-					    <div class="progress-bar bg-danger w-100">0%</div> </div>
+					    <div class="progress-bar bg-primary w-0" title="DOCUMENTO NÃO CADASTRADO">0%</div> </div>
 						<a href="{{ route('cadastrarDocumentoDep', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 21)) }}">
 					    @else 
-						<div class="progress-bar bg-success w-100">100%</div> </div>
+						 @if($doc->status == 0)
+						 <div class="progress-bar bg-warning w-50" title="DOCUMENTO EM VALIDAÇÃO">50%</div> </div>
+						 @elseif($doc->status == 1)
+						 <div class="progress-bar bg-danger w-100" title="DOCUMENTO REPROVADO">0%</div> </div>
+						 @else
+						 <div class="progress-bar bg-success w-100" title="DOCUMENTO VALIDADO">100%</div> </div>
+						 @endif
 						<a href="{{ route('documentoDepExcluir', array($unidade[0]->id, $processos[0]->id, $user[0]->id, 21)) }}">
 					   @endif
 					   <img src="{{ asset('img/painel/documentos/historicoEscolar.jpg') }}" width="80px" height="80px"> 

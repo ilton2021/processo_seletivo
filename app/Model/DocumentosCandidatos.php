@@ -14,6 +14,7 @@ class DocumentosCandidatos extends Model
         'id_documento',
         'caminho',
         'nome_arquivo',
+        'status',
         'created_at',
         'updated_at'
     ];

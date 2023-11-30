@@ -58,9 +58,13 @@
     </div>
   </nav>
 </body>
-<div class="container" style="margin-top: 80px;">
+<div class="container" style="margin-top: 80px;"> 
 	@if ($errors->any())
-	<div class="alert alert-danger">
+	 @if($errors->any() == false)
+	  <div class="alert alert-danger">
+	 @else
+	  <div class="alert alert-success">
+	 @endif
 		<ul>
 			@foreach ($errors->all() as $error)
 			<li>{{ $error }}</li>
@@ -116,170 +120,442 @@
 								<th colspan="2"><center>Documentos Candidato</center></th>
 							</tr>
 						</thead>
-						@foreach($documentosC as $doc)
 						<tfoot style="font-size:14px;">
+						@foreach($documentosC as $doc)
 							@if($doc->id_documento == 1)
 							<tr>
-								<th>CTPS</th>
+								<th><center>CTPS</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 2)
 							<tr>
-								<th>CARTÃO SUS</th>
+								<th><center>CARTÃO SUS</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 3)
 							<tr>
-								<th>RG</th>
+								<th><center>RG</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 4)
 							<tr>
-								<th>CPF</th>
+								<th><center>CPF</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 5)
 							<tr>
-								<th>PIS</th>
+								<th><center>PIS</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 6)
 							<tr>
-								<th>CERTIDÃO NASCIMENTO CASAMENTO</th>
+								<th><center>CERTIDÃO NASCIMENTO CASAMENTO</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 7)
 							<tr>
-								<th>COMPROVANTE DE RESIDÊNCIA ATUALIZADO</th>
+								<th><center>COMPROVANTE DE RESIDÊNCIA ATUALIZADO</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 8)
 							<tr>
-								<th>TÍTULO DE ELEITOR</th>
+								<th><center>TÍTULO DE ELEITOR</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 9)
 							<tr>
-								<th>CARTEIRA DE VACINAÇÃO ATUALIZADA</th>
+								<th><center>CARTEIRA DE VACINAÇÃO ATUALIZADA</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 10)
 							<tr>
-								<th>CERTIFICADO DE ESCOLARIDADE OU DIPLOMA</th>
+								<th><center>CERTIFICADO DE ESCOLARIDADE OU DIPLOMA</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 11)
 							<tr>
-								<th>CARTEIRA RESERVISTA</th>
+								<th><center>CARTEIRA RESERVISTA</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 12)
 							<tr>
-								<th>FOTO 3x4</th>
+								<th><center>FOTO 3x4</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 13)
 							<tr>
-								<th>CERTIFICADO DE ESPECIALIZAÇÃO</th>
+								<th><center>CERTIFICADO DE ESPECIALIZAÇÃO</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 14)
 							<tr>
-								<th>CARTÃO VEM</th>
+								<th><center>CARTÃO VEM</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 15)
 							<tr>
-								<th>REGISTRO PROFISSIONAL CONSELHO DE CLASSE</th>
+								<th><center>REGISTRO PROFISSIONAL CONSELHO DE CLASSE</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
 							@if($doc->id_documento == 16)
 							<tr>
-								<th>DECLARAÇÃO NADA CONSTA CONSELHO CLASSE</th>
+								<th><center>DECLARAÇÃO NADA CONSTA CONSELHO CLASSE</center></th>
 								<th>
 								  <center>
 								 	<a class="btn btn-info btn-sm" target="_blank" style="color: #FFFFFF;margin-top:2px;font-size: 20px;" href="{{asset('storage')}}/{{$doc->caminho}}"> <i class="fas fa-file-alt"></i></a>
 								  </center>
+								  @if($doc->status == 0)
+								   <center> <font color="blue">VALIDAR</font> </center>
+								  @elseif($doc->status == 1)
+								   <center> <font color="red">REPROVADO</font> </center>
+								  @else
+								   <center> <font color="green">APROVADO</font> </center>
+								  @endif
 								</th>
 							</tr>
 							@endif
+						@endforeach 
+						</table>
+						<table class="table table-bordered" id="dataTable" width="10px" cellspacing="0">
+						<tr>
+							<th>
+							  <center>
+							    <form action="{{ route('validarDocs', array($processos[0]->id, $candidatos[0]->id)) }}" method="POST">             
+								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+								  REPROVAR
+								</button>
+								 <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Reprovar Documentação:</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										  <span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+									<div class="row"> 
+									 <div class="col">
+									  @foreach($documentosC as $doc)
+									   @if($doc->id_documento == 1) <input type="checkbox" id="doc1" name="doc1" /> <font size="2">CTPS</font> <br> @endif
+									   @if($doc->id_documento == 2) <input type="checkbox" id="doc2" name="doc2" /> <font size="2">CARTÃO SUS</font> <br> @endif 
+									   @if($doc->id_documento == 3) <input type="checkbox" id="doc3" name="doc3" /> <font size="2">RG</font> <br> @endif
+									   @if($doc->id_documento == 4) <input type="checkbox" id="doc4" name="doc4" /> <font size="2">CPF</font> <br> @endif
+									   @if($doc->id_documento == 5) <input type="checkbox" id="doc5" name="doc5" /> <font size="2">PIS</font> <br> @endif
+									   @if($doc->id_documento == 6) <input type="checkbox" id="doc6" name="doc6" /> <font size="2">CERTIDÃO NASCIMENTO CASAMENTO:</font> <br> @endif
+									   @if($doc->id_documento == 7) <input type="checkbox" id="doc7" name="doc7" /> <font size="2">COMPROVANTE DE RESIDÊNCIA ATUALIZADO</font> <br> @endif
+									   @if($doc->id_documento == 8) <input type="checkbox" id="doc8" name="doc8" /> <font size="2">TÍTULO DE ELEITOR</font> <br> @endif
+									   @if($doc->id_documento == 9) <input type="checkbox" id="doc9" name="doc9" /> <font size="2">CARTEIRA DE VACINAÇÃO ATUALIZADA</font> <br> @endif
+									   @if($doc->id_documento == 10) <input type="checkbox" id="doc10" name="doc10" /> <font size="2">CERTIFICADO DE ESCOLARIDADE OU DIPLOMA</font> <br> @endif
+									   @if($doc->id_documento == 11) <input type="checkbox" id="doc11" name="doc11" /> <font size="2">CARTEIRA RESERVISTA</font> <br> @endif
+									   @if($doc->id_documento == 12) <input type="checkbox" id="doc12" name="doc12" /> <font size="2">FOTO 3x4</font> <br> @endif
+									   @if($doc->id_documento == 13) <input type="checkbox" id="doc13" name="doc13" /> <font size="2">CERTIFICADO DE ESPECIALIZAÇÃO</font> <br> @endif
+									   @if($doc->id_documento == 14) <input type="checkbox" id="doc14" name="doc14" /> <font size="2">CARTÃO VEM</font> <br> @endif
+									   @if($doc->id_documento == 15) <input type="checkbox" id="doc15" name="doc15" /> <font size="2">REGISTRO PROFISSIONAL CONSELHO DE CLASSE</font> <br> @endif
+									   @if($doc->id_documento == 16) <input type="checkbox" id="doc16" name="doc16" /> <font size="2">DECLARAÇÃO NADA CONSTA CONSELHO CLASSE</font> <br> @endif
+									  @endforeach 
+								     </div>
+									 <div class="col">
+									   <textarea id="descricao_re" name="descricao_re" rows="8" class="form-control" placeholder="Especifique a informação para o candidato, informando quais documentos estão em desacordo. Informe qual documento está reprovado.">{{ old('descricao_re') }}</textarea>
+									 </div>
+									</div>
+									<div class="modal-footer">
+										<input hidden type="text" id="resultado" name="resultado" value="1" />
+										<button type="submit" class="btn btn-danger btn-sm">REPROVAR</button>
+									</div>
+									</div>
+								  </div>
+								 </div> 
+								</form> 
+							 </center>
+							</th>
+							<th>
+							 <center>
+								<form action="{{ route('validarDocs', array($processos[0]->id, $candidatos[0]->id)) }}" method="POST">             
+								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+								<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal2">
+								  PENDÊNCIAS
+								</button>
+								 <div class="modal fade bd-example-modal-lg" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+								  <div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+									 <div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Pendências na Documentação:</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										  <span aria-hidden="true">&times;</span>
+										</button>
+									 </div>
+									 <div class="modal-body">
+									<div class="row"> 
+									 <div class="col">
+									  @foreach($documentosC as $doc)
+									   @if($doc->id_documento == 1) <input type="checkbox" id="doc1" name="doc1" /> <font size="2">CTPS</font> <br> @endif
+									   @if($doc->id_documento == 2) <input type="checkbox" id="doc2" name="doc2" /> <font size="2">CARTÃO SUS</font> <br> @endif 
+									   @if($doc->id_documento == 3) <input type="checkbox" id="doc3" name="doc3" /> <font size="2">RG</font> <br> @endif
+									   @if($doc->id_documento == 4) <input type="checkbox" id="doc4" name="doc4" /> <font size="2">CPF</font> <br> @endif
+									   @if($doc->id_documento == 5) <input type="checkbox" id="doc5" name="doc5" /> <font size="2">PIS</font> <br> @endif
+									   @if($doc->id_documento == 6) <input type="checkbox" id="doc6" name="doc6" /> <font size="2">CERTIDÃO NASCIMENTO CASAMENTO:</font> <br> @endif
+									   @if($doc->id_documento == 7) <input type="checkbox" id="doc7" name="doc7" /> <font size="2">COMPROVANTE DE RESIDÊNCIA ATUALIZADO</font> <br> @endif
+									   @if($doc->id_documento == 8) <input type="checkbox" id="doc8" name="doc8" /> <font size="2">TÍTULO DE ELEITOR</font> <br> @endif
+									   @if($doc->id_documento == 9) <input type="checkbox" id="doc9" name="doc9" /> <font size="2">CARTEIRA DE VACINAÇÃO ATUALIZADA</font> <br> @endif
+									   @if($doc->id_documento == 10) <input type="checkbox" id="doc10" name="doc10" /> <font size="2">CERTIFICADO DE ESCOLARIDADE OU DIPLOMA</font> <br> @endif
+									   @if($doc->id_documento == 11) <input type="checkbox" id="doc11" name="doc11" /> <font size="2">CARTEIRA RESERVISTA</font> <br> @endif
+									   @if($doc->id_documento == 12) <input type="checkbox" id="doc12" name="doc12" /> <font size="2">FOTO 3x4</font> <br> @endif
+									   @if($doc->id_documento == 13) <input type="checkbox" id="doc13" name="doc13" /> <font size="2">CERTIFICADO DE ESPECIALIZAÇÃO</font> <br> @endif
+									   @if($doc->id_documento == 14) <input type="checkbox" id="doc14" name="doc14" /> <font size="2">CARTÃO VEM</font> <br> @endif
+									   @if($doc->id_documento == 15) <input type="checkbox" id="doc15" name="doc15" /> <font size="2">REGISTRO PROFISSIONAL CONSELHO DE CLASSE</font> <br> @endif
+									   @if($doc->id_documento == 16) <input type="checkbox" id="doc16" name="doc16" /> <font size="2">DECLARAÇÃO NADA CONSTA CONSELHO CLASSE</font> <br> @endif
+									  @endforeach 
+								     </div>
+									 <div class="col">
+									   <textarea id="descricao_pe" name="descricao_pe" rows="8" class="form-control" placeholder="Especifique a informação para o candidato, informando quais documentos estão em pendências.">{{ old('descricao_pe') }}</textarea>
+									 </div>
+									</div>
+									<div class="modal-footer">
+										<input hidden type="text" id="resultado" name="resultado" value="2" />
+										<button type="submit" class="btn btn-warning btn-sm">PENDÊNCIAS</button>
+									</div>
+									</div>
+								  </div>
+								 </div> 
+								</form> 
+							 </center>
+							</th>
+							<th>
+							 <center>
+								<form action="{{ route('validarDocs', array($processos[0]->id, $candidatos[0]->id)) }}" method="POST">             
+								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+								<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal3">
+								  APROVAR
+								</button>
+								 <div class="modal fade bd-example-modal-lg" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+								  <div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+									 <div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Aprovar Documentação:</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										  <span aria-hidden="true">&times;</span>
+										</button>
+									 </div>
+									 <div class="modal-body">
+									<div class="row"> 
+									 <div class="col">
+									  @foreach($documentosC as $doc)
+									   @if($doc->id_documento == 1) <input type="checkbox" id="doc1" name="doc1" /> <font size="2">CTPS</font> <br> @endif
+									   @if($doc->id_documento == 2) <input type="checkbox" id="doc2" name="doc2" /> <font size="2">CARTÃO SUS</font> <br> @endif 
+									   @if($doc->id_documento == 3) <input type="checkbox" id="doc3" name="doc3" /> <font size="2">RG</font> <br> @endif
+									   @if($doc->id_documento == 4) <input type="checkbox" id="doc4" name="doc4" /> <font size="2">CPF</font> <br> @endif
+									   @if($doc->id_documento == 5) <input type="checkbox" id="doc5" name="doc5" /> <font size="2">PIS</font> <br> @endif
+									   @if($doc->id_documento == 6) <input type="checkbox" id="doc6" name="doc6" /> <font size="2">CERTIDÃO NASCIMENTO CASAMENTO:</font> <br> @endif
+									   @if($doc->id_documento == 7) <input type="checkbox" id="doc7" name="doc7" /> <font size="2">COMPROVANTE DE RESIDÊNCIA ATUALIZADO</font> <br> @endif
+									   @if($doc->id_documento == 8) <input type="checkbox" id="doc8" name="doc8" /> <font size="2">TÍTULO DE ELEITOR</font> <br> @endif
+									   @if($doc->id_documento == 9) <input type="checkbox" id="doc9" name="doc9" /> <font size="2">CARTEIRA DE VACINAÇÃO ATUALIZADA</font> <br> @endif
+									   @if($doc->id_documento == 10) <input type="checkbox" id="doc10" name="doc10" /> <font size="2">CERTIFICADO DE ESCOLARIDADE OU DIPLOMA</font> <br> @endif
+									   @if($doc->id_documento == 11) <input type="checkbox" id="doc11" name="doc11" /> <font size="2">CARTEIRA RESERVISTA</font> <br> @endif
+									   @if($doc->id_documento == 12) <input type="checkbox" id="doc12" name="doc12" /> <font size="2">FOTO 3x4</font> <br> @endif
+									   @if($doc->id_documento == 13) <input type="checkbox" id="doc13" name="doc13" /> <font size="2">CERTIFICADO DE ESPECIALIZAÇÃO</font> <br> @endif
+									   @if($doc->id_documento == 14) <input type="checkbox" id="doc14" name="doc14" /> <font size="2">CARTÃO VEM</font> <br> @endif
+									   @if($doc->id_documento == 15) <input type="checkbox" id="doc15" name="doc15" /> <font size="2">REGISTRO PROFISSIONAL CONSELHO DE CLASSE</font> <br> @endif
+									   @if($doc->id_documento == 16) <input type="checkbox" id="doc16" name="doc16" /> <font size="2">DECLARAÇÃO NADA CONSTA CONSELHO CLASSE</font> <br> @endif
+									  @endforeach 
+								     </div>
+									 <div class="col">
+									   <textarea id="descricao_ap" name="descricao_ap" rows="8" class="form-control" placeholder="Especifique a informação para o candidato, informando quais documentos estão aprovados.">{{ old('descricao_ap') }}</textarea>
+									 </div>
+									</div>
+									<div class="modal-footer">
+										<input hidden type="text" id="resultado" name="resultado" value="3" />
+										<button type="submit" class="btn btn-success btn-sm">APROVAR</button>
+									</div>
+									</div>
+								  </div>
+								 </div> 
+								</form> 
+							 </center>
+							</th>
+						</tr>
 						</tfoot>
-						@endforeach
 					</table>
 				</div>
 			</div>
